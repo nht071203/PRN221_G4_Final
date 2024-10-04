@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -20,6 +20,18 @@
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="8.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PRN221_BusinessLogic\PRN221_BusinessLogic.csproj" />
+    <ProjectReference Include="..\PRN221_DataAccess\PRN221_DataAccess.csproj" />
+    <ProjectReference Include="..\PRN221_Models\PRN221_Models.csproj" />
+    <ProjectReference Include="..\PRN221_Repository\PRN221_Repository.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Pages\Account\" />
   </ItemGroup>
 
 </Project>
