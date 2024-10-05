@@ -1,0 +1,196 @@
+/*
+
+[Custom Stylesheet]
+
+Project     : SociFly - Multipurpose Social Network HTML5 Template
+Version     : 1.0
+Author      : ThemeLooks
+Author URI  : https://themeforest.net/user/themelooks
+
+You can write your custom css styles in this file...
+
+*/
+.header--section.style--1 {
+}
+
+#header--toppart > container {
+}
+
+#sticky--wrapper {
+    background: #6ab04c;
+}
+
+    /*SEARCH BOX header*/
+    #sticky--wrapper .container {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        flex-basis: 1000px;
+        padding: 5px 0;
+        margin: 0 20px;
+    }
+
+        #sticky--wrapper .container .navbar-header {
+            width: 20%;
+            display: flex;
+            justify-content: center;
+        }
+
+/*SEARCH BOX*/
+.search-container {
+    width: 20%;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-right: 20px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.search-container.showBoxShadow {
+    box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.285);
+    background: white;
+}
+
+.search-container .head-search {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 10px;
+}
+.search-container .head-search .back-btn {
+    background: white;
+    border: none;
+    cursor: pointer;
+    transition: 0.4s ease;
+    width: 0;
+    height: 37px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+    transition: width 0.3s ease;
+}
+.search-container .head-search .back-btn:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+        /* form search  */
+.search-container .head-search #form-search {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 1px solid rgba(0, 0, 0, 0.211);
+    width: 250px;
+    height: 40px;
+    overflow: hidden;
+    border-radius: 50px;
+    padding-left: 12px;
+    margin-left: 10px;
+    background: white;
+}
+.search-container .head-search #form-search i {
+    color: rgba(0, 0, 0, 0.386);
+    text-align: center;
+    height: 100%;
+    width: 20px;
+    display: flex;
+    align-items: center;
+    transition: width 0.3s ease;
+    background: white;
+}
+.search-container .head-search #form-search input {
+    flex: 1;
+    padding-left: 5px;
+    height: 100%;
+    border: none;
+    outline: none;
+    color: rgba(0, 0, 0, 0.386);
+}
+
+/* button back  */
+.head-search.expand #form-search {
+    width: 220px;
+}
+.head-search.expand .back-btn {
+    width: 40px;
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s; /* Remove delay on visibility */
+}
+.head-search.expand #form-search i {
+    width: 0;
+    transition-delay: 0;
+}
+
+/* Suggest */
+.search-container .suggestions-box {
+    display: none;
+    transition: display 0.25s;
+}
+.search-container .suggestions-box.showSuggest {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    padding: 5px 10px;
+    background: white;
+    box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.285);
+    z-index: 100;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+.search-container .suggestions-box.showSuggest a {
+    width: calc(100% - 10px);
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    text-decoration: none;
+    transition: 0.2s ease;
+    color: rgba(0, 0, 0, 0.573);
+    padding-left: 10px;
+    border-radius: 5px;
+}
+.search-container .suggestions-box.showSuggest a:hover {
+    background: rgba(0, 0, 0, 0.145);
+}
+
+
+
+/*ACTIVITIES LIST*/
+.main--content-inner {
+    background: #e2e5e9;
+}
+.activity--list {
+    background: transparent;
+}
+.activity--list ul li {
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+}
+.activity--list ul li div {
+    padding: 0;
+}
+/*FOOTER*/
+.footer--section .widget a {
+    color: white;
+}
