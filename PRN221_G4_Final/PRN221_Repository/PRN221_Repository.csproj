@@ -22,4 +22,9 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PRN221_DataAccess\PRN221_DataAccess.csproj" />
+    <ProjectReference Include="..\PRN221_Models\PRN221_Models.csproj" />
+  </ItemGroup>
+
 </Project>
