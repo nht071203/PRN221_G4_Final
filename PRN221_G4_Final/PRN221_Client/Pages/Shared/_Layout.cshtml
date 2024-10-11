@@ -59,7 +59,7 @@
                     </a>
                     </li> *@
                     <li>
-                        <a href="#" class="btn-link">
+                        <a href="/Access/Login" class="btn-link">
                             <i class="fa mr--8 fa-user-o"></i>
                             <span>My Account</span>
                         </a>
@@ -156,9 +156,9 @@
                             </a>
 
                             <ul class="dropdown-menu">
-                                <li><a href="">List of expert</a></li>
-                                <li><a href="">Service 1</a></li>
-                                <li><a href="">Service 2</a></li>
+                                <li><a href="">Danh sách chuyên gia</a></li>
+                                <li><a href="/Service/ListServices">Các dịch vụ</a></li>
+                                <li><a href="/Service/ServiceDetail">Dịch vụ 2</a></li>
                             </ul>
                         </li>
                         <li><a href=""><span>Liên hệ hỗ trợ</span></a></li>
@@ -434,7 +434,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
+    <script src="~/js/mainServiceDetail.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

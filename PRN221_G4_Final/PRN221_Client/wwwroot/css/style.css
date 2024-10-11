@@ -2196,8 +2196,6 @@ label {
 
 .activity--items > li {
     float: none;
-    margin-bottom: 20px;
-    width: 100%;
 }
 
     .activity--items > li + li {
@@ -2210,6 +2208,7 @@ label {
 
         .activity--items > li + li .activity--info {
             padding-top: 24px;
+            border-top: 1px solid #e5e5e5;
         }
 
 .activity--content {
@@ -6331,7 +6330,7 @@ body.isScrolling #backToTop {
     border: none;
 }
 
-.booking-btn:hover {
-    background-color: #ffffff;
-    color: #1da1f2;
-}
+    .booking-btn:hover {
+        background-color: #ffffff;
+        color: #1da1f2;
+    }
