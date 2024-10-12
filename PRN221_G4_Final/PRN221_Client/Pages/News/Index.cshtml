@@ -1,0 +1,25 @@
+﻿@page
+@model PRN221_Client.Pages.News.IndexModel
+@{
+    ViewData["Title"] = "News List";
+}
+
+<h2>News List</h2>
+
+@if (Model.NewsList != null)
+{
+    <ul>
+        @foreach (var news in Model.NewsList)
+        {
+            <li>
+                <h3>@news.Title</h3>
+                <p>@news.Content</p>
+                <p><strong>Published on:</strong> @news.CreatedAt.ToString("MMMM dd, yyyy")</p>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>No news available.</p>
+}
