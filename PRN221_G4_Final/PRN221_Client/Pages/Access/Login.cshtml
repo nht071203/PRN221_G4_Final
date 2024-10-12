@@ -26,14 +26,15 @@
         <div class="form login">
             <div class="form-content">
                 <header>Đăng nhập</header>
-                <form method="post">
+
+                <form method="post" asp-page-handler="Login">
                     <div class="field input-field">
-                        <input type="email" placeholder="Email" class="input">
+                        <input type="text" placeholder="Tên đăng nhập" class="input" name="Username">
                     </div>
 
                     <div class="field input-field">
-                        <input type="password" placeholder="Mật khẩu" class="password">
-                        <i class='bx bx-hide eye-icon'></i>
+                        <input type="password" placeholder="Mật khẩu" class="password" name="Password">
+                        @* <i class='bx bx-hide eye-icon'></i> *@
                     </div>
 
                     <div class="form-link">
@@ -41,9 +42,8 @@
                     </div>
 
                     <div class="field button-field">
-                        <button>Đăng nhập</button>
+                        <button>Đăng nhập</button>  
                     </div>
-
                 </form>
 
                 <div class="form-link">

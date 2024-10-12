@@ -2196,6 +2196,8 @@ label {
 
 .activity--items > li {
     float: none;
+    margin-bottom: 20px;
+    width: 100%;
 }
 
     .activity--items > li + li {
@@ -2208,7 +2210,6 @@ label {
 
         .activity--items > li + li .activity--info {
             padding-top: 24px;
-            border-top: 1px solid #e5e5e5;
         }
 
 .activity--content {
