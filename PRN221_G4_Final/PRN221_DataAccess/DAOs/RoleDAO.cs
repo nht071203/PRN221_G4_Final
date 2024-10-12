@@ -21,6 +21,30 @@ namespace PRN221_DataAccess.DAOs
             if (item == null) return null;
             return item;
         }
+        public async Task Add(Role item)
+        {
+            _context.Roles.Add(item);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task Update(Role item)
+        {
+            var existingItem = await FindById(item.RoleId);
+            if (existingItem == null) return;
+
+            _context.Entry(existingItem).CurrentValues.SetValues(item);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task Delete(int id)
+        {
+            var item = await FindById(id);
+            if (item == null) return;
+
+            _context.Roles.Remove(item);
+            await _context.SaveChangesAsync();
+        }
 
     }
 }
+  

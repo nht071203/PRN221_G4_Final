@@ -19,5 +19,21 @@ namespace PRN221_BusinessLogic.Service
         }
 
         public async Task<IEnumerable<News>> GetAllNews() => await _newsRepo.GetAllNews();
+        public async Task<News> GetByIdNews(int id)
+        {
+            return await _newsRepo.GetById(id);
+        }
+        public async Task AddNews(News item)
+        {
+            await _newsRepo.Add(item);
+        }
+        public async Task UpdateNews(News item)
+        {
+            await _newsRepo.Update(item);
+        }
+        public async Task DeleteNews(int id)
+        {
+            await _newsRepo.Delete(id);
+        }
     }
 }
