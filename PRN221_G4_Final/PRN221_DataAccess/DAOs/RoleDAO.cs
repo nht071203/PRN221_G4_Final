@@ -15,7 +15,7 @@ namespace PRN221_DataAccess.DAOs
             return await _context.Roles.ToListAsync();
         }
 
-        public async Task<Role> FindById(int id)
+        public async Task<Role?> FindById(int id)
         {
             var item = await _context.Roles.FirstOrDefaultAsync(obj => obj.RoleId == id);
             if (item == null) return null;

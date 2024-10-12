@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    var isLoggedIn = HttpContextAccessor.HttpContext.Session.GetString("UserSession") != null;
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -58,12 +65,31 @@
                     <span class="badge">3</span>
                     </a>
                     </li> *@
-                    <li>
-                        <a href="/Access/Login" class="btn-link">
-                            <i class="fa mr--8 fa-user-o"></i>
-                            <span>My Account</span>
-                        </a>
-                    </li>
+                    @if (isLoggedIn)
+                    {
+                        <li>
+                            <a href="#" class="btn-link">
+                                <i class="fa mr--8 fa-user-o"></i>
+                                <span>My Account</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="/Access/Login?handler=Logout" class="btn-link">
+                                <i class="fa mr--8 fa-user-o"></i>
+                                <span>Đăng xuất</span>
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a href="/Access/Login" class="btn-link">
+                                <i class="fa mr--8 fa-user-o"></i>
+                                <span>Đăng nhập</span>
+                            </a>
+                        </li>
+                    }
                 </ul>
                 <!-- Header Topbar Links End -->
             </div>

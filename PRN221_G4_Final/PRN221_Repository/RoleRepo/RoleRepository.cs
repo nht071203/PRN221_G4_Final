@@ -19,5 +19,10 @@ namespace PRN221_Repository.RoleRepo
         {
             return await roleDAO.GetAll();
         }
+
+        public async Task<Role?> getById(int id)
+        {
+            return await roleDAO.FindById(id);
+        }
     }
 }
