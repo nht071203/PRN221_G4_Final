@@ -21,5 +21,11 @@ namespace PRN221_Repository.NewsRepo
         {
             return await _newsDAO.GetAllNews();
         }
+
+        public async Task<News> GetById(int id) => await _newsDAO.FindById(id);
+        public async Task Add(News news) => await _newsDAO.Add(news);
+        public async Task Update(News news) => await _newsDAO.Update(news);
+
+        public async Task Delete(int id) => await _newsDAO.Delete(id);
     }
 }
