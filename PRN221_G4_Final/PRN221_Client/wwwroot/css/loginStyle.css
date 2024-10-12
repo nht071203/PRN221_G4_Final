@@ -8,13 +8,41 @@
     font-family: 'Poppins', sans-serif;
 }
 
-.container {
+body {
+    background-image: url('/image/background2.jpeg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     height: 100vh;
+}
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+header {
+    height: 10%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    padding: 10px;
+}
+header .logo {
+    height: 100%;
+    width: 4%;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+
+.container {
+    height: calc(100vh - 10%);
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #4070f4;
     column-gap: 30px;
 }
 
@@ -24,13 +52,14 @@
     width: 100%;
     padding: 30px;
     border-radius: 6px;
-    background: #FFF;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 2px 2px 10px rgba(255, 255, 255, 0.4);
 }
 
-    .form.signup {
-        opacity: 0;
-        pointer-events: none;
-    }
+.form.signup {
+    opacity: 0;
+    pointer-events: none;
+}
 
 .forms.show-signup .form.signup {
     opacity: 1;
@@ -42,7 +71,7 @@
     pointer-events: none;
 }
 
-header {
+.title-login {
     font-size: 28px;
     font-weight: 600;
     color: #232836;
@@ -77,9 +106,9 @@ form {
     border: 1px solid#CACACA;
 }
 
-    .field input:focus {
-        border-bottom-width: 2px;
-    }
+.field input:focus {
+    border-bottom-width: 2px;
+}
 
 .eye-icon {
     position: absolute;
@@ -94,29 +123,29 @@ form {
 
 .field button {
     color: #fff;
-    background-color: #0171d3;
+    background-color: #2ECC71;
     transition: all 0.3s ease;
     cursor: pointer;
 }
 
-    .field button:hover {
-        background-color: #016dcb;
-    }
+.field button:hover {
+    background-color: #2ecc704e;
+}
 
 .form-link {
     text-align: center;
     margin-top: 10px;
 }
 
-    .form-link span,
-    .form-link a {
-        font-size: 14px;
-        font-weight: 400;
-        color: #232836;
-    }
+.form-link span,
+.form-link a {
+    font-size: 14px;
+    font-weight: 400;
+    color: #232836;
+}
 
 .form a {
-    color: #0171d3;
+    color: #2ecc71;
     text-decoration: none;
 }
 
@@ -132,16 +161,16 @@ form {
     background-color: #d4d4d4;
 }
 
-    .line::before {
-        content: 'Hoặc';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: #FFF;
-        color: #8b8b8b;
-        padding: 0 15px;
-    }
+.line::before {
+    content: 'Hoặc';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #FFF;
+    color: #8b8b8b;
+    padding: 0 15px;
+}
 
 .media-options a {
     display: flex;
@@ -151,20 +180,21 @@ form {
 
 a.facebook {
     color: #fff;
-    background-color: #4267b2;
+    background: #4267b2;
+    //background: linear-gradient(5deg, #fff 10%, #4267b2 80%);
 }
 
-    a.facebook .facebook-icon {
-        height: 28px;
-        width: 28px;
-        color: #0171d3;
-        font-size: 20px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: #fff;
-    }
+a.facebook .facebook-icon {
+    height: 28px;
+    width: 28px;
+    color: #0171d3;
+    font-size: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+}
 
 .facebook-icon,
 img.google-img {
@@ -173,22 +203,21 @@ img.google-img {
     left: 15px;
     transform: translateY(-50%);
 }
-
 img.google-img {
-    height: 20px;
-    width: 20px;
+    height: 27px;
+    width: 27px;
     object-fit: cover;
+    background: #fff;
+    border-radius: 50%;
 }
-
 a.google {
-    border: 1px solid #CACACA;
+    color: #fff;
+    background: #EA4335;
+    //background: linear-gradient(5deg, #fff 10%, #EA4335 80%);
 }
-
-    a.google span {
-        font-weight: 500;
-        opacity: 0.6;
-        color: #232836;
-    }
+a.google span {
+    font-weight: 500;
+}
 
 @media screen and (max-width: 400px) {
     .form {
