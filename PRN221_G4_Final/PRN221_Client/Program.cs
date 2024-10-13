@@ -6,6 +6,7 @@ using PRN221_BusinessLogic.Service;
 using PRN221_DataAccess;
 using PRN221_DataAccess.DAOs;
 using PRN221_Repository.AccountRepo;
+using PRN221_Repository.NewsRepo;
 using PRN221_Repository.RoleRepo;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -59,6 +60,9 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<RoleDAO>();
 
+builder.Services.AddScoped<INewsService, NewsService>();
+builder.Services.AddScoped<INewsRepository, NewsRepository>();
+builder.Services.AddScoped<NewsDAO>();
 
 builder.Services.AddSession();
 builder.Services.AddDistributedMemoryCache(); // For storing session data in memory
