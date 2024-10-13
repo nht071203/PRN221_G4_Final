@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.EntityFrameworkCore;
 using PRN221_BusinessLogic.Interface;
 using PRN221_BusinessLogic.Service;
@@ -14,12 +16,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<Prn221Context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddSession(options =>
-{
-    options.IdleTimeout = TimeSpan.FromMinutes(10);
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true;
-});
+
 
 builder.Services.AddAuthentication("CookiesPRN221").AddCookie("CookiesPRN221", options =>
 {
@@ -28,6 +25,28 @@ builder.Services.AddAuthentication("CookiesPRN221").AddCookie("CookiesPRN221", o
     options.AccessDeniedPath = "/Access/AccessDenied";
     options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
 });
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+}).
+AddCookie().
+AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
+{
+    options.ClientId = builder.Configuration.GetSection("GoogleKeys:ClientID").Value;
+    options.ClientSecret = builder.Configuration.GetSection("GoogleKeys:ClientSecret").Value;
+    options.CallbackPath = "/signin-google";
+    options.Scope.Add("profile");
+});
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(10);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 builder.Services.AddAuthorization();
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -35,9 +54,15 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IAuthenService, AuthenService>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<AccountDAO>();
+builder.Services.AddScoped<IAccountService, AccountService>();  
 
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<RoleDAO>();
+
+
+builder.Services.AddSession();
+builder.Services.AddDistributedMemoryCache(); // For storing session data in memory
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
@@ -50,15 +75,9 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
-app.UseAuthentication();
-
-app.UseAuthorization();
-
 app.UseSession();
-
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapRazorPages();
-
 app.Run();

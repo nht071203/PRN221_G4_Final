@@ -16,5 +16,6 @@ namespace PRN221_BusinessLogic.Interface
         Task AddAccount(Account item);
         Task UpdateAccount(Account item);
         Task DeleteAccount(int id);
+        Task<Account?> GetAccountByEmail(string email);
     }
 }

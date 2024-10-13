@@ -41,5 +41,10 @@ namespace PRN221_BusinessLogic.Service
         {
             await _accountRepo.Delete(id);
         }
+
+        public async Task<Account?> GetAccountByEmail(string email)
+        {
+            return await _accountRepo.GetAccountByEmail(email);
+        }
     }
 }
