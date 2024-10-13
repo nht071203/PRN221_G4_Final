@@ -25,6 +25,14 @@ namespace PRN221_DataAccess.DAOs
             if (item == null) return null;
             return item;
         }
+
+        public async Task<CategoryNews> GetCategoryNewsById(int id)
+        {
+            var item = await _context.CategoryNews.FirstOrDefaultAsync(obj => obj.CategoryNewsId == id);
+            if (item == null) return null;
+            return item;
+        }
+
         public async Task Add(News item)
         {
             _context.News.Add(item);
@@ -35,7 +43,7 @@ namespace PRN221_DataAccess.DAOs
         {
             var existingItem = await FindById(item.NewsId);
             if (existingItem == null) return;
-
+            item.UpdatedAt = DateOnly.FromDateTime(DateTime.Now);
             _context.Entry(existingItem).CurrentValues.SetValues(item);
             await _context.SaveChangesAsync();
         }
@@ -45,7 +53,9 @@ namespace PRN221_DataAccess.DAOs
             var item = await FindById(id);
             if (item == null) return;
 
-            _context.News.Remove(item);
+            item.IsDeleted = true;
+            item.DeletedAt = DateOnly.FromDateTime(DateTime.Now);
+            _context.News.Update(item);
             await _context.SaveChangesAsync();
         }
     }

@@ -35,5 +35,10 @@ namespace PRN221_BusinessLogic.Service
         {
             await _newsRepo.Delete(id);
         }
+
+        public async Task<CategoryNews> GetCategoryNewsById(int id)
+        {
+            return await _newsRepo.GetCategoryNewsById(id);
+        }
     }
 }
