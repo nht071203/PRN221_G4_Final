@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PRN221_Admin"
            xmlns:oxy="http://oxyplot.org/wpf"
         mc:Ignorable="d"
-        Title="DashboardMU" Height="450" Width="800">
+        Title="DashboardMU" Width="800" Height="600" MaxHeight="600">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -14,22 +14,23 @@
             <ColumnDefinition Width="Auto" />
             <!-- Nửa bên phải -->
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,2,0,0" Height="449">
+        <StackPanel Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2,0,0,0" Height="582">
 
-            <Image Height="43" Width="54" Source="/logo.jpg"/>
+            <Image Height="43"  Margin="1,10,0,0" Width="54" Source="/logo.jpg"/>
 
-            <Button Content="Manage Expert" Margin="1,10,0,0" Height="35" Width="110" Background="#FF68AEDC"  FontWeight="Bold"/>
+            <Button Content="Manage Expert" Margin="1,10,0,0" Height="35" Width="110" Background="#FF68AEDC"  FontWeight="Bold" Click="Button_ManageExpert"/>
             <Button Content="Manage Farmer" Margin="1,10,0,0" Height="35" Width="110" Background="#FF7DE678" FontWeight="Bold"/>
-            <Button Content="Manage News" Margin="1,10,0,0" Height="35" Width="110" Background="#FFD8E863" FontWeight="Bold"/>
+            <Button Content="Manage News" Margin="1,10,0,0" Height="35" Width="110" Background="#FFD8E863" FontWeight="Bold" Click="Button_ManagerNew"/>
             <Button Content="Manage Post" Margin="1,10,0,0" Height="35" Width="110" Background="#FF6DDAD6" FontWeight="Bold"/>
-            <Button Content="Button" Margin="1,10,0,0" Height="35" Width="110" Background="#FFF294FF" FontWeight="Bold"/>
+            <Button Content="Thong Ke" Margin="1,10,0,0" Height="35" Width="110" Background="#FFF294FF" FontWeight="Bold" Click="Button_ThongKe"/>
             <Button Content="Button" Margin="1,10,0,0" Height="35" Width="110" Background="#FFFCD18C" FontWeight="Bold"/>
             <Button Content="Button" Margin="1,10,0,0" Height="35" Width="110" Background="#FF696CD9" FontWeight="Bold"/>
-            <Button Content="Log out" Margin="0,18,0,5" Height="35" Width="110" Background="#FFFFB3AD" FontWeight="Bold"/>
+            <Button Content="Log out" Margin="0,158,0,5" Height="35" Width="110" Background="#FFFFB3AD" FontWeight="Bold"/>
         </StackPanel>
 
         <Grid Grid.Column="1" HorizontalAlignment="Left" Width="670">
-            <Grid.RowDefinitions>
+            <Frame NavigationUIVisibility="Hidden" x:Name="NoiDung" />
+            <!--<Grid.RowDefinitions>
                 <RowDefinition Height="421*"/>
                 <RowDefinition Height="6*"/>
                 <RowDefinition Height="7*"/>
@@ -39,7 +40,9 @@
             <Label Content="Total Post" HorizontalAlignment="Left" Margin="300,10,0,0" VerticalAlignment="Top" Foreground="#FF4400FF" FontWeight="Bold" FontStyle="Italic"/>
             <Label Content="Total View" HorizontalAlignment="Left" Margin="450,10,0,0" VerticalAlignment="Top" Foreground="#FFF40000" FontWeight="Bold" FontStyle="Italic"/>
 
+            -->
             <!-- TextBlocks for values -->
+            <!--
             <TextBlock HorizontalAlignment="Left" Margin="32,30,0,0" Text="10" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
             <TextBlock HorizontalAlignment="Left" Margin="182,30,0,0" Text="10" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
             <TextBlock HorizontalAlignment="Left" Margin="332,30,0,0" Text="10" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
@@ -47,9 +50,9 @@
 
             <oxy:PlotView x:Name="plotView"
                           Model="{Binding PlotModel}"
-                          Margin="0,70,0,0" Grid.RowSpan="3" />
-   
-        
+                          Margin="0,70,0,0" Grid.RowSpan="3" />-->
+
+
         </Grid>
     </Grid>
 </Window>
