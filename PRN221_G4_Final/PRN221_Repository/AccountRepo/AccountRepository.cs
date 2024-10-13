@@ -34,5 +34,10 @@ namespace PRN221_Repository.AccountRepo
         public async Task Add(Account account) => await _accountDAO.Add(account);
         public async Task Update(Account account) => await _accountDAO.Update(account);
         public async Task Delete(int id) => await _accountDAO.Delete(id);
+
+        public async Task<Account?> GetAccountByEmail(string email)
+        {
+            return await _accountDAO.GetAccountByEmail(email);
+        }
     }
 }
