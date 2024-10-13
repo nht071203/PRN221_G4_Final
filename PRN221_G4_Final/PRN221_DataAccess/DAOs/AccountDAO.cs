@@ -45,10 +45,11 @@ namespace PRN221_DataAccess.DAOs
             return item;
         }
 
-        public async Task Add(Account item)
+        public async Task<Account> Add(Account item)
         {
             _context.Accounts.Add(item);
             await _context.SaveChangesAsync();
+            return item;
         }
 
         public async Task Update(Account item)

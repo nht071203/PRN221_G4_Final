@@ -5,6 +5,7 @@ using PRN221_BusinessLogic.Interface;
 using PRN221_BusinessLogic.Service;
 using PRN221_DataAccess;
 using PRN221_DataAccess.DAOs;
+using PRN221_Models.Models;
 using PRN221_Repository.AccountRepo;
 using PRN221_Repository.NewsRepo;
 using PRN221_Repository.RoleRepo;
@@ -55,7 +56,8 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IAuthenService, AuthenService>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<AccountDAO>();
-builder.Services.AddScoped<IAccountService, AccountService>();  
+builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<Account>();
 
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<RoleDAO>();
