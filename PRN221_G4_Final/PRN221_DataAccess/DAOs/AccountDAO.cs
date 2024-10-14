@@ -27,7 +27,7 @@ namespace PRN221_DataAccess.DAOs
         }
         public async Task<IEnumerable<Account>> GetListAccountByRoleId(int role_id)
         {
-            var item = await _context.Accounts.Where(c => c.RoleId == role_id).ToListAsync();
+            var item = await _context.Accounts.Where(c => c.RoleId == role_id && c.IsDeleted == false).ToListAsync();
             if (item == null) return null;
             return item;
         }
@@ -51,22 +51,40 @@ namespace PRN221_DataAccess.DAOs
             await _context.SaveChangesAsync();
         }
 
+
         public async Task Update(Account item)
         {
             var existingItem = await GetById(item.AccountId);
             if (existingItem == null) return;
 
+            existingItem.IsDeleted = true;
+
             _context.Entry(existingItem).CurrentValues.SetValues(item);
             await _context.SaveChangesAsync();
         }
 
-        public async Task Delete(int id)
+        public async Task Delete(Account item)
         {
-            var item = await GetById(id);
-            if (item == null) return;
+            var existingItem = await GetById(item.AccountId);
+            if (existingItem == null) return;
 
-            _context.Accounts.Remove(item);
+            existingItem.IsDeleted = true;
+
+            _context.Entry(existingItem).CurrentValues.SetValues(item);
             await _context.SaveChangesAsync();
         }
+
+        //public async Task Delete(int id)
+        //{
+        //    var item = await GetById(id);
+        //    if (item == null) return;
+
+        //    _context.Accounts.Remove(item);
+        //    await _context.SaveChangesAsync();
+        //}
+
+
+       
+
     }
 }

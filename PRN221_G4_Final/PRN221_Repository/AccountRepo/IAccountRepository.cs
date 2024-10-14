@@ -16,6 +16,6 @@ namespace PRN221_Repository.AccountRepo
         Task<Account> GetById(int id);
         Task Add(Account item);
         Task Update(Account item);
-        Task Delete(int id);
+        Task Delete(Account item);
     }
 }
