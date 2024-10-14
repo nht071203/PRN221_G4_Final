@@ -15,7 +15,6 @@ namespace PRN221_Client.Pages.News
         }
 
         public IEnumerable<PRN221_Models.Models.News> NewsList { get; set; }
-        public CategoryNews categoryNews { get; set; }
         public async Task OnGet()
         {
             NewsList = await _newsService.GetAllNews();
@@ -30,7 +29,7 @@ namespace PRN221_Client.Pages.News
             var category = await _newsService.GetCategoryNewsById(categoryId);
             return category?.CategoryNewsName ?? "Unknown"; // Replace 'Name' with the actual property name for category
         }
-
+        
         public async Task<IActionResult> OnPostDelete(int id)
         {
             var news = await _newsService.GetByIdNews(id);

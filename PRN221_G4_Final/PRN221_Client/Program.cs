@@ -57,6 +57,8 @@ builder.Services.AddScoped<IAuthenService, AuthenService>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<AccountDAO>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<AccountService>();
+builder.Services.AddScoped<AccountRepository>();
 builder.Services.AddScoped<Account>();
 
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
@@ -65,6 +67,8 @@ builder.Services.AddScoped<RoleDAO>();
 builder.Services.AddScoped<INewsService, NewsService>();
 builder.Services.AddScoped<INewsRepository, NewsRepository>();
 builder.Services.AddScoped<NewsDAO>();
+builder.Services.AddScoped<NewsService>();
+builder.Services.AddScoped<NewsRepository>();
 
 builder.Services.AddSession();
 builder.Services.AddDistributedMemoryCache(); // For storing session data in memory
