@@ -40,5 +40,10 @@ namespace PRN221_BusinessLogic.Service
         {
             return await _newsRepo.GetCategoryNewsById(id);
         }
+
+        public async Task<IEnumerable<CategoryNews>> GetAllCategoryNews()
+        {
+            return await _newsRepo.GetAllCategoryNews();
+        }
     }
 }

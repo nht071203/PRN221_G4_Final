@@ -1,8 +1,11 @@
 ﻿@using Microsoft.AspNetCore.Http;
 @inject IHttpContextAccessor HttpContextAccessor
+@inject PRN221_BusinessLogic.Interface.INewsService _newsService
 
 @{
+    IEnumerable<PRN221_Models.Models.CategoryNews> categories;
     var isLoggedIn = HttpContextAccessor.HttpContext.Session.GetString("UserSession") != null;
+    categories = await _newsService.GetAllCategoryNews();
 }
 
 <!DOCTYPE html>
@@ -33,7 +36,7 @@
 <body class="wrapper">
     <!-- Header Section Start -->
     <header class="header--section style--1">
-
+        
         <!-- Header Topbar Start -->
         <div id="header--toppart" class="header--topbar bg-white">
             <div class="container">
@@ -101,12 +104,12 @@
         <!-- Header Topbar End -->
         <!-- Header Navbar Start -->
         <div id="sticky--wrapper" class="header--navbar">
-            <div class="container">
+            <div class="container d-flex justify-content-around" style="padding-left: 100px">
 
                 <div class="navbar-header">
                     <!-- Header Navbar Logo Start -->
                     <div class="header--navbar-logo navbar-brand">
-                        <a href="">
+                        <a href="/">
                             <img src="~/image/logo.jpg" class="normal" alt="" style="width: 138px; height: 80px;">
                             <img src="~/image/logo.jpg" class="sticky" alt="">
                         </a>
@@ -141,13 +144,13 @@
                     <!-- Header Nav Links Start -->
                     <ul class="header--nav-links style--1 nav ff--primary">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <a href="/" class="dropdown-toggle" data-toggle="dropdown">
                                 <span>Trang chủ</span>
                                 @* <i class="fa fa-caret-down"></i> *@
                             </a>
 
                             <ul class="dropdown-menu">
-                                <li><a href=""><span>Activity</span></a></li>
+                                <li><a href="/"><span>Activity</span></a></li>
                                 <li><a href=""><span>Members</span></a></li>
                                 <li><a href=""><span>Groups</span></a></li>
                             </ul>
@@ -167,16 +170,15 @@
                         </li>
 
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <span>Tin tức</span>
-                                @* <i class="fa fa-caret-down"></i> *@
+                            <a href="/News/Index" class="dropdown-toggle"><span>Tin tức</span></a>
+                            @* <a href="/News/Index" data-toggle="dropdown"> *@
                             </a>
 
                             <ul class="dropdown-menu">
-                                <li><a href="">News category 1</a></li>
-                                <li><a href="">News category 2</a></li>
-                                <li><a href="">News category 3</a></li>
-                                <li><a href="">News category 4</a></li>
+                                @foreach(var category in categories)
+                                {
+                                    <li><a href="">@category.CategoryNewsName</a></li>
+                                }
                             </ul>
                         </li>
                         <li class="dropdown">
