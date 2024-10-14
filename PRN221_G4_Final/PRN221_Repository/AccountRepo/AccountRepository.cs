@@ -29,6 +29,8 @@ namespace PRN221_Repository.AccountRepo
 
 
 
+
+
         public async Task<IEnumerable<Account>> GetListAccByRoleId(int role_id) => await _accountDAO.GetListAccountByRoleId(role_id);
         public async Task<Account> GetById(int id) => await _accountDAO.GetById(id);
         public async Task Add(Account account) => await _accountDAO.Add(account);

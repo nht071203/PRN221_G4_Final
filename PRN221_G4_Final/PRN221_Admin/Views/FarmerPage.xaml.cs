@@ -1,0 +1,39 @@
+﻿using PRN221_Admin.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace PRN221_Admin.Views
+{
+    /// <summary>
+    /// Interaction logic for FarmerPage.xaml
+    /// </summary>
+    public partial class FarmerPage : Page
+    {
+        private readonly FarmerModelView _viewModel;
+        public FarmerPage(FarmerModelView viewModel)
+        {
+            InitializeComponent();
+            _viewModel = viewModel;
+            DataContext = _viewModel;
+
+        }
+        public FarmerPage()
+        {
+            InitializeComponent();
+            this.DataContext = new FarmerModelView();
+        }
+    }
+}
+    
