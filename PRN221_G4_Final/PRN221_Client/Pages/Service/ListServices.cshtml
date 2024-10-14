@@ -23,295 +23,51 @@
                             </thead>
 
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <h4 class="h6 fw--500 text-darkest"><a href="topic-replies.html" class="btn-link">Chuẩn đoán bệnh ở cây lúa</a></h4>
+                                @foreach (var service in Model.ServiceList)
+                                {
+                                    // Lấy tài khoản liên kết với dịch vụ này
+                                    var account = Model.ServiceCreatorAccounts[service.ServiceId];
 
-                                        <!-- <p>Started by <a href="member-activity-personal.html">Alice A. Baker</a> in <a href="#">sports</a> forum</p> -->
-                                        <!-- hiển thị sao được đánh giá -->
-                                        <div class="rate">
-                                            <input type="radio" id="star5" name="rate" value="5" />
-                                            <label for="star5" title="text">5 stars</label>
-                                            <input type="radio" id="star4" name="rate" value="4" />
-                                            <label for="star4" title="text">4 stars</label>
-                                            <input type="radio" id="star3" name="rate" value="3" />
-                                            <label for="star3" title="text">3 stars</label>
-                                            <input type="radio" id="star2" name="rate" value="2" />
-                                            <label for="star2" title="text">2 stars</label>
-                                            <input type="radio" id="star1" name="rate" value="1" />
-                                            <label for="star1" title="text">1 star</label>
-                                        </div>
-                                        <p class="count-rate">(150)</p>
-                                    </td>
-                                    <td>
-                                        <div class="ff--primary fw--500 fs--14 text-darkest d-flex-price">
-                                            <p>160.000</p>
-                                            <p>đ</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p>Đang hoạt động</p>
+                                    // Tính số lượng sao đầy dựa trên average_rating
+                                    int fullStars = (int)Math.Floor(service.AverageRating ?? 0); // Lấy phần nguyên
+                                    int emptyStars = 5 - fullStars; // Tính số sao còn lại
+                                    <tr>
+                                        <td>
+                                            <h4 class="h6 fw--500 text-darkest"><a href="topic-replies.html" class="btn-link">@service.Title</a></h4>
 
-                                        <a href="member-activity-personal.html" class="topic--author">
-                                            <span class="name">Đặng Nguyễn Đăng Khoa</span>
-                                            <span class="avatar"><img src="img/topics-img/avatar-01.jpg" alt=""></span>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <button class="booking-btn btn btn-primary">Đặt lịch</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <h4 class="h6 fw--500 text-darkest"><a href="topic-replies.html" class="btn-link">Làm cách nào để cây phát triển tốt</a></h4>
+                                            <!-- <p>Started by <a href="member-activity-personal.html">Alice A. Baker</a> in <a href="#">sports</a> forum</p> -->
+                                            <!-- hiển thị sao được đánh giá -->
+                                            <div class="rate">
+                                                @for (int i = 1; i <= fullStars; i++)
+                                                {
+                                                    <label title="Full star">★</label>
+                                                }
+                                                @for (int i = 1; i <= emptyStars; i++)
+                                                {
+                                                    <label title="Empty star" style="color: #ccc;">★</label> <!-- Sao trống (màu xám) -->
+                                                }
+                                            </div>
+                                            <p class="count-rate">(@service.RatingCount)</p>
+                                        </td>
+                                        <td>
+                                            <div class="ff--primary fw--500 fs--14 text-darkest d-flex-price">
+                                                <p>@service.Price</p>
+                                                <p>đ</p>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p>Đang hoạt động</p>
 
-                                        <div class="rate">
-                                            <input type="radio" id="star5" name="rate" value="5" />
-                                            <label for="star5" title="text">5 stars</label>
-                                            <input type="radio" id="star4" name="rate" value="4" />
-                                            <label for="star4" title="text">4 stars</label>
-                                            <input type="radio" id="star3" name="rate" value="3" />
-                                            <label for="star3" title="text">3 stars</label>
-                                            <input type="radio" id="star2" name="rate" value="2" />
-                                            <label for="star2" title="text">2 stars</label>
-                                            <input type="radio" id="star1" name="rate" value="1" />
-                                            <label for="star1" title="text">1 star</label>
-                                        </div>
-                                        <p class="count-rate">(150)</p>
-                                    </td>
-                                    <td>
-                                        <div class="ff--primary fw--500 fs--14 text-darkest d-flex-price">
-                                            <p>160.000</p>
-                                            <p>đ</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p>2 ngày trước</p>
-
-                                        <a href="member-activity-personal.html" class="topic--author">
-                                            <span class="name">Bùi Thị Mai Xuân</span>
-                                            <span class="avatar"><img src="img/topics-img/avatar-02.jpg" alt=""></span>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <button class="booking-btn btn btn-primary">Đặt lịch</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <h4 class="h6 fw--500 text-darkest"><a href="topic-replies.html" class="btn-link">Removing Headers from Pages</a></h4>
-
-                                        <div class="rate">
-                                            <input type="radio" id="star5" name="rate" value="5" />
-                                            <label for="star5" title="text">5 stars</label>
-                                            <input type="radio" id="star4" name="rate" value="4" />
-                                            <label for="star4" title="text">4 stars</label>
-                                            <input type="radio" id="star3" name="rate" value="3" />
-                                            <label for="star3" title="text">3 stars</label>
-                                            <input type="radio" id="star2" name="rate" value="2" />
-                                            <label for="star2" title="text">2 stars</label>
-                                            <input type="radio" id="star1" name="rate" value="1" />
-                                            <label for="star1" title="text">1 star</label>
-                                        </div>
-                                        <p class="count-rate">(150)</p>
-                                    </td>
-                                    <td>
-                                        <div class="ff--primary fw--500 fs--14 text-darkest d-flex-price">
-                                            <p>160.000</p>
-                                            <p>đ</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p>2 days, 5 hours ago</p>
-
-                                        <a href="member-activity-personal.html" class="topic--author">
-                                            <span class="name">Barbara L. Posey</span>
-                                            <span class="avatar"><img src="img/topics-img/avatar-03.jpg" alt=""></span>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <button class="booking-btn btn btn-primary">Đặt lịch</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <h4 class="h6 fw--500 text-darkest"><a href="topic-replies.html" class="btn-link">Header Image Resizing For NATURAL Theme</a></h4>
-
-                                        <div class="rate">
-                                            <input type="radio" id="star5" name="rate" value="5" />
-                                            <label for="star5" title="text">5 stars</label>
-                                            <input type="radio" id="star4" name="rate" value="4" />
-                                            <label for="star4" title="text">4 stars</label>
-                                            <input type="radio" id="star3" name="rate" value="3" />
-                                            <label for="star3" title="text">3 stars</label>
-                                            <input type="radio" id="star2" name="rate" value="2" />
-                                            <label for="star2" title="text">2 stars</label>
-                                            <input type="radio" id="star1" name="rate" value="1" />
-                                            <label for="star1" title="text">1 star</label>
-                                        </div>
-                                        <p class="count-rate">(150)</p>
-                                    </td>
-                                    <td>
-                                        <div class="ff--primary fw--500 fs--14 text-darkest d-flex-price">
-                                            <p>160.000</p>
-                                            <p>đ</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p>2 days, 5 hours ago</p>
-
-                                        <a href="member-activity-personal.html" class="topic--author">
-                                            <span class="name">William C. Morgan</span>
-                                            <span class="avatar"><img src="img/topics-img/avatar-04.jpg" alt=""></span>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <button class="booking-btn btn btn-primary">Đặt lịch</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <h4 class="h6 fw--500 text-darkest"><a href="topic-replies.html" class="btn-link">Can't access the CSS Editor</a></h4>
-
-                                        <div class="rate">
-                                            <input type="radio" id="star5" name="rate" value="5" />
-                                            <label for="star5" title="text">5 stars</label>
-                                            <input type="radio" id="star4" name="rate" value="4" />
-                                            <label for="star4" title="text">4 stars</label>
-                                            <input type="radio" id="star3" name="rate" value="3" />
-                                            <label for="star3" title="text">3 stars</label>
-                                            <input type="radio" id="star2" name="rate" value="2" />
-                                            <label for="star2" title="text">2 stars</label>
-                                            <input type="radio" id="star1" name="rate" value="1" />
-                                            <label for="star1" title="text">1 star</label>
-                                        </div>
-                                        <p class="count-rate">(150)</p>
-                                    </td>
-                                    <td>
-                                        <div class="ff--primary fw--500 fs--14 text-darkest d-flex-price">
-                                            <p>160.000</p>
-                                            <p>đ</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p>2 days, 5 hours ago</p>
-
-                                        <a href="member-activity-personal.html" class="topic--author">
-                                            <span class="name">Diane H. Guzman</span>
-                                            <span class="avatar"><img src="img/topics-img/avatar-05.jpg" alt=""></span>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <button class="booking-btn btn btn-primary">Đặt lịch</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <h4 class="h6 fw--500 text-darkest"><a href="topic-replies.html" class="btn-link">Change default colours on main menu</a></h4>
-
-                                        <div class="rate">
-                                            <input type="radio" id="star5" name="rate" value="5" />
-                                            <label for="star5" title="text">5 stars</label>
-                                            <input type="radio" id="star4" name="rate" value="4" />
-                                            <label for="star4" title="text">4 stars</label>
-                                            <input type="radio" id="star3" name="rate" value="3" />
-                                            <label for="star3" title="text">3 stars</label>
-                                            <input type="radio" id="star2" name="rate" value="2" />
-                                            <label for="star2" title="text">2 stars</label>
-                                            <input type="radio" id="star1" name="rate" value="1" />
-                                            <label for="star1" title="text">1 star</label>
-                                        </div>
-                                        <p class="count-rate">(150)</p>
-                                    </td>
-                                    <td>
-                                        <div class="ff--primary fw--500 fs--14 text-darkest d-flex-price">
-                                            <p>160.000</p>
-                                            <p>đ</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p>2 days, 5 hours ago</p>
-
-                                        <a href="member-activity-personal.html" class="topic--author">
-                                            <span class="name">Diane H. Guzman</span>
-                                            <span class="avatar"><img src="img/topics-img/avatar-06.jpg" alt=""></span>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <button class="booking-btn btn btn-primary">Đặt lịch</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <h4 class="h6 fw--500 text-darkest"><a href="topic-replies.html" class="btn-link">Customising Kelly Theme post page</a></h4>
-
-                                        <div class="rate">
-                                            <input type="radio" id="star5" name="rate" value="5" disabled />
-                                            <label for="star5" title="text">5 stars</label>
-                                            <input type="radio" id="star4" name="rate" value="4" disabled />
-                                            <label for="star4" title="text">4 stars</label>
-                                            <input type="radio" id="star3" name="rate" value="3" disabled />
-                                            <label for="star3" title="text">3 stars</label>
-                                            <input type="radio" id="star2" name="rate" value="2" disabled />
-                                            <label for="star2" title="text">2 stars</label>
-                                            <input type="radio" id="star1" name="rate" value="1" disabled />
-                                            <label for="star1" title="text">1 star</label>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="ff--primary fw--500 fs--14 text-darkest d-flex-price">
-                                            <p>160.000</p>
-                                            <p>đ</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p>2 days, 5 hours ago</p>
-
-                                        <a href="member-activity-personal.html" class="topic--author">
-                                            <span class="name">Sara Mitchell</span>
-                                            <span class="avatar"><img src="img/topics-img/avatar-07.jpg" alt=""></span>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <button class="booking-btn btn btn-primary">Đặt lịch</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <h4 class="h6 fw--500 text-darkest"><a href="topic-replies.html" class="btn-link">Tagline Colour</a></h4>
-
-                                        <div class="rate">
-                                            <input type="radio" id="star5" name="rate" value="5" disabled />
-                                            <label for="star5" title="text">5 stars</label>
-                                            <input type="radio" id="star4" name="rate" value="4" disabled />
-                                            <label for="star4" title="text">4 stars</label>
-                                            <input type="radio" id="star3" name="rate" value="3" disabled />
-                                            <label for="star3" title="text">3 stars</label>
-                                            <input type="radio" id="star2" name="rate" value="2" disabled />
-                                            <label for="star2" title="text">2 stars</label>
-                                            <input type="radio" id="star1" name="rate" value="1" disabled />
-                                            <label for="star1" title="text">1 star</label>
-                                        </div>
-                                        <p class="count-rate">(150)</p>
-                                    </td>
-                                    <td>
-                                        <div class="ff--primary fw--500 fs--14 text-darkest d-flex-price">
-                                            <p>160.000</p>
-                                            <p>đ</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p>2 days, 5 hours ago</p>
-
-                                        <a href="member-activity-personal.html" class="topic--author">
-                                            <span class="name">Zachary West</span>
-                                            <span class="avatar"><img src="img/topics-img/avatar-08.jpg" alt=""></span>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <button class="booking-btn btn btn-primary">Đặt lịch</button>
-                                    </td>
-                                </tr>
+                                            <a href="member-activity-personal.html" class="topic--author">
+                                                <span class="name">@account.FullName</span>
+                                                <span class="avatar"><img src="@account.Avatar" alt=""></span>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <button class="booking-btn btn btn-primary">Đặt lịch</button>
+                                        </td>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </div>
@@ -319,13 +75,23 @@
                     <!-- Page Count Start -->
                     <div class="page--count pt--30">
                         <label class="ff--primary fs--14 fw--500 text-darker">
-                            <span>Hiển thị 8 dịch vụ - 1 trong 8</span>
+                            <span>Hiển thị @Model.ServiceList.Count() dịch vụ - @Model.CurrentPage trong @Model.TotalPages</span>
 
-                            <a href="#" class="btn-link"><i class="fa fa-caret-left"></i></a>
-                            <input type="number" name="page-count" value="01" class="form-control form-sm">
-                            <a href="#" class="btn-link"><i class="fa fa-caret-right"></i></a>
+                            @if (Model.CurrentPage > 1)
+                            {
+                                <a asp-page="/Service/ListServices" asp-page-handler="Pagination" asp-route-p="@(Model.CurrentPage - 1)" class="btn-link previous-page">
+                                    <i class="fa fa-caret-left"></i>
+                                </a>
+                            }
+                            <input type="number" name="page-count" value="@Model.CurrentPage" class="form-control form-sm" readonly>
+                            @if (Model.CurrentPage < Model.TotalPages)
+                            {
+                                <a asp-page="/Service/ListServices" asp-page-handler="Pagination" asp-route-p="@(Model.CurrentPage + 1)" class="btn-link previous-page">
+                                    <i class="fa fa-caret-right"></i>
+                                </a>
+                            }
 
-                            <span>08</span>
+                            <span>@Model.TotalPages</span>
                         </label>
                     </div>
                     <!-- Page Count End -->

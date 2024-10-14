@@ -9,6 +9,8 @@ public partial class Account
 
     public int RoleId { get; set; }
 
+    public string? FacebookId { get; set; }
+
     public string Username { get; set; } = null!;
 
     public string Password { get; set; } = null!;
@@ -31,7 +33,7 @@ public partial class Account
 
     public string? Major { get; set; }
 
-    public string? Address { get; set; } = null!;
+    public string Address { get; set; } = null!;
 
     public bool? IsDeleted { get; set; }
 
