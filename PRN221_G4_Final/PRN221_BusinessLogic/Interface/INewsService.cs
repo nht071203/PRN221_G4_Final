@@ -10,5 +10,12 @@ namespace PRN221_BusinessLogic.Interface
     public interface INewsService
     {
         Task<IEnumerable<News>> GetAllNews();
+
+        Task<News> GetByIdNews(int id);
+        Task AddNews(News item);
+        Task UpdateNews(News item);
+        Task DeleteNews(int id);
+        Task<CategoryNews> GetCategoryNewsById(int id);
+
     }
 }

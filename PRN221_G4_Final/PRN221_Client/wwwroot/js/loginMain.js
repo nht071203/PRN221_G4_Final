@@ -21,9 +21,9 @@ pwShowHide.forEach(eyeIcon => {
 });
 
 // Add click event listener to each link to toggle between forms
-links.forEach(link => {
-    link.addEventListener("click", e => {
-        e.preventDefault(); // Prevent default link behavior
-        forms.classList.toggle("show-signup");
-    });
-});
+//links.forEach(link => {
+//    link.addEventListener("click", e => {
+//        e.preventDefault(); // Prevent default link behavior
+//        forms.classList.toggle("show-signup");
+//    });
+//});
