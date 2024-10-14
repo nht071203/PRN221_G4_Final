@@ -45,6 +45,11 @@ namespace PRN221_DataAccess.DAOs
             return item;
         }
 
+        public async Task<IEnumerable<CategoryNews>> GetAllCategoryNews()
+        {
+            return await _context.CategoryNews.ToListAsync();
+        }
+
         public async Task Add(News item)
         {
             _context.News.Add(item);
@@ -87,8 +92,7 @@ namespace PRN221_DataAccess.DAOs
             return result.Select(item => (item.Month, item.Count));
         }
 
-
-
+        
 
     }
 }
