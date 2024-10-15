@@ -28,10 +28,8 @@ header {
     padding: 10px;
 }
 header .logo {
-    height: 100%;
-    width: 4%;
-    border-radius: 50%;
-    overflow: hidden;
+    height: 80px;
+    width: auto;
 }
 
 main {
