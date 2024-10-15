@@ -4,10 +4,12 @@ using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PRN221_BusinessLogic.Interface;
+using PRN221_Client.Hashing;
 using PRN221_Models.Models;
 using System.Data;
 using System.Security.Claims;
 using System.Security.Policy;
+using System.Text;
 
 namespace PRN221_Client.Pages.Access
 {
@@ -76,17 +78,12 @@ namespace PRN221_Client.Pages.Access
             return RedirectToPage("/Index");
         }
 
-        public IActionResult OnPostLoginWithGoogle()
+        public async Task<IActionResult> OnGetGoogleLogin()
         {
-            var properties = new AuthenticationProperties
-            {
-                RedirectUri = Url.Page("/Access/Login/OnGetGoogleResponse")
-            };
-
-            return Challenge(properties, GoogleDefaults.AuthenticationScheme);
+            var redirectUrl = Url.Page("/Access/Login", pageHandler: "GoogleResponse");
+            var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
+            return new ChallengeResult(GoogleDefaults.AuthenticationScheme, properties);
         }
-
-
         public async Task<IActionResult> OnGetGoogleResponse()
         {
             Console.WriteLine("OnGetGoogleResponse called.");
@@ -110,8 +107,28 @@ namespace PRN221_Client.Pages.Access
             var account = await _accountService.GetAccountByEmail(email);
             if (account == null)
             {
-                Console.WriteLine("Account not found for email: " + email);
-                return RedirectToPage("/Access/OptionsRole");
+                Account acc = new Account
+                {
+                    RoleId = 1,
+                    Username = email,
+                    Password = PasswordHashing.HashPasswordMD5(PasswordHashing.RandomPassword(32)),
+                    FullName = fullName,
+                    Email = email,
+                    EmailConfirmed = 1,
+                    Phone = null,
+                    PhoneConfirmed = 0,
+                    Gender = "N/A",
+                    DegreeUrl = null,
+                    Avatar = null,
+                    Major = null,
+                    Address = "N/A",
+                    IsDeleted = false,
+                    Otp = null,
+                    FacebookId = null,
+                };
+
+                await _accountService.AddAccount(acc);
+                return RedirectToPage("/Index");
             }
 
             var claims = new List<Claim>
