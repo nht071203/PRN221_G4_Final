@@ -14,6 +14,7 @@ namespace PRN221_Repository.AccountRepo
         Task<Account?> GetAccountByEmail(string email);
         Task<IEnumerable<Account>> GetListAccByRoleId(int id);
         Task<Account> GetById(int id);
+        Task<Account> GetByFbId(string id);
         Task<Account> Add(Account item);
         Task Update(Account item);
         Task Delete(int id);

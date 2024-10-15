@@ -1,4 +1,5 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Facebook;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.EntityFrameworkCore;
 using PRN221_BusinessLogic.Interface;
@@ -33,6 +34,7 @@ builder.Services.AddAuthentication(options =>
 {
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = FacebookDefaults.AuthenticationScheme;
 }).
 AddCookie().
 AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
@@ -41,7 +43,23 @@ AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
     options.ClientSecret = builder.Configuration.GetSection("GoogleKeys:ClientSecret").Value;
     options.CallbackPath = "/signin-google";
     options.Scope.Add("profile");
-});
+})
+.AddFacebook(options =>
+ {
+     options.AppId = builder.Configuration["Facebook:AppId"];
+     options.AppSecret = builder.Configuration["Facebook:AppSecret"];
+     options.SaveTokens = true;
+     options.CallbackPath = builder.Configuration["Facebook:CallbackPath"];
+
+     // Thêm quyền và trường để yêu cầu từ Facebook
+     options.Scope.Add("public_profile");
+     options.Fields.Add("id");       // Facebook ID
+     options.Fields.Add("name");     // Name
+     options.Fields.Add("email");    // Email
+     options.Fields.Add("picture");  // Avatar (Profile Picture)
+ });
+
+
 
 builder.Services.AddSession(options =>
 {

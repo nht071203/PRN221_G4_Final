@@ -46,5 +46,34 @@ namespace PRN221_BusinessLogic.Service
         {
             return await _accountRepo.GetAccountByEmail(email);
         }
+        public async Task<Account> GetByIdFacebook(string fbId)
+        {
+            return await _accountRepo.GetByFbId(fbId);
+        }
+        public async Task CreateNewFacebookAccount(string fbId, string name, string email, string avatar)
+        {
+            Account newAcc = new Account
+            {
+                AccountId = 0,
+                RoleId = 1,
+                FacebookId = fbId,
+                Username = name,
+                Password = "1", 
+                FullName = name,
+                Email = email,
+                EmailConfirmed = 1,
+                Phone = null,
+                PhoneConfirmed = 0,
+                Gender = "none",
+                DegreeUrl = null,
+                Avatar = avatar,
+                Major = null,
+                Address = null,
+                IsDeleted = false,
+                Otp = null
+            };
+
+            await _accountRepo.Add(newAcc);
+        }
     }
 }
