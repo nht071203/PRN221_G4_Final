@@ -76,6 +76,9 @@ builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
 builder.Services.AddScoped<ServiceDAO>();
 builder.Services.AddScoped<Service>();
 
+builder.Services.AddScoped<IImageService, ImageService>();
+builder.Services.AddScoped<FirebaseConfig>();
+
 builder.Services.AddSession();
 builder.Services.AddDistributedMemoryCache(); // For storing session data in memory
 builder.Services.AddHttpContextAccessor();
