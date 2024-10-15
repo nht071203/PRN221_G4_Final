@@ -564,7 +564,7 @@
                                  data-src="https://gitiho.com/frontend/img/gitiho_v2/icon/icon-custom-3.svg" />
                             <div class="detail-cou-label">
                                 <span class="text-white">Người đăng ký</span><br />
-                                <span class="text-white">76,312</span>
+                                <span class="text-white">@Model.CountBookingService</span>
                             </div>
                         </li>
                     </ul>
@@ -759,10 +759,10 @@
                             <div class="px-3 text-center" style="min-width: 30%">
                                 <p class="f-24">
                                     <i class="fas fa-star mr-2" style="color: #F2C94C"></i>
-                                    <strong>4.8/5</strong>
+                                    <strong>@Model.ServiceDetail.AverageRating/5</strong>
                                 </p>
                                 <p class="f-16">
-                                    <strong>97</strong> Đánh giá và nhận xét
+                                    <strong>@Model.ServiceDetail.RatingCount</strong> Đánh giá và nhận xét
                                 </p>
                             </div>
 
@@ -928,49 +928,46 @@
 
 
                         <div class="list_reviews">
-                            <div class="border p-3 mb-2">
-                                <div class="d-flex mb-2">
-                                    <img src="../frontend/img/gitiho_v2/placehover_18x18.png"
-                                         alt="" data-src="../caches/ua_small/users/1615037654.jpg"
-                                         class="my-auto rounded-circle lazyload mr-3" width="36px"
-                                         height="36px" />
-                                    <div class="user-right-new">
-                                        <p class="mb-0 f-16 user-name color_label fw-700">
-                                            <a target="_blank"
-                                               href="https://gitiho.com/u/79716-lam-phuong-chi">
-                                                Lâm Phượng
-                                                Chi
-                                            </a>
-                                        </p>
-                                        <div class="d-flex">
-                                            <div class="cou-rating mr-3">
-                                                <div class="gen-star">
-                                                    <div class="stars">
-                                                        <div class="stars-content">
-                                                            <div class="fas fa-star star-on"
-                                                                 style="width: 92px"></div>
-                                                            <div class="fas fa-star star-off"></div>
+                            @foreach(var ratingList in Model.ServiceRatingList){
+                                <div class="border p-3 mb-2">
+                                    <div class="d-flex mb-2">
+                                        <img src="../frontend/img/gitiho_v2/placehover_18x18.png"
+                                             alt="" data-src="../caches/ua_small/users/1615037654.jpg"
+                                             class="my-auto rounded-circle lazyload mr-3" width="36px"
+                                             height="36px" />
+                                        <div class="user-right-new">
+                                            <p class="mb-0 f-16 user-name color_label fw-700">
+                                                <a target="_blank"
+                                                   href="https://gitiho.com/u/79716-lam-phuong-chi">
+                                                    @ratingList.UserId
+                                                </a>
+                                            </p>
+                                            <div class="d-flex">
+                                                <div class="cou-rating mr-3">
+                                                    <div class="gen-star">
+                                                        <div class="stars">
+                                                            <div class="stars-content">
+                                                                <div class="fas fa-star star-on"
+                                                                     style="width: 92px"></div>
+                                                                <div class="fas fa-star star-off"></div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <p class="mb-0 color_text2">@ratingList.RatedAt</p>
                                             </div>
-                                            <p class="mb-0 color_text2">10:22 12/01/2023</p>
                                         </div>
+
+                                    </div>
+                                    <div class="f-16" style="word-break: break-word">
+                                        @ratingList.Comment
                                     </div>
 
+                                    <div class="mt-2">
+                                    </div>
                                 </div>
-                                <div class="f-16" style="word-break: break-word">
-                                    Đã từng mua khóa học tại website khác nhưng học buồn ngủ vì dạy quá nhiều về
-                                    lý thuyết từ chuyên ngành, học không nổi, còn giáo án ở Gitiho thì phù hợp
-                                    ứng dụng thực tế, có bài tập làm xuyên suốt khóa, kèm đáp án. Thầy có tốc độ
-                                    dạy vừa phải giọng đọc truyền tải tốt. Đây là khóa học nên mua với các bạn
-                                    cần bắt đầu tìm hiểu lại từ con số 0 excel.
-                                </div>
-
-                                <div class="mt-2">
-                                </div>
-                            </div>
-                            <div class="border p-3 mb-2">
+                            }
+                            @* <div class="border p-3 mb-2">
                                 <div class="d-flex mb-2">
                                     <img src="../frontend/img/gitiho_v2/placehover_18x18.png" alt=""
                                          data-src="../images/avatar/folder_89/bui-lan.png"
@@ -1124,7 +1121,7 @@
                                     từng loại cần được mô tả giải thích để học viên biết lý do tại sao cần công
                                     thức này khi áp dụng
                                 </div>
-                            </div>
+                            </div> *@
                         </div>
 
                         <div class="m-auto btn--more-review" style="max-width: 200px">

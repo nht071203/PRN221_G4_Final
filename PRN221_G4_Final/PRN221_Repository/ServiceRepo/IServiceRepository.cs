@@ -13,5 +13,7 @@ namespace PRN221_Repository.ServiceRepo
         Task<Service> GetById(int id);
         Task<IEnumerable<Service>> GetServicesPaged(int pageNumber, int pageSize);
         Task<int> GetTotalServicesCount();
+        Task<int> CountServicecConfirm(int id);
+        Task<IEnumerable<ServiceRating>> GetAllRatingByServiceId(int id);
     }
 }

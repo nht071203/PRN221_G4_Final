@@ -15,6 +15,8 @@ namespace PRN221_Client.Pages.Service
             _accountService = accountService;
         }
         public PRN221_Models.Models.Service ServiceDetail { get; set; }
+        public IEnumerable<ServiceRating> ServiceRatingList { get; set; }
+        public int CountBookingService { get; set; }
         public Account CreatorService {  get; set; }
         public async Task OnGet(int id)
         {
@@ -25,6 +27,10 @@ namespace PRN221_Client.Pages.Service
 
             ServiceDetail = await _requirementServices.GetServiceById(id);
             CreatorService = await _accountService.GetByIdAccount(ServiceDetail.CreatorId);
+            CountBookingService = await _requirementServices.CountServicecConfirm(ServiceDetail.ServiceId);
+            ServiceRatingList = await _requirementServices.GetAllRatingByServiceId(ServiceDetail.ServiceId);
+
+            Console.WriteLine(CountBookingService);
 
             if (ServiceDetail == null)
             {
