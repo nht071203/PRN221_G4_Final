@@ -39,6 +39,7 @@ namespace PRN221_Client.Pages.Access
                 Phone = this.PhoneNumber,
                 Username = this.Username,
                 Password = this.Password,
+                Email = "Unknown",
                 RoleId = 1,
                 IsDeleted = false
             };
