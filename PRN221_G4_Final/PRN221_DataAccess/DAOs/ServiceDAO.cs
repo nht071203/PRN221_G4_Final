@@ -37,5 +37,17 @@ namespace PRN221_DataAccess.DAOs
         {
             return await _context.Services.CountAsync(s => s.IsDeleted == false);
         }
+
+        // Đếm tổng số dịch vụ đã được sử dụng
+        public async Task<int> CountServicecConfirm(int id)
+        {
+            return await _context.BookingServices.Where(b => b.ServiceId == id && b.BookingStatus.Equals("confirmed")).CountAsync();
+        }
+
+        // Lấy danh sách đánh giá của 1 dịch vụ
+        public async Task<IEnumerable<ServiceRating>> GetAllRatingByServiceId(int id)
+        {
+            return await _context.ServiceRatings.Where(sr => sr.ServiceId == id).ToListAsync();
+        }
     }
 }

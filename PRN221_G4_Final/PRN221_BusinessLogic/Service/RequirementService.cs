@@ -1,4 +1,6 @@
 ﻿using PRN221_BusinessLogic.Interface;
+using PRN221_DataAccess.DAOs;
+using PRN221_Models.Models;
 using PRN221_Repository.ServiceRepo;
 using System;
 using System.Collections.Generic;
@@ -30,6 +32,14 @@ namespace PRN221_BusinessLogic.Service
         public async Task<int> GetTotalServicesCount()
         {
             return await _requirementService.GetTotalServicesCount();
+        }
+        public async Task<int> CountServicecConfirm(int id)
+        {
+            return await _requirementService.CountServicecConfirm(id);
+        }
+        public async Task<IEnumerable<ServiceRating>> GetAllRatingByServiceId(int id)
+        {
+            return await _requirementService.GetAllRatingByServiceId(id);
         }
     }
 }
