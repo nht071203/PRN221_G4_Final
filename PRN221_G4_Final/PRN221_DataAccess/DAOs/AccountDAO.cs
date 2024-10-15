@@ -69,5 +69,12 @@ namespace PRN221_DataAccess.DAOs
             _context.Accounts.Remove(item);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<Account> GetByFbId(string fbId)
+        {
+            var item = await _context.Accounts.FirstOrDefaultAsync(acc => acc.FacebookId.Equals(fbId));
+            if (item == null) return null;
+            return item;
+        }
     }
 }
