@@ -128,7 +128,7 @@ namespace PRN221_Client.Pages.Access
                 };
 
                 await _accountService.AddAccount(acc);
-                return RedirectToPage("./Index");
+                return RedirectToPage("/Index");
             }
 
             var claims = new List<Claim>
