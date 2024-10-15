@@ -74,17 +74,14 @@ namespace PRN221_DataAccess.DAOs
             await _context.SaveChangesAsync();
         }
 
-        //public async Task Delete(int id)
-        //{
-        //    var item = await GetById(id);
-        //    if (item == null) return;
 
-        //    _context.Accounts.Remove(item);
-        //    await _context.SaveChangesAsync();
-        //}
+   
+        public async Task<int> GetTotalFarmerCountAsync()
+        {
+            return await _context.Accounts.CountAsync(n => n.IsDeleted == false && n.RoleId == 1);
+        }
 
 
-       
 
     }
 }

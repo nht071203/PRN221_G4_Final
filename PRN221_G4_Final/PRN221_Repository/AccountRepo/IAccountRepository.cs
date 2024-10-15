@@ -17,5 +17,6 @@ namespace PRN221_Repository.AccountRepo
         Task Add(Account item);
         Task Update(Account item);
         Task Delete(Account item);
+        Task<int> GetTotalFarmerRepo();
     }
 }

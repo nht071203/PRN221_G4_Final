@@ -39,5 +39,10 @@ namespace PRN221_Repository.AccountRepo
         {
             return await _accountDAO.GetAccountByEmail(email);
         }
+
+            public async Task<int> GetTotalFarmerRepo()
+        {
+            return await _accountDAO.GetTotalFarmerCountAsync();
+        }
     }
 }

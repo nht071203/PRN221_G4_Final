@@ -51,5 +51,10 @@ namespace PRN221_BusinessLogic.Service
         {
             return await _accountRepo.GetAccountByEmail(email);
         }
+
+        public async Task<int> GetTotalFarmerService()
+        {
+            return await _accountRepo.GetTotalFarmerRepo();
+        }
     }
 }
