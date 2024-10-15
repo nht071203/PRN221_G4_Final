@@ -13,8 +13,13 @@ namespace PRN221_BusinessLogic.Interface
         Task<IEnumerable<Account>> GetListAllAccount();
         Task<IEnumerable<Account>> GetListAccountByRoleId(int role_id);
         Task<Account> GetByIdAccount(int id);
+
         Task<Account> GetByUsername(string username);
+
+        Task<Account> GetByIdFacebook(string fbId);
+
         Task AddAccount(Account item);
+        Task CreateNewFacebookAccount(string fbId, string name, string email, string avatar);
         Task UpdateAccount(Account item);
         Task DeleteAccount(Account item);
         Task<Account?> GetAccountByEmail(string email);

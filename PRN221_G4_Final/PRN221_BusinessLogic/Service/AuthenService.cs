@@ -48,6 +48,13 @@ namespace PRN221_BusinessLogic.Service
             return _httpContextAccessor;
         }
 
+        public async Task<Account?> Register(Account account)
+        {
+            if(account == null) return null;
+
+            return await _accountRepo.Add(account);
+        }
+
         private string HashPass32(string password)
         {
             using (var sha256 = SHA256.Create())
@@ -59,5 +66,7 @@ namespace PRN221_BusinessLogic.Service
                 return hashedString.Substring(0, 32);
             }
         }
+
+        
     }
 }

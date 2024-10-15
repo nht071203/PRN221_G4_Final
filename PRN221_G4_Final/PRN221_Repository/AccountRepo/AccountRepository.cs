@@ -31,7 +31,7 @@ namespace PRN221_Repository.AccountRepo
 
         public async Task<IEnumerable<Account>> GetListAccByRoleId(int role_id) => await _accountDAO.GetListAccountByRoleId(role_id);
         public async Task<Account> GetById(int id) => await _accountDAO.GetById(id);
-        public async Task Add(Account account) => await _accountDAO.Add(account);
+        public async Task<Account> Add(Account account) => await _accountDAO.Add(account);
         public async Task Update(Account account) => await _accountDAO.Update(account);
         public async Task Delete(Account account) => await _accountDAO.Delete(account);
 
@@ -40,9 +40,13 @@ namespace PRN221_Repository.AccountRepo
             return await _accountDAO.GetAccountByEmail(email);
         }
 
-            public async Task<int> GetTotalFarmerRepo()
+        public async Task<int> GetTotalFarmerRepo()
         {
             return await _accountDAO.GetTotalFarmerCountAsync();
+        }
+        public async Task<Account> GetByFbId(string fbId)
+        {
+            return await _accountDAO.GetByFbId(fbId);
         }
     }
 }

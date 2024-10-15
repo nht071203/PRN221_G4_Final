@@ -12,7 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Đăng Nhập </title>
-
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <!-- CSS -->
     <link rel="stylesheet" href="~/css/loginStyle.css">
 
@@ -61,26 +61,18 @@
             <div class="line"></div>
 
             <div class="media-options">
-                <a href="@Url.Page("./Login_test", "SignInFacebook")" class="field facebook">
+                <a href="@Url.Page("/Access/Login", "SignInFacebook")" class="field facebook">
                     <i class='bx bxl-facebook facebook-icon'></i>
                     <span>Đăng nhập bằng Facebook</span>
                 </a>
             </div>
-
+            
             <div class="media-options">
-                <form method="post" asp-page-handler="LoginWithGoogle" class="field google">
-                    <button>
-                        <img src="~/image/google.png" alt="" class="google-img">
-                        <span>Đăng nhập bằng Google</span>
-                    </button>
-                </form>
-            </div>
-            @* <div class="media-options">
-                <a asp-page-handler="OnPostLoginWithGoogle" class="field google">
+                <a href="@Url.Page("/Access/Login", "GoogleLogin")" class="field google">
                     <img src="~/image/google.png" alt="" class="google-img">
-                    <span>Đăng nhập bằng Google</span>
+                <span>Đăng nhập bằng Google</span>
                 </a>
-            </div> *@
+            </div>
         </div>
         <!-- Signup Form -->
 
@@ -114,7 +106,7 @@
             <div class="line"></div>
 
             <div class="media-options">
-                <a href="/Login_test/ExternalLogin?provider=Facebook" class="field facebook">
+                <a href="@Url.Page("./Access/Login", "SignInFacebook")" class="field facebook">
                     <i class='bx bxl-facebook facebook-icon'></i>
                     <span>Đăng nhập bằng Facebook</span>
                 </a>

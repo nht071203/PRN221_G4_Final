@@ -6279,19 +6279,20 @@ body.isScrolling #backToTop {
             }
 
 /* đánh giá sao */
-
+/* đánh giá sao */
 .rate {
     float: left;
     height: 30px;
+    display: flex; /* Use flexbox to arrange the stars */
 }
 
     .rate:not(:checked) > input {
         position: absolute;
-        top: -9999px;
+        top: -9999px; /* Hide the radio input */
     }
 
     .rate:not(:checked) > label {
-        float: right;
+        float: none;
         width: 1em;
         overflow: hidden;
         white-space: nowrap;
@@ -6302,20 +6303,16 @@ body.isScrolling #backToTop {
         .rate:not(:checked) > label:before {
             content: '★ ';
         }
-/* .rate > input:checked ~ label {
-    color: #ffc700;    
-} */
-/* .rate:not(:checked) > label:hover,
-.rate:not(:checked) > label:hover ~ label {
-    color: #deb217;  
-} */
-/* .rate > input:checked + label:hover,
-.rate > input:checked + label:hover ~ label,
-.rate > input:checked ~ label:hover,
-.rate > input:checked ~ label:hover ~ label,
-.rate > label:hover ~ input:checked ~ label {
-    color: #c59b08;
-} */
+
+/* Style for full and empty stars */
+.full-star {
+    color: #ffc700; /* Yellow star color */
+}
+
+.empty-star {
+    color: #ccc; /* Grey star color */
+}
+
 
 .count-rate {
     margin-top: 10px;
@@ -6331,7 +6328,7 @@ body.isScrolling #backToTop {
     border: none;
 }
 
-    .booking-btn:hover {
-        background-color: #ffffff;
-        color: #1da1f2;
-    }
+.booking-btn:hover {
+    background-color: #ffffff;
+    color: #1da1f2;
+}

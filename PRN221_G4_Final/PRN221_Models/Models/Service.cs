@@ -24,4 +24,8 @@ public partial class Service
     public bool? IsEnable { get; set; }
 
     public bool? IsDeleted { get; set; }
+
+    public decimal? AverageRating { get; set; }
+
+    public int? RatingCount { get; set; }
 }

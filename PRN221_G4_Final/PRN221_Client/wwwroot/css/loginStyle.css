@@ -30,9 +30,8 @@ header {
     padding: 10px;
 }
 header .logo {
-    height: 100%;
-    width: 4%;
-    border-radius: 50%;
+    height: 80px;
+    width: auto;
     overflow: hidden;
 }
 
@@ -181,7 +180,8 @@ form {
 a.facebook {
     color: #fff;
     background: #4267b2;
-    //background: linear-gradient(5deg, #fff 10%, #4267b2 80%);
+    /*background: linear-gradient(5deg, #fff 10%, #4267b2 80%);*/
+    cursor: pointer;
 }
 
 a.facebook .facebook-icon {

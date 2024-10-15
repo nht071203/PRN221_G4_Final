@@ -23,7 +23,7 @@ public partial class Account
 
     public int? PhoneConfirmed { get; set; }
 
-    public string Gender { get; set; } = null!;
+    public string? Gender { get; set; }
 
     public string? DegreeUrl { get; set; }
 
@@ -31,9 +31,11 @@ public partial class Account
 
     public string? Major { get; set; }
 
-    public string Address { get; set; } = null!;
+    public string? Address { get; set; }
 
     public bool? IsDeleted { get; set; }
 
     public int? Otp { get; set; }
+
+    public string? FacebookId { get; set; }
 }

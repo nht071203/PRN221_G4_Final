@@ -1,7 +1,10 @@
 ﻿@page
 @model IndexModel
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
 @{
     ViewData["Title"] = "Home page";
+    var isLoggedIn = HttpContextAccessor.HttpContext.Session.GetString("UserSession") != null;
 }
 
 <!-- Page Wrapper Start -->
@@ -44,9 +47,21 @@
                                                 <img src="img/activity-img/profile-pic-01.jpg" alt="">
                                             </div>
                                         </div>
-                                        <div class="activity--action fw--700">
-                                            <a href="#">See More...</a>
-                                        </div>
+
+                                        @* KHI KHONG LOGIN THI KHÔNG XEM ĐƯỢC CHI TIẾT *@
+                                        @if (!isLoggedIn)
+                                        {
+                                            <div class="activity--action fw--700">
+                                                <a href="/Access/Login">See More...</a>
+                                            </div>
+                                        } else
+                                        {
+                                            @* KHI LOGIN ROI THI XEM DUOC *@
+                                            <div class="activity--action fw--700">
+                                                <a href="#">See More...</a>
+                                            </div>
+                                        }   
+
                                     </div>
                                 </div>
                                 <!-- Activity Item End -->
@@ -75,9 +90,22 @@
                                             <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration  If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything.</p>
                                         </div>
 
-                                        <div class="activity--action fw--700">
-                                            <a href="#">See More...</a>
-                                        </div>
+
+                                        @* KHI KHONG LOGIN THI KHÔNG XEM ĐƯỢC CHI TIẾT *@
+                                        @if (!isLoggedIn)
+                                        {
+                                            <div class="activity--action fw--700">
+                                                <a href="/Access/Login">See More...</a>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            @* KHI LOGIN ROI THI XEM DUOC *@
+                                            <div class="activity--action fw--700">
+                                                <a href="#">See More...</a>
+                                            </div>
+                                        }
+
                                     </div>
                                 </div>
                                 <!-- Activity Item End -->
@@ -125,9 +153,22 @@
                                                 </div>
                                             </div>
 
-                                            <div class="activity--action fw--700">
-                                                <a href="#">See More...</a>
-                                            </div>
+
+                                            @* KHI KHONG LOGIN THI KHÔNG XEM ĐƯỢC CHI TIẾT *@
+                                            @if (!isLoggedIn)
+                                            {
+                                                <div class="activity--action fw--700">
+                                                    <a href="/Access/Login">See More...</a>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                @* KHI LOGIN ROI THI XEM DUOC *@
+                                                <div class="activity--action fw--700">
+                                                    <a href="#">See More...</a>
+                                                </div>
+                                            }
+
                                         </div>
                                     </div>
                                 </div>
@@ -180,9 +221,22 @@
                                                 </ul>
                                             </div>
 
-                                            <div class="activity--action fw--700">
-                                                <a href="#">See More...</a>
-                                            </div>
+
+                                            @* KHI KHONG LOGIN THI KHÔNG XEM ĐƯỢC CHI TIẾT *@
+                                            @if (!isLoggedIn)
+                                            {
+                                                <div class="activity--action fw--700">
+                                                    <a href="/Access/Login">See More...</a>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                @* KHI LOGIN ROI THI XEM DUOC *@
+                                                <div class="activity--action fw--700">
+                                                    <a href="#">See More...</a>
+                                                </div>
+                                            }
+
                                         </div>
                                     </div>
                                 </div>

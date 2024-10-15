@@ -15,10 +15,6 @@ namespace PRN221_DataAccess.DAOs
             return await _context.Accounts.ToListAsync();
         }
 
-
-
-
-
         public async Task<Account?> getByUsername(string username)
         {
             var account = await _context.Accounts.SingleOrDefaultAsync(acc => acc.Username.Equals(username));
@@ -45,10 +41,11 @@ namespace PRN221_DataAccess.DAOs
             return item;
         }
 
-        public async Task Add(Account item)
+        public async Task<Account> Add(Account item)
         {
             _context.Accounts.Add(item);
             await _context.SaveChangesAsync();
+            return item;
         }
 
 
@@ -82,6 +79,14 @@ namespace PRN221_DataAccess.DAOs
         }
 
 
+
+
+        public async Task<Account> GetByFbId(string fbId)
+        {
+            var item = await _context.Accounts.FirstOrDefaultAsync(acc => acc.FacebookId.Equals(fbId));
+            if (item == null) return null;
+            return item;
+        }
 
     }
 }

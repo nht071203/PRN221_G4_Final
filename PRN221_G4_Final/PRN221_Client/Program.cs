@@ -1,13 +1,16 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Facebook;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.EntityFrameworkCore;
 using PRN221_BusinessLogic.Interface;
 using PRN221_BusinessLogic.Service;
 using PRN221_DataAccess;
 using PRN221_DataAccess.DAOs;
+using PRN221_Models.Models;
 using PRN221_Repository.AccountRepo;
 using PRN221_Repository.NewsRepo;
 using PRN221_Repository.RoleRepo;
+using PRN221_Repository.ServiceRepo;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +34,7 @@ builder.Services.AddAuthentication(options =>
 {
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = FacebookDefaults.AuthenticationScheme;
 }).
 AddCookie().
 AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
@@ -39,7 +43,23 @@ AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
     options.ClientSecret = builder.Configuration.GetSection("GoogleKeys:ClientSecret").Value;
     options.CallbackPath = "/signin-google";
     options.Scope.Add("profile");
-});
+})
+.AddFacebook(options =>
+ {
+     options.AppId = builder.Configuration["Facebook:AppId"];
+     options.AppSecret = builder.Configuration["Facebook:AppSecret"];
+     options.SaveTokens = true;
+     options.CallbackPath = builder.Configuration["Facebook:CallbackPath"];
+
+     // Thêm quyền và trường để yêu cầu từ Facebook
+     options.Scope.Add("public_profile");
+     options.Fields.Add("id");       // Facebook ID
+     options.Fields.Add("name");     // Name
+     options.Fields.Add("email");    // Email
+     options.Fields.Add("picture");  // Avatar (Profile Picture)
+ });
+
+
 
 builder.Services.AddSession(options =>
 {
@@ -55,7 +75,10 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IAuthenService, AuthenService>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<AccountDAO>();
-builder.Services.AddScoped<IAccountService, AccountService>();  
+builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<AccountService>();
+builder.Services.AddScoped<AccountRepository>();
+builder.Services.AddScoped<Account>();
 
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<RoleDAO>();
@@ -63,6 +86,16 @@ builder.Services.AddScoped<RoleDAO>();
 builder.Services.AddScoped<INewsService, NewsService>();
 builder.Services.AddScoped<INewsRepository, NewsRepository>();
 builder.Services.AddScoped<NewsDAO>();
+builder.Services.AddScoped<NewsService>();
+builder.Services.AddScoped<NewsRepository>();
+
+builder.Services.AddScoped<IRequirementService, RequirementService>();
+builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
+builder.Services.AddScoped<ServiceDAO>();
+builder.Services.AddScoped<Service>();
+
+builder.Services.AddScoped<IImageService, ImageService>();
+builder.Services.AddScoped<FirebaseConfig>();
 
 builder.Services.AddSession();
 builder.Services.AddDistributedMemoryCache(); // For storing session data in memory
