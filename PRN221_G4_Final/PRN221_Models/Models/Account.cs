@@ -33,7 +33,7 @@ public partial class Account
 
     public string? Major { get; set; }
 
-    public string Address { get; set; } = null!;
+    public string? Address { get; set; }
 
     public bool? IsDeleted { get; set; }
 

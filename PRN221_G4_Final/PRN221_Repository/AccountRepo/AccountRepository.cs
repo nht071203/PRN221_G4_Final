@@ -39,5 +39,9 @@ namespace PRN221_Repository.AccountRepo
         {
             return await _accountDAO.GetAccountByEmail(email);
         }
+        public async Task<Account> GetByFbId(string fbId)
+        {
+            return await _accountDAO.GetByFbId(fbId);
+        }
     }
 }
