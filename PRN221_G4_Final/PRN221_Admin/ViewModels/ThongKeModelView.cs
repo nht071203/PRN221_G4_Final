@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PRN221_Admin.ViewModels
 {
-   public class ThongKeModelView : BaseViewModel
+    public class ThongKeModelView : BaseViewModel
     {
         public NewsDAO newsDAO;
 
@@ -31,7 +31,8 @@ namespace PRN221_Admin.ViewModels
                 Title = "Posts"
             });
 
-            LoadData(); 
+
+            LoadData();
         }
 
 
@@ -52,11 +53,11 @@ namespace PRN221_Admin.ViewModels
 
             foreach (var item in newsCountByMonth)
             {
-                var month = DateTime.ParseExact(item.Month, "yyyy-MM", null).Month; 
-                lineSeries.Points.Add(new DataPoint(month, item.Count)); 
+                var month = DateTime.ParseExact(item.Month, "yyyy-MM", null).Month;
+                lineSeries.Points.Add(new DataPoint(month, item.Count));
             }
             PlotModel.Series.Add(lineSeries);
-            PlotModel.InvalidatePlot(true); 
+            PlotModel.InvalidatePlot(true);
         }
 
         private int _totalNewsCount; // Trường riêng để lưu tổng số lượng bài viết
