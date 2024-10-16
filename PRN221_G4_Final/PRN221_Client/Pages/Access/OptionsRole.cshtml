@@ -1,41 +1,24 @@
 ﻿@page "/Access/OptionsRole"
 @model PRN221_Client.Pages.Access.OptionsRoleModel
 @{
-    Layout = null;
+    Layout = "_LayoutAccess";
+    ViewData["Title"] = "Lựa chọn chức vụ";
 }
+<main>
+    <div class="container-role">
+        <h1>Bạn muốn tạo tài khoản cho?</h1>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="~/css/registerRole.css">
-    <script src="https://kit.fontawesome.com/1bd9fa3a2e.js" crossorigin="anonymous"></script>
-</head>
-<body>
-    <header>
-        <a href="#" class="logo">
-            <img src="~/image/logo.jpg" alt="">
-        </a>
-    </header>
-    <main>
-        <div class="container-role">
-            <h1>Bạn muốn tạo tài khoản cho?</h1>
-
-            <div class="option-role">
-                <a class="register-farmer" href="/Access/RegisterFarmer">
-                    Nông dân
-                </a>
-                <a class="register-expert" href="/Access/RegisterExpert">
-                    Chuyên gia
-                </a>
-            </div>
-
-            <div class="back-login">
-                <a href="/Access/Login"><i class="fa-regular fa-hand-point-left"></i> Trở về trang đăng nhập</a>
-            </div>
+        <div class="option-role">
+            <a class="register-farmer" href="/Access/RegisterFarmer">
+                Nông dân
+            </a>
+            <a class="register-expert" href="/Access/RegisterExpert">
+                Chuyên gia
+            </a>
         </div>
-    </main>
-</body>
-</html>
+
+        <div class="back-login">
+            <a href="/Access/Login"><i class="fa-regular fa-hand-point-left"></i> Trở về trang đăng nhập</a>
+        </div>
+    </div>
+</main>

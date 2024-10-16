@@ -1,200 +1,171 @@
 ﻿@page "/Access/RegisterExpert"
 @model PRN221_Client.Pages.Access.RegisterExpertModel
 @{
-    Layout = null;
+    Layout = "_LayoutAccess";
+    ViewData["Title"] = "Đăng ký";
 }
+<section class="h-100 h-custom gradient-custom-2 pt-3">
+    <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12">
 
-<!DOCTYPE html>
-<html lang="en">
+                <!-- CARD REGISTER -->
+                <form method="post" asp-page-handler="RegisterExpert" enctype="multipart/form-data" class="card-registration card-registration-2" style="border-radius: 15px;">
+                    <div class="card-body p-0">
+                        <div class="row g-0">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/register.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://kit.fontawesome.com/1bd9fa3a2e.js" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
-</head>
+                            <!-- LEFT FORM -->
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <h3 class="fw-normal mb-5">Thông tin cá nhân</h3>
 
-<body>
-    <header class="pt-5 d-flex w-100 justify-content-center">
-        <a href="/Index" class="logo">
-            <img src="~/image/logo.jpg" alt="">
-        </a>
-    </header>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4 pb-2">
 
-    <section class="h-100 h-custom gradient-custom-2">
-        <div class="container py-5 h-100">
-            <div class="row d-flex justify-content-center align-items-center h-100">
-                <div class="col-12">
-
-                    <!-- CARD REGISTER -->
-                    <form method="post" asp-page-handler="RegisterExpert" enctype="multipart/form-data" class="card-registration card-registration-2" style="border-radius: 15px;">
-                        <div class="card-body p-0">
-                            <div class="row g-0">
-
-                                <!-- LEFT FORM -->
-                                <div class="col-lg-6">
-                                    <div class="p-5">
-                                        <h3 class="fw-normal mb-5">Thông tin cá nhân</h3>
-
-                                        <div class="row">
-                                            <div class="col-md-12 mb-4 pb-2">
-
-                                                <div class="form-outline form-floating">
-                                                    <input type="text" id="floatingFullname" placeholder="Họ và tên"
-                                                           class="form-control fullname inputRegister" name="FullName" />
-                                                    <label for="floatingFullname">Họ và tên</label>
-                                                </div>
-
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-4 gender-field">
-                                            <label class="label-label" for="gender-options">Giới tính:</label>
-                                            <div class="gender-options" id="gender-options">
-                                                <div class="male-option">
-                                                    <input type="radio" id="male" name="Gender" value="male">
-                                                    <label for="male">Nam</label>
-                                                </div>
-                                                <div class="female-option">
-                                                    <input type="radio" id="female" name="Gender" value="female">
-                                                    <label for="female">Nữ</label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-4 pb-2">
                                             <div class="form-outline form-floating">
-                                                <textarea style="height: 100px" id="floatingAddress"
-                                                          class="address inputRegister form-control" name="Address"
-                                                          placeholder="Địa chỉ"></textarea>
-                                                <label for="floatingAddress">Địa chỉ</label>
+                                                <input type="text" id="floatingFullname" placeholder="Họ và tên"
+                                                       class="form-control fullname inputRegister" name="FullName" />
+                                                <label for="floatingFullname">Họ và tên</label>
                                             </div>
-                                        </div>
 
-                                        <div class="mb-4 pb-2">
-                                            <div class="form-outline form-floating">
-                                                <input type="text" placeholder="Nhập tên đăng nhập"
-                                                       id="floatingUsername" class="username inputRegister form-control"
-                                                       name="Username">
-                                                <label for="floatingUsername">Tên đăng nhập</label>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-6 mb-4 pb-2 mb-md-0 pb-md-0">
-
-                                                <div class="form-outline form-floating">
-                                                    <input type="password" placeholder="Tạo mật khẩu" id="floatingPass"
-                                                           class="password inputRegister form-control" name="Password">
-                                                    <label for="floatingPass">Mật khẩu</label>
-                                                </div>
-
-                                            </div>
-                                            <div class="col-md-6 mb-4 pb-2 mb-md-0 pb-md-0">
-
-                                                <div class="form-outline form-floating">
-                                                    <input type="password" placeholder="Xác nhận mật khẩu"
-                                                           id="floatingRepass" class="password form-control" name="Repassword">
-                                                    <label for="floatingRepass">Xác nhận mật khẩu</label>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                        <div class="back-login">
-                                            <a href="/Access/Login"><i class="fa-regular fa-hand-point-left"></i> Trở về trang đăng nhập</a>
                                         </div>
                                     </div>
 
-
-                                </div>
-                                <!-- END LEFT FORM -->
-                                <!-- RIGHT FORM  -->
-                                <div class="col-lg-6 text-black">
-                                    <div class="p-5">
-                                        <h3 class="fw-normal mb-5">Thông tin liên lạc</h3>
-
-                                        <div class="row">
-                                            <div class="col-md-3 mb-4 pb-2">
-
-                                                <div data-mdb-input-init class="form-outline form-white form-floating">
-                                                    <input type="text" id="codeNumberphone" placeholder="Code"
-                                                           class="form-control form-control-lg" readonly />
-                                                    <label class="form-label" for="codeNumberphone"> +84 </label>
-                                                </div>
-
+                                    <div class="mb-4 gender-field">
+                                        <label class="label-label" for="gender-options">Giới tính:</label>
+                                        <div class="gender-options" id="gender-options">
+                                            <div class="male-option">
+                                                <input type="radio" id="male" name="Gender" value="male">
+                                                <label for="male">Nam</label>
                                             </div>
-                                            <div class="col-md-9 mb-4 pb-2">
-
-                                                <div data-mdb-input-init class="form-outline form-white form-floating">
-                                                    <input type="text" placeholder="Nhập số điện thoại"
-                                                           id="floatingPhone"
-                                                           class="phonenumber inputRegister form-control"
-                                                           name="PhoneNumber">
-                                                    <label for="floatingPhone">Số điện thoại</label>
-                                                </div>
-
+                                            <div class="female-option">
+                                                <input type="radio" id="female" name="Gender" value="female">
+                                                <label for="female">Nữ</label>
                                             </div>
                                         </div>
+                                    </div>
 
-                                        <div class="mb-4 pb-2">
-                                            <div data-mdb-input-init class="form-outline form-white form-floating">
-                                                <input type="email" placeholder="Nhập email" id="floatingEmail"
-                                                       class="email inputRegister form-control" name="Email">
-                                                <label for="floatingEmail">Email</label>
+                                    <div class="mb-4 pb-2">
+                                        <div class="form-outline form-floating">
+                                            <textarea style="height: 100px" id="floatingAddress"
+                                                      class="address inputRegister form-control" name="Address"
+                                                      placeholder="Địa chỉ"></textarea>
+                                            <label for="floatingAddress">Địa chỉ</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-4 pb-2">
+                                        <div class="form-outline form-floating">
+                                            <input type="text" placeholder="Nhập tên đăng nhập"
+                                                   id="floatingUsername" class="username inputRegister form-control"
+                                                   name="Username">
+                                            <label for="floatingUsername">Tên đăng nhập</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4 pb-2 mb-md-0 pb-md-0">
+
+                                            <div class="form-outline form-floating">
+                                                <input type="password" placeholder="Tạo mật khẩu" id="floatingPass"
+                                                       class="password inputRegister form-control" name="Password">
+                                                <label for="floatingPass">Mật khẩu</label>
                                             </div>
-                                        </div>
 
-                                        <div class="mb-4 pb-2">
-                                            <div data-mdb-input-init class="form-outline form-white form-floating">
-                                                <input type="text" placeholder="Nhập chuyên ngành" id="floatingMajor"
-                                                       class="major inputRegister form-control" name="Major">
-                                                <label for="floatingMajor">Chuyên ngành</label>
+                                        </div>
+                                        <div class="col-md-6 mb-4 pb-2 mb-md-0 pb-md-0">
+
+                                            <div class="form-outline form-floating">
+                                                <input type="password" placeholder="Xác nhận mật khẩu"
+                                                       id="floatingRepass" class="password form-control" name="Repassword">
+                                                <label for="floatingRepass">Xác nhận mật khẩu</label>
                                             </div>
-                                        </div>
 
-                                        <div class="mb-4">
-                                            <div data-mdb-input-init class="form-outline form-white">
-                                                <input class="form-control" type="file" id="fileDegree" name="fileDegree">
-                                            </div>
                                         </div>
-
-                                        <div class="mb-4">
-                                            <div data-mdb-input-init class="form-outline form-white">
-                                                <input class="form-control" type="file" id="fileAvatar" name="fileAvatar">
-                                            </div>
-                                        </div>
-
-                                        <div class="field btn-register-expert">
-                                            <button type="submit" class="btn btn-lg mt-2"
-                                                    data-mdb-ripple-color="dark">
-                                                Đăng ký
-                                            </button>
-                                        </div>
-
+                                    </div>
+                                    <div class="back-login">
+                                        <a href="/Access/Login"><i class="fa-regular fa-hand-point-left"></i> Trở về trang đăng nhập</a>
                                     </div>
                                 </div>
-                                <!-- END RIGHT FORM  -->
+
 
                             </div>
+                            <!-- END LEFT FORM -->
+                            <!-- RIGHT FORM  -->
+                            <div class="col-lg-6 text-black">
+                                <div class="p-5">
+                                    <h3 class="fw-normal mb-5">Thông tin liên lạc</h3>
+
+                                    <div class="row">
+                                        <div class="col-md-3 mb-4 pb-2">
+
+                                            <div data-mdb-input-init class="form-outline form-white form-floating">
+                                                <input type="text" id="codeNumberphone" placeholder="Code"
+                                                       class="form-control form-control-lg" readonly />
+                                                <label class="form-label" for="codeNumberphone"> +84 </label>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-9 mb-4 pb-2">
+
+                                            <div data-mdb-input-init class="form-outline form-white form-floating">
+                                                <input type="text" placeholder="Nhập số điện thoại"
+                                                       id="floatingPhone"
+                                                       class="phonenumber inputRegister form-control"
+                                                       name="PhoneNumber">
+                                                <label for="floatingPhone">Số điện thoại</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-4 pb-2">
+                                        <div data-mdb-input-init class="form-outline form-white form-floating">
+                                            <input type="email" placeholder="Nhập email" id="floatingEmail"
+                                                   class="email inputRegister form-control" name="Email">
+                                            <label for="floatingEmail">Email</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-4 pb-2">
+                                        <div data-mdb-input-init class="form-outline form-white form-floating">
+                                            <input type="text" placeholder="Nhập chuyên ngành" id="floatingMajor"
+                                                   class="major inputRegister form-control" name="Major">
+                                            <label for="floatingMajor">Chuyên ngành</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <div data-mdb-input-init class="form-outline form-white">
+                                            <input class="form-control" type="file" id="fileDegree" name="fileDegree">
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <div data-mdb-input-init class="form-outline form-white">
+                                            <input class="form-control" type="file" id="fileAvatar" name="fileAvatar">
+                                        </div>
+                                    </div>
+
+                                    <div class="field btn-register-expert">
+                                        <button type="submit" class="btn btn-lg mt-2"
+                                                data-mdb-ripple-color="dark">
+                                            Đăng ký
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!-- END RIGHT FORM  -->
+
                         </div>
-                    </form>
+                    </div>
+                </form>
 
-                </div>
+            </div>
 
-                <div class="col-12">
-                </div>
+            <div class="col-12">
             </div>
         </div>
-    </section>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-            crossorigin="anonymous"></script>
-</body>
-
-</html>
+    </div>
+</section>
