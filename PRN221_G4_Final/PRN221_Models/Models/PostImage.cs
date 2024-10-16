@@ -9,7 +9,7 @@ public partial class PostImage
 
     public int PostId { get; set; }
 
-    public string ImageUrl { get; set; } = null!;
+    public string ImageUrl { get; set; }
 
     public bool? IsDeleted { get; set; }
 }

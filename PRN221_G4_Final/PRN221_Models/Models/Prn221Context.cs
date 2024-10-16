@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PRN221_Models.Models;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
-namespace PRN221_DataAccess;
+namespace PRN221_Models.Models;
 
 public partial class Prn221Context : DbContext
 {
