@@ -1,11 +1,4 @@
-﻿@using Microsoft.AspNetCore.Http;
-@inject IHttpContextAccessor HttpContextAccessor
-@inject PRN221_BusinessLogic.Interface.INewsService _newsService
-
-@{
-    IEnumerable<PRN221_Models.Models.CategoryNews> categories;
-    var isLoggedIn = HttpContextAccessor.HttpContext.Session.GetString("UserSession") != null;
-    categories = await _newsService.GetAllCategoryNews();
+﻿@{
 }
 
 <!DOCTYPE html>
