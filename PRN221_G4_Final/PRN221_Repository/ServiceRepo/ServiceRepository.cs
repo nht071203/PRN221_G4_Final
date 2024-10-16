@@ -31,5 +31,13 @@ namespace PRN221_Repository.ServiceRepo
         {
             return await serviceDAO.GetTotalServicesCount();
         }
+        public async Task<int> CountServicecConfirm(int id)
+        {
+            return await serviceDAO.CountServicecConfirm(id);
+        }
+        public async Task<IEnumerable<ServiceRating>> GetAllRatingByServiceId(int id)
+        {
+            return await serviceDAO.GetAllRatingByServiceId(id);
+        }
     }
 }

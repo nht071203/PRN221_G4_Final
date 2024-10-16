@@ -17,6 +17,7 @@ namespace PRN221_Client.Pages.Service
             _requirementServices = requirementService;
             _accountService = accountService;
         }
+        // Khai báo list chứa các dịch vụ
         public IEnumerable<PRN221_Models.Models.Service> ServiceList { get; set; }
 
         // Dictionary để lưu tài khoản của từng dịch vụ

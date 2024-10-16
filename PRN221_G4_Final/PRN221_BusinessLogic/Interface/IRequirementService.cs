@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PRN221_Models.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,5 +13,7 @@ namespace PRN221_BusinessLogic.Interface
         Task<PRN221_Models.Models.Service> GetServiceById(int id);
         Task<IEnumerable<PRN221_Models.Models.Service>> GetServicesPaged(int pageNumber, int pageSize);
         Task<int> GetTotalServicesCount();
+        Task<int> CountServicecConfirm(int id);
+        Task<IEnumerable<ServiceRating>> GetAllRatingByServiceId(int id);
     }
 }

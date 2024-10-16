@@ -27,7 +27,8 @@ namespace PRN221_BusinessLogic.Service
         }
         public async Task<Account> GetByIdAccount(int id)
         {
-            return await _accountRepo.GetById(id);
+            var getAcc = await _accountRepo.GetById(id);
+            return getAcc;
         }
 
         public async Task<Account> GetByUsername(string username)
