@@ -12,6 +12,7 @@ namespace PRN221_Repository.NewsRepo
     public class NewsRepository : INewsRepository
     {
         private readonly NewsDAO _newsDAO;
+        private readonly CategoryNewsDAO _categoryNewsDAO;
 
         public NewsRepository(NewsDAO newsDAO)
         {
@@ -31,12 +32,12 @@ namespace PRN221_Repository.NewsRepo
 
         public async Task<IEnumerable<News>> GetAllNewsByCategoryId(int categoryId) => await _newsDAO.GetAllNewsByCategoryId(categoryId);
 
-        public async Task<CategoryNews> GetCategoryNewsById(int id) => await _newsDAO.GetCategoryNewsById(id);
+        public async Task<CategoryNews> GetCategoryNewsById(int id) => await _categoryNewsDAO.GetCategoryNewsById(id);
 
         public async Task<int> GetTotalNewsRepo()
         {
             return await _newsDAO.GetTotalNewsCountAsync();
         }
-        public async Task<IEnumerable<CategoryNews>> GetAllCategoryNews() => await _newsDAO.GetAllCategoryNews();
+        public async Task<IEnumerable<CategoryNews>> GetAllCategoryNews() => await _categoryNewsDAO.GetAllCategoryNews();
     }
 }
