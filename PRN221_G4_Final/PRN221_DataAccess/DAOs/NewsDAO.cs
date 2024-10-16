@@ -67,20 +67,23 @@ namespace PRN221_DataAccess.DAOs
         public async Task<IEnumerable<(string Month, int Count)>> GetNewsCountByMonth()
         {
             var result = await _context.News
-                .Where(n => n.IsDeleted != true) // Lọc các bài viết không bị xóa
+                .Where(n => n.IsDeleted != true)
                 .GroupBy(n => new { n.CreatedAt.Year, n.CreatedAt.Month })
                 .Select(g => new
                 {
-                    Month = $"{g.Key.Year}-{g.Key.Month:D2}", // Định dạng năm-tháng
+                    Month = $"{g.Key.Year}-{g.Key.Month:D2}", 
                     Count = g.Count()
                 })
                 .ToListAsync();
 
-            // Chuyển đổi kết quả sang tuple
             return result.Select(item => (item.Month, item.Count));
         }
 
-
+        public async Task<int> GetTotalNewsCountAsync()
+        {
+            return await _context.News.CountAsync(n => n.IsDeleted == false);
+        }
+        
         public async Task<IEnumerable<News>> GetAllNewsByCategoryId(int categoryId)
         {
             return await _context.News.Where(n => n.CategoryNewsId == categoryId).ToListAsync();

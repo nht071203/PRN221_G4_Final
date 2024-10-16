@@ -16,7 +16,22 @@
     <!-- Boxicons CSS -->
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
 
-</head> *@
+
+</head>
+
+<body>
+    <header>
+        <a href="/" class="logo">
+            <img src="~/image/logo.jpg" alt="">
+        </a>
+    </header>
+
+    <section class="container forms">
+
+        <div class="form login">
+            <div class="form-content">
+                <h1 class="title-login">Đăng nhập</h1>
+
 
 <section class="container forms">
 
@@ -113,3 +128,17 @@
 </section>
 
 <!-- JavaScript -->
+                  <script src="~/js/loginMain.js"></script>
+    <script type="text/javascript">
+        if (window.location.hash === '#_=_') {
+            if (history.replaceState) {
+                var cleanUrl = window.location.href.split("#")[0];
+                history.replaceState(null, null, cleanUrl);
+            } else {
+                window.location.hash = '';
+            }
+        }
+    </script>
+</body>
+
+</html>

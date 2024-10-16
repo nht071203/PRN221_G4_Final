@@ -1,4 +1,5 @@
-﻿using PRN221_DataAccess.DAOs;
+﻿using Microsoft.EntityFrameworkCore;
+using PRN221_DataAccess.DAOs;
 using PRN221_Models.Models;
 using System;
 using System.Collections.Generic;
@@ -29,5 +30,13 @@ namespace PRN221_Repository.NewsRepo
         public async Task Delete(int id) => await _newsDAO.Delete(id);
 
         public async Task<IEnumerable<News>> GetAllNewsByCategoryId(int categoryId) => await _newsDAO.GetAllNewsByCategoryId(categoryId);
+
+        public async Task<CategoryNews> GetCategoryNewsById(int id) => await _newsDAO.GetCategoryNewsById(id);
+
+        public async Task<int> GetTotalNewsRepo()
+        {
+            return await _newsDAO.GetTotalNewsCountAsync();
+        }
+        public async Task<IEnumerable<CategoryNews>> GetAllCategoryNews() => await _newsDAO.GetAllCategoryNews();
     }
 }

@@ -18,5 +18,6 @@ namespace PRN221_BusinessLogic.Interface
         Task<CategoryNews> GetCategoryNewsById(int id);
         Task<IEnumerable<News>> GetAllNewsByCategoryId(int categoryId);
         Task<IEnumerable<CategoryNews>> GetCategoriesHaveNews();
+        Task<int> GetTotalNewsService();
     }
 }
