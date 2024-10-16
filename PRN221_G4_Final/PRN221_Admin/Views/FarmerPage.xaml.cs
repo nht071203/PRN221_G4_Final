@@ -21,19 +21,10 @@ namespace PRN221_Admin.Views
     /// </summary>
     public partial class FarmerPage : Page
     {
-        private readonly FarmerModelView _viewModel;
         public FarmerPage(FarmerModelView viewModel)
         {
             InitializeComponent();
-            _viewModel = viewModel;
-            DataContext = _viewModel;
-
-        }
-        public FarmerPage()
-        {
-            InitializeComponent();
-            this.DataContext = new FarmerModelView();
+            DataContext = viewModel;
         }
     }
 }
-    

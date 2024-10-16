@@ -1,195 +1,43 @@
-﻿//using PRN221_BusinessLogic.Interface;
-//using PRN221_Models.Models;
-//using System;
-//using System.Collections.Generic;
-//using System.Collections.ObjectModel;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-//using System.Windows;
-////using System.Windows.Forms;
-//using System.Windows.Input;
-//namespace PRN221_Admin.ViewModels
-//{
-//   public class FarmerModelView : BaseViewModel
-//    {
-//        public FarmerModelView() { }
-
-//        private readonly IAccountService accountService;
-//        public ObservableCollection<Account> Farmer { get; set; } = new ObservableCollection<Account>();
-//        public async Task LoadFarmers()
-//        {
-//            var members = await accountService.GetListAccountByRoleId(1);
-//            Farmer.Clear();
-//            foreach (var member in members)
-//            {
-
-//                Farmer.Add(member);
-//            }
-//        }
-
-//        public ICommand AddFarmerCommand { get; set; }
-//        public ICommand DeleteFarmerBtn { get; set; }
-
-//        public FarmerModelView(IAccountService accountService)
-//        {
-//            Farmer = new ObservableCollection<Account>();
-//            this.accountService = accountService;
-//            _ = LoadFarmers();
-
-//            DeleteFarmerBtn = new RelayCommand(async (obj) => await DeleteMember(obj), CanExecute);
-//        }
-
-//        private Account _selectedFarmer;
-//        public Account SelectedFarmer
-//        {
-//            get => _selectedFarmer;
-//            set
-//            {
-//                _selectedFarmer = value;
-//                OnPropertyChanged(nameof(SelectedFarmer));
-//                OnPropertyChanged(nameof(IsMale));
-//                OnPropertyChanged(nameof(IsFemale));
-//            }
-//        }
-
-
-//        public bool IsMale
-//        {
-//            get => SelectedFarmer != null && SelectedFarmer.Gender == "Male";
-//            set
-//            {
-//                if (SelectedFarmer != null)
-//                {
-//                    SelectedFarmer.Gender = value ? "Male" : SelectedFarmer.Gender;
-//                    OnPropertyChanged(nameof(IsMale));
-//                    OnPropertyChanged(nameof(IsFemale));
-//                }
-//            }
-//        }
-
-//        public bool IsFemale
-//        {
-//            get => SelectedFarmer != null && SelectedFarmer.Gender == "Female";
-//            set
-//            {
-//                if (SelectedFarmer != null)
-//                {
-//                    SelectedFarmer.Gender = value ? "Female" : SelectedFarmer.Gender;
-//                    OnPropertyChanged(nameof(IsMale));
-//                    OnPropertyChanged(nameof(IsFemale));
-//                }
-//            }
-//        }
-//        private bool CanExecute(object obj)
-//        {
-//            return SelectedFarmer != null;
-//        }
-
-
-//        public async Task UpdateMember(object obj)
-//        {
-//            try
-//            {
-//                var existingMember = await accountService.GetByIdAccount(SelectedFarmer.AccountId);
-
-//                if (existingMember == null)
-//                {
-//                    System.Windows.MessageBox.Show("Can not find farmer.", "Notification", MessageBoxButton.OK, MessageBoxImage.Warning);
-//                    return;
-//                }
-
-//                var result = System.Windows.MessageBox.Show("Are you sure?", "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-//                if (result == MessageBoxResult.Yes)
-//                {
-//                    //existingMember.IsDeleted = true;
-//                    await accountService.DeleteAccount(existingMember);
-//                    await LoadFarmers();
-//                    System.Windows.MessageBox.Show("Delete successful!", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
-//                }
-//                else
-//                {
-//                    System.Windows.MessageBox.Show("Cancel delete action.", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
-//                }
-//            }
-//            catch (Exception ex)
-//            {
-//                System.Windows.MessageBox.Show("Delete fail", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-//            }
-//        }
-
-//        public async Task DeleteMember(object obj)
-//        {
-//            try
-//            {
-//                var existingMember = await accountService.GetByIdAccount(SelectedFarmer.AccountId);
-
-//                if (existingMember == null)
-//                {
-//                    System.Windows.MessageBox.Show("Can not find farmer.", "Notification", MessageBoxButton.OK, MessageBoxImage.Warning);
-//                    return;
-//                }
-
-//                var result = System.Windows.MessageBox.Show("Are you sure?", "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-//                if (result == MessageBoxResult.Yes)
-//                {
-//                    existingMember.IsDeleted = true;
-//                    await accountService.DeleteAccount(existingMember);
-//                    await LoadFarmers();
-//                    System.Windows.MessageBox.Show("Delete successful!", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
-//                }
-//                else
-//                {
-//                    System.Windows.MessageBox.Show("Cancel delete action.", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
-//                }
-//            }
-//            catch (Exception ex)
-//            {
-//                System.Windows.MessageBox.Show("Delete fail", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-//            }
-//        }
-
-
-
-//    }
-//}
-
-
-
-
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
+﻿using Microsoft.Identity.Client;
 using PRN221_BusinessLogic.Interface;
+using PRN221_BusinessLogic.Service;
 using PRN221_Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-//using System.Windows.Forms;
 using System.Windows.Input;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+
+
 namespace PRN221_Admin.ViewModels
 {
     public class FarmerModelView : BaseViewModel
     {
-        public FarmerModelView() { }
+
+        private ObservableCollection<Account> _expert;
+
+        private Account _selectedExpert;
 
         private readonly IAccountService accountService;
-        public ObservableCollection<Account> Farmer { get; set; } = new ObservableCollection<Account>();
-        public async Task LoadFarmers()
-        {
-            var members = await accountService.GetListAccountByRoleId(1);
-            Farmer.Clear();
-            foreach (var member in members)
-            {
+        //public ObservableCollection<Account> Accounts { get; set; } = new ObservableCollection<Account>();
 
-                Farmer.Add(member);
+        public ObservableCollection<Account> Farmers
+        {
+            get { return _expert; }
+            set
+            {
+                _expert = value;
+                OnPropertyChanged(nameof(Farmers));
+
             }
         }
+
 
         public ICommand AddFarmerCommand { get; set; }
         public ICommand DeleteFarmerBtn { get; set; }
@@ -197,26 +45,29 @@ namespace PRN221_Admin.ViewModels
 
         public ICommand ClearToAdd { get; set; }
 
+
         public FarmerModelView(IAccountService accountService)
         {
-            Farmer = new ObservableCollection<Account>();
+            Farmers = new ObservableCollection<Account>();
+
             this.accountService = accountService;
+
             _ = LoadFarmers();
 
-            DeleteFarmerBtn = new RelayCommand(async (obj) => await DeleteMember(obj),CanExecute2);
+            DeleteFarmerBtn = new RelayCommand(async (obj) => await DeleteMember(obj), CanExecute2);
             AddFarmerCommand = new RelayCommand(async (obj) => await AddFarmer(obj), CanExecute);
-            ClearToAdd = new RelayCommand( ClearFields, CanExecute2);
+            ClearToAdd = new RelayCommand(ClearFields, CanExecute2);
 
         }
 
         private Account _selectedFarmer;
-        public Account SelectedFarmer
+        public Account SelectedFarmers
         {
             get => _selectedFarmer;
             set
             {
                 _selectedFarmer = value;
-                OnPropertyChanged(nameof(SelectedFarmer));
+                OnPropertyChanged(nameof(SelectedFarmers));
 
                 //OnPropertyChanged(nameof(IsMale));
                 //OnPropertyChanged(nameof(IsFemale));
@@ -229,11 +80,25 @@ namespace PRN221_Admin.ViewModels
                     Email = _selectedFarmer.Email;
                     Phone = _selectedFarmer.Phone;
                     Address = _selectedFarmer.Address;
-              
+
 
                 }
             }
         }
+        public async Task LoadFarmers()
+        {
+
+            var students = await accountService.GetListAccountByRoleId(1);
+            Farmers.Clear();
+            foreach (var student in students)
+            {
+                Farmers.Add(student);
+
+            }
+
+        }
+
+
 
         private void ClearFields(object obj)
         {
@@ -244,7 +109,7 @@ namespace PRN221_Admin.ViewModels
             Phone = string.Empty;
             Address = string.Empty;
             Gender = string.Empty;
-            SelectedFarmer = null;
+            SelectedFarmers = null;
             OnPropertyChanged(nameof(IsMale));
             OnPropertyChanged(nameof(IsFemale));
         }
@@ -283,16 +148,16 @@ namespace PRN221_Admin.ViewModels
 
         private bool CanExecute(object obj)
         {
-            return SelectedFarmer == null;
-       
+            return SelectedFarmers == null;
+
         }
 
 
- 
+
         private bool CanExecute2(object obj)
         {
-            return SelectedFarmer != null;
-       
+            return SelectedFarmers != null;
+
         }
 
 
@@ -372,7 +237,7 @@ namespace PRN221_Admin.ViewModels
                 OnPropertyChanged(nameof(Address));
             }
         }
-  
+
         private async Task AddFarmer(object parameter)
         {
 
@@ -427,7 +292,7 @@ namespace PRN221_Admin.ViewModels
             };
 
             await accountService.AddAccount(st);
-            Farmer.Add(st);
+            Farmers.Add(st);
 
             Username = FullName = Email = Phone = Address = "";
             OnPropertyChanged(nameof(IsMale));
@@ -435,13 +300,13 @@ namespace PRN221_Admin.ViewModels
             await LoadFarmers();
         }
 
-   
+
 
         public async Task UpdateMember(object obj)
         {
             try
             {
-                var existingMember = await accountService.GetByIdAccount(SelectedFarmer.AccountId);
+                var existingMember = await accountService.GetByIdAccount(SelectedFarmers.AccountId);
 
                 if (existingMember == null)
                 {
@@ -463,7 +328,7 @@ namespace PRN221_Admin.ViewModels
         {
             try
             {
-                var existingMember = await accountService.GetByIdAccount(SelectedFarmer.AccountId);
+                var existingMember = await accountService.GetByIdAccount(SelectedFarmers.AccountId);
 
                 if (existingMember == null)
                 {
@@ -495,3 +360,5 @@ namespace PRN221_Admin.ViewModels
 
     }
 }
+
+

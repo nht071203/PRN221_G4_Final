@@ -14,7 +14,16 @@ namespace PRN221_DataAccess.DAOs
         {
             return await _context.Accounts.ToListAsync();
         }
+        private readonly Prn221Context _context;
+        public AccountDAO(Prn221Context context)
+        {
+            _context = context;
+        }
 
+        public AccountDAO()
+        {
+            _context = new Prn221Context();
+        }
         public async Task<Account?> getByUsername(string username)
         {
             var account = await _context.Accounts.SingleOrDefaultAsync(acc => acc.Username.Equals(username));

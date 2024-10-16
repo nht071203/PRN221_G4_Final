@@ -48,27 +48,27 @@ public partial class Prn221Context : DbContext
 
     public virtual DbSet<Service> Services { get; set; }
 
+    public virtual DbSet<ServiceRating> ServiceRatings { get; set; }
+
     public virtual DbSet<SharePost> SharePosts { get; set; }
 
     public virtual DbSet<View> Views { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=TUV268\\SQLEXPRESS;Initial Catalog=PRNproject;User ID=sa;Password=0789616573;Trust Server Certificate=True");
+        => optionsBuilder.UseSqlServer("Server=TUV268\\SQLEXPRESS;Database=PRNproject;uid=sa;pwd=0789616573;encrypt=true;trustServerCertificate=true;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Account>(entity =>
         {
-            entity.HasKey(e => e.AccountId).HasName("PK__Account__46A222CDA102AFF7");
+            entity.HasKey(e => e.AccountId).HasName("PK__Account__46A222CDDA4DC2DA");
 
             entity.ToTable("Account");
 
-            entity.HasIndex(e => e.Email, "UQ__Account__AB6E61643FCEDAB9").IsUnique();
+            entity.HasIndex(e => e.Phone, "UQ__Account__B43B145F2EBBAE94").IsUnique();
 
-            entity.HasIndex(e => e.Phone, "UQ__Account__B43B145F27685C6C").IsUnique();
-
-            entity.HasIndex(e => e.Username, "UQ__Account__F3DBC5720F93DF71").IsUnique();
+            entity.HasIndex(e => e.Username, "UQ__Account__F3DBC572EC0B8408").IsUnique();
 
             entity.Property(e => e.AccountId).HasColumnName("account_id");
             entity.Property(e => e.Address)
@@ -83,10 +83,13 @@ public partial class Prn221Context : DbContext
                 .IsUnicode(false)
                 .HasColumnName("degree_url");
             entity.Property(e => e.Email)
-                .HasMaxLength(50)
+                .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("email");
             entity.Property(e => e.EmailConfirmed).HasColumnName("email_confirmed");
+            entity.Property(e => e.FacebookId)
+                .HasMaxLength(255)
+                .HasColumnName("facebook_id");
             entity.Property(e => e.FullName)
                 .HasMaxLength(50)
                 .HasColumnName("full_name");
@@ -110,14 +113,14 @@ public partial class Prn221Context : DbContext
             entity.Property(e => e.PhoneConfirmed).HasColumnName("phone_confirmed");
             entity.Property(e => e.RoleId).HasColumnName("role_id");
             entity.Property(e => e.Username)
-                .HasMaxLength(20)
+                .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("username");
         });
 
         modelBuilder.Entity<AccountConversation>(entity =>
         {
-            entity.HasKey(e => new { e.AccountId, e.ConversationId }).HasName("PK__AccountC__F5B3C5249AE583A4");
+            entity.HasKey(e => new { e.AccountId, e.ConversationId }).HasName("PK__AccountC__F5B3C524E7ED688E");
 
             entity.ToTable("AccountConversation");
 
@@ -129,7 +132,7 @@ public partial class Prn221Context : DbContext
 
         modelBuilder.Entity<BookingService>(entity =>
         {
-            entity.HasKey(e => e.BookingId).HasName("PK__BookingS__5DE3A5B1BFD6C1B3");
+            entity.HasKey(e => e.BookingId).HasName("PK__BookingS__5DE3A5B1F4D4DCAE");
 
             entity.ToTable("BookingService");
 
@@ -148,7 +151,7 @@ public partial class Prn221Context : DbContext
 
         modelBuilder.Entity<CategoryNews>(entity =>
         {
-            entity.HasKey(e => e.CategoryNewsId).HasName("PK__Category__9D9BEED8C51B6284");
+            entity.HasKey(e => e.CategoryNewsId).HasName("PK__Category__9D9BEED8EF30A06A");
 
             entity.Property(e => e.CategoryNewsId).HasColumnName("category_news_id");
             entity.Property(e => e.CategoryNewsDescription)
@@ -161,7 +164,7 @@ public partial class Prn221Context : DbContext
 
         modelBuilder.Entity<CategoryPost>(entity =>
         {
-            entity.HasKey(e => e.CategoryPostId).HasName("PK__Category__02AEB4E35E9A624E");
+            entity.HasKey(e => e.CategoryPostId).HasName("PK__Category__02AEB4E3958A0B07");
 
             entity.ToTable("CategoryPost");
 
@@ -176,7 +179,7 @@ public partial class Prn221Context : DbContext
 
         modelBuilder.Entity<CategoryService>(entity =>
         {
-            entity.HasKey(e => e.CategoryServiceId).HasName("PK__Category__8B6132CCD39AAB82");
+            entity.HasKey(e => e.CategoryServiceId).HasName("PK__Category__8B6132CCF3BC29D1");
 
             entity.ToTable("CategoryService");
 
@@ -191,7 +194,7 @@ public partial class Prn221Context : DbContext
 
         modelBuilder.Entity<Comment>(entity =>
         {
-            entity.HasKey(e => e.CommentId).HasName("PK__Comment__E7957687C666781E");
+            entity.HasKey(e => e.CommentId).HasName("PK__Comment__E7957687D30CB443");
 
             entity.ToTable("Comment");
 
@@ -209,7 +212,7 @@ public partial class Prn221Context : DbContext
 
         modelBuilder.Entity<Conversation>(entity =>
         {
-            entity.HasKey(e => e.ConversationId).HasName("PK__Conversa__311E7E9AA57EEC3D");
+            entity.HasKey(e => e.ConversationId).HasName("PK__Conversa__311E7E9A528DF8E8");
 
             entity.ToTable("Conversation");
 
@@ -227,7 +230,7 @@ public partial class Prn221Context : DbContext
 
         modelBuilder.Entity<Follow>(entity =>
         {
-            entity.HasKey(e => e.FollowId).HasName("PK__Follow__15A6914448BE345C");
+            entity.HasKey(e => e.FollowId).HasName("PK__Follow__15A69144B643CC9D");
 
             entity.ToTable("Follow");
 
@@ -239,7 +242,7 @@ public partial class Prn221Context : DbContext
 
         modelBuilder.Entity<LikePost>(entity =>
         {
-            entity.HasKey(e => e.LikePostId).HasName("PK__LikePost__8F1D2FE8F9212260");
+            entity.HasKey(e => e.LikePostId).HasName("PK__LikePost__8F1D2FE8A66CDEFE");
 
             entity.ToTable("LikePost");
 
@@ -251,7 +254,7 @@ public partial class Prn221Context : DbContext
 
         modelBuilder.Entity<Message>(entity =>
         {
-            entity.HasKey(e => e.MessageId).HasName("PK__Message__0BBF6EE69EC2BEF2");
+            entity.HasKey(e => e.MessageId).HasName("PK__Message__0BBF6EE6838506C1");
 
             entity.ToTable("Message");
 
@@ -267,7 +270,7 @@ public partial class Prn221Context : DbContext
 
         modelBuilder.Entity<News>(entity =>
         {
-            entity.HasKey(e => e.NewsId).HasName("PK__News__4C27CCD895EDDE8C");
+            entity.HasKey(e => e.NewsId).HasName("PK__News__4C27CCD864B048A0");
 
             entity.Property(e => e.NewsId).HasColumnName("news_id");
             entity.Property(e => e.CategoryNewsId).HasColumnName("category_news_id");
@@ -285,7 +288,7 @@ public partial class Prn221Context : DbContext
 
         modelBuilder.Entity<NewsImage>(entity =>
         {
-            entity.HasKey(e => e.NewsImageId).HasName("PK__NewsImag__4C7E25D880CBAB46");
+            entity.HasKey(e => e.NewsImageId).HasName("PK__NewsImag__4C7E25D89AA18253");
 
             entity.ToTable("NewsImage");
 
@@ -300,7 +303,7 @@ public partial class Prn221Context : DbContext
 
         modelBuilder.Entity<Post>(entity =>
         {
-            entity.HasKey(e => e.PostId).HasName("PK__Post__3ED787668CEA33BE");
+            entity.HasKey(e => e.PostId).HasName("PK__Post__3ED787663F6CD81D");
 
             entity.ToTable("Post");
 
@@ -318,7 +321,7 @@ public partial class Prn221Context : DbContext
 
         modelBuilder.Entity<PostImage>(entity =>
         {
-            entity.HasKey(e => e.PostImageId).HasName("PK__PostImag__CD0DD5605BABAD90");
+            entity.HasKey(e => e.PostImageId).HasName("PK__PostImag__CD0DD560C92B8447");
 
             entity.ToTable("PostImage");
 
@@ -333,7 +336,7 @@ public partial class Prn221Context : DbContext
 
         modelBuilder.Entity<Role>(entity =>
         {
-            entity.HasKey(e => e.RoleId).HasName("PK__Role__760965CCE80568F1");
+            entity.HasKey(e => e.RoleId).HasName("PK__Role__760965CCB33E752F");
 
             entity.ToTable("Role");
 
@@ -346,11 +349,14 @@ public partial class Prn221Context : DbContext
 
         modelBuilder.Entity<Service>(entity =>
         {
-            entity.HasKey(e => e.ServiceId).HasName("PK__Service__3E0DB8AF14C88E8D");
+            entity.HasKey(e => e.ServiceId).HasName("PK__Service__3E0DB8AFDE79127B");
 
             entity.ToTable("Service");
 
             entity.Property(e => e.ServiceId).HasColumnName("service_id");
+            entity.Property(e => e.AverageRating)
+                .HasColumnType("decimal(2, 1)")
+                .HasColumnName("average_rating");
             entity.Property(e => e.Content)
                 .HasMaxLength(1000)
                 .HasColumnName("content");
@@ -360,15 +366,35 @@ public partial class Prn221Context : DbContext
             entity.Property(e => e.IsDeleted).HasColumnName("is_deleted");
             entity.Property(e => e.IsEnable).HasColumnName("is_enable");
             entity.Property(e => e.Price).HasColumnName("price");
+            entity.Property(e => e.RatingCount).HasColumnName("rating_count");
             entity.Property(e => e.Title)
                 .HasMaxLength(200)
                 .HasColumnName("title");
             entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
         });
 
+        modelBuilder.Entity<ServiceRating>(entity =>
+        {
+            entity.HasKey(e => e.RatingId).HasName("PK__ServiceR__D35B278B0488872C");
+
+            entity.ToTable("ServiceRating");
+
+            entity.Property(e => e.RatingId).HasColumnName("rating_id");
+            entity.Property(e => e.Comment).HasColumnName("comment");
+            entity.Property(e => e.RatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("rated_at");
+            entity.Property(e => e.Rating)
+                .HasColumnType("decimal(2, 1)")
+                .HasColumnName("rating");
+            entity.Property(e => e.ServiceId).HasColumnName("service_id");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+        });
+
         modelBuilder.Entity<SharePost>(entity =>
         {
-            entity.HasKey(e => e.SharePostId).HasName("PK__SharePos__3B880F3210044DE6");
+            entity.HasKey(e => e.SharePostId).HasName("PK__SharePos__3B880F32F9AB7449");
 
             entity.ToTable("SharePost");
 
@@ -381,7 +407,7 @@ public partial class Prn221Context : DbContext
 
         modelBuilder.Entity<View>(entity =>
         {
-            entity.HasKey(e => e.CountViewId).HasName("PK__Views__C5F7EC924CA25788");
+            entity.HasKey(e => e.CountViewId).HasName("PK__Views__C5F7EC92CAB4CBF8");
 
             entity.Property(e => e.CountViewId).HasColumnName("count_view_id");
             entity.Property(e => e.AccountId).HasColumnName("account_id");
