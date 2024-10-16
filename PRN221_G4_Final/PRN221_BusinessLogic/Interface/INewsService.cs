@@ -16,6 +16,6 @@ namespace PRN221_BusinessLogic.Interface
         Task UpdateNews(News item);
         Task DeleteNews(int id);
         Task<CategoryNews> GetCategoryNewsById(int id);
-
+        Task<int> GetTotalNewsService();
     }
 }

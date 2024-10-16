@@ -33,11 +33,16 @@ namespace PRN221_Repository.AccountRepo
         public async Task<Account> GetById(int id) => await _accountDAO.GetById(id);
         public async Task<Account> Add(Account account) => await _accountDAO.Add(account);
         public async Task Update(Account account) => await _accountDAO.Update(account);
-        public async Task Delete(int id) => await _accountDAO.Delete(id);
+        public async Task Delete(Account account) => await _accountDAO.Delete(account);
 
         public async Task<Account?> GetAccountByEmail(string email)
         {
             return await _accountDAO.GetAccountByEmail(email);
+        }
+
+        public async Task<int> GetTotalFarmerRepo()
+        {
+            return await _accountDAO.GetTotalFarmerCountAsync();
         }
         public async Task<Account> GetByFbId(string fbId)
         {

@@ -17,6 +17,7 @@ namespace PRN221_Repository.AccountRepo
         Task<Account> GetByFbId(string id);
         Task<Account> Add(Account item);
         Task Update(Account item);
-        Task Delete(int id);
+        Task Delete(Account item);
+        Task<int> GetTotalFarmerRepo();
     }
 }

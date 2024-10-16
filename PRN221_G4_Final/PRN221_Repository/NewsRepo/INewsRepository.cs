@@ -17,5 +17,6 @@ namespace PRN221_Repository.NewsRepo
         Task Add(News item);
         Task Update(News item);
         Task Delete(int id);
+        Task<int> GetTotalNewsRepo();
     }
 }
