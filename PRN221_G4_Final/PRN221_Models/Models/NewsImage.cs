@@ -9,7 +9,7 @@ public partial class NewsImage
 
     public int NewsId { get; set; }
 
-    public string ImageUrl { get; set; }
+    public string ImageUrl { get; set; } = null!;
 
     public bool? IsDeleted { get; set; }
 }
