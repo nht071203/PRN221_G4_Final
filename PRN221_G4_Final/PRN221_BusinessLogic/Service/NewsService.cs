@@ -12,10 +12,12 @@ namespace PRN221_BusinessLogic.Service
     public class NewsService : INewsService
     {
         private readonly INewsRepository _newsRepo;
+        private readonly ICategoryNewsRepository _categoryNewsRepository;
 
-        public NewsService(INewsRepository newsRepo)
+        public NewsService(INewsRepository newsRepo, ICategoryNewsRepository categoryNewsRepository)
         {
             _newsRepo = newsRepo;
+            _categoryNewsRepository = categoryNewsRepository;
         }
 
         public async Task<IEnumerable<News>> GetAllNews() => await _newsRepo.GetAllNews();
@@ -36,14 +38,13 @@ namespace PRN221_BusinessLogic.Service
             await _newsRepo.Delete(id);
         }
 
-        public async Task<CategoryNews> GetCategoryNewsById(int id)
-        {
-            return await _newsRepo.GetCategoryNewsById(id);
-        }
 
-        public async Task<IEnumerable<CategoryNews>> GetAllCategoryNews()
-        {
-            return await _newsRepo.GetAllCategoryNews();
-        }
+        public async Task<IEnumerable<CategoryNews>> GetAllCategoryNews() => await _categoryNewsRepository.GetAllCategoryNews();
+
+        public async Task<CategoryNews> GetCategoryNewsById(int id) => await _categoryNewsRepository.GetCategoryNewsById(id);
+
+        public async Task<IEnumerable<News>> GetAllNewsByCategoryId(int categoryId) => await _newsRepo.GetAllNewsByCategoryId(categoryId);
+
+        public Task<IEnumerable<CategoryNews>> GetCategoriesHaveNews() => _categoryNewsRepository.GetCategoriesHaveNews();
     }
 }

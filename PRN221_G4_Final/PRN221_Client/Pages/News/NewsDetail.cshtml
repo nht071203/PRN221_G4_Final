@@ -1,7 +1,8 @@
-﻿@page
+﻿@page "{id:int}"
 @model PRN221_Client.Pages.News.NewsDetailModel
+
 @{
-    ViewData["Title"] = "Tiêu đề tin tức";
+    ViewData["Title"] = Model.NewsDetail.Title;
 }
 
 <section class="page--wrapper pb--20" style="transform: none;">
@@ -9,7 +10,9 @@
         <div class="d-flex">
             <a href="/News/ListNews"><h2 class="pb--20">Tin tức</h2></a>
             <i class="ml--10 text- fa fa-caret-right" style="padding: 35px 20px 0 10px"></i>
-            <h2 class="pb--20">Tiêu đề tin tức</h2>
+            <a asp-page="/News/ListNews" asp-route-id="@Model.CategoryNews.CategoryNewsId"><h2 class="pb--20">@Model.CategoryNews.CategoryNewsName</h2></a>
+            <i class="ml--10 text- fa fa-caret-right" style="padding: 35px 20px 0 10px"></i>
+            <h2 class="pb--20">@Model.NewsDetail.Title</h2>
         </div>
         <div class="row" style="transform: none;">
             <!-- Main Content Start -->
@@ -31,14 +34,14 @@
                                     <ul class="nav">
                                         <li>
                                             <i class="mr--8 fa fa-folder-open-o"></i>
-                                            <a href=""><span>Category bài viết</span></a>
+                                            <a href=""><span>@Model.CategoryNews.CategoryNewsName</span></a>
                                             <a href="" style="cursor: text">
                                                 <img src="~/image/logo.jpg" alt="">
-                                                <span>Tên người viết</span>
+                                                <span>Farm Family</span>
                                             </a>
                                             <a href="" style="cursor: text">
                                                 <i class="mr--8 fa fa-calendar-o"></i>
-                                                <span>Ngày viết bài</span>
+                                                <span>@Model.NewsDetail.CreatedAt</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -62,12 +65,12 @@
 
                                     <p>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop  sometimes on purpose (injected humour and the like).</p>
 
-                                    <blockquote>
+                                    @* <blockquote>
                                         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley.</p>
 
                                         <cite>Larry R. Ramirez</cite>
                                     </blockquote>
-
+ *@
                                     <h4>Where can I get some?</h4>
 
                                     <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat therefore always free from repetition, injected humour, or non-characteristic words etc.</p>
@@ -313,13 +316,13 @@
                                     <div class="col-xs-12">
                                         <div class="form-group">
                                             <label>
-                                                <span class="text-darker ff--primary fw--500">Filter Country</span>
+                                                <span class="text-darker ff--primary fw--500">Danh mục tin tức</span>
 
                                                 <select name="city" class="form-control form-sm" data-trigger="selectmenu" style="display: none;">
-                                                    <option value="unitedstates">United States</option>
-                                                    <option value="australia">Australia</option>
-                                                    <option value="turkey">Turkey</option>
-                                                    <option value="vietnam">Vietnam</option>
+                                                    @foreach (var category in Model.CategoryNewsList)
+                                                    {
+                                                        <option value="@category.CategoryNewsName"><a href="">@category.CategoryNewsName</a></option>
+                                                    }
                                                 </select>
                                             </label>
                                         </div>

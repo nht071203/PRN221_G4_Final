@@ -23,14 +23,11 @@ namespace PRN221_Repository.NewsRepo
         }
 
         public async Task<News> GetById(int id) => await _newsDAO.FindById(id);
-        //public async Task<CategoryNews> GetCategoryNewsById(int id) => await _newsDAO.GetCategoryNewsById(id);
         public async Task Add(News news) => await _newsDAO.Add(news);
         public async Task Update(News news) => await _newsDAO.Update(news);
 
         public async Task Delete(int id) => await _newsDAO.Delete(id);
 
-        public async Task<CategoryNews> GetCategoryNewsById(int id) => await _newsDAO.GetCategoryNewsById(id);
-
-        public async Task<IEnumerable<CategoryNews>> GetAllCategoryNews() => await _newsDAO.GetAllCategoryNews();
+        public async Task<IEnumerable<News>> GetAllNewsByCategoryId(int categoryId) => await _newsDAO.GetAllNewsByCategoryId(categoryId);
     }
 }

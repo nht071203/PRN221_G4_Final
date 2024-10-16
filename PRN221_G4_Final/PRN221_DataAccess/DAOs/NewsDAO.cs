@@ -38,18 +38,6 @@ namespace PRN221_DataAccess.DAOs
             return item;
         }
 
-        public async Task<CategoryNews> GetCategoryNewsById(int id)
-        {
-            var item = await _context.CategoryNews.FirstOrDefaultAsync(obj => obj.CategoryNewsId == id);
-            if (item == null) return null;
-            return item;
-        }
-
-        public async Task<IEnumerable<CategoryNews>> GetAllCategoryNews()
-        {
-            return await _context.CategoryNews.ToListAsync();
-        }
-
         public async Task Add(News item)
         {
             _context.News.Add(item);
@@ -92,8 +80,11 @@ namespace PRN221_DataAccess.DAOs
             return result.Select(item => (item.Month, item.Count));
         }
 
-        
 
+        public async Task<IEnumerable<News>> GetAllNewsByCategoryId(int categoryId)
+        {
+            return await _context.News.Where(n => n.CategoryNewsId == categoryId).ToListAsync();
+        }
     }
 }
 
