@@ -508,13 +508,8 @@
                     </div>
                     <div class="main-content">
                         <h1 class="text-white-change f-26 fw-600">
-                            Dịch vụ chuẩn đoán bệnh ở cây lúa
+                            @Model.ServiceDetail.Title
                         </h1>
-                        <div>
-                            <p class="text-white-change f-16 line-clamp line-clamp-2-lines">
-                                cung cấp các dịch vụ cho việc sản xuất nông nghiệp như: máy móc, thiết bị, phân bón, các sản phẩm có thể hỗ trợ người dân trong quá trình canh tác, sản xuất, trồng trọt, chăn nuôi
-                            </p>
-                        </div>
                     </div>
 
                     <div class="main-content">
@@ -530,9 +525,10 @@
                                                  style="line-height:18px;font-family: 'Font Awesome 5 Pro'">
                                             </div>
                                         </div>
-                                    </div><span class="review-count pull-left">
-                                        <strong>4.8</strong> (<u>
-                                            97 đánh
+                                    </div>
+                                    <span class="review-count pull-left">
+                                        <strong>@Model.ServiceDetail.AverageRating</strong> (<u>
+                                            @Model.ServiceDetail.RatingCount đánh
                                             giá
                                         </u>)
                                     </span>
@@ -549,8 +545,7 @@
                             <div class="detail-cou-label">
                                 <span class="text-white">Chuyên gia</span><br />
                                 <span class="text-white">
-                                    <a href="#teacher" class="text-white"
-                                       style="color:#2997ff!important;"><u>G-LEARNING</u></a>
+                                    <div class="text-white" style="color:#2997ff!important;">@Model.CreatorService.FullName</div>
                                 </span>
                             </div>
                         </li>
@@ -559,8 +554,8 @@
                                  width="36px" height="36px" class="lazyload my-auto"
                                  data-src="https://gitiho.com/frontend/img/gitiho_v2/icon/icon-custom-2.svg" />
                             <div class="detail-cou-label">
-                                <span class="text-white">Ngày update</span><br />
-                                <span class="text-white">10/2024</span>
+                                <span class="text-white">Ngày bắt đầu</span><br />
+                                <span class="text-white">@Model.ServiceDetail.CreateAt</span>
                             </div>
                         </li>
                         <li>
@@ -569,7 +564,7 @@
                                  data-src="https://gitiho.com/frontend/img/gitiho_v2/icon/icon-custom-3.svg" />
                             <div class="detail-cou-label">
                                 <span class="text-white">Người đăng ký</span><br />
-                                <span class="text-white">76,312</span>
+                                <span class="text-white">@Model.CountBookingService</span>
                             </div>
                         </li>
                     </ul>
@@ -578,17 +573,8 @@
                             <div class="d-flex justify-content-between">
                                 <div class="d-flex">
                                     <p class="f-20 text-white mb-0 fw-700 sale-price-display-js"
-                                       style="color: #d91c5c!important;" data-price-old="199000">199,000đ</p>
-                                    <span class="ml-3 color_text2 line-through my-auto">499,000đ</span>
+                                       style="color: #d91c5c!important;">@Model.ServiceDetail.Price<span>đ</span></p>
                                 </div>
-
-                                <div class="text-right my-auto text-white">
-                                    Tiết kiệm <b class="text-white percent-display" data-percent-old="60%">
-                                        60
-                                        %
-                                    </b>
-                                </div>
-
                             </div>
 
                             <div class="mt-3">
@@ -692,355 +678,9 @@
                     <div class="main-content">
                         <p class="f-32 fw-500 mb-3">Mô tả dịch vụ</p>
                         <div class="show-more--container">
-                            <span id="show-more-check" data-type="checkbox" data-checked=""
-                                  style="display: none;"></span>
                             <div class="cou-description ck-content show-more--with-gradient show-more--content  f-16">
-                                <p>
-                                    <span style="background-color:transparent;color:#000000;">
-                                        Excel là công cụ
-                                        tin học văn phòng được sử dụng phổ biến trong nhiều lĩnh vực học tập và
-                                        công việc. Tuy nhiên, thời còn đi học chúng ta thường không quá chú
-                                        trọng vào môn học này.
-                                    </span>
-                                </p>
-                                <p>
-                                    <span style="background-color:transparent;color:#000000;">
-                                        Sau này đi làm, đa
-                                        số các file dữ liệu đều được lưu và xử lý trên Excel. Nhiều bạn lúng
-                                        túng&nbsp; không biết thao tác xử lý dữ liệu như nào, dẫn đến tốn nhiều
-                                        thời gian hơn và hiệu suất công việc giảm xuống một cách đáng kể.
-                                    </span>
-                                </p>
-                                <p>
-                                    <span style="background-color:transparent;color:#000000;">
-                                        ?&nbsp;<strong>
-                                            Nếu
-                                            như bạn:
-                                        </strong>
-                                    </span>
-                                </p>
-                                <ul>
-                                    <li>
-                                        <span style="background-color:transparent;color:#000000;">
-                                            <i>
-                                                Đang dùng
-                                                Excel trong công việc nhưng chưa hiệu quả, kiến thức cóp nhặt
-                                                “vụn vặt”, không bài bản.&nbsp;
-                                            </i>
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <span style="background-color:transparent;color:#000000;">
-                                            <i>
-                                                Hoặc trước
-                                                đây chỉ học lý thuyết nên không biết áp dụng vào thực tế công
-                                                việc như nào.&nbsp;
-                                            </i>
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <span style="background-color:transparent;color:#000000;">
-                                            <i>
-                                                Hoặc đã có
-                                                kiến thức cơ bản về Excel và đang muốn nâng cao kỹ năng của mình
-                                                lên.
-                                            </i>
-                                        </span>
-                                    </li>
-                                </ul>
-                                <p>
-                                    <span style="background-color:transparent;color:#000000;">
-                                        Thì Gitiho ở đây để
-                                        giúp bạn giải quyết tất cả những khó khăn mà bạn gặp phải khi đi làm với
-                                        khóa học&nbsp;<strong>
-                                            EXG02 - Thủ thuật Excel cập nhật hàng tuần cho dân
-                                            văn phòng&nbsp;
-                                        </strong>với 107 bài giảng trong 8 giờ.
-                                    </span>
-                                </p>
-                                <p>
-                                    <span style="background-color:transparent;color:#000000;">
-                                        Hoàn thành khóa
-                                        học, bạn có thể tự tin giải quyết công việc theo cách thông minh, nhanh
-                                        chóng, từ đó tỏa sáng nơi công sở, được sếp tin tưởng và ra tăng cơ hội
-                                        thăng tiến.
-                                    </span>
-                                </p>
-                                <h2>
-                                    <span style="background-color:transparent;color:#000000;">
-                                        Tại sao khóa học
-                                        Thủ thuật Excel lại cần thiết cho dân văn phòng?
-                                    </span>
-                                </h2>
-                                <p>
-                                    <span style="background-color:transparent;color:#000000;">
-                                        Đa số mọi người khi
-                                        còn đang đi học thường không dành nhiều thời gian để học tin học nhất là
-                                        Excel. Bởi họ chưa biết được Excel có thể áp dụng vào việc xử lý các
-                                        công việc hàng ngày.&nbsp;
-                                    </span>
-                                </p>
-                                <p>
-                                    <span style="background-color:transparent;color:#000000;">
-                                        Khi đi làm, bạn sẽ
-                                        thấy nếu không thành thạo trong việc sử dụng Excel sẽ tốn nhiều thời
-                                        gian, công sức để xử lý công việc. Hơn nữa, chúng ta cũng không biết
-                                        những thứ mình đang thực hiện đúng hay không.
-                                    </span>
-                                </p>
-                                <p>
-                                    <span style="background-color:transparent;color:#000000;">
-                                        Hiện
-                                        nay&nbsp;<strong>100% các doanh nghiệp tại Việt Nam</strong> đều cần tới
-                                        kỹ năng Excel khi ứng tuyển vào vị trí kế toán, xử lý dữ liệu, bán hàng,
-                                        quản lý, nhân viên ngân hàng, tài chính... Mỗi cấp độ sẽ có yêu cầu
-                                        thành thạo Excel xử lý công việc khác nhau.
-                                    </span>
-                                </p>
-                                <p>
-                                    <span style="background-color:transparent;color:#000000;">
-                                        Chính vì điều đó
-                                        Gitiho đã mở khóa học về&nbsp;<strong>
-                                            Thủ thuật Excel cập nhật hàng tuần
-                                            - EXG02
-                                        </strong> với hơn<strong> 7h+ học</strong> cùng
-                                        với&nbsp;<strong>92 tài liệu đính kèm</strong> bạn sẽ nhận được nhiều
-                                        lợi ích vô tận như:
-                                    </span>
-                                </p>
-                                <ul>
-                                    <li>
-                                        <span style="background-color:transparent;color:#000000;">
-                                            Giảng viên là
-                                            những người có trình độ chuyên môn cao, kinh nghiệm thực tiễn dày
-                                            dặn đã và đang đào tạo trực tiếp cho nhiều đơn vị lớn
-                                            như&nbsp;<strong>
-                                                Vietinbank, VPBank, FPT software, Vietcombank, MIC,
-                                                Tập đoàn Thành Công, TH True Milk
-                                            </strong>,… sẽ giúp bạn thành
-                                            thạo kỹ năng sử dụng Excel nhanh chóng.
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <span style="background-color:transparent;color:#000000;">
-                                            Học nhanh
-                                            nhưng nhớ lâu bởi luôn có các bài tập thực hành kèm với lý
-                                            thuyết.
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <span style="background-color:transparent;color:#000000;">
-                                            Các video bài
-                                            giảng được xây dựng dựa trên các chủ đề cụ thể, đồng thời chú trọng
-                                            tối đa đến tính ứng dụng cao. Đặc biệt, bộ video&nbsp;<strong>
-                                                các
-                                                thủ thuật trong Excel 2013, 2016, 2019
-                                            </strong> và nhiều phiên
-                                            bản khác, phù hợp với tất cả mọi đối tượng muốn tỏa sáng nơi công sở
-                                            với thủ thuật Excel nâng cao thông minh và tạo kết quả bất ngờ trong
-                                            công việc.
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <span style="background-color:transparent;color:#000000;">
-                                            Bạn sẽ tự tin
-                                            xử lý được mọi việc trên các công cụ Excel một cách chuyên nghiệp
-                                            giúp đẩy nhân được tiến độ công việc, nâng cao hiệu suất làm việc
-                                            lên tới 5 lần.
-                                        </span>
-                                    </li>
-                                </ul>
-                                <p>
-                                    <span style="background-color:transparent;color:#000000;">
-                                        Đặc biệt
-                                        khi&nbsp;<strong>đăng ký khóa học EXG02&nbsp;</strong>học viên sẽ có cơ
-                                        hội nhận ưu đãi sở hữu trọn đời chỉ với&nbsp;<strong>199.000đ</strong>.
-                                        Thao tác đăng ký khá đơn giản, bạn chỉ cần nhấn vào ĐĂNG KÝ HỌC NGAY
-                                        khóa học EXG08 trên gitiho.com là xong.
-                                    </span>
-                                </p>
-                                <p>
-                                    <span style="background-color:transparent;color:#000000;">
-                                        Nếu có bất cứ thắc
-                                        mắc nào liên quan đến tới&nbsp;<strong>
-                                            khóa học EXG02 - Thủ thuật Excel
-                                            cập nhật hàng tuần
-                                        </strong> bạn hãy để kết nối cho Gitiho qua
-                                        hotline 0774 116 285 để được tư vấn chi tiết nhé.
-                                    </span>
-                                </p>
-                                <h2>
-                                    <span style="background-color:transparent;color:#000000;">
-                                        Nội dung bài giảng
-                                        trong khóa học thủ thuật trên Excel của Gitiho?
-                                    </span>
-                                </h2>
-                                <p>
-                                    <span style="background-color:transparent;color:#000000;">
-                                        Khóa học Thủ thuật
-                                        Excel cập nhật các mẹo Excel văn phòng hàng tuần, bạn có thể được update
-                                        những nội dung mới nhất về tin học văn phòng như sau:&nbsp;
-                                    </span>
-                                </p>
-                                <ul>
-                                    <li>
-                                        <span style="background-color:transparent;color:#000000;">
-                                            Định dạng
-                                            nhanh bằng công cụ&nbsp;<strong>Format Painter</strong> và<strong>
-                                                Cell Styles
-                                            </strong>, sắp xếp bảng tính, thay đổi thiết lập tính
-                                            toán, các thủ thuật excel tính tổng, đặt tên nhanh cho bảng tính,
-                                            hiển thị công thức trong ô, tạo ghi chú và cố định dòng -
-                                            cột.
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <span style="background-color:transparent;color:#000000;">
-                                            Kỹ thuật định
-                                            dạng và xử lý dữ liệu bao gồm tự động thêm ký hiệu tiền tệ, viết
-                                            biểu thức hóa học - toán học và loại bỏ dữ liệu trùng lặp.
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <span style="background-color:transparent;color:#000000;">
-                                            Tổng hợp thủ
-                                            thuật với hàm, công thức bao gồm cách tắt/mở gợi ý khi viết hàm, đặt
-                                            tên và sử dụng tên trong công thức và các hàm tính toán theo thời
-                                            gian.
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <span style="background-color:transparent;color:#000000;">
-                                            Tổng hợp hàm,
-                                            công thức tính toán theo thời gian như hàm tính toán theo tháng,
-                                            tuổi, ngày hết hạn hợp đồng,...
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <span style="background-color:transparent;color:#000000;">
-                                            Hướng dẫn dùng
-                                            các hàm và công thức nâng cao như&nbsp;<strong>
-                                                SUM, SUMIFS, VLOOKUP,
-                                                INDEX
-                                            </strong>, và các thủ thuật hay trong Excel khác với hàm và
-                                            công thức.
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <span style="background-color:transparent;color:#000000;">
-                                            Những thiết
-                                            lập chế độ làm việc trên Excel như thiết lập theme, background, in
-                                            ấn, và các thanh, tiêu đề, đường kẻ lưới trong Excel.
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <span style="background-color:transparent;color:#000000;">
-                                            Hình khối,
-                                            Biểu đồ trong Excel: Vẽ biểu đồ trong ô, tạo biểu đồ động, cố định
-                                            các đối tượng hình khối, và gán nội dung văn bản vào hình
-                                            khối.
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <span style="background-color:transparent;color:#000000;">
-                                            Một số thủ
-                                            thuật hữu ích khác trong Excel như: khóa bảo vệ nội dung trong
-                                            Sheet, tạo mục lục di chuyển nhanh, thao tác trên nhiều Sheet cùng
-                                            lúc, và nhiều thủ thuật khác.
-                                        </span>
-                                    </li>
-                                </ul>
-                                <h2>
-                                    <span style="background-color:transparent;color:#000000;">
-                                        Tại sao nên chọn
-                                        khóa học Thủ thuật Excel tại Gitiho?
-                                    </span>
-                                </h2>
-                                <p>
-                                    <span style="background-color:transparent;color:#000000;">
-                                        Ở Gitiho, khóa học
-                                        Thủ thuật Excel có những ưu điểm đặc biệt, xứng đáng để bạn lựa chọn
-                                        như:
-                                    </span>
-                                </p>
-                                <p>
-                                    <span style="background-color:transparent;color:#000000;">
-                                        <strong>
-                                            Học từ
-                                            chuyên gia
-                                        </strong>: Được xây dựng và dạy bởi các chuyên gia hàng
-                                        đầu trong lĩnh vực tin học văn phòng, đảm bảo kiến thức sâu rộng về
-                                        Excel nâng cao cho dân văn phòng.
-                                    </span>
-                                </p>
-                                <p>
-                                    <span style="background-color:transparent;color:#000000;">
-                                        <strong>
-                                            Học tập
-                                            linh hoạt
-                                        </strong>: Bạn sở hữu khóa học trọn đời, học bất cứ lúc nào
-                                        và trên bất kỳ thiết bị nào với kết nối internet. Khả năng ôn tập lại kỹ
-                                        thuật bất kỳ khi nào giúp cải thiện hiệu quả làm việc.
-                                    </span>
-                                </p>
-                                <p>
-                                    <span style="background-color:transparent;color:#000000;">
-                                        <strong>
-                                            Nội dung dễ
-                                            hiểu, áp dụng ngay vào công việc
-                                        </strong>: Tập trung vào nội dung
-                                        thiết thực và quan trọng của Excel, giúp bạn áp dụng kiến thức ngay
-                                        trong công việc hàng ngày.
-                                    </span>
-                                </p>
-                                <p>
-                                    <span style="background-color:transparent;color:#000000;">
-                                        <strong>
-                                            Nâng cao
-                                            hiệu suất công việc
-                                        </strong>: Thành thạo Excel giúp công việc của
-                                        bạn trở nên nhanh chóng, hiệu quả hơn đặc biệt khi xử lý dữ liệu lớn,
-                                        phức tạp.
-                                    </span>
-                                </p>
-                                <p>
-                                    <span style="background-color:transparent;color:#000000;">
-                                        <strong>
-                                            Hỗ trợ giải
-                                            đáp trong 8 tiếng làm việc
-                                        </strong>: Mọi thắc mắc sẽ được giải đáp
-                                        chi tiết, cụ thể trong khoảng thời gian này.
-                                    </span>
-                                </p>
-                                <p>
-                                    <span style="background-color:transparent;color:#000000;">
-                                        <strong>
-                                            Cơ hội
-                                            thăng tiến và chứng chỉ hoàn thành
-                                        </strong>: Thành thạo Excel sẽ
-                                        nâng cao khả năng của bạn, tạo cơ hội thăng tiến và nhận được chứng chỉ
-                                        quan trọng khi hoàn thành khóa học, là điểm cộng lớn khi xin
-                                        việc.
-                                    </span>
-                                </p>
-                                <p>
-                                    <span style="background-color:transparent;color:#000000;">
-                                        Với&nbsp;<strong>
-                                            khóa
-                                            học Thủ thuật Excel Online của Gitiho
-                                        </strong>, sẽ giúp bạn làm việc
-                                        linh hoạt hơn, mở ra cơ hội thành công trong sự nghiệp của bạn. Đăng ký
-                                        ngay để nhận những ưu đãi tuyệt vời từ Gitiho nhé.
-                                    </span>
-                                </p>
+                                @Model.ServiceDetail.Content
                             </div>
-
-                            <button class="btn btn-none f-14 p-0 color_label fw-700"
-                                    onclick="toggleDescription('show-more-check')"
-                                    style="box-shadow: none;outline: none">
-                                <span class="show-more">Xem tất cả <i class="far fa-angle-down"></i></span>
-                                <span class="show-less">Ẩn bớt <i class="far fa-angle-up"></i></span>
-                            </button>
                         </div>
 
                     </div>
@@ -1050,15 +690,79 @@
             <div class="my-5" id="reviews">
                 <div class="container">
                     <div class="main-content">
+                        <p class="f-32 fw-500 mb-3">Đánh giá dịch vụ</p>
+                        <div class="d-flex align-items-center justify-content-center border my-3">
+                            <form class="card">
+
+                                <div class="row">
+
+                                    <div class="col-2">
+
+
+                                        <img src="https://i.imgur.com/xELPaag.jpg" width="70" class="rounded-circle mt-2">
+
+
+                                    </div>
+
+                                    <div class="col-10">
+
+                                        <div class="comment-box ml-2">
+
+                                            <h4>Thê đánh giá</h4>
+
+                                            <div class="rating">
+                                                <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label>
+                                                <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label>
+                                                <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label>
+                                                <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label>
+                                                <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label>
+                                            </div>
+
+                                            <div class="comment-area">
+
+                                                <textarea class="form-control" placeholder="Ý kiến của bạn" rows="4"></textarea>
+
+                                            </div>
+
+                                            <div class="comment-btns mt-2">
+
+                                                <div class="row">
+
+                                                    <div class="">
+
+                                                        <div class="pull-right">
+
+                                                            <button class="btn btn-success send btn-sm">
+                                                                Gửi <i class="fa fa-long-arrow-right ml-1"></i>
+                                                            </button>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+                            </form>
+                        </div>
                         <p class="f-32 fw-500 mb-3">Đánh giá khách hàng</p>
                         <div class="d-flex align-items-center justify-content-center border my-3">
                             <div class="px-3 text-center" style="min-width: 30%">
                                 <p class="f-24">
                                     <i class="fas fa-star mr-2" style="color: #F2C94C"></i>
-                                    <strong>4.8/5</strong>
+                                    <strong>@Model.ServiceDetail.AverageRating/5</strong>
                                 </p>
                                 <p class="f-16">
-                                    <strong>97</strong> Đánh giá và nhận xét
+                                    <strong>@Model.ServiceDetail.RatingCount</strong> Đánh giá và nhận xét
                                 </p>
                             </div>
 
@@ -1224,49 +928,46 @@
 
 
                         <div class="list_reviews">
-                            <div class="border p-3 mb-2">
-                                <div class="d-flex mb-2">
-                                    <img src="../frontend/img/gitiho_v2/placehover_18x18.png"
-                                         alt="" data-src="../caches/ua_small/users/1615037654.jpg"
-                                         class="my-auto rounded-circle lazyload mr-3" width="36px"
-                                         height="36px" />
-                                    <div class="user-right-new">
-                                        <p class="mb-0 f-16 user-name color_label fw-700">
-                                            <a target="_blank"
-                                               href="https://gitiho.com/u/79716-lam-phuong-chi">
-                                                Lâm Phượng
-                                                Chi
-                                            </a>
-                                        </p>
-                                        <div class="d-flex">
-                                            <div class="cou-rating mr-3">
-                                                <div class="gen-star">
-                                                    <div class="stars">
-                                                        <div class="stars-content">
-                                                            <div class="fas fa-star star-on"
-                                                                 style="width: 92px"></div>
-                                                            <div class="fas fa-star star-off"></div>
+                            @foreach(var ratingList in Model.ServiceRatingList){
+                                <div class="border p-3 mb-2">
+                                    <div class="d-flex mb-2">
+                                        <img src="../frontend/img/gitiho_v2/placehover_18x18.png"
+                                             alt="" data-src="../caches/ua_small/users/1615037654.jpg"
+                                             class="my-auto rounded-circle lazyload mr-3" width="36px"
+                                             height="36px" />
+                                        <div class="user-right-new">
+                                            <p class="mb-0 f-16 user-name color_label fw-700">
+                                                <a target="_blank"
+                                                   href="https://gitiho.com/u/79716-lam-phuong-chi">
+                                                    @ratingList.UserId
+                                                </a>
+                                            </p>
+                                            <div class="d-flex">
+                                                <div class="cou-rating mr-3">
+                                                    <div class="gen-star">
+                                                        <div class="stars">
+                                                            <div class="stars-content">
+                                                                <div class="fas fa-star star-on"
+                                                                     style="width: 92px"></div>
+                                                                <div class="fas fa-star star-off"></div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <p class="mb-0 color_text2">@ratingList.RatedAt</p>
                                             </div>
-                                            <p class="mb-0 color_text2">10:22 12/01/2023</p>
                                         </div>
+
+                                    </div>
+                                    <div class="f-16" style="word-break: break-word">
+                                        @ratingList.Comment
                                     </div>
 
+                                    <div class="mt-2">
+                                    </div>
                                 </div>
-                                <div class="f-16" style="word-break: break-word">
-                                    Đã từng mua khóa học tại website khác nhưng học buồn ngủ vì dạy quá nhiều về
-                                    lý thuyết từ chuyên ngành, học không nổi, còn giáo án ở Gitiho thì phù hợp
-                                    ứng dụng thực tế, có bài tập làm xuyên suốt khóa, kèm đáp án. Thầy có tốc độ
-                                    dạy vừa phải giọng đọc truyền tải tốt. Đây là khóa học nên mua với các bạn
-                                    cần bắt đầu tìm hiểu lại từ con số 0 excel.
-                                </div>
-
-                                <div class="mt-2">
-                                </div>
-                            </div>
-                            <div class="border p-3 mb-2">
+                            }
+                            @* <div class="border p-3 mb-2">
                                 <div class="d-flex mb-2">
                                     <img src="../frontend/img/gitiho_v2/placehover_18x18.png" alt=""
                                          data-src="../images/avatar/folder_89/bui-lan.png"
@@ -1420,7 +1121,7 @@
                                     từng loại cần được mô tả giải thích để học viên biết lý do tại sao cần công
                                     thức này khi áp dụng
                                 </div>
-                            </div>
+                            </div> *@
                         </div>
 
                         <div class="m-auto btn--more-review" style="max-width: 200px">
@@ -1734,33 +1435,12 @@
                     <div>
                         <div class="try-content">
                         </div>
-
+                        
                         <div class="py-3 px-3">
-                            <p class="color_primary mb-2">
-                                <i class="far fa-alarm-clock mr-2"></i> Giá ưu đãi chỉ còn <b>1 ngày</b>
-                            </p>
-
-                            <div class="d-flex justify-content-between">
-
+                            <div class="text-white-change f-26 fw-600">Giá dịch vụ</div>
+                            <div class="d-flex justify-content-between" style="margin-top:10px; margin-bottom:0px;">
                                 <div class="d-flex">
-                                    <p class="f-20 color_label mb-0 fw-700 sale-price-display-js"
-                                       data-price-old="199,000đ">199,000đ</p>
-                                    <span class="ml-3 color_text2 line-through my-auto">499,000đ</span>
-                                </div>
-
-                                <div class="text-right my-auto">
-                                    Tiết kiệm <b class="color_primary percent-display" data-percent-old="60%">
-                                        60
-                                        %
-                                    </b>
-                                </div>
-
-                            </div>
-
-                            <div class="mt-3">
-                                <div class="coupon-input-render">
-                                    <div>
-                                    </div>
+                                    <p class="f-20 color_label mb-0 fw-700 sale-price-display-js">@Model.ServiceDetail.Price<span>đ</span></p>
                                 </div>
                             </div>
 
@@ -1781,7 +1461,7 @@
                             </div>
                         </div>
 
-                        <div class="p-3" style="border-top: 1px solid rgba(193, 209, 231, 0.47)">
+                        @* <div class="p-3" style="border-top: 1px solid rgba(193, 209, 231, 0.47)">
                             <p class="fw-700 color_label mb-1">Tư vấn dịch vụ</p>
                             <p class="mb-3 color_label">
                                 Giải thích những thắc mắc về dịch vụ
@@ -1794,9 +1474,9 @@
                                     Tư vấn cho doanh nghiệp
                                 </button>
                             </a>
-                        </div>
+                        </div> *@
 
-                        <div class="form-code-discount p-3 d-flex flex-column"
+                        @* <div class="form-code-discount p-3 d-flex flex-column"
                              style="border-top: 1px solid rgba(193, 209, 231, 0.47)">
                             <div class="d-flex justify-content-center pointer" onclick="openCodeDiscount(this)">
                                 <u class="mb-0 pointer fw-700" style="color:#6CB1E5!important;">
@@ -1827,7 +1507,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> *@
                     </div>
                 </div>
             </div>
