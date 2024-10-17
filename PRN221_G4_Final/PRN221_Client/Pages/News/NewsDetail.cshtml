@@ -34,7 +34,7 @@
                                     <ul class="nav">
                                         <li>
                                             <i class="mr--8 fa fa-folder-open-o"></i>
-                                            <a href=""><span>@Model.CategoryNews.CategoryNewsName</span></a>
+                                            <a asp-page="/News/ListNews" asp-route-cat="@Model.NewsDetail.CategoryNewsId"><span>@Model.CategoryNews.CategoryNewsName</span></a>
                                             <a href="" style="cursor: text">
                                                 <img src="~/image/logo.jpg" alt="">
                                                 <span>Farm Family</span>
