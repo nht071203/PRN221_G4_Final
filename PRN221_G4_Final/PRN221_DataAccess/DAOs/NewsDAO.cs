@@ -38,18 +38,6 @@ namespace PRN221_DataAccess.DAOs
             return item;
         }
 
-        public async Task<CategoryNews> GetCategoryNewsById(int id)
-        {
-            var item = await _context.CategoryNews.FirstOrDefaultAsync(obj => obj.CategoryNewsId == id);
-            if (item == null) return null;
-            return item;
-        }
-
-        public async Task<IEnumerable<CategoryNews>> GetAllCategoryNews()
-        {
-            return await _context.CategoryNews.ToListAsync();
-        }
-
         public async Task Add(News item)
         {
             _context.News.Add(item);
@@ -79,20 +67,44 @@ namespace PRN221_DataAccess.DAOs
         public async Task<IEnumerable<(string Month, int Count)>> GetNewsCountByMonth()
         {
             var result = await _context.News
-                .Where(n => n.IsDeleted != true) // Lọc các bài viết không bị xóa
+                .Where(n => n.IsDeleted != true)
                 .GroupBy(n => new { n.CreatedAt.Year, n.CreatedAt.Month })
                 .Select(g => new
                 {
-                    Month = $"{g.Key.Year}-{g.Key.Month:D2}", // Định dạng năm-tháng
+                    Month = $"{g.Key.Year}-{g.Key.Month:D2}", 
                     Count = g.Count()
                 })
                 .ToListAsync();
 
-            // Chuyển đổi kết quả sang tuple
             return result.Select(item => (item.Month, item.Count));
         }
 
+        public async Task<int> GetTotalNewsCountAsync()
+        {
+            return await _context.News.CountAsync(n => n.IsDeleted == false);
+        }
         
+        public async Task<IEnumerable<News>> GetAllNewsByCategoryId(int categoryId)
+        {
+            return await _context.News.Where(n => n.CategoryNewsId == categoryId).ToListAsync();
+        }
+
+        public async Task<IEnumerable<News>> SearchNews(int category, string searchString)
+        {
+            var query = _context.News.AsQueryable();
+
+            if (category > 0)
+            {
+                query = query.Where(n => n.CategoryNewsId == category);
+            }
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                query = query.Where(n => n.Title.Contains(searchString) || n.Content.Contains(searchString));
+            }
+
+            return await query.ToListAsync();
+        }
 
     }
 }

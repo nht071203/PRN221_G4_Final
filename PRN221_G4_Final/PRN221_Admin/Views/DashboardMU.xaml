@@ -6,10 +6,10 @@
         xmlns:local="clr-namespace:PRN221_Admin"
            xmlns:oxy="http://oxyplot.org/wpf"
         mc:Ignorable="d"
-        Title="DashboardMU" Width="800" Height="600" MaxHeight="600">
+        Title="DashboardMU" Width="900" Height="600" MaxHeight="600">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="130" />
             <!-- Nửa bên trái -->
             <ColumnDefinition Width="Auto" />
             <!-- Nửa bên phải -->
@@ -19,7 +19,7 @@
             <Image Height="43"  Margin="1,10,0,0" Width="54" Source="/logo.jpg"/>
 
             <Button Content="Manage Expert" Margin="1,10,0,0" Height="35" Width="110" Background="#FF68AEDC"  FontWeight="Bold" Click="Button_ManageExpert"/>
-            <Button Content="Manage Farmer" Margin="1,10,0,0" Height="35" Width="110" Background="#FF7DE678" FontWeight="Bold"/>
+            <Button Content="Manage Farmer" Margin="1,10,0,0" Height="35" Width="110" Background="#FF7DE678" FontWeight="Bold" Click="Button_ManageFarmer"/>
             <Button Content="Manage News" Margin="1,10,0,0" Height="35" Width="110" Background="#FFD8E863" FontWeight="Bold" Click="Button_ManagerNew"/>
             <Button Content="Manage Post" Margin="1,10,0,0" Height="35" Width="110" Background="#FF6DDAD6" FontWeight="Bold"/>
             <Button Content="Thong Ke" Margin="1,10,0,0" Height="35" Width="110" Background="#FFF294FF" FontWeight="Bold" Click="Button_ThongKe"/>
@@ -28,8 +28,12 @@
             <Button Content="Log out" Margin="0,158,0,5" Height="35" Width="110" Background="#FFFFB3AD" FontWeight="Bold"/>
         </StackPanel>
 
-        <Grid Grid.Column="1" HorizontalAlignment="Left" Width="670">
-            <Frame NavigationUIVisibility="Hidden" x:Name="NoiDung" />
+        <Grid Grid.Column="1" HorizontalAlignment="Left" Width="800" Height="600">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="241*"/>
+                <RowDefinition Height="343*"/>
+            </Grid.RowDefinitions>
+            <Frame NavigationUIVisibility="Hidden" x:Name="NoiDung" Grid.RowSpan="2" />
             <!--<Grid.RowDefinitions>
                 <RowDefinition Height="421*"/>
                 <RowDefinition Height="6*"/>

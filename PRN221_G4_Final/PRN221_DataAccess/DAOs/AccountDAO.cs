@@ -14,7 +14,16 @@ namespace PRN221_DataAccess.DAOs
         {
             return await _context.Accounts.ToListAsync();
         }
+        private readonly Prn221Context _context;
+        public AccountDAO(Prn221Context context)
+        {
+            _context = context;
+        }
 
+        public AccountDAO()
+        {
+            _context = new Prn221Context();
+        }
         public async Task<Account?> getByUsername(string username)
         {
             var account = await _context.Accounts.SingleOrDefaultAsync(acc => acc.Username.Equals(username));
@@ -23,7 +32,7 @@ namespace PRN221_DataAccess.DAOs
         }
         public async Task<IEnumerable<Account>> GetListAccountByRoleId(int role_id)
         {
-            var item = await _context.Accounts.Where(c => c.RoleId == role_id).ToListAsync();
+            var item = await _context.Accounts.Where(c => c.RoleId == role_id && c.IsDeleted == false).ToListAsync();
             if (item == null) return null;
             return item;
         }
@@ -48,23 +57,38 @@ namespace PRN221_DataAccess.DAOs
             return item;
         }
 
+
         public async Task Update(Account item)
         {
             var existingItem = await GetById(item.AccountId);
             if (existingItem == null) return;
 
+            existingItem.IsDeleted = true;
+
             _context.Entry(existingItem).CurrentValues.SetValues(item);
             await _context.SaveChangesAsync();
         }
 
-        public async Task Delete(int id)
+        public async Task Delete(Account item)
         {
-            var item = await GetById(id);
-            if (item == null) return;
+            var existingItem = await GetById(item.AccountId);
+            if (existingItem == null) return;
 
-            _context.Accounts.Remove(item);
+            existingItem.IsDeleted = true;
+
+            _context.Entry(existingItem).CurrentValues.SetValues(item);
             await _context.SaveChangesAsync();
         }
+
+
+   
+        public async Task<int> GetTotalFarmerCountAsync()
+        {
+            return await _context.Accounts.CountAsync(n => n.IsDeleted == false && n.RoleId == 1);
+        }
+
+
+
 
         public async Task<Account> GetByFbId(string fbId)
         {
@@ -72,5 +96,6 @@ namespace PRN221_DataAccess.DAOs
             if (item == null) return null;
             return item;
         }
+
     }
 }

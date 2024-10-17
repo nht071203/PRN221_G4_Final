@@ -100,6 +100,10 @@ builder.Services.AddScoped<NewsDAO>();
 builder.Services.AddScoped<NewsService>();
 builder.Services.AddScoped<NewsRepository>();
 
+builder.Services.AddScoped<ICategoryNewsRepository, CategoryNewsRepository>();
+builder.Services.AddScoped<CategoryNewsDAO>();
+builder.Services.AddScoped<CategoryNewsRepository>();
+
 builder.Services.AddScoped<IRequirementService, RequirementService>();
 builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
 builder.Services.AddScoped<ServiceDAO>();
