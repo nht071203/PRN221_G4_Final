@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PRN221_BusinessLogic.Interface;
+using PRN221_Client.Pagination;
+using System;
 namespace PRN221_Client.Pages.News
 {
     public class ListNewsModel : PageModel
@@ -15,32 +17,38 @@ namespace PRN221_Client.Pages.News
         public IEnumerable<PRN221_Models.Models.News> NewsList { get; set; }
         public IEnumerable<PRN221_Models.Models.News> NewsListByCategory { get; set; }
         public IEnumerable<PRN221_Models.Models.CategoryNews> CategoryNewsList { get; set; }
-        public async Task OnGetAsync(int? id)
+        public string SearchKey { get; set; }
+        public async Task OnGetAsync(int? cat, string searchKey)
         {
-            if (id.HasValue)
+            if (!string.IsNullOrEmpty(searchKey) || cat.HasValue)
             {
-                // Gọi phương thức với categoryId.Value
-                NewsListByCategory = await _newsService.GetAllNewsByCategoryId(id.Value);
-                //if (NewsListByCategory != null)
-                //{
-
-                //}
-                NewsList = NewsListByCategory;
+                SearchKey = searchKey;
+                if (string.IsNullOrEmpty(searchKey) && cat.HasValue)
+                {
+                    // Gọi phương thức với categoryId.Value
+                    NewsListByCategory = await _newsService.GetAllNewsByCategoryId(cat.Value);
+                    NewsList = NewsListByCategory;
+                }
+                else
+                {
+                    NewsList = await _newsService.SearchNews(cat ?? 0, searchKey);
+                    if (NewsList.Count() == 0)
+                    {
+                        Console.WriteLine("No category or search key provided.");
+                        TempData["Message"] = "No category or search key provided.";
+                    }
+                }
             }
             else
             {
                 NewsList = await _newsService.GetAllNews();
             }
             CategoryNewsList = await _newsService.GetCategoriesHaveNews();
-            //foreach (var news in NewsList)
-            //{
-            //    Console.WriteLine(news.Title);
-            //}
         }
         public async Task<string> GetCategoryName(int categoryId)
         {
             var category = await _newsService.GetCategoryNewsById(categoryId);
-            return category?.CategoryNewsName ?? "Unknown"; // Replace 'Name' with the actual property name for category
+            return category?.CategoryNewsName ?? "Unknown";
         }
     }
 }

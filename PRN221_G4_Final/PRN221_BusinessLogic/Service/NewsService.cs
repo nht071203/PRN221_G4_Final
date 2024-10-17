@@ -51,5 +51,7 @@ namespace PRN221_BusinessLogic.Service
         {
             return await _newsRepo.GetTotalNewsRepo();
         }
+
+        public async Task<IEnumerable<News>> SearchNews(int category, string searchString) => await _newsRepo.SearchNews(category, searchString);
     }
 }

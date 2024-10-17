@@ -168,7 +168,7 @@
                                 @foreach (var category in categories)
                                 {
                                     <li>
-                                        <a asp-page="/News/ListNews" asp-route-id="@category.CategoryNewsId">@category.CategoryNewsName</a>
+                                        <a asp-page="/News/ListNews" asp-route-cat="@category.CategoryNewsId">@category.CategoryNewsName</a>
                                     </li>
                                 }
                             </ul>
@@ -470,6 +470,8 @@
             }
         }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
