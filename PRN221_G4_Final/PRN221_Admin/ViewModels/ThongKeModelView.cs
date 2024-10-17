@@ -42,6 +42,8 @@ namespace PRN221_Admin.ViewModels
             var newsCountByMonth = await NewsDAO.Instance.GetNewsCountByMonth();
             TotalNewsCount = await NewsDAO.Instance.GetTotalNewsCountAsync();
             TotalFarmerCount = await AccountDAO.Instance.GetTotalFarmerCountAsync();
+            TotalExpertCount = await AccountDAO.Instance.GetTotaExpertCountAsync();
+            TotalServiceCount = await ServiceDAO.Instance.GetTotalServicesCount();
 
 
             var lineSeries = new LineSeries
@@ -90,7 +92,35 @@ namespace PRN221_Admin.ViewModels
                 }
             }
         }
+        private int _totalExpertCount; // Trường riêng để lưu tổng số lượng bài viết
 
+        public int TotalExpertCount
+        {
+            get { return _totalExpertCount; }
+            set
+            {
+                if (_totalExpertCount != value)
+                {
+                    _totalExpertCount = value;
+                    OnPropertyChanged(nameof(TotalExpertCount)); // Thông báo cho UI rằng giá trị đã thay đổi
+                }
+            }
+        }
+
+        private int _totalServiceCount; // Trường riêng để lưu tổng số lượng bài viết
+
+        public int TotalServiceCount
+        {
+            get { return _totalServiceCount; }
+            set
+            {
+                if (_totalServiceCount != value)
+                {
+                    _totalServiceCount = value;
+                    OnPropertyChanged(nameof(TotalServiceCount)); // Thông báo cho UI rằng giá trị đã thay đổi
+                }
+            }
+        }
 
     }
 }

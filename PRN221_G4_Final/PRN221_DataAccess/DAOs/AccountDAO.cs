@@ -87,6 +87,10 @@ namespace PRN221_DataAccess.DAOs
             return await _context.Accounts.CountAsync(n => n.IsDeleted == false && n.RoleId == 1);
         }
 
+        public async Task<int> GetTotaExpertCountAsync()
+        {
+            return await _context.Accounts.CountAsync(n => n.IsDeleted == false && n.RoleId == 2);
+        }
 
 
 
