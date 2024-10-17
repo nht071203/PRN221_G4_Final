@@ -105,136 +105,74 @@
                         <!-- Post Author End -->
                         <!-- Related Posts Start -->
                         <div class="related--posts pt--40">
-                            <h4 class="h4 pb--20">You May Also Like It</h4>
-
+                            <h4 class="h4 pb--20">Bài viết mới nhất</h4>
                             <div class="row AdjustRow" style="position: relative; height: 499.35px;">
-                                <div class="col-md-6 pb--30" style="position: absolute; left: 0px; top: 0px;">
-                                    <!-- Post Item Start -->
-                                    <div class="post--item">
-                                        <!-- Post Image Start -->
-                                        <div class="post--img">
-                                            <a href=""><img src="~/image/background2.jpeg" alt=""></a>
-                                        </div>
-                                        <!-- Post Image End -->
-                                        <!-- Post Info Start -->
-                                        <div class="post--info">
-                                            <!-- Post Meta Start -->
-                                            <div class="post--meta">
-                                                <ul class="nav">
-                                                    <li>
-                                                        <a href="" style="cursor: text">
-                                                            <img src="~/image/logo.jpg" alt="">
-                                                            <span>Tên người viết</span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="" style="cursor: text">
-                                                            <i class="mr--8 fa fa-calendar-o"></i>
-                                                            <span>Ngày viết</span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
+                                @foreach (var news in Model.List2News)
+                                {
+                                    <div class="col-md-6 pb--30" style="position: absolute; left: 0px; top: 0px;">
+                                        <!-- Post Item Start -->
+                                        <div class="post--item">
+                                            <!-- Post Image Start -->
+                                            <div class="post--img">
+                                                <a asp-page="/News/NewsDetail" asp-route-id="@news.NewsId" ><img src="~/image/background2.jpeg" alt=""></a>
                                             </div>
-                                            <!-- Post Meta End -->
-                                            <!-- Post Title Start -->
-                                            <div class="post--title mt--10">
-                                                <h3 class="h6">
-                                                    <a href="" class="btn-link">
-                                                        TIêu đề bài viết
-                                                    </a>
-                                                </h3>
-                                            </div>
-                                            <!-- Post Title End -->
-                                            <!-- Post Meta Start -->
-                                            <div class="post--meta">
-                                                <ul class="nav">
-                                                    <li>
-                                                        <i class="mr--8 fa fa-folder-open-o"></i>
+                                            <!-- Post Image End -->
+                                            <!-- Post Info Start -->
+                                            <div class="post--info">
+                                                <!-- Post Meta Start -->
+                                                <div class="post--meta">
+                                                    <ul class="nav">
+                                                        <li>
+                                                            <a href="" style="cursor: text">
+                                                                <img src="~/image/logo.jpg" alt="">
+                                                                <span>Farm Family</span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="" style="cursor: text">
+                                                                <i class="mr--8 fa fa-calendar-o"></i>
+                                                                <span>@news.CreatedAt</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <!-- Post Meta End -->
+                                                <!-- Post Title Start -->
+                                                <div class="post--title mt--10">
+                                                    <h3 class="h6">
+                                                        <a href="" class="btn-link">
+                                                            @news.Title
+                                                        </a>
+                                                    </h3>
+                                                </div>
+                                                <!-- Post Title End -->
+                                                <!-- Post Meta Start -->
+                                                <div class="post--meta">
+                                                    <ul class="nav">
+                                                        <li>
+                                                            <i class="mr--8 fa fa-folder-open-o"></i>
 
-                                                        <a href=""><span>Category bài viết</span></a>
-                                                    </li>
-                                                </ul>
+                                                            <a asp-page="/News/NewsList" asp-route-id="@news.CategoryNewsId"><span>Category bài viết</span></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <!-- Post Meta End -->
+                                                <!-- Post Content Start -->
+                                                @* <div class="post--content text-darker mt--10">
+                                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley.</p>
+                                                </div> *@
+                                                <!-- Post Content End -->
+                                                <!-- Post Action Start -->
+                                                <div class="post--action text-darkest mt--8">
+                                                    <a asp-page="/News/NewsDetail" asp-route-id="@news.NewsId" class="btn-link">Chi tiết tin tức<i class="ml--10 text-primary fa fa-caret-right"></i></a>
+                                                </div>
+                                                <!-- Post Action End -->
                                             </div>
-                                            <!-- Post Meta End -->
-                                            <!-- Post Content Start -->
-                                            <div class="post--content text-darker mt--10">
-                                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley.</p>
-                                            </div>
-                                            <!-- Post Content End -->
-                                            <!-- Post Action Start -->
-                                            <div class="post--action text-darkest mt--8">
-                                                <a href="" class="btn-link">bài viết chi tiết<i class="ml--10 text-primary fa fa-caret-right"></i></a>
-                                            </div>
-                                            <!-- Post Action End -->
+                                            <!-- Post Info End -->
                                         </div>
-                                        <!-- Post Info End -->
+                                        <!-- Post Item End -->
                                     </div>
-                                    <!-- Post Item End -->
-                                </div>
-
-                                <div class="col-md-6 pb--30" style="position: absolute; left: 0px; top: 0px;">
-                                    <!-- Post Item Start -->
-                                    <div class="post--item">
-                                        <!-- Post Image Start -->
-                                        <div class="post--img">
-                                            <a href=""><img src="~/image/background2.jpeg" alt=""></a>
-                                        </div>
-                                        <!-- Post Image End -->
-                                        <!-- Post Info Start -->
-                                        <div class="post--info">
-                                            <!-- Post Meta Start -->
-                                            <div class="post--meta">
-                                                <ul class="nav">
-                                                    <li>
-                                                        <a href="" style="cursor: text">
-                                                            <img src="~/image/logo.jpg" alt="">
-                                                            <span>Tên người viết</span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="" style="cursor: text">
-                                                            <i class="mr--8 fa fa-calendar-o"></i>
-                                                            <span>Ngày viết</span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <!-- Post Meta End -->
-                                            <!-- Post Title Start -->
-                                            <div class="post--title mt--10">
-                                                <h3 class="h6">
-                                                    <a href="https://themelooks.us/demo/socifly/html/blog-details.html#" class="btn-link">
-                                                        TIêu đề bài viết
-                                                    </a>
-                                                </h3>
-                                            </div>
-                                            <!-- Post Title End -->
-                                            <!-- Post Meta Start -->
-                                            <div class="post--meta">
-                                                <ul class="nav">
-                                                    <li>
-                                                        <i class="mr--8 fa fa-folder-open-o"></i>
-
-                                                        <a href="https://themelooks.us/demo/socifly/html/blog-details.html#"><span>Category bài viết</span></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <!-- Post Meta End -->
-                                            <!-- Post Content Start -->
-                                            <div class="post--content text-darker mt--10">
-                                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley.</p>
-                                            </div>
-                                            <!-- Post Content End -->
-                                            <!-- Post Action Start -->
-                                            <div class="post--action text-darkest mt--8">
-                                                <a href="https://themelooks.us/demo/socifly/html/blog-details.html#" class="btn-link">bài viết chi tiết<i class="ml--10 text-primary fa fa-caret-right"></i></a>
-                                            </div>
-                                            <!-- Post Action End -->
-                                        </div>
-                                        <!-- Post Info End -->
-                                    </div>
-                                    <!-- Post Item End -->
-                                </div>
+                                }
                             </div>
                         </div>
                         <!-- Related Posts End -->

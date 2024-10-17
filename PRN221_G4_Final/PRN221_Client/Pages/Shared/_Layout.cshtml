@@ -6,8 +6,7 @@
 @{
     IEnumerable<PRN221_Models.Models.CategoryNews> categories;
     var isLoggedIn = HttpContextAccessor.HttpContext.Session.GetString("UserSession") != null;
-<<<<<<< HEAD
-    categories = await _newsService.GetAllCategoryNews();
+    categories = await _newsService.GetCategoriesHaveNews();
     int? getIdAccount = null;
     if (HttpContextAccessor.HttpContext.Session.GetString("AccountID") != null)
     {
@@ -19,9 +18,6 @@
         // Retrieve the account based on the account ID
         getAcc = await _acccountService.GetByIdAccount(getIdAccount.Value);
     }
-=======
-    categories = await _newsService.GetCategoriesHaveNews();
->>>>>>> main
 }
 
 <!DOCTYPE html>

@@ -38,7 +38,7 @@ namespace PRN221_DataAccess.DAOs
         }
         public async Task<Account?> GetAccountByEmail(string email)
         {
-            var account = await _context.Accounts.SingleOrDefaultAsync(acc => acc.Email.Equals(email));
+            var account = await _context.Accounts.FirstOrDefaultAsync(acc => acc.Email.Equals(email));
             if (account == null) return null;
             return account;
         }

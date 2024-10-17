@@ -24,7 +24,7 @@ namespace PRN221_DataAccess.DAOs
 
         public async Task<IEnumerable<News>> GetAllNews()
         {
-            return await _context.News.ToListAsync();
+            return await _context.News.Where(n => n.IsDeleted == false).ToListAsync();
         }
         public async Task<IEnumerable<News>> GetAll()
         {
@@ -104,6 +104,21 @@ namespace PRN221_DataAccess.DAOs
             }
 
             return await query.ToListAsync();
+        }
+
+        public async Task<IEnumerable<News>> GetNewsPaged(int pageNumber, int pageSize)
+        {
+            return await _context.News
+                .Where(s => s.IsDeleted == false) // Adjust based on your business logic
+                .OrderBy(s => s.NewsId) // Ensure consistent ordering
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+        }
+
+        public async Task<int> GetTotalNewsCount()
+        {
+            return await _context.News.CountAsync(s => s.IsDeleted == false);
         }
 
     }
