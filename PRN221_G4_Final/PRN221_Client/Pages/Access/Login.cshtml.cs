@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Facebook;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -73,6 +74,7 @@ namespace PRN221_Client.Pages.Access
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             HttpContext.Session.Remove("UserSession");
+            HttpContext.Session.Remove("AccountID");
 
             await HttpContext.SignOutAsync("CookiesPRN221");
 
@@ -168,7 +170,7 @@ namespace PRN221_Client.Pages.Access
 
         public async Task<IActionResult> OnGetExternalLoginCallbackAsync()
         {
-            var authenticateResult = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            var authenticateResult = await HttpContext.AuthenticateAsync(FacebookDefaults.AuthenticationScheme);
 
             if (!authenticateResult.Succeeded || authenticateResult?.Principal == null)
             {

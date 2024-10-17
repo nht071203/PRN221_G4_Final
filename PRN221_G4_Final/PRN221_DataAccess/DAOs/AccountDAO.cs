@@ -63,8 +63,6 @@ namespace PRN221_DataAccess.DAOs
             var existingItem = await GetById(item.AccountId);
             if (existingItem == null) return;
 
-            existingItem.IsDeleted = true;
-
             _context.Entry(existingItem).CurrentValues.SetValues(item);
             await _context.SaveChangesAsync();
         }
@@ -97,5 +95,12 @@ namespace PRN221_DataAccess.DAOs
             return item;
         }
 
+        // Lấy account bằng gmail để reset password
+        public async Task<Account?> GetAccountByEmailForReset(string email)
+        {
+            var account = await _context.Accounts.SingleOrDefaultAsync(acc => acc.Email.Equals(email) && acc.IsDeleted == false && acc.FacebookId == null);
+            if (account == null) return null;
+            return account;
+        }
     }
 }
