@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Facebook;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Mvc;
@@ -8,9 +9,12 @@ using PRN221_BusinessLogic.Interface;
 using PRN221_BusinessLogic.Service;
 using PRN221_DataAccess;
 using PRN221_DataAccess.DAOs;
+using PRN221_Models.DTO;
 using PRN221_Models.Models;
 using PRN221_Repository.AccountRepo;
 using PRN221_Repository.NewsRepo;
+using PRN221_Repository.PostImageRepo;
+using PRN221_Repository.PostsRepo;
 using PRN221_Repository.RoleRepo;
 using PRN221_Repository.ServiceRepo;
 
@@ -31,10 +35,18 @@ builder.Services.AddAuthentication(options =>
 {
     options.LoginPath = "/Access/Login";
     options.LogoutPath = "/Access/Logout";
+    options.Cookie.Path = "/";
     options.AccessDeniedPath = "/Access/Login";
     options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+<<<<<<< HEAD
 })
 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+=======
+    options.Cookie.SecurePolicy = CookieSecurePolicy.None;
+});
+
+builder.Services.AddAuthentication(options =>
+>>>>>>> main
 {
     options.LoginPath = "/Access/Login";
     options.LogoutPath = "/Access/Logout";
@@ -121,7 +133,17 @@ builder.Services.AddScoped<Service>();
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<FirebaseConfig>();
 
+<<<<<<< HEAD
 builder.Services.AddScoped<IEmailSender, SmtpEmailSender>();
+=======
+builder.Services.AddScoped<IPostService, PostService>();
+builder.Services.AddScoped<IPostRepository, PostRepository>();
+builder.Services.AddScoped<PostDAO>();
+builder.Services.AddScoped<PostDTO>();
+
+builder.Services.AddScoped<IPostImageRepository, PostImageRepository>();
+builder.Services.AddScoped<PostImageDAO>();
+>>>>>>> main
 
 builder.Services.AddSession();
 builder.Services.AddDistributedMemoryCache(); // For storing session data in memory
@@ -140,7 +162,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseSession();
+
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapRazorPages();
 app.Run();

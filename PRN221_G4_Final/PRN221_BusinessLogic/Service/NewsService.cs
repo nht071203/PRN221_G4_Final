@@ -53,5 +53,9 @@ namespace PRN221_BusinessLogic.Service
         }
 
         public async Task<IEnumerable<News>> SearchNews(int category, string searchString) => await _newsRepo.SearchNews(category, searchString);
+
+        public Task<IEnumerable<News>> GetNewsPaged(int pageNumber, int pageSize) => _newsRepo.GetNewsPaged(pageNumber, pageSize);  
+
+        public Task<int> GetTotalNewsCount() => _newsRepo.GetTotalNewsCount();
     }
 }

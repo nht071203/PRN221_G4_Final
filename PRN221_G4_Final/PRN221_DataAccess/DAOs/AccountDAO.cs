@@ -10,10 +10,7 @@ namespace PRN221_DataAccess.DAOs
 {
     public class AccountDAO : SingletonBase<AccountDAO>
     {
-        public async Task<IEnumerable<Account>> getAll()
-        {
-            return await _context.Accounts.ToListAsync();
-        }
+        
         private readonly Prn221Context _context;
         public AccountDAO(Prn221Context context)
         {
@@ -24,6 +21,12 @@ namespace PRN221_DataAccess.DAOs
         {
             _context = new Prn221Context();
         }
+
+        public async Task<IEnumerable<Account>> getAll()
+        {
+            return await _context.Accounts.ToListAsync();
+        }
+
         public async Task<Account?> getByUsername(string username)
         {
             var account = await _context.Accounts.SingleOrDefaultAsync(acc => acc.Username.Equals(username));
@@ -38,12 +41,12 @@ namespace PRN221_DataAccess.DAOs
         }
         public async Task<Account?> GetAccountByEmail(string email)
         {
-            var account = await _context.Accounts.SingleOrDefaultAsync(acc => acc.Email.Equals(email));
+            var account = await _context.Accounts.FirstOrDefaultAsync(acc => acc.Email.Equals(email));
             if (account == null) return null;
             return account;
         }
 
-        public async Task<Account> GetById(int id)
+        public async Task<Account> GetById(int? id)
         {
             var item = await _context.Accounts.FirstOrDefaultAsync(c => c.AccountId == id);
             if (item == null) return null;
@@ -77,16 +80,11 @@ namespace PRN221_DataAccess.DAOs
             _context.Entry(existingItem).CurrentValues.SetValues(item);
             await _context.SaveChangesAsync();
         }
-
-
    
         public async Task<int> GetTotalFarmerCountAsync()
         {
             return await _context.Accounts.CountAsync(n => n.IsDeleted == false && n.RoleId == 1);
         }
-
-
-
 
         public async Task<Account> GetByFbId(string fbId)
         {
@@ -95,6 +93,7 @@ namespace PRN221_DataAccess.DAOs
             return item;
         }
 
+<<<<<<< HEAD
         // Lấy account bằng gmail để reset password
         public async Task<Account?> GetAccountByEmailForReset(string email)
         {
@@ -102,5 +101,12 @@ namespace PRN221_DataAccess.DAOs
             if (account == null) return null;
             return account;
         }
+=======
+        public async Task<string?> GetFullNameByUsername(string username)
+        {
+            return await _context.Accounts.Where(a => a.Username.Equals(username)).Select(f => f.FullName).FirstOrDefaultAsync();
+        }
+
+>>>>>>> main
     }
 }
