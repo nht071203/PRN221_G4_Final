@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PRN221_BusinessLogic.Interface;
 using PRN221_BusinessLogic.Service;
@@ -6,6 +7,7 @@ using PRN221_Models.Models;
 
 namespace PRN221_Client.Pages.News
 {
+    [Authorize]
     public class NewsDetailModel : PageModel
     {
         private readonly INewsService _newsService;
