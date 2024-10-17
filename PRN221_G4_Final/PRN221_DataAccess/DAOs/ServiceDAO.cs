@@ -49,5 +49,56 @@ namespace PRN221_DataAccess.DAOs
         {
             return await _context.ServiceRatings.Where(sr => sr.ServiceId == id).ToListAsync();
         }
+
+		// Lấy danh sách dịch vụ theo accountId
+		public async Task<IEnumerable<Service>> GetAllServiceByAccId(int id)
+		{
+			return await _context.Services.Where(c => c.CreatorId == id && c.IsDeleted == false).ToListAsync();
+		}
+
+        // Tạo dịch vụ
+        public async Task<Service> AddService(Service item)
+        {
+            _context.Services.Add(item);
+            await _context.SaveChangesAsync();
+            return item;
+        }
+
+        // Chỉnh sửa dịch vụ
+        /*public async Task UpdateService(Service item)
+        {
+            var existingItem = await GetById(item.ServiceId);
+            if (existingItem == null) return;
+
+            _context.Entry(existingItem).CurrentValues.SetValues(item);
+            await _context.SaveChangesAsync();
+        }*/
+
+        public async Task<Service> UpdateService(Service item)
+        {
+            var existingItem = await GetById(item.ServiceId);
+            if (existingItem == null) return null;
+
+            _context.Entry(existingItem).CurrentValues.SetValues(item);
+            await _context.SaveChangesAsync();
+            return item;
+
+        }
+
+        // Xóa dịch vụ
+        public async Task DeleteService(int id)
+        {
+            var item = await GetById(id);
+            if (item == null) return;
+
+            _context.Services.Remove(item);
+            await _context.SaveChangesAsync();
+        }
+
+        // Lấy danh sách dịch vụ không xóa
+        public async Task<IEnumerable<Service>> GetAllServiceAvailable()
+        {
+            return await _context.Services.Where(c => c.IsDeleted == false).ToListAsync();
+        }
     }
 }

@@ -64,8 +64,9 @@ namespace PRN221_Client.Pages.Access
 
             await HttpContext.SignInAsync("CookiesPRN221", new ClaimsPrincipal(claimsIdentity), authProperties);
             HttpContext.Session.SetString("UserSession", Username);
+			HttpContext.Session.SetInt32("AccountID", account.AccountId);
 
-            return RedirectToPage("/Index");
+			return RedirectToPage("/Index");
         }
 
         public async Task<IActionResult> OnGetLogout()
@@ -169,8 +170,9 @@ namespace PRN221_Client.Pages.Access
         {
             var authenticateResult = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-            if (!authenticateResult.Succeeded)
+            if (!authenticateResult.Succeeded || authenticateResult?.Principal == null)
             {
+                Console.WriteLine("Đăng nhập Fb thất bại");
                 // Authentication failed, return to login page
                 return RedirectToPage("/Access/Login");
             }

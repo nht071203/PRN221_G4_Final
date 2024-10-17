@@ -31,7 +31,7 @@ namespace PRN221_Client.Pages.Service
             int page = 1;
 
             // Lấy danh sách tất cả dịch vụ
-            var allServices = await _requirementServices.GetAllService();
+            var allServices = await _requirementServices.GetAllServiceAvailable();
 
             // Tính tổng số trang
             int totalServices = allServices.Count();
