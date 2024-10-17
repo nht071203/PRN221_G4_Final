@@ -35,6 +35,7 @@ namespace PRN221_BusinessLogic.Service
         {
             return await _accountRepo.GetByUsername(username);
         }
+
         public async Task AddAccount(Account item)
         {
             await _accountRepo.Add(item);
@@ -86,7 +87,7 @@ namespace PRN221_BusinessLogic.Service
             };
 
             await _accountRepo.Add(newAcc);
-       }
+        }
 
         public async Task<string?> GetFullNameByUsername(string username)
         {

@@ -65,12 +65,10 @@ namespace PRN221_Client.Pages.Access
                 ExpiresUtc = DateTime.UtcNow.AddMinutes(30)
             };
 
-            
-
             await HttpContext.SignInAsync("CookiesPRN221", claimsPrincipal, authProperties);
             HttpContext.Session.SetString("UserSession", Username);
             HttpContext.Session.SetString("UserRole", role.RoleName);
-            
+            HttpContext.Session.SetInt32("AccountID", account.AccountId);
             return RedirectToPage("/Index");
         }
 
@@ -175,8 +173,9 @@ namespace PRN221_Client.Pages.Access
         {
             var authenticateResult = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-            if (!authenticateResult.Succeeded)
+            if (!authenticateResult.Succeeded || authenticateResult?.Principal == null)
             {
+                Console.WriteLine("Đăng nhập Fb thất bại");
                 // Authentication failed, return to login page
                 return RedirectToPage("/Access/Login");
             }

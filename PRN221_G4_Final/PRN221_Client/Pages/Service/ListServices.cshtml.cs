@@ -10,7 +10,7 @@ namespace PRN221_Client.Pages.Service
     {
         private readonly IRequirementService _requirementServices;
         private readonly IAccountService _accountService;
-        private const int PageSize = 8; // Số dịch vụ trong 1 page
+        private const int PageSize = 2; // Số dịch vụ trong 1 page
 
         public ListServicesModel(IRequirementService requirementService, IAccountService accountService)
         {
@@ -31,7 +31,7 @@ namespace PRN221_Client.Pages.Service
             int page = 1;
 
             // Lấy danh sách tất cả dịch vụ
-            var allServices = await _requirementServices.GetAllService();
+            var allServices = await _requirementServices.GetAllServiceAvailable();
 
             // Tính tổng số trang
             int totalServices = allServices.Count();

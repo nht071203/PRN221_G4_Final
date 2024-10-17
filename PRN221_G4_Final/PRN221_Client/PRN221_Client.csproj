@@ -26,10 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Account\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\PRN221_BusinessLogic\PRN221_BusinessLogic.csproj" />
     <ProjectReference Include="..\PRN221_DataAccess\PRN221_DataAccess.csproj" />
     <ProjectReference Include="..\PRN221_Models\PRN221_Models.csproj" />
