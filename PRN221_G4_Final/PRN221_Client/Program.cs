@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Facebook;
 using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PRN221_BusinessLogic.Interface;
 using PRN221_BusinessLogic.Service;
@@ -26,7 +27,7 @@ builder.Services.AddAuthentication("CookiesPRN221").AddCookie("CookiesPRN221", o
 {
     options.LoginPath = "/Access/Login";
     options.LogoutPath = "/Access/Logout";
-    options.AccessDeniedPath = "/Access/AccessDenied";
+    options.AccessDeniedPath = "/Access/Login";
     options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
 });
 
@@ -57,6 +58,16 @@ AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
      options.Fields.Add("name");     // Name
      options.Fields.Add("email");    // Email
      options.Fields.Add("picture");  // Avatar (Profile Picture)
+
+
+     // Thêm sự kiện bắt trường hợp thoát đăng nhập Fb
+     options.Events.OnRemoteFailure = context =>
+     {
+         context.Response.Redirect("/Access/Login");
+         context.HandleResponse();
+
+         return Task.FromResult(0);
+     };
  });
 
 
