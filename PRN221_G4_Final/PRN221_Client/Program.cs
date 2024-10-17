@@ -38,20 +38,14 @@ builder.Services.AddAuthentication(options =>
     options.Cookie.Path = "/";
     options.AccessDeniedPath = "/Access/Login";
     options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
-<<<<<<< HEAD
-})
-.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
-=======
     options.Cookie.SecurePolicy = CookieSecurePolicy.None;
 });
 
 builder.Services.AddAuthentication(options =>
->>>>>>> main
 {
-    options.LoginPath = "/Access/Login";
-    options.LogoutPath = "/Access/Logout";
-    options.AccessDeniedPath = "/Access/Login";
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = FacebookDefaults.AuthenticationScheme;
 })
 .AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
 {

@@ -93,7 +93,7 @@ namespace PRN221_DataAccess.DAOs
             return item;
         }
 
-<<<<<<< HEAD
+
         // Lấy account bằng gmail để reset password
         public async Task<Account?> GetAccountByEmailForReset(string email)
         {
@@ -101,12 +101,11 @@ namespace PRN221_DataAccess.DAOs
             if (account == null) return null;
             return account;
         }
-=======
+
         public async Task<string?> GetFullNameByUsername(string username)
         {
             return await _context.Accounts.Where(a => a.Username.Equals(username)).Select(f => f.FullName).FirstOrDefaultAsync();
         }
 
->>>>>>> main
     }
 }
