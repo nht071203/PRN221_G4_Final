@@ -8,9 +8,12 @@ using PRN221_BusinessLogic.Interface;
 using PRN221_BusinessLogic.Service;
 using PRN221_DataAccess;
 using PRN221_DataAccess.DAOs;
+using PRN221_Models.DTO;
 using PRN221_Models.Models;
 using PRN221_Repository.AccountRepo;
 using PRN221_Repository.NewsRepo;
+using PRN221_Repository.PostImageRepo;
+using PRN221_Repository.PostsRepo;
 using PRN221_Repository.RoleRepo;
 using PRN221_Repository.ServiceRepo;
 
@@ -115,6 +118,13 @@ builder.Services.AddScoped<Service>();
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<FirebaseConfig>();
 
+builder.Services.AddScoped<IPostService, PostService>();
+builder.Services.AddScoped<IPostRepository, PostRepository>();
+builder.Services.AddScoped<PostDAO>();
+builder.Services.AddScoped<PostDTO>();
+
+builder.Services.AddScoped<IPostImageRepository, PostImageRepository>();
+builder.Services.AddScoped<PostImageDAO>();
 
 builder.Services.AddSession();
 builder.Services.AddDistributedMemoryCache(); // For storing session data in memory

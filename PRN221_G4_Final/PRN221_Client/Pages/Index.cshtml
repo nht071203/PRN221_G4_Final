@@ -77,138 +77,39 @@
 
                     <!-- Activity List Start -->
                     <div class="activity--list">
-
-                        <!-- Activity Items Start -->
                         <ul class="activity--items nav">
 
-                            @* sử dụng khi đăng 1 ảnh *@
-                            <li>
+                            @foreach(var post in Model.Posts)
+                            {
                                 <!-- Activity Item Start -->
-                                <div class="activity--item">
-                                    @* AVATAR *@
-                                    <div class="activity--avatar">
-                                        <a href="member-activity-personal.html">
-                                            <img src="img/activity-img/avatar-01.jpg" alt="">
-                                        </a>
-                                    </div>
-                                    @* CONTENT A POST *@
-                                    <div class="activity--info fs--14">
-                                        <div class="activity--header">
-                                            <p><a href="">Eileen K. Ruiz</a> update her profile picture</p>
+                                <li>
+                                    <div class="activity--item">
+                                        <div class="activity--avatar">
+                                            <a href="member-activity-personal.html">
+                                                <img src="@post.account.Avatar" alt="" onerror="this.onerror=null; this.src='https://firebasestorage.googleapis.com/v0/b/prn221-69738.appspot.com/o/image%2Fuser.png?alt=media&token=e669a837-b9c8-4983-b2bd-8eb5c091d48f';">
+                                            </a>
                                         </div>
 
-                                        <div class="activity--meta fs--12">
-                                            <p><i class="fa mr--8 fa-clock-o"></i>Yeasterday at 08:20 am</p>
-                                        </div>
-
-                                        <div class="activity--content">
-                                            <div class="img--embed">
-                                                <img src="img/activity-img/profile-pic-01.jpg" alt="">
+                                        <div class="activity--info fs--14">
+                                            <div class="activity--header">
+                                                <p><a href="member-activity-personal.html">@post.account.FullName</a> vừa đăng 1 bài viết</p>
                                             </div>
-                                        </div>
 
-                                        @* KHI KHONG LOGIN THI KHÔNG XEM ĐƯỢC CHI TIẾT *@
-                                        @if (!isLoggedIn)
-                                        {
-                                            <div class="activity--action fw--700">
-                                                <a href="/Access/Login">See More...</a>
+                                            <div class="activity--meta fs--12">
+                                                <p><i class="fa mr--8 fa-clock-o"></i>@post.post.CreatedAt</p>
                                             </div>
-                                        } else
-                                        {
-                                            @* KHI LOGIN ROI THI XEM DUOC *@
-                                            <div class="activity--action fw--700">
-                                                <a href="#">See More...</a>
-                                            </div>
-                                        }   
 
-                                    </div>
-                                </div>
-                                <!-- Activity Item End -->
-                            </li>
+                                            <div class="activity--content">
+                                                <p class="content-text-ellipsis">@post.post.PostContent</p>
 
-                            @* sử dụng khi đăng bài post dài *@
-                            <li>
-                                <!-- Activity Item Start -->
-                                <div class="activity--item">
-                                    <div class="activity--avatar">
-                                        <a href="member-activity-personal.html">
-                                            <img src="img/activity-img/avatar-02.jpg" alt="">
-                                        </a>
-                                    </div>
-
-                                    <div class="activity--info fs--14">
-                                        <div class="activity--header">
-                                            <p><a href="member-activity-personal.html">Samuel C. Azevedo</a> posted an update in the group <a href="group-home.html">Travel Guides</a></p>
-                                        </div>
-
-                                        <div class="activity--meta fs--12">
-                                            <p><i class="fa mr--8 fa-clock-o"></i>Yeasterday at 08:20 am</p>
-                                        </div>
-
-                                        <div class="activity--content">
-                                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration  If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything.</p>
-                                        </div>
-
-
-                                        @* KHI KHONG LOGIN THI KHÔNG XEM ĐƯỢC CHI TIẾT *@
-                                        @if (!isLoggedIn)
-                                        {
-                                            <div class="activity--action fw--700">
-                                                <a href="/Access/Login">See More...</a>
-                                            </div>
-                                        }
-                                        else
-                                        {
-                                            @* KHI LOGIN ROI THI XEM DUOC *@
-                                            <div class="activity--action fw--700">
-                                                <a href="#">See More...</a>
-                                            </div>
-                                        }
-
-                                    </div>
-                                </div>
-                                <!-- Activity Item End -->
-                            </li>
-
-                            @* sử dụng khi đăng 1 video *@
-                            <li>
-                                <!-- Activity Item Start -->
-                                <div class="activity--item">
-                                    <div class="activity--avatar">
-                                        <a href="member-activity-personal.html">
-                                            <img src="img/activity-img/avatar-05.jpg" alt="">
-                                        </a>
-                                    </div>
-
-                                    <div class="activity--info fs--14">
-                                        <div class="activity--header">
-                                            <p><a href="member-activity-personal.html">Lee E. Jones</a> Shared a link</p>
-                                        </div>
-
-                                        <div class="activity--meta fs--12">
-                                            <p><i class="fa mr--8 fa-clock-o"></i>Yeasterday at 08:20 am</p>
-                                        </div>
-
-                                        <div class="activity--content">
-                                            <div class="link--embed">
-                                                <a class="link--url" href="https://www.youtube.com/watch?v=YE7VzlLtp-4" data-trigger="video_popup"></a>
-
-                                                <div class="link--video">
-                                                    <img src="img/activity-img/link-video-poster.jpg" alt="">
-                                                </div>
-
-                                                <div class="link--info fs--12">
-                                                    <div class="link--title">
-                                                        <h4 class="h6">There are many variations of passages of Lorem Ipsum available, but the majority have suffered</h4>
-                                                    </div>
-
-                                                    <div class="link--desc">
-                                                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing</p>
-                                                    </div>
-
-                                                    <div class="link--rel ff--primary text-uppercase">
-                                                        <p>www.unknownneonnettle.com</p>
-                                                    </div>
+                                                <div class="gallery--embed" data-trigger="gallery_popup">
+                                                    <ul class="nav AdjustRow">
+                                                        <li>
+                                                            <a href="~/image/avatar2.png">
+                                                                <img src="~/image/avatar2.png" alt="">
+                                                            </a>
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </div>
 
@@ -224,18 +125,17 @@
                                             {
                                                 @* KHI LOGIN ROI THI XEM DUOC *@
                                                 <div class="activity--action fw--700">
-                                                    <a href="#">See More...</a>
+                                                    <a href="/Posts/PostDetail/@post.post.PostId">See More...</a>
                                                 </div>
                                             }
-
                                         </div>
                                     </div>
-                                </div>
+                                </li>
                                 <!-- Activity Item End -->
-                            </li>
+                            }
+                            
 
-                            @* sử dụng khi đăng nhiều ảnh *@
-                            <li>
+                           @*  <li>
                                 <!-- Activity Item Start -->
                                 <div class="activity--item">
                                     <div class="activity--avatar">
@@ -257,64 +157,41 @@
                                             <div class="gallery--embed" data-trigger="gallery_popup">
                                                 <ul class="nav AdjustRow">
                                                     <li>
-                                                        <a href="img/activity-img/gallery-embed-01.jpg">
-                                                            <img src="img/activity-img/gallery-embed-01.jpg" alt="">
+                                                        <a href="~/image/avatar2.png">
+                                                            <img src="~/image/avatar2.png" alt="">
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a href="img/activity-img/gallery-embed-02.jpg">
-                                                            <img src="img/activity-img/gallery-embed-02.jpg" alt="">
+                                                        <a href="~/image/avatar2.png">
+                                                            <img src="~/image/avatar2.png" alt="">
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a href="img/activity-img/gallery-embed-03.jpg">
-                                                            <img src="img/activity-img/gallery-embed-03.jpg" alt="">
+                                                        <a href="~/image/avatar2.png">
+                                                            <img src="~/image/avatar2.png" alt="">
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a href="img/activity-img/gallery-embed-04.jpg" data-overlay="0.5">
-                                                            <img src="img/activity-img/gallery-embed-04.jpg" alt="">
+                                                        <a href="~/image/avatar2.png" data-overlay="0.5">
+                                                            <img src="~/image/avatar2.png" alt="">
                                                             <span>24+ More</span>
                                                         </a>
                                                     </li>
                                                 </ul>
                                             </div>
-
-
-                                            @* KHI KHONG LOGIN THI KHÔNG XEM ĐƯỢC CHI TIẾT *@
-                                            @if (!isLoggedIn)
-                                            {
-                                                <div class="activity--action fw--700">
-                                                    <a href="/Access/Login">See More...</a>
-                                                </div>
-                                            }
-                                            else
-                                            {
-                                                @* KHI LOGIN ROI THI XEM DUOC *@
-                                                <div class="activity--action fw--700">
-                                                    <a href="#">See More...</a>
-                                                </div>
-                                            }
-
+                                        </div>
+                                        <div class="activity--action fw--700">
+                                            <a href="#">See More...</a>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- Activity Item End -->
-                            </li>
+                            </li> *@
 
                         </ul>
-                        <!-- Activity Items End -->
                     </div>
                     <!-- Activity List End -->
                 </div>
-
-                <!-- Load More Button Start -->
-                <div class="load-more--btn pt--30 text-center">
-                    <a href="#" class="btn btn-animate">
-                        <span>See More Activities<i class="fa ml--10 fa-caret-right"></i></span>
-                    </a>
-                </div>
-                <!-- Load More Button End -->
 
             </div>
             <!-- Main Content End -->

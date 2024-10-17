@@ -10,10 +10,7 @@ namespace PRN221_DataAccess.DAOs
 {
     public class AccountDAO : SingletonBase<AccountDAO>
     {
-        public async Task<IEnumerable<Account>> getAll()
-        {
-            return await _context.Accounts.ToListAsync();
-        }
+        
         private readonly Prn221Context _context;
         public AccountDAO(Prn221Context context)
         {
@@ -24,6 +21,12 @@ namespace PRN221_DataAccess.DAOs
         {
             _context = new Prn221Context();
         }
+
+        public async Task<IEnumerable<Account>> getAll()
+        {
+            return await _context.Accounts.ToListAsync();
+        }
+
         public async Task<Account?> getByUsername(string username)
         {
             var account = await _context.Accounts.SingleOrDefaultAsync(acc => acc.Username.Equals(username));
@@ -43,7 +46,7 @@ namespace PRN221_DataAccess.DAOs
             return account;
         }
 
-        public async Task<Account> GetById(int id)
+        public async Task<Account> GetById(int? id)
         {
             var item = await _context.Accounts.FirstOrDefaultAsync(c => c.AccountId == id);
             if (item == null) return null;
@@ -62,8 +65,6 @@ namespace PRN221_DataAccess.DAOs
         {
             var existingItem = await GetById(item.AccountId);
             if (existingItem == null) return;
-
-            existingItem.IsDeleted = true;
 
             _context.Entry(existingItem).CurrentValues.SetValues(item);
             await _context.SaveChangesAsync();
