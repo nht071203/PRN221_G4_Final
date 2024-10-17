@@ -49,14 +49,10 @@ namespace PRN221_Repository.AccountRepo
         {
             return await _accountDAO.GetByFbId(fbId);
         }
-<<<<<<< HEAD
         public async Task<Account?> GetAccountByEmailForReset(string email)
         {
             return await _accountDAO.GetAccountByEmailForReset(email);
         }
-=======
 
-        
->>>>>>> main
     }
 }
