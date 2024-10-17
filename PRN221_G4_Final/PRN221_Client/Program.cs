@@ -127,9 +127,9 @@ builder.Services.AddScoped<Service>();
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<FirebaseConfig>();
 
-<<<<<<< HEAD
+
 builder.Services.AddScoped<IEmailSender, SmtpEmailSender>();
-=======
+
 builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<PostDAO>();
@@ -137,7 +137,7 @@ builder.Services.AddScoped<PostDTO>();
 
 builder.Services.AddScoped<IPostImageRepository, PostImageRepository>();
 builder.Services.AddScoped<PostImageDAO>();
->>>>>>> main
+
 
 builder.Services.AddSession();
 builder.Services.AddDistributedMemoryCache(); // For storing session data in memory
