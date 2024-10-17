@@ -9,11 +9,11 @@
     <div class="container" style="transform: none;">
         <div class="d-flex">
             <a href="/News/ListNews"><h2 class="pb--20">Tin tức</h2></a>
-            @* @if (@Model.NewsListByCategory != null)
+            @if (@Model.NewsListByCategory != null)
             {
                 <i class="ml--10 text- fa fa-caret-right" style="padding: 35px 20px 0 10px"></i>
-                <a asp-page="/News/ListNews" asp-route-id="@Model.CategoryNewsList.First().CategoryNewsId"><h2 class="pb--20">@await Model.GetCategoryName(Model.NewsListByCategory.First().CategoryNewsId)</h2></a>
-            } *@
+                <a asp-page="/News/ListNews" asp-route-cat="@Model.NewsListByCategory.First().CategoryNewsId"><h2 class="pb--20">@await Model.GetCategoryName(Model.NewsListByCategory.First().CategoryNewsId)</h2></a>
+            }
         </div>
         <div class="row" style="transform: none;">
             <!-- Main Content Start -->

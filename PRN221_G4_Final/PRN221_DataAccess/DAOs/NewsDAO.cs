@@ -24,7 +24,7 @@ namespace PRN221_DataAccess.DAOs
 
         public async Task<IEnumerable<News>> GetAllNews()
         {
-            return await _context.News.ToListAsync();
+            return await _context.News.Where(n => n.IsDeleted == false).ToListAsync();
         }
         public async Task<IEnumerable<News>> GetAll()
         {
