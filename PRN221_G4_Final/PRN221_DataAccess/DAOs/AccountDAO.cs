@@ -79,22 +79,22 @@ namespace PRN221_DataAccess.DAOs
             _context.Entry(existingItem).CurrentValues.SetValues(item);
             await _context.SaveChangesAsync();
         }
-
-
    
         public async Task<int> GetTotalFarmerCountAsync()
         {
             return await _context.Accounts.CountAsync(n => n.IsDeleted == false && n.RoleId == 1);
         }
 
-
-
-
         public async Task<Account> GetByFbId(string fbId)
         {
             var item = await _context.Accounts.FirstOrDefaultAsync(acc => acc.FacebookId.Equals(fbId));
             if (item == null) return null;
             return item;
+        }
+
+        public async Task<string?> GetFullNameByUsername(string username)
+        {
+            return await _context.Accounts.Where(a => a.Username.Equals(username)).Select(f => f.FullName).FirstOrDefaultAsync();
         }
 
     }

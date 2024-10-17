@@ -1,4 +1,4 @@
-/*
+﻿/*
 
 [Custom Stylesheet]
 
@@ -177,7 +177,7 @@ You can write your custom css styles in this file...
 
 /*ACTIVITIES LIST*/
 .main--content-inner {
-    background: #e2e5e9;
+    background: white;
 }
 .activity--list {
     background: transparent;
@@ -193,4 +193,115 @@ You can write your custom css styles in this file...
 /*FOOTER*/
 .footer--section .widget a {
     color: white;
+}
+
+
+/*ADD POST INDEX */
+.wrapper-add-post {
+    width: 710px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+}
+.wrapper-add-post .post-header {
+    display: flex;
+    align-items: center;
+}
+.post-header img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.post-header input {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    padding: 10px;
+    font-size: 14px;
+    outline: none;
+    background: #f0f2f5;
+    cursor: pointer;
+    transition: 0.1s;
+}
+.post-header input:hover {
+    background: #c8c9caa0;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.popup.ShowPopup {
+    display: flex;
+}
+.popup-content {
+    background: white;
+    width: 700px;
+    max-height: 80%; /* Giới hạn chiều cao tối đa thành 80% của viewport */
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    overflow: hidden; /* Không cho phép cuộn */
+}
+.popup-content .close-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    float: right;
+    cursor: pointer;
+}
+.popup-content textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    outline: none;
+    height: 180px;
+}
+.popup-content .actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+.popup-content .actions button {
+    background: none;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.popup-content .actions button img {
+    width: 20px;
+    margin-right: 5px;
+}
+#imagePreview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Khoảng cách giữa các ảnh */
+    max-height: 150px; /* Giới hạn chiều cao */
+    overflow-y: auto; /* Cho phép cuộn nếu có nhiều ảnh */
+    overflow-x: hidden; /* Ẩn cuộn ngang */
+}
+
+#clearImagesButton {
+    padding: 10px 15px;
+    color: rgba(255, 255, 255, 0.6);
+    background: rgb(234, 109, 109);
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
 }

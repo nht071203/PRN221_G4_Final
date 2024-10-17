@@ -2198,6 +2198,7 @@ label {
     float: none;
     margin-bottom: 20px;
     width: 100%;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
 }
 
     .activity--items > li + li {
@@ -5207,7 +5208,7 @@ body.isScrolling #backToTop {
 /* 10.1. MAIN CONTENT */
 .main--content-inner.drop--shadow {
     padding: 30px 20px;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+    /*box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);*/
 }
 
 /* 10.2. MAIN SIDEBAR */

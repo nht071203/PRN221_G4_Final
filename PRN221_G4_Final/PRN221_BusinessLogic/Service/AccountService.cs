@@ -88,6 +88,10 @@ namespace PRN221_BusinessLogic.Service
 
             await _accountRepo.Add(newAcc);
         }
-       
+
+        public async Task<string?> GetFullNameByUsername(string username)
+        {
+            return await _accountRepo.GetFullnameByUsername(username);
+        }
     }
 }
