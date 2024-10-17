@@ -1,0 +1,38 @@
+﻿@page "/Service/EditService"
+@model PRN221_Client.Pages.Service.EditServiceModel
+@{
+}
+<!-- JQUERY STEP -->
+<link rel="stylesheet" href="~/css/addServiceStyle.css" />
+<section class="body-form">
+    <h1>Cập nhật dịch vụ</h1>
+    <form class="cf" method="post" asp-page-handler="UpdateService">
+        <div class="half left cf">
+            <input type="hidden" asp-for="ServiceItem.ServiceId" />
+            <input type="hidden" asp-for="ServiceItem.CreateAt" />
+            <input type="hidden" asp-for="ServiceItem.AverageRating" />
+            <input type="hidden" asp-for="ServiceItem.RatingCount" />
+            <h4 class="title-input">Tiêu đề</h4>
+            <input class="input-form" type="text" placeholder="Tiêu đề" asp-for="ServiceItem.Title" required>
+
+            <h4 class="title-input">Giá dịch vụ</h4>
+            <input class="input-form" type="number" placeholder="Giá" asp-for="ServiceItem.Price" required>
+
+            <h4 class="title-input">Nội dung</h4>
+            <textarea class="input-form" asp-for="ServiceItem.Content" placeholder="Nội dung" required></textarea>
+
+            <h4 class="title-input">Trạng thái</h4>
+            <div class="radio-check d-flex justify-content-center gap-5">
+                <div>
+                    <input type="radio" asp-for="ServiceItem.IsEnable" value="true">
+                    <label>Khả dụng</label><br>
+                </div>
+                <div>
+                    <input type="radio" asp-for="ServiceItem.IsEnable" value="false">
+                    <label>Không khả dụng</label><br>
+                </div>
+            </div>
+        </div>
+        <input class="submit-service" type="submit" value="Cập nhật" id="input-submit">
+    </form>
+</section>

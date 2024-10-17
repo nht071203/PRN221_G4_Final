@@ -1,11 +1,23 @@
 ﻿@using Microsoft.AspNetCore.Http;
 @inject IHttpContextAccessor HttpContextAccessor
 @inject PRN221_BusinessLogic.Interface.INewsService _newsService
+@inject PRN221_BusinessLogic.Interface.IAccountService _acccountService
 
 @{
     IEnumerable<PRN221_Models.Models.CategoryNews> categories;
     var isLoggedIn = HttpContextAccessor.HttpContext.Session.GetString("UserSession") != null;
     categories = await _newsService.GetAllCategoryNews();
+    int? getIdAccount = null;
+    if (HttpContextAccessor.HttpContext.Session.GetString("AccountID") != null)
+    {
+        getIdAccount = Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetInt32("AccountID"));
+    }
+    PRN221_Models.Models.Account getAcc = null;
+    if (getIdAccount.HasValue)
+    {
+        // Retrieve the account based on the account ID
+        getAcc = await _acccountService.GetByIdAccount(getIdAccount.Value);
+    }
 }
 
 <!DOCTYPE html>
@@ -183,7 +195,11 @@
                             <ul class="dropdown-menu">
                                 <li><a href="">Danh sách chuyên gia</a></li>
                                 <li><a href="/Service/ListServices">Các dịch vụ</a></li>
-                                <li><a href="/Service/ServiceDetail">Dịch vụ 2</a></li>
+                                @* <li><a href="/Service/ListServiceExpert">ListServiceExpert</a></li> *@
+                                @if (getAcc != null && getAcc.RoleId == 2)
+                                {
+                                    <li><a href="/Service/ListServiceExpert">ListServiceExpert</a></li>
+                                }
                             </ul>
                         </li>
                         <li><a href=""><span>Liên hệ hỗ trợ</span></a></li>

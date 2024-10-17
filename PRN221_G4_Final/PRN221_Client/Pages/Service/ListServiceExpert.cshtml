@@ -1,0 +1,107 @@
+﻿@page "/Service/ListServiceExpert"
+@model PRN221_Client.Pages.Service.ListServiceExpertModel
+@{
+	Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="~/css/listServiceExpertStyle.css"/>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> 
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	  href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js" />
+<link rel="stylesheet" href="https://cdn.datatables.net/2.0.0/css/dataTables.bootstrap5.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<script src="https://kit.fontawesome.com/1bd9fa3a2e.js" crossorigin="anonymous"></script>
+
+<section class="body">
+	<div class="container-xl">
+		<div class="table-responsive">
+			<div class="table-wrapper">
+				<div class="table-title">
+					<div class="row">
+						<div class="col-sm-6">
+							<h2>Quản lý <b>dịch vụ</b></h2>
+						</div>
+						<div class="col-sm-6">
+							<a asp-page ="/Service/AddService" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Tạo dịch vụ mới</span></a>
+						</div>
+					</div>
+				</div>
+				<table id="example" class="table table-striped table-hover">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Tiêu đề</th>
+							<th>Ngày tạo</th>
+							<th>Giá</th>
+							<th>Đánh giá</th>
+							<th>Thao tác</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach(var serviceList in Model.ServiceByAccIdList)
+						{
+							<tr>
+								<td>@serviceList.ServiceId</td>
+								<td>@serviceList.Title</td>
+								<td>@serviceList.CreateAt</td>
+								<td>@serviceList.Price</td>
+								<td>@serviceList.AverageRating</td>
+								<td>
+									<a asp-page="/Service/EditService" asp-route-id="@serviceList.ServiceId" class="edit"><i class="material-icons" title="Edit">&#xE254;</i></a>
+									<a href="#deleteEmployeeModal" class="delete" data-id="@serviceList.ServiceId" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+								</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+			<div id="deleteEmployeeModal" class="modal fade">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<form>
+							<div class="modal-header">
+								<h4 class="modal-title">Xóa dịch vụ</h4>
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							</div>
+							<div class="modal-body">
+								<p>Bạn có muốn xóa dịch vụ này không?</p>
+							</div>
+							<div class="modal-footer">
+								<input type="button" class="btn btn-default" data-dismiss="modal" value="Quay về">
+								<a id="confirmDelete" class="btn btn-danger">Xóa</a>
+
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</section>
+
+<script>
+	$(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+
+    $('.delete').on('click', function () {
+        var serviceId = $(this).data('id');
+        $('#confirmDelete').attr('href', '/Service/DeleteService?handler=RemoveService&id=' + serviceId);
+        $('#deleteEmployeeModal').modal('show');
+    });
+});
+
+
+</script>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.0/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/2.0.0/js/dataTables.bootstrap5.js"></script>
+<script>
+	new DataTable('#example');
+</script>

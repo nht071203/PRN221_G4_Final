@@ -21,7 +21,11 @@ namespace PRN221_BusinessLogic.Service
         {
             return await _requirementService.GetAll();
         }
-        public async Task<PRN221_Models.Models.Service> GetServiceById(int id)
+		public async Task<IEnumerable<PRN221_Models.Models.Service>> GetAllServiceAvailable()
+		{
+			return await _requirementService.GetAllServiceAvailable();
+		}
+		public async Task<PRN221_Models.Models.Service> GetServiceById(int id)
         {
             return await _requirementService.GetById(id);
         }
@@ -40,6 +44,26 @@ namespace PRN221_BusinessLogic.Service
         public async Task<IEnumerable<ServiceRating>> GetAllRatingByServiceId(int id)
         {
             return await _requirementService.GetAllRatingByServiceId(id);
+        }
+		public async Task<IEnumerable<PRN221_Models.Models.Service>> GetAllServiceByAccId(int id)
+		{
+			return await _requirementService.GetAllServiceByAccId(id);
+		}
+        public async Task<PRN221_Models.Models.Service> AddService(PRN221_Models.Models.Service item)
+        {
+            return await _requirementService.AddService(item);
+        }
+        /*public async Task UpdateService(PRN221_Models.Models.Service item)
+        {
+            await _requirementService.UpdateService(item);
+        }*/
+        public async Task<PRN221_Models.Models.Service> UpdateService(PRN221_Models.Models.Service item)
+        {
+            return await _requirementService.UpdateService(item);
+        }
+        public async Task DeleteService(int id)
+        {
+            await _requirementService.DeleteService(id);
         }
     }
 }
