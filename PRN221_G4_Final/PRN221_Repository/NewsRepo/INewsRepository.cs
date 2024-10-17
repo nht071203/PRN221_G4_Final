@@ -17,5 +17,6 @@ namespace PRN221_Repository.NewsRepo
         Task Delete(int id);
         Task<IEnumerable<News>> GetAllNewsByCategoryId(int categoryId);
         Task<int> GetTotalNewsRepo();
+        Task<IEnumerable<News>> SearchNews(int category, string searchString);
     }
 }

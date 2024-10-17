@@ -39,5 +39,7 @@ namespace PRN221_Repository.NewsRepo
             return await _newsDAO.GetTotalNewsCountAsync();
         }
         public async Task<IEnumerable<CategoryNews>> GetAllCategoryNews() => await _categoryNewsDAO.GetAllCategoryNews();
+
+        public async Task<IEnumerable<News>> SearchNews(int category, string searchString) => await _newsDAO.SearchNews(category, searchString);
     }
 }

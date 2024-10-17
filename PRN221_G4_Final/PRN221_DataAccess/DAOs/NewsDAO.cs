@@ -88,6 +88,24 @@ namespace PRN221_DataAccess.DAOs
         {
             return await _context.News.Where(n => n.CategoryNewsId == categoryId).ToListAsync();
         }
+
+        public async Task<IEnumerable<News>> SearchNews(int category, string searchString)
+        {
+            var query = _context.News.AsQueryable();
+
+            if (category > 0)
+            {
+                query = query.Where(n => n.CategoryNewsId == category);
+            }
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                query = query.Where(n => n.Title.Contains(searchString) || n.Content.Contains(searchString));
+            }
+
+            return await query.ToListAsync();
+        }
+
     }
 }
 

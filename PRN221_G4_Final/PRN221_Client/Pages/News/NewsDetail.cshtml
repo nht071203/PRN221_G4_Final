@@ -10,7 +10,7 @@
         <div class="d-flex">
             <a href="/News/ListNews"><h2 class="pb--20">Tin tức</h2></a>
             <i class="ml--10 text- fa fa-caret-right" style="padding: 35px 20px 0 10px"></i>
-            <a asp-page="/News/ListNews" asp-route-id="@Model.CategoryNews.CategoryNewsId"><h2 class="pb--20">@Model.CategoryNews.CategoryNewsName</h2></a>
+            <a asp-page="/News/ListNews" asp-route-cat="@Model.CategoryNews.CategoryNewsId"><h2 class="pb--20">@Model.CategoryNews.CategoryNewsName</h2></a>
             <i class="ml--10 text- fa fa-caret-right" style="padding: 35px 20px 0 10px"></i>
             <h2 class="pb--20">@Model.NewsDetail.Title</h2>
         </div>
@@ -251,16 +251,14 @@
                     <div class="widget">
                         <h2 class="h4 fw--700 widget--title">Tìm kiếm tin tức</h2>
 
-                        <!-- Buddy Finder Widget Start -->
                         <div class="buddy-finder--widget">
-                            <form action="">
+                            <form method="get">
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <div class="form-group">
                                             <label>
                                                 <span class="text-darker ff--primary fw--500">Tìm kiếm tin tức</span>
-
-                                                <input class="form-control form-sm" placeholder="Nhập từ khóa tin tức bạn muốn tìm"></input>
+                                                <input class="form-control form-sm" name="searchKey" placeholder="Nhập từ khóa tin tức bạn muốn tìm" value="@Model.SearchKey" />
                                             </label>
                                         </div>
                                     </div>
@@ -268,12 +266,11 @@
                                         <div class="form-group">
                                             <label>
                                                 <span class="text-darker ff--primary fw--500">Danh mục tin tức</span>
-
-                                                <select class="form-control form-sm" data-trigger="selectmenu" style="display: none;">
-                                                    <option value=" "><a href="">Chọn danh mục</a></option>
+                                                <select class="form-control form-sm" name="cat">
+                                                    <option value="">Chọn danh mục</option>
                                                     @foreach (var category in Model.CategoryNewsList)
                                                     {
-                                                        <option value="@category.CategoryNewsName"><a>@category.CategoryNewsName</a></option>
+                                                        <option value="@category.CategoryNewsId">@category.CategoryNewsName</option>
                                                     }
                                                 </select>
                                             </label>
@@ -281,12 +278,11 @@
                                     </div>
 
                                     <div class="col-xs-12">
-                                        <button type="submit" class="btn btn-primary">Search</button>
+                                        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
                                     </div>
                                 </div>
                             </form>
                         </div>
-                        <!-- Buddy Finder Widget End -->
                     </div>
                 </div>
             </div>
