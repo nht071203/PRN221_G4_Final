@@ -3,6 +3,7 @@ using PRN221_Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -34,7 +35,7 @@ namespace PRN221_Repository.AccountRepo
         public async Task<Account> Add(Account account) => await _accountDAO.Add(account);
         public async Task Update(Account account) => await _accountDAO.Update(account);
         public async Task Delete(Account account) => await _accountDAO.Delete(account);
-
+        public async Task<string?> GetFullnameByUsername(string username) => await _accountDAO.GetFullNameByUsername(username);
         public async Task<Account?> GetAccountByEmail(string email)
         {
             return await _accountDAO.GetAccountByEmail(email);
@@ -48,5 +49,7 @@ namespace PRN221_Repository.AccountRepo
         {
             return await _accountDAO.GetByFbId(fbId);
         }
+
+        
     }
 }

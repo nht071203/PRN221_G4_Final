@@ -24,5 +24,6 @@ namespace PRN221_BusinessLogic.Interface
         Task DeleteAccount(Account item);
         Task<Account?> GetAccountByEmail(string email);
         Task<int> GetTotalFarmerService();
+        Task<string?> GetFullNameByUsername(string username);
     }
 }

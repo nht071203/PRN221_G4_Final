@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
 using PRN221_BusinessLogic.Interface;
 using PRN221_Client.Hashing;
 using PRN221_Models.Models;
@@ -15,11 +16,13 @@ namespace PRN221_Client.Pages.Access
 {
     public class LoginModel : PageModel
     {
+        private readonly ILogger<LoginModel> _logger;
         private readonly IAuthenService _authenService;
         private readonly IAccountService _accountService;
 
-        public LoginModel(IAuthenService authenticationService, IAccountService accountService)
+        public LoginModel(ILogger<LoginModel> logger, IAuthenService authenticationService, IAccountService accountService)
         {
+            _logger = logger;
             _authenService = authenticationService;
             _accountService = accountService;
         }
@@ -62,9 +65,12 @@ namespace PRN221_Client.Pages.Access
                 ExpiresUtc = DateTime.UtcNow.AddMinutes(30)
             };
 
-            await HttpContext.SignInAsync("CookiesPRN221", new ClaimsPrincipal(claimsIdentity), authProperties);
-            HttpContext.Session.SetString("UserSession", Username);
+            
 
+            await HttpContext.SignInAsync("CookiesPRN221", claimsPrincipal, authProperties);
+            HttpContext.Session.SetString("UserSession", Username);
+            HttpContext.Session.SetString("UserRole", role.RoleName);
+            
             return RedirectToPage("/Index");
         }
 

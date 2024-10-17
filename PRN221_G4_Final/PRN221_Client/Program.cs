@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Facebook;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.EntityFrameworkCore;
@@ -27,7 +28,9 @@ builder.Services.AddAuthentication("CookiesPRN221").AddCookie("CookiesPRN221", o
     options.LoginPath = "/Access/Login";
     options.LogoutPath = "/Access/Logout";
     options.AccessDeniedPath = "/Access/AccessDenied";
+    options.Cookie.Path = "/";
     options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+    options.Cookie.SecurePolicy = CookieSecurePolicy.None;
 });
 
 builder.Services.AddAuthentication(options =>
@@ -101,6 +104,7 @@ builder.Services.AddScoped<Service>();
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<FirebaseConfig>();
 
+
 builder.Services.AddSession();
 builder.Services.AddDistributedMemoryCache(); // For storing session data in memory
 builder.Services.AddHttpContextAccessor();
@@ -118,7 +122,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseSession();
+
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapRazorPages();
 app.Run();
