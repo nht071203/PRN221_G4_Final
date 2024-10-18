@@ -1,6 +1,8 @@
 ﻿@page "{postId:int}"
 @model PRN221_Client.Pages.Posts.PostDetailModel
+@inject PRN221_BusinessLogic.Interface.IAccountService _accountService;
 @{
+    ViewData["Title"] = Model.PostDTO.account.FullName;
 }
 
 
@@ -40,10 +42,18 @@
                                 <!-- Post avatar End -->
 
                                 <div class="post-detail-title">
-                                    <div class="post-detail-header">
-                                        <p><a href="/Access/Login">Người dùng ẩn danh</a> vừa đăng 1 bài viết</p>
-                                    </div>
-
+                                    @if (Model.PostDTO.account == null)
+                                    {
+                                        <div class="post-detail-header">
+                                            <p><a href="/Access/Login">Người dùng ẩn danh</a> vừa đăng 1 bài viết</p>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="post-detail-header">
+                                            <p><a href="/Access/Login">@Model.PostDTO.account.FullName</a> vừa đăng 1 bài viết</p>
+                                        </div>
+                                    }
                                     <div class="post-detail-date">
                                         <p><i class="fa mr--8 fa-clock-o"></i>@Model.PostDTO.post.CreatedAt</p>
                                     </div>
@@ -88,11 +98,11 @@
                                             <ul class="nav">
                                                 <li>
                                                     <a href="#"><i class="fa-solid fa-thumbs-up"></i></a>
-                                                    <span>20 lượt thích</span>
+                                                    <span>@Model.CountLikePost lượt thích</span>
                                                 </li>
                                                 <li>
                                                     <a href="#"><i class="fa-solid fa-share"></i></a>
-                                                    <span>30 lượt chia sẻ</span>
+                                                    <span>@Model.CountSharePost lượt chia sẻ</span>
                                                 </li>
                                             </ul>
                                         </div>
@@ -136,48 +146,53 @@
                     <!-- Comment Form End -->
                     <!-- Comment List Start -->
                     <div class="comment--list pt--40">
-                        <h4 class="h4 pb--20">03 bình luận</h4>
+                        <h4 class="h4 pb--20">@Model.CountCommentPost bình luận</h4>
 
                         <ul class="comment--items nav">
+                            @{
+                                
+                            }
+                            @foreach (var comment in Model.ListComment)
+                            {
+                                var account = Model.CommentAccounts[comment.AccountId.Value];
+                                <!-- Comment Item Start -->
+                                <li class="w-100">
+                                    <div class="comment--item mr--15 clearfix">
 
-                            <!-- Comment Item Start -->
-                            <li>
-                                <div class="comment--item mr--15 clearfix">
+                                        @* AVATAR USER COMMENT *@
+                                        <div class="img float--left" data-overlay="0.3" data-overlay-color="primary">
+                                            <img src="@account.Avatar" alt="">
+                                        </div>
+                                        @* END AVATAR USER COMMENT *@
 
-                                    @* AVATAR USER COMMENT *@
-                                    <div class="img float--left" data-overlay="0.3" data-overlay-color="primary">
-                                        <img src="~/image/logo.jpg" alt="">
-                                    </div>
-                                    @* END AVATAR USER COMMENT *@
+                                        <div class="info ov--h">
 
-                                    <div class="info ov--h">
+                                            @* INFORMATION OF USER COMMENT *@
+                                            <div class="header clearfix">
+                                                <div class="meta float--left">
+                                                    <p class="fs--14 fw--700 text-darkest">
+                                                        <a href="#">@account.FullName</a>
+                                                    </p>
 
-                                        @* INFORMATION OF USER COMMENT *@
-                                        <div class="header clearfix">
-                                            <div class="meta float--left">
-                                                <p class="fs--14 fw--700 text-darkest">
-                                                    <a href="#">Denise R. Sherman</a>
-                                                </p>
-
-                                                <p>
-                                                    <i class="mr--10 fa fa-clock-o"></i>
-                                                    <span>Yeasterday at 08:20 am</span>
-                                                </p>
+                                                    <p>
+                                                        <i class="mr--10 fa fa-clock-o"></i>
+                                                        <span>@comment.CreatedAt</span>
+                                                    </p>
+                                                </div>
                                             </div>
-                                        </div>
-                                        @* END COMMENT INFORMATION USER *@
+                                            @* END COMMENT INFORMATION USER *@
 
-                                        @* CONTENT COMMENT *@
-                                        <div class="content pt--8 fs--14">
-                                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration  If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything.</p>
-                                        </div>
-                                        @* END CONTENT COMMENT *@
+                                            @* CONTENT COMMENT *@
+                                            <div class="content pt--8 fs--14">
+                                                <p>@comment.Content</p>
+                                            </div>
+                                            @* END CONTENT COMMENT *@
 
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
-                            <!-- Comment Item End -->
-
+                                </li>
+                                <!-- Comment Item End -->
+                            }
                         </ul>
                     </div>
                     <!-- Comment List End -->
