@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OxyPlot;
 using PRN221_BusinessLogic.Interface;
@@ -6,6 +7,7 @@ using PRN221_Models.Models;
 
 namespace PRN221_Client.Pages.Service
 {
+    [Authorize]
     public class ListServicesModel : PageModel
     {
         private readonly IRequirementService _requirementServices;

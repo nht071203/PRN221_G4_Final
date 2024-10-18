@@ -1,0 +1,47 @@
+﻿@page
+@model PRN221_Client.Pages.Access.ConfirmForgetModel
+@{
+    Layout = "_LayoutAccess";
+    ViewData["Title"] = "OTP Reset";
+}
+<section class="container forms" id="confirm-page">
+
+    <div class="form login">
+        <div class="form-content">
+            <h1 class="title-login">Quên mật khẩu?</h1>
+
+            <form method="post" asp-page-handler="ConfirmOTP">
+                <label>Nhập Email ở đây</label>
+                <div class="field input-field">
+                    <input asp-for="OTP" type="number" placeholder="OTP">
+                    <span asp-validation-for="OTP" class="text-danger"></span>
+                </div>
+
+                <div class="field button-field">
+                    <button>Xác nhận</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <!-- Signup Form -->
+</section>
+
+
+
+<!-- JavaScript -->
+<script src="~/js/loginMain.js"></script>
+<script type="text/javascript">
+    if (window.location.hash === '#_=_') {
+        if (history.replaceState) {
+            var cleanUrl = window.location.href.split("#")[0];
+            history.replaceState(null, null, cleanUrl);
+        } else {
+            window.location.hash = '';
+        }
+    }
+</script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
