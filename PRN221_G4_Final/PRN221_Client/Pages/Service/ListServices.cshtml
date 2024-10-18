@@ -4,6 +4,8 @@
 @{
     var isLoggedIn = HttpContextAccessor.HttpContext.Session.GetString("UserSession") != null;
 }
+<link rel="stylesheet" href="~/css/modalFormBookingStyle.css" />
+
 <!-- Page Wrapper Start -->
 <!-- Hiển thị danh sách dịch vụ -->
 <section class="page--wrapper pt--80 pb--20">
@@ -69,18 +71,27 @@
                                             <div>
                                                 @if (isLoggedIn)
                                                 {
-                                                    <a class="booking-btn btn btn-primary">Đặt lịch</a>
+                                                    <button class="booking-btn btn btn-primary" onclick="showModalForm(@service.ServiceId);">Đặt lịch</button>
                                                 }
                                                 else
                                                 {
                                                     <button class="booking-btn btn btn-primary" onclick="window.dialog.showModal();">Đặt lịch</button>
                                                 }
-                                            </div>   
+                                            </div>
                                         </td>
                                     </tr>
                                 }
                             </tbody>
                         </table>
+                    </div>
+                    <div id="requestModal" class="modal" style="display: none;">
+                        <form class="modal-content" method="post" asp-page-handler="RequestService">
+                            <input type="hidden" id="serviceIdInput" asp-for="InputServiceId" value="" />
+                            <span class="close" onclick="closeModalForm()">&times;</span>
+                            <h2>Nhập yêu cầu của bạn</h2>
+                            <textarea id="userRequest" rows="4" placeholder="Nhập yêu cầu..." asp-for="InputRequestContent"></textarea>
+                            <button id="submitRequest">Gửi yêu cầu</button>
+                        </form>
                     </div>
                     <!-- Topics List End -->
                     <!-- Page Count Start -->
@@ -200,3 +211,13 @@
     </div>
 </section>
 <!-- Page Wrapper End -->
+<script>
+    function showModalForm(serviceId) {
+        document.getElementById('serviceIdInput').value = serviceId;
+        document.getElementById("requestModal").style.display = "block";
+    }
+
+    function closeModalForm() {
+        document.getElementById("requestModal").style.display = "none";
+    }
+</script>
