@@ -4,6 +4,7 @@ using PRN221_Models.Models;
 namespace PRN221_DataAccess;
 
 
+
 public partial class Prn221Context : DbContext
 {
     public Prn221Context()
