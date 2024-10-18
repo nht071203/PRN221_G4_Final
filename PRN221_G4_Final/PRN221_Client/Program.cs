@@ -18,6 +18,7 @@ using PRN221_Repository.LikePostRepo;
 using PRN221_Repository.NewsRepo;
 using PRN221_Repository.PostImageRepo;
 using PRN221_Repository.PostsRepo;
+using PRN221_Repository.RateRepo;
 using PRN221_Repository.RoleRepo;
 using PRN221_Repository.ServiceRepo;
 using PRN221_Repository.SharePostRepo;
@@ -132,6 +133,10 @@ builder.Services.AddScoped<Service>();
 builder.Services.AddScoped<IBookingService, PRN221_BusinessLogic.Service.BookingService>();
 builder.Services.AddScoped<IBookingRepository, BookingRepository>();
 builder.Services.AddScoped<BookingDAO>();
+
+builder.Services.AddScoped<IRateService, RateService>();
+builder.Services.AddScoped<IRateRepository, RateRepository>();
+builder.Services.AddScoped<RateDAO>();
 
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<FirebaseConfig>();

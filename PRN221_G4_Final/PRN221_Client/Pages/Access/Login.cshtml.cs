@@ -195,7 +195,9 @@ namespace PRN221_Client.Pages.Access
             {
 
                 await _accountService.CreateNewFacebookAccount(fbId, name, email, avatar);
+                var getAccAgain = await _accountService.GetByIdFacebook(fbId);
             }
+
 
             if (string.IsNullOrEmpty(avatar) && !string.IsNullOrEmpty(fbId))
             {
