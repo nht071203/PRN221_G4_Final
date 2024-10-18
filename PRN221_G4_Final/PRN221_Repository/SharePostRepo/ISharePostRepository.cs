@@ -5,11 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PRN221_Repository.PostsRepo
+namespace PRN221_Repository.SharePostRepo
 {
-    public interface IPostRepository
+    public interface ISharePostRepository
     {
-        Task<IEnumerable<Post>> GetAll();
-        Task<Post?> GetById(int postId);
+        Task<IEnumerable<SharePost>> GetAllSharePostByPostId(int id);
     }
 }

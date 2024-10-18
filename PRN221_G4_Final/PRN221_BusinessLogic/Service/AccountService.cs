@@ -59,6 +59,10 @@ namespace PRN221_BusinessLogic.Service
         {
             return await _accountRepo.GetTotalFarmerRepo();
         }
+        public async Task<int> GetTotalExpertService()
+        {
+            return await _accountRepo.GetTotalExpertRepo();
+        }
         public async Task<Account> GetByIdFacebook(string fbId)
         {
             return await _accountRepo.GetByFbId(fbId);
@@ -92,6 +96,9 @@ namespace PRN221_BusinessLogic.Service
         {
             return await _accountRepo.GetFullnameByUsername(username);
         }
+
+       }
+
+
     }
 
-}

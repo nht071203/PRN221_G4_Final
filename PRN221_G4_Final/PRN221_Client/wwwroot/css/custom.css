@@ -315,3 +315,27 @@ You can write your custom css styles in this file...
     text-overflow: ellipsis;
     margin-bottom: 20px;
 }
+
+/*POST details */
+
+.post-detail-info {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+.post-detail-info .post-detail-avatar {
+    width: 10%;
+    height: 10%;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.post-detail-info .post-detail-title {
+    font-size: 17px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.post-detail-content {
+    margin-top: 20px;
+    font-size: 17px;
+}

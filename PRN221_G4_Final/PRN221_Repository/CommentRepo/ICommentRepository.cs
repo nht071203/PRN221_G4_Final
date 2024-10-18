@@ -5,11 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PRN221_Repository.PostsRepo
+namespace PRN221_Repository.CommentRepo
 {
-    public interface IPostRepository
+    public interface ICommentRepository
     {
-        Task<IEnumerable<Post>> GetAll();
-        Task<Post?> GetById(int postId);
+        Task<IEnumerable<Comment>> GetAllCommentPostByPostId(int id);
     }
 }

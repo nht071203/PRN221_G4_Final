@@ -1,4 +1,4 @@
-﻿<Window x:Class="PRN221_Admin.DashboardMU"
+﻿<!--<Window x:Class="PRN221_Admin.DashboardMU"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -10,9 +10,13 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="130" />
-            <!-- Nửa bên trái -->
+            -->
+<!-- Nửa bên trái -->
+<!--
             <ColumnDefinition Width="Auto" />
-            <!-- Nửa bên phải -->
+            -->
+<!-- Nửa bên phải -->
+<!--
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2,0,0,0" Height="582">
 
@@ -32,11 +36,120 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="241*"/>
                 <RowDefinition Height="343*"/>
-
             </Grid.RowDefinitions>
             <Frame NavigationUIVisibility="Hidden" x:Name="NoiDung" Grid.RowSpan="2" />
+            -->
+<!--<Grid.RowDefinitions>
+                <RowDefinition Height="421*"/>
+                <RowDefinition Height="6*"/>
+                <RowDefinition Height="7*"/>
+            </Grid.RowDefinitions>
+            <Label Content="Total Farmer" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Foreground="#FF37AF31" FontWeight="Bold" FontStyle="Italic"/>
+            <Label Content="Total Expert" HorizontalAlignment="Left" Margin="150,10,0,0" VerticalAlignment="Top" Foreground="#FF003FC8" FontWeight="Bold" FontStyle="Italic"/>
+            <Label Content="Total Post" HorizontalAlignment="Left" Margin="300,10,0,0" VerticalAlignment="Top" Foreground="#FF4400FF" FontWeight="Bold" FontStyle="Italic"/>
+            <Label Content="Total View" HorizontalAlignment="Left" Margin="450,10,0,0" VerticalAlignment="Top" Foreground="#FFF40000" FontWeight="Bold" FontStyle="Italic"/>
+
+            -->
+<!-- TextBlocks for values -->
+<!--
+            <TextBlock HorizontalAlignment="Left" Margin="32,30,0,0" Text="10" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
+            <TextBlock HorizontalAlignment="Left" Margin="182,30,0,0" Text="10" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
+            <TextBlock HorizontalAlignment="Left" Margin="332,30,0,0" Text="10" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
+            <TextBlock HorizontalAlignment="Left" Margin="482,30,0,0" Text="10" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
+
+            <oxy:PlotView x:Name="plotView"
+                          Model="{Binding PlotModel}"
+                          Margin="0,70,0,0" Grid.RowSpan="3" />-->
+<!--
 
 
         </Grid>
+    </Grid>
+</Window>-->
+
+
+
+<Window x:Class="PRN221_Admin.DashboardMU"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        xmlns:local="clr-namespace:PRN221_Admin"
+           xmlns:oxy="http://oxyplot.org/wpf"
+        mc:Ignorable="d"
+        Title="DashboardMU"    d:DesignHeight="850" d:DesignWidth="1100">
+    <Grid>
+        <Grid.ColumnDefinitions>
+
+            <ColumnDefinition Width="64*" />
+            <ColumnDefinition Width="303*" />
+
+        </Grid.ColumnDefinitions>
+        <Grid.Resources>
+            <Style TargetType="materialDesign:PackIcon">
+                <Setter Property="Width" Value="30"></Setter>
+                <Setter Property="Height" Value="30"></Setter>
+            </Style>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Column="0" Background="White" Grid.RowSpan="2" Margin="0,10,10,-10">
+            <StackPanel Orientation="Vertical" Width="182" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0" Height="362" >
+
+                <Image Source="/logo.jpg" Height="54" Width="102" />
+
+                <Button Width="150" Height="40" Background="Transparent" BorderThickness="0" Click="Button_ThongKe">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="16" Text="&#xE77F;" Margin="5"/>
+                        <TextBlock Text="Statistic" VerticalAlignment="Center" Margin="10,0,0,0" FontWeight="Bold" Foreground="Black" FontSize="16"/>
+                    </StackPanel>
+                </Button>
+                <Button Width="158" Height="40" Background="Transparent" BorderThickness="0" Click="Button_Farmer">
+                    <StackPanel Orientation="Horizontal" Width="157">
+                        <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="16" Text="&#xE8D4;" Margin="5"/>
+                        <TextBlock Text="Manage Farmer" VerticalAlignment="Center" Margin="10,0,0,0" FontWeight="Bold" Foreground="Black" FontSize="16" Width="120"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Width="154" Height="40" Background="Transparent" BorderThickness="0" Click="Button_ManageExpert">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="16" Text="&#xE8B8;" Margin="5"/>
+                        <TextBlock Text="Manage Expert" VerticalAlignment="Center" Margin="10,0,0,0" FontWeight="Bold" Foreground="Black" FontSize="16" Width="121"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Width="150" Height="40" Background="Transparent" BorderThickness="0" Foreground="Black" Click="Button_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="16" Text="&#xE835;" Margin="5"/>
+                        <TextBlock Text="Manage News" VerticalAlignment="Center" Margin="10,0,0,0" FontWeight="Bold" Foreground="Black" FontSize="16"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Width="150" Height="40" Background="Transparent" BorderThickness="0">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="16" Text="&#xE789;" Margin="5"/>
+                        <TextBlock Text="Manage Post" VerticalAlignment="Center" Margin="10,0,0,0" FontWeight="Bold" Foreground="Black" FontSize="16"/>
+                    </StackPanel>
+                </Button>
+                <Button Width="150" Height="40" Background="Transparent" BorderThickness="0">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="16" Text="&#xE897;" Margin="5"/>
+                        <TextBlock Text="Help" VerticalAlignment="Center" Margin="10,0,0,0" FontWeight="Bold" Foreground="Black" FontSize="16"/>
+                    </StackPanel>
+                </Button>
+
+
+            </StackPanel>
+
+        </Grid>
+
+
+        <Frame Grid.Column="1"  NavigationUIVisibility="Hidden" x:Name="NoiDung" Grid.RowSpan="2" TextBlock.FontWeight="Bold" TextBlock.Foreground="Red" TextBlock.FontSize="16" Foreground="Black"/>
+
+
     </Grid>
 </Window>

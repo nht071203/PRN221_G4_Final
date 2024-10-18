@@ -5,11 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PRN221_Repository.PostsRepo
+namespace PRN221_Repository.LikePostRepo
 {
-    public interface IPostRepository
+    public interface ILikePostRepository
     {
-        Task<IEnumerable<Post>> GetAll();
-        Task<Post?> GetById(int postId);
+        Task<IEnumerable<LikePost>> GetAllLikePostByPostId(int id);
     }
 }
