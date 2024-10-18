@@ -4,11 +4,12 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PRN221_Admin.Views"
+      xmlns:vm="clr-namespace:PRN221_Admin.ViewModels"
       mc:Ignorable="d" 
-    Width="800" Height="600" MaxHeight="600"
+      d:DesignWidth="1000" d:DesignHeight="750" MaxHeight="750" 
       Title="ExpertPage">
 
-    <Grid Background="White" Margin="0,0,0,31" Width="800">
+    <Grid Background="White" Margin="0,0,0,31" Width="1000" Height="750">
         <Grid.RowDefinitions>
             <RowDefinition  Height="198"></RowDefinition>
             <RowDefinition Height="33"></RowDefinition>
@@ -23,10 +24,12 @@
                 <DataGridTextColumn Header="UserName" Binding="{Binding Username}" Width="80"/>
                 <DataGridTextColumn Header="FullName" Binding="{Binding FullName}" Width="100"/>
                 <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="150"/>
-                <DataGridTextColumn Header="Phone" Binding="{Binding PhoneNumer}" Width="90"/>
+                <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" Width="90"/>
                 <DataGridTextColumn Header="Gender" Binding="{Binding Gender}" Width="70"/>
-                <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="150"/>
+                <DataGridTextColumn Header="Birthday" Binding="{Binding Address}" Width="70"/>
+                <DataGridTextColumn Header="Address" Binding="{Binding DateOfBirth}" Width="150"/>
                 <DataGridTextColumn Header="Major" Binding="{Binding Major}" Width="100"/>
+                <DataGridTextColumn Header="Short bio" Binding="{Binding ShortBio}" Width="100"/>
             </DataGrid.Columns>
         </DataGrid>
 
@@ -36,43 +39,77 @@
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="0" Width="70" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Vertical" Margin="10, 0,0,0">
-            <Image x:Name="avatar" Source="/logo.jpg" Width="70" Height="70"/>
+            <Image x:Name="avatar" Source="{Binding AvatarURL}" Width="70" Height="70"/>
         </StackPanel>
 
-        <Label Content = "ID:" HorizontalAlignment = "Left" VerticalAlignment = "Top" FontWeight = "Bold" Margin="124,24,0,0" Grid.Row="2" />
-        <TextBox Text="123" BorderThickness="0" Background="Transparent" Padding="0,5,0,0" Margin="156,24,520,218" Grid.Row="2" RenderTransformOrigin="0.7,0.525"/>
+        <Label Content="ID:" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Margin="125,11,0,0" Grid.Row="2" RenderTransformOrigin="0.587,0" />
+        <TextBox Text="{Binding SelectedExpert.AccountId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+         BorderThickness="0" Background="Transparent" Padding="0,5,0,0" 
+         Margin="161,10,562,302" Grid.Row="2" RenderTransformOrigin="0.7,0.525"
+         IsReadOnly="True" />
 
+        <Label Content="RoleId:" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Margin="107,38,0,0" Grid.Row="2" RenderTransformOrigin="0.587,0" />
+        <TextBox Text="{Binding SelectedExpert.RoleId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+         BorderThickness="0" Background="Transparent" Padding="0,5,0,0" 
+         Margin="161,38,562,274" Grid.Row="2" RenderTransformOrigin="0.7,0.525"
+         IsReadOnly="True" />
 
 
         <!--BUTTON-->
-        <Grid Grid.Row="2" Grid.RowSpan="2">
-            <Label Content = "Username:" HorizontalAlignment = "Left" VerticalAlignment = "Top" FontWeight = "Bold" Margin="10,74,0,0"  />
-            <TextBox Height = "22" Background="Transparent" Padding="0,5,0,0" Margin="85,78,532,238"/>
+        <Grid Grid.Row="2" Grid.RowSpan="2" Margin="1,0,-1,6">
+            <Label Content = "Username:" HorizontalAlignment = "Left" VerticalAlignment = "Top" FontWeight = "Bold" Margin="11,76,0,0"  />
+            <TextBox Text = "{Binding SelectedExpert.Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height = "22" Background="Transparent" Padding="0,5,0,0" Margin="88,78,727,269"/>
 
 
 
-            <Label Content = "Full Name:" HorizontalAlignment = "Left" Margin = "10,110,0,0" VerticalAlignment = "Top" FontWeight = "Bold" />
-            <Label Content = "Email:" HorizontalAlignment = "Left" Margin = "31,146,0,0" VerticalAlignment = "Top" FontWeight = "Bold" RenderTransformOrigin="0.496,1.513" />
-            <Label Content="Gender:" HorizontalAlignment="Left" Margin="20,178,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-            <Label Content = "Major:" HorizontalAlignment = "Right" Margin = "0,202,722,0" VerticalAlignment = "Top" FontWeight = "Bold" RenderTransformOrigin="0.95,0.516" />
-            <Label Content = "Address:" HorizontalAlignment = "Right" Margin = "0,238,718,0" VerticalAlignment = "Top" FontWeight = "Bold" RenderTransformOrigin="0.405,2.863" />
+            <Label Content = "Full Name:" HorizontalAlignment = "Left" Margin = "9,106,0,0" VerticalAlignment = "Top" FontWeight = "Bold" />
+            <Label Content = "Email:" HorizontalAlignment = "Left" Margin = "35,132,0,0" VerticalAlignment = "Top" FontWeight = "Bold" RenderTransformOrigin="0.496,1.513" />
+            <Label Content = "Phone:" HorizontalAlignment = "Left" Margin = "26,163,0,0" VerticalAlignment = "Top" FontWeight = "Bold" RenderTransformOrigin="0.496,1.513" />
+            <Label Content="Gender:" HorizontalAlignment="Left" Margin="22,201,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+            <Label Content = "Major:" HorizontalAlignment = "Right" Margin = "0,227,931,0" VerticalAlignment = "Top" FontWeight = "Bold" RenderTransformOrigin="0.95,0.516" />
+            <Label Content = "Address:" HorizontalAlignment = "Right" Margin = "0,254,921,0" VerticalAlignment = "Top" FontWeight = "Bold" RenderTransformOrigin="0.405,2.863" />
+            <Label Content = "BirthDay:" HorizontalAlignment = "Right" Margin = "0,293,923,0" VerticalAlignment = "Top" FontWeight = "Bold" RenderTransformOrigin="0.405,2.863" />
+
+            <Label Content = "Address:" HorizontalAlignment = "Right" Margin = "0,397,925,0" VerticalAlignment = "Top" FontWeight = "Bold" RenderTransformOrigin="0.405,2.863" />
+            <Label Content = "Password:" HorizontalAlignment = "Right" Margin = "0,428,927,0" VerticalAlignment = "Top" FontWeight = "Bold" RenderTransformOrigin="0.405,2.863" />
 
 
-            <TextBox Text = "{Binding SelectedExpert.FullName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment = "Left" Margin = "85,114,0,0"  TextWrapping = "Wrap" VerticalAlignment = "Top" Width = "187" Height = "22" Grid.ColumnSpan="2"/>
-            <TextBox Text = "{Binding SelectedExpert.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment = "Left" Margin = "85,150,0,0"  TextWrapping = "Wrap" VerticalAlignment = "Top" Width = "187" Height = "22" Grid.ColumnSpan="2"/>
-            <RadioButton Content="Male" IsChecked="{Binding IsMale, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="85,184,0,0" VerticalAlignment="Top"/>
-            <RadioButton Content="Female" IsChecked="{Binding IsFemale, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="178,184,0,0" VerticalAlignment="Top"/>
-            <TextBox Text = "{Binding SelectedExpert.Major, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment = "Left" Margin = "85,204,0,0"  TextWrapping = "Wrap" VerticalAlignment = "Top" Width = "187" Height = "22" Grid.ColumnSpan="2" />
-            <TextBox Text = "{Binding SelectedExpert.Address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment = "Left" Margin = "85,240,0,0"  TextWrapping = "Wrap" VerticalAlignment = "Top" Width = "187" Height = "22" Grid.ColumnSpan="2"/>
+            <TextBox Text = "{Binding SelectedExpert.FullName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment = "Left" Margin = "86,106,0,0"  TextWrapping = "Wrap" VerticalAlignment = "Top" Width = "187" Height = "22"/>
+            <TextBox Text = "{Binding SelectedExpert.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment = "Left" Margin = "86,136,0,0"  TextWrapping = "Wrap" VerticalAlignment = "Top" Width = "187" Height = "22"/>
+            <TextBox Text = "{Binding SelectedExpert.Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment = "Left" Margin = "86,167,0,0"  TextWrapping = "Wrap" VerticalAlignment = "Top" Width = "187" Height = "22"/>
 
-            <StackPanel Grid.Row="2" Grid.Column="0" Width="450" Height="200" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Vertical" Margin="285,2,0,0" Grid.ColumnSpan="2">
-                <Image x:Name="Degree" Source="/logo.jpg" Width="450" Height="200"/>
+            <!--<RadioButton Content="Male" IsChecked="{Binding IsMaleChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="85,184,0,0" VerticalAlignment="Top"/>
+            <RadioButton Content="Female" IsChecked="{Binding IsFemaleChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="178,184,0,0" VerticalAlignment="Top"/>-->
+            <RadioButton Content="Male" 
+             IsChecked="{Binding IsMaleChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+             HorizontalAlignment="Left" 
+             Margin="88,207,0,0" 
+             VerticalAlignment="Top"/>
+
+            <RadioButton Content="Female" 
+             IsChecked="{Binding IsFemaleChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+             HorizontalAlignment="Left" 
+             Margin="180,207,0,0" 
+             VerticalAlignment="Top"/>
+
+            <TextBox Text = "{Binding SelectedExpert.Major, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment = "Left" Margin = "86,227,0,0"  TextWrapping = "Wrap" VerticalAlignment = "Top" Width = "187" Height = "22" />
+            <TextBox Text = "{Binding SelectedExpert.Address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment = "Left" Margin = "86,260,0,0"  TextWrapping = "Wrap" VerticalAlignment = "Top" Width = "187" Height = "22"/>
+            <TextBox Text = "{Binding SelectedExpert.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment = "Left" Margin = "88,432,0,0"  TextWrapping = "Wrap" VerticalAlignment = "Top" Width = "187" Height = "22" RenderTransformOrigin="0.7,0.525" />
+
+
+            <StackPanel Grid.Column="0" Width="300" Height="200" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Vertical" Margin="320,2,0,0">
+                <Image x:Name="Degree" Source="{Binding ImageUrl}" Width="297" Height="200"/>
+            </StackPanel>
+            <StackPanel Grid.Column="0" Width="300" Height="200" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Vertical" Margin="670,2,0,0">
+                <Image x:Name="Education" Source="{Binding ImageUrl}" Width="297" Height="200"/>
             </StackPanel>
 
-            <Button x:Name="Add" Content="ADD" Command="{Binding AddStudentCommand}" Width="70"  Margin="451,227,279,56" Height="25"/>
-            <Button x:Name="Delete" Content="DELETE"  Command="{Binding RemoveStudentCommand}" Width="70"  Margin="565,227,165,54" Height="25"/>
-            <Button Content="Avatar" Visibility="{Binding ChooseImageVisibility}" Margin="335,227,400,56" Height="25"/>
-            <Button Content="Degree" Visibility="{Binding ChooseImageDegreeVisibility}" Margin="678,227,47,54" Height="25"/>
+            <Button x:Name="Add" Content="ADD" Command="{Binding AddExpertCommand}" Width="70"  Margin="556,256,374,233" Height="25" IsEnabled="{Binding IsAddButtonEnabled}" />
+            <Button x:Name="Delete" Content="DELETE"  Command="{Binding RemoveExpertCommand}" Width="70"  Margin="670,256,260,231" Height="25" IsEnabled="{Binding IsDeleteButtonEnabled}"/>
+            <Button Content="Avatar" Command="{Binding UploadAvatarCommand}"  Visibility="{Binding ChooseImageVisibility}" Margin="340,256,562,233" Height="25"/>
+            <Button Content="Degree" Command="{Binding UploadDegreeCommand}" Visibility="{Binding ChooseImageDegreeVisibility}" Margin="871,258,47,85" Height="25"/>
+            <Button Content="Clear" Command="{Binding ClearFormCommand}" Margin="503,304,374,183" Height="25" IsEnabled="{Binding IsClearButtonEnabled}" />
+
         </Grid>
         <Label Content="MANAGE EXPERT" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold" FontSize="20"/>
     </Grid>

@@ -7,7 +7,8 @@ using System.Windows.Input;
 
 namespace PRN221_Admin.ViewModels
 {
-   public class RelayCommand : ICommand
+    public class RelayCommand : ICommand
+
     {
         private readonly Action<object> _execute;
         private readonly Func<object, bool> _canExecute;
@@ -33,4 +34,6 @@ namespace PRN221_Admin.ViewModels
             remove { CommandManager.RequerySuggested -= value; }
         }
     }
+
 }
+

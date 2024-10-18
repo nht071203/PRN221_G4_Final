@@ -10,17 +10,21 @@ namespace PRN221_DataAccess.DAOs
 {
     public class AccountDAO : SingletonBase<AccountDAO>
     {
+
         
         private readonly Prn221Context _context;
+        
         public AccountDAO(Prn221Context context)
         {
             _context = context;
         }
 
+
         public AccountDAO()
         {
             _context = new Prn221Context();
         }
+
 
         public async Task<IEnumerable<Account>> getAll()
         {

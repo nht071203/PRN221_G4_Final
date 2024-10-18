@@ -13,7 +13,7 @@ public partial class ServiceRating
 
     public decimal Rating { get; set; }
 
-    public string? Comment { get; set; }
+    public string Comment { get; set; }
 
     public DateTime RatedAt { get; set; }
 }
