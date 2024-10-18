@@ -71,7 +71,7 @@ namespace PRN221_BusinessLogic.Service
                 RoleId = 1,
                 FacebookId = fbId,
                 Username = name,
-                Password = "1", 
+                Password = "1",
                 FullName = name,
                 Email = email,
                 EmailConfirmed = 1,
@@ -94,4 +94,5 @@ namespace PRN221_BusinessLogic.Service
             return await _accountRepo.GetFullnameByUsername(username);
         }
     }
+
 }
