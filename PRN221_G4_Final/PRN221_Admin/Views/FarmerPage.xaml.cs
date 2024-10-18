@@ -14,18 +14,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PRN221_Admin
+namespace PRN221_Admin.Views
 {
     /// <summary>
-    /// Interaction logic for NewsPage.xaml
+    /// Interaction logic for FarmerPage.xaml
     /// </summary>
-    public partial class NewsPage : Page
+    public partial class FarmerPage : Page
     {
-        public NewsPage(NewsViewModel viewModel)
+        public FarmerPage(FarmerViewModel viewModel)
         {
             InitializeComponent();
             DataContext = viewModel;
         }
-
     }
 }

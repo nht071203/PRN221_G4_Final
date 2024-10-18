@@ -40,5 +40,27 @@ namespace PRN221_BusinessLogic.Service
 
             return imageUrl;
         }
+
+        //mai xuan
+        public async Task<string> UploadToFirebase(Stream fileStream, string fileName)
+        {
+            var firebaseFileName = $"image/{DateTime.UtcNow.Ticks}_{fileName}";
+
+            var storage = new FirebaseStorage(
+                "prn221-69738.appspot.com",
+                new FirebaseStorageOptions
+                {
+                    AuthTokenAsyncFactory = () => Task.FromResult(""),
+                    ThrowOnCancel = true
+                });
+
+            // Upload file to Firebase Storage and get the URL
+            var imageUrl = await storage
+                .Child(firebaseFileName)
+                .PutAsync(fileStream);
+
+            return imageUrl;
+        }
+
     }
 }

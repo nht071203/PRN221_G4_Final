@@ -16,6 +16,7 @@ using OxyPlot.Series;
 using System.Windows;
 using OxyPlot.Axes;
 using PRN221_Admin.Views;
+using PRN221_Admin.ViewModels;
 
 namespace PRN221_Admin
 {
@@ -25,10 +26,17 @@ namespace PRN221_Admin
     public partial class DashboardMU : Window
     {
         public PlotModel PlotModel { get; set; }
+        private ExpertViewModel _ExpertViewModel;
+        private NewsViewModel _NewsViewModel;
+        private FarmerViewModel _farmerViewModel;
 
-        public DashboardMU()
+        public DashboardMU(ExpertViewModel expertViewModel, NewsViewModel newsViewModel, FarmerViewModel farmerViewModel)
         {
             InitializeComponent();
+            _farmerViewModel = farmerViewModel;
+            _ExpertViewModel = expertViewModel;
+            _NewsViewModel = newsViewModel;
+          
         }
 
         private void Button_ThongKe(object sender, RoutedEventArgs e)
@@ -39,12 +47,17 @@ namespace PRN221_Admin
 
         private void Button_ManagerNew(object sender, RoutedEventArgs e)
         {
-            NoiDung.Content = new NewsPage();
+            NoiDung.Content = new NewsPage(_NewsViewModel);
         }
 
         private void Button_ManageExpert(object sender, RoutedEventArgs e)
         {
-            NoiDung.Content = new ExpertPage();
+            NoiDung.Content = new ExpertPage(_ExpertViewModel);
+        }
+
+        private void Button_ManageFarmer(object sender, RoutedEventArgs e)
+        {
+            NoiDung.Content = new FarmerPage(_farmerViewModel);
         }
     }
 }

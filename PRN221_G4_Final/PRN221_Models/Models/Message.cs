@@ -13,7 +13,7 @@ public partial class Message
 
     public DateOnly CreateAt { get; set; }
 
-    public string Content { get; set; } = null!;
+    public string Content { get; set; }
 
     public bool? IsDeleted { get; set; }
 }

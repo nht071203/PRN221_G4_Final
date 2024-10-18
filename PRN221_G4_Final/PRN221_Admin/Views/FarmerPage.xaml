@@ -1,0 +1,78 @@
+﻿<Page x:Class="PRN221_Admin.Views.FarmerPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PRN221_Admin.Views"
+      xmlns:vm="clr-namespace:PRN221_Admin.ViewModels"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="FarmerPage">
+
+    <Grid Background="White" Margin="0,0,0,31" Width="800">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="107*"/>
+            <ColumnDefinition Width="93*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition  Height="198"></RowDefinition>
+            <RowDefinition Height="33"></RowDefinition>
+            <RowDefinition Height="167*"></RowDefinition>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+
+
+        <DataGrid ItemsSource="{Binding Accounts, Mode=TwoWay}" SelectedItem="{Binding SelectedExpert}" AutoGenerateColumns="False" Grid.Row="0" Grid.Column="0" Margin="0,33,0,5">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="AccountId" Binding="{Binding AccountId}" Width="55"/>
+                <DataGridTextColumn Header="UserName" Binding="{Binding Username}" Width="80"/>
+                <DataGridTextColumn Header="FullName" Binding="{Binding FullName}" Width="100"/>
+                <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="150"/>
+                <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" Width="90"/>
+                <DataGridTextColumn Header="Gender" Binding="{Binding Gender}" Width="70"/>
+                <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="150"/>
+                <!--<DataGridTextColumn Header="Major" Binding="{Binding Major}" Width="100"/>-->
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!--details-->
+        <!--<StackPanel Background="#FF656565" Grid.Row="1" Grid.Column="0" Margin="0,2,0,2" Grid.ColumnSpan="2">
+            <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Details" FontSize="20" FontWeight="Bold" Foreground="White"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Grid.Column="0" Width="70" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Vertical" Margin="10, 0,0,0"/>
+
+
+
+
+        --><!--BUTTON--><!--
+        <Grid Grid.Row="2" Grid.RowSpan="2" Grid.ColumnSpan="2">
+            <Label Content = "Category:" HorizontalAlignment = "Left" VerticalAlignment = "Top" FontWeight = "Bold" Margin="18,49,0,0"  />
+            <TextBox Text = "{Binding SelectedNews.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Height = "22" Background="Transparent" Padding="0,5,0,0" Margin="92,89,525,227"/>
+
+
+            <Label Content = "ID:" HorizontalAlignment = "Left" VerticalAlignment = "Top" FontWeight = "Bold" Margin="56,10,0,0"  />
+
+            <Label Content = "Title:" HorizontalAlignment = "Left" Margin = "44,89,0,0" VerticalAlignment = "Top" FontWeight = "Bold" />
+            <Label Content = "Content:" HorizontalAlignment = "Left" Margin = "24,132,0,0" VerticalAlignment = "Top" FontWeight = "Bold" RenderTransformOrigin="0.496,1.513" />
+            <Label Content="CreatedAt:" HorizontalAlignment="Left" Margin="15,178,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+
+            <TextBox Text="{Binding SelectedNews.NewsId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" BorderThickness="0" Background="Transparent" Padding="0,5,0,0" Margin="85,10,665,302" RenderTransformOrigin="0.7,0.525"/>
+
+            <TextBox Text = "{Binding SelectedNews.CategoryNewsId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment = "Left" Margin = "92,49,0,0"  TextWrapping = "Wrap" VerticalAlignment = "Top" Width = "187" Height = "22"/>
+            <TextBox Text = "{Binding SelectedNews.Content, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment = "Left" Margin = "92,134,0,0"  TextWrapping = "Wrap" VerticalAlignment = "Top" Width = "187" Height = "22"/>
+            <DatePicker x:Name="datepicker_CreatedAtDateOfBirth" Text="{Binding CreatedAt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Padding="2" Margin="92,178,525,138" BorderBrush="#888" BorderThickness="1"/>
+
+
+            <StackPanel Grid.Row="2" Grid.Column="0" Width="450" Height="200" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Vertical" Margin="285,2,0,0" Grid.ColumnSpan="2">
+                <Image x:Name="Degree" Source="/logo.jpg" Width="450" Height="200"/>
+            </StackPanel>
+
+            <Button x:Name="Add" Content="ADD" Command="{Binding AddStudentCommand}" Width="70"  Margin="451,227,279,56" Height="25"/>
+            <Button x:Name="Delete" Content="DELETE"  Command="{Binding RemoveStudentCommand}" Width="70"  Margin="565,227,165,54" Height="25"/>
+            <Button Content="Avatar" Visibility="{Binding ChooseImageVisibility}" Margin="335,227,400,56" Height="25"/>
+            <Button Content="Degree" Visibility="{Binding ChooseImageDegreeVisibility}" Margin="678,227,47,54" Height="25"/>
+        </Grid>
+        <Label Content="MANAGE NEWS" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold" FontSize="20" Grid.ColumnSpan="2" Margin="341,0,0,0"/>-->
+    </Grid>
+</Page>
