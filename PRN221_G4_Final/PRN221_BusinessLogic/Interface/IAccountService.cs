@@ -26,5 +26,6 @@ namespace PRN221_BusinessLogic.Interface
         Task<Account?> GetAccountByEmail(string email);
         Task<int> GetTotalFarmerService();
         Task<string?> GetFullNameByUsername(string username);
+        Task<int> GetTotalExpertService();
     }
 }
