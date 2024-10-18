@@ -16,6 +16,7 @@ namespace PRN221_Admin.ViewModels
         public NewsDAO newsDAO;
 
         public PlotModel PlotModel { get; set; }
+
         public ThongKeModelView()
         {
             PlotModel = new PlotModel { Title = "Post Chart" };
@@ -32,10 +33,10 @@ namespace PRN221_Admin.ViewModels
             });
 
 
+
+
             LoadData();
         }
-
-
 
         private async void LoadData()
         {
@@ -44,7 +45,6 @@ namespace PRN221_Admin.ViewModels
             TotalFarmerCount = await AccountDAO.Instance.GetTotalFarmerCountAsync();
             TotalExpertCount = await AccountDAO.Instance.GetTotaExpertCountAsync();
             TotalServiceCount = await ServiceDAO.Instance.GetTotalServicesCount();
-
 
             var lineSeries = new LineSeries
             {
@@ -58,12 +58,12 @@ namespace PRN221_Admin.ViewModels
                 var month = DateTime.ParseExact(item.Month, "yyyy-MM", null).Month;
                 lineSeries.Points.Add(new DataPoint(month, item.Count));
             }
+
             PlotModel.Series.Add(lineSeries);
             PlotModel.InvalidatePlot(true);
         }
 
-        private int _totalNewsCount; // Trường riêng để lưu tổng số lượng bài viết
-
+        private int _totalNewsCount;
         public int TotalNewsCount
         {
             get { return _totalNewsCount; }
@@ -72,14 +72,12 @@ namespace PRN221_Admin.ViewModels
                 if (_totalNewsCount != value)
                 {
                     _totalNewsCount = value;
-                    OnPropertyChanged(nameof(TotalNewsCount)); // Thông báo cho UI rằng giá trị đã thay đổi
+                    OnPropertyChanged(nameof(TotalNewsCount));
                 }
             }
         }
 
-
-        private int _totalFarmerCount; // Trường riêng để lưu tổng số lượng bài viết
-
+        private int _totalFarmerCount;
         public int TotalFarmerCount
         {
             get { return _totalFarmerCount; }
@@ -88,12 +86,12 @@ namespace PRN221_Admin.ViewModels
                 if (_totalFarmerCount != value)
                 {
                     _totalFarmerCount = value;
-                    OnPropertyChanged(nameof(TotalFarmerCount)); // Thông báo cho UI rằng giá trị đã thay đổi
+                    OnPropertyChanged(nameof(TotalFarmerCount));
                 }
             }
         }
-        private int _totalExpertCount; // Trường riêng để lưu tổng số lượng bài viết
 
+        private int _totalExpertCount;
         public int TotalExpertCount
         {
             get { return _totalExpertCount; }
@@ -102,13 +100,12 @@ namespace PRN221_Admin.ViewModels
                 if (_totalExpertCount != value)
                 {
                     _totalExpertCount = value;
-                    OnPropertyChanged(nameof(TotalExpertCount)); // Thông báo cho UI rằng giá trị đã thay đổi
+                    OnPropertyChanged(nameof(TotalExpertCount));
                 }
             }
         }
 
-        private int _totalServiceCount; // Trường riêng để lưu tổng số lượng bài viết
-
+        private int _totalServiceCount;
         public int TotalServiceCount
         {
             get { return _totalServiceCount; }
@@ -117,10 +114,12 @@ namespace PRN221_Admin.ViewModels
                 if (_totalServiceCount != value)
                 {
                     _totalServiceCount = value;
-                    OnPropertyChanged(nameof(TotalServiceCount)); // Thông báo cho UI rằng giá trị đã thay đổi
+                    OnPropertyChanged(nameof(TotalServiceCount));
                 }
             }
         }
+
+
 
     }
 }

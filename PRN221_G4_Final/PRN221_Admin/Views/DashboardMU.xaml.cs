@@ -108,11 +108,8 @@
 
             public PlotModel PlotModel { get; set; }
             public FarmerModelView FarmerView { get; set; }
-            //public DashboardMU()
-            //{
-            //    InitializeComponent();
-            //}
-            public DashboardMU(FarmerModelView farmerViewModel)
+
+        public DashboardMU(FarmerModelView farmerViewModel)
             {
                 InitializeComponent();
                 FarmerView = farmerViewModel;
@@ -123,7 +120,25 @@
                 InitializeComponent();
                 SeriesCollection = new SeriesCollection();
             }
-         
+
+        private void Button_ThongKe(object sender, RoutedEventArgs e)
+        {
+            NoiDung.Content = new ThongKePost();
+        }
+
+        private void Button_Farmer(object sender, RoutedEventArgs e)
+        {
+            NoiDung.Content = new FarmerPage(FarmerView);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            NoiDung.Content = new BieuDo();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
 
         }
+    }
     }
