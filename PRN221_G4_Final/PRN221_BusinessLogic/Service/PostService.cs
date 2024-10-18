@@ -41,9 +41,18 @@ namespace PRN221_BusinessLogic.Service
             return response;
         }
 
-        public Task<PostDTO> GetPostAndImage(int postId)
+        public async Task<PostDTO> GetPostAndImage(int postId)
         {
-            throw new NotImplementedException();
+            var response = new PostDTO();
+            var post = await _postRepository.GetById(postId);
+
+            if (post == null) return null;
+
+            response.post = post;
+            response.account = await _accountRepository.GetAccountById(post.AccountId);
+            response.postImages = await _postImageRepository.GetAllByPostId(post.PostId);
+
+            return response;
         }
     }
 }

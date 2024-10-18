@@ -1,7 +1,287 @@
-﻿@page "/Posts/PostDetail/{id:int}"
+﻿@page "{postId:int}"
 @model PRN221_Client.Pages.Posts.PostDetailModel
 @{
 }
 
 
-<h1>Hello</h1>
+<!-- Page Wrapper Start -->
+<section class="page--wrapper pt--80 pb--20">
+    <div class="container">
+
+        <div class="row">
+
+            <!-- Main Content Start -->
+            <div class="main--content col-md-8 pb--30" data-trigger="stickyScroll">
+                <div class="main--content-inner">
+
+                    <!-- Post Item Start -->
+                    <div class="post--item post--single pb--30">
+
+                        <!-- Post Info Start -->
+                        <div class="post--info">
+
+                            <div class="post-detail-info">
+
+                                <!-- Post AVATAR Start -->
+                                <div class="post-detail-avatar">
+                                    @if (Model.PostDTO.account == null)
+                                    {
+                                        <a href="/Access/Login">
+                                            <img src="" alt="" onerror="this.onerror=null; this.src='https://firebasestorage.googleapis.com/v0/b/prn221-69738.appspot.com/o/image%2Fuser.png?alt=media&token=e669a837-b9c8-4983-b2bd-8eb5c091d48f';">
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a href="#">
+                                            <img src="@Model.PostDTO.account.Avatar" alt="Alternate Text" />
+                                        </a>
+                                    }
+                                </div>
+                                <!-- Post avatar End -->
+
+                                <div class="post-detail-title">
+                                    <div class="post-detail-header">
+                                        <p><a href="/Access/Login">Người dùng ẩn danh</a> vừa đăng 1 bài viết</p>
+                                    </div>
+
+                                    <div class="post-detail-date">
+                                        <p><i class="fa mr--8 fa-clock-o"></i>@Model.PostDTO.post.CreatedAt</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                            
+                            <!-- Post Content Start -->
+                            <div class="post-detail-content text-darker">
+                                <p>@Model.PostDTO.post.PostContent</p>
+                            </div>
+                            <!-- Post Content End -->
+
+                            <!-- Post Footer Start -->
+                            <div class="post--footer">
+                                <div class="row">
+                                    <div class="col-sm-6">
+
+                                        <!-- Post Meta Start -->
+                                        <div class="post--meta">
+                                            <ul class="nav" style="display: flex; flex-direction: column">
+                                                <li>
+                                                    <i class="mr--8 fa fa-folder-open-o"></i>
+
+                                                    <a href="#"><span>@Model.PostDTO.post.CategoryPostId</span></a>
+                                                </li>
+                                                <li>
+                                                    <i class="mr--8 fa fa-tags"></i>
+
+                                                    <a href="#"><span>@Model.View lượt xem</span></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <!-- Post Meta End -->
+
+                                    </div>
+
+                                    <div class="col-sm-6">
+
+                                        <!-- Post Social Start -->
+                                        <div class="post--social-share clearfix">
+                                            <ul class="nav">
+                                                <li>
+                                                    <a href="#"><i class="fa-solid fa-thumbs-up"></i></a>
+                                                    <span>20 lượt thích</span>
+                                                </li>
+                                                <li>
+                                                    <a href="#"><i class="fa-solid fa-share"></i></a>
+                                                    <span>30 lượt chia sẻ</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <!-- Post Social End -->
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Post Footer End -->
+                        </div>
+                        <!-- Post Info End -->
+
+                    </div>
+                    <!-- Post Item End -->
+
+                    
+                    
+                    <!-- Comment Form Start -->
+                    <div class="comment--form pb--30" data-form="validate">
+                        <h4 class="h4 pb--15">Bình luận</h4>
+
+                        @* FORM COMMENT *@
+                        <form action="#">
+                            <div class="row gutter--15">
+
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <textarea name="comment" placeholder="Comment *" class="form-control" required></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12 pt--10">
+                                    <button type="submit" class="btn btn-sm btn-primary fs--14">Đăng</button>
+                                </div>
+
+                            </div>
+                        </form>
+                        @* END FORM COMMENT *@
+
+                    </div>
+                    <!-- Comment Form End -->
+                    <!-- Comment List Start -->
+                    <div class="comment--list pt--40">
+                        <h4 class="h4 pb--20">03 bình luận</h4>
+
+                        <ul class="comment--items nav">
+
+                            <!-- Comment Item Start -->
+                            <li>
+                                <div class="comment--item mr--15 clearfix">
+
+                                    @* AVATAR USER COMMENT *@
+                                    <div class="img float--left" data-overlay="0.3" data-overlay-color="primary">
+                                        <img src="~/image/logo.jpg" alt="">
+                                    </div>
+                                    @* END AVATAR USER COMMENT *@
+
+                                    <div class="info ov--h">
+
+                                        @* INFORMATION OF USER COMMENT *@
+                                        <div class="header clearfix">
+                                            <div class="meta float--left">
+                                                <p class="fs--14 fw--700 text-darkest">
+                                                    <a href="#">Denise R. Sherman</a>
+                                                </p>
+
+                                                <p>
+                                                    <i class="mr--10 fa fa-clock-o"></i>
+                                                    <span>Yeasterday at 08:20 am</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        @* END COMMENT INFORMATION USER *@
+
+                                        @* CONTENT COMMENT *@
+                                        <div class="content pt--8 fs--14">
+                                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration  If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything.</p>
+                                        </div>
+                                        @* END CONTENT COMMENT *@
+
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- Comment Item End -->
+
+                        </ul>
+                    </div>
+                    <!-- Comment List End -->
+
+                </div>
+            </div>
+            <!-- Main Content End -->
+            <!-- Main Sidebar Start -->
+            <div class="main--sidebar col-md-4 pb--60" data-trigger="stickyScroll">
+                <!-- Widget Start -->
+                <div class="widget">
+                    <h2 class="h4 fw--700 widget--title">Find A Buddy</h2>
+
+                    <!-- Buddy Finder Widget Start -->
+                    <div class="buddy-finder--widget">
+                        <form action="#">
+                            <div class="row">
+                                <div class="col-xs-6 col-xxs-12">
+                                    <div class="form-group">
+                                        <label>
+                                            <span class="text-darker ff--primary fw--500">I Am</span>
+
+                                            <select name="gender" class="form-control form-sm" data-trigger="selectmenu">
+                                                <option value="male">Male</option>
+                                                <option value="female">Female</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-6 col-xxs-12">
+                                    <div class="form-group">
+                                        <label>
+                                            <span class="text-darker ff--primary fw--500">Looking For</span>
+
+                                            <select name="lookingfor" class="form-control form-sm" data-trigger="selectmenu">
+                                                <option value="female">Female</option>
+                                                <option value="male">Male</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-6 col-xxs-12">
+                                    <div class="form-group">
+                                        <label>
+                                            <span class="text-darker ff--primary fw--500">Age</span>
+
+                                            <select name="age" class="form-control form-sm" data-trigger="selectmenu">
+                                                <option value="18to25">18 to 25</option>
+                                                <option value="25to30">25 to 30</option>
+                                                <option value="30to35">30 to 35</option>
+                                                <option value="35to40">35 to 40</option>
+                                                <option value="40plus">40+</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-6 col-xxs-12">
+                                    <div class="form-group">
+                                        <label>
+                                            <span class="text-darker ff--primary fw--500">City</span>
+
+                                            <select name="city" class="form-control form-sm" data-trigger="selectmenu">
+                                                <option value="newyork">New York</option>
+                                                <option value="California">California</option>
+                                                <option value="Atlanta">Atlanta</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12">
+                                    <div class="form-group">
+                                        <label>
+                                            <span class="text-darker ff--primary fw--500">Filter Country</span>
+
+                                            <select name="city" class="form-control form-sm" data-trigger="selectmenu">
+                                                <option value="unitedstates">United States</option>
+                                                <option value="australia">Australia</option>
+                                                <option value="turkey">Turkey</option>
+                                                <option value="vietnam">Vietnam</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12">
+                                    <button type="submit" class="btn btn-primary">Search</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- Buddy Finder Widget End -->
+                </div>
+                <!-- Widget End -->
+
+            </div>
+            <!-- Main Sidebar End -->
+
+        </div>
+    </div>
+</section>
+<!-- Page Wrapper End -->
