@@ -32,6 +32,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="241*"/>
                 <RowDefinition Height="343*"/>
+
             </Grid.RowDefinitions>
             <Frame NavigationUIVisibility="Hidden" x:Name="NoiDung" Grid.RowSpan="2" />
 

@@ -1,129 +1,106 @@
 ﻿@page "/Access/Login"
 @model PRN221_Client.Pages.Access.LoginModel
 @{
-    Layout = null;
+    Layout = "_LayoutAccess";
+    ViewData["Title"] = "Đăng nhập";
 }
-<!DOCTYPE html>
-<!-- Coding by CodingLab | www.codinglabweb.com-->
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Đăng Nhập </title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
-    <!-- CSS -->
-    <link rel="stylesheet" href="~/css/loginStyle.css">
+<section class="container forms">
 
-    <!-- Boxicons CSS -->
-    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <div class="form login">
+        <div class="form-content">
+            <h1 class="title-login">Đăng nhập</h1>
 
-</head>
+            <form method="post" asp-page-handler="Login">
+                <div class="field input-field">
+                    <input type="text" placeholder="Tên đăng nhập" class="input" name="Username">
+                </div>
 
-<body>
-    <header class="pt-5 d-flex w-100 justify-content-center">
-        <a href="/"class="logo" >
-            <img src="~/image/logo.jpg" alt="">
-        </a>
-    </header>
-
-    <section class="container forms">
-
-        <div class="form login">
-            <div class="form-content">
-                <h1 class="title-login">Đăng nhập</h1>
-
-                <form method="post" asp-page-handler="Login">
-                    <div class="field input-field">
-                        <input type="text" placeholder="Tên đăng nhập" class="input" name="Username">
-                    </div>
-
-                    <div class="field input-field">
-                        <input type="text" placeholder="Mật khẩu" class="password" name="Password">
-                        <i class='bx bx-hide eye-icon'></i>
-                    </div>
-
-                    <div class="form-link">
-                        <a href="#" class="forgot-pass">Quên mật khẩu?</a>
-                    </div>
-
-                    <div class="field button-field">
-                        <button>Đăng nhập</button>  
-                    </div>
-                </form>
+                <div class="field input-field">
+                    <input type="text" placeholder="Mật khẩu" class="password" name="Password">
+                    <i class='bx bx-hide eye-icon'></i>
+                </div>
 
                 <div class="form-link">
-                    <span>Bạn chưa có tài khoản? <a href="/Access/OptionsRole" class="link signup-link">Đăng ký</a></span>
+                    <a href="#" class="forgot-pass">Quên mật khẩu?</a>
                 </div>
-            </div>
 
-            <div class="line"></div>
+                <div class="field button-field">
+                    <button>Đăng nhập</button>
+                </div>
+            </form>
 
-            <div class="media-options">
-                <a href="@Url.Page("/Access/Login", "SignInFacebook")" class="field facebook">
-                    <i class='bx bxl-facebook facebook-icon'></i>
-                    <span>Đăng nhập bằng Facebook</span>
-                </a>
+            <div class="form-link">
+                <span>Bạn chưa có tài khoản? <a href="/Access/OptionsRole" class="link signup-link">Đăng ký</a></span>
             </div>
-            
-            <div class="media-options">
-                <a href="@Url.Page("/Access/Login", "GoogleLogin")" class="field google">
-                    <img src="~/image/google.png" alt="" class="google-img">
+        </div>
+
+        <div class="line"></div>
+
+        <div class="media-options">
+            <a href="@Url.Page("/Access/Login", "SignInFacebook")" class="field facebook">
+                <i class='bx bxl-facebook facebook-icon'></i>
+                <span>Đăng nhập bằng Facebook</span>
+            </a>
+        </div>
+
+        <div class="media-options">
+            <a href="@Url.Page("/Access/Login", "GoogleLogin")" class="field google">
+                <img src="~/image/google.png" alt="" class="google-img">
                 <span>Đăng nhập bằng Google</span>
-                </a>
-            </div>
+            </a>
         </div>
-        <!-- Signup Form -->
+    </div>
+    <!-- Signup Form -->
 
-        <div class="form signup">
-            <div class="form-content">
-                <h1 class="title-login">Đăng ký</h1>
-                <form action="#">
-                    <div class="field input-field">
-                        <input type="email" placeholder="Email" class="input">
-                    </div>
-
-                    <div class="field input-field">
-                        <input type="password" placeholder="Tạo mật khẩu" class="password">
-                    </div>
-
-                    <div class="field input-field">
-                        <input type="password" placeholder="Xác nhận mật khẩu" class="password">
-                        <i class='bx bx-hide eye-icon'></i>
-                    </div>
-
-                    <div class="field button-field">
-                        <button>Đăng ký</button>
-                    </div>
-                </form>
-
-                <div class="form-link">
-                    <span>Bạn đã có tài khoản? <a href="#" class="link login-link">Đăng nhập</a></span>
+    <div class="form signup">
+        <div class="form-content">
+            <h1 class="title-login">Đăng ký</h1>
+            <form action="#">
+                <div class="field input-field">
+                    <input type="email" placeholder="Email" class="input">
                 </div>
+
+                <div class="field input-field">
+                    <input type="password" placeholder="Tạo mật khẩu" class="password">
+                </div>
+
+                <div class="field input-field">
+                    <input type="password" placeholder="Xác nhận mật khẩu" class="password">
+                    <i class='bx bx-hide eye-icon'></i>
+                </div>
+
+                <div class="field button-field">
+                    <button>Đăng ký</button>
+                </div>
+            </form>
+
+            <div class="form-link">
+                <span>Bạn đã có tài khoản? <a href="#" class="link login-link">Đăng nhập</a></span>
             </div>
-
-            <div class="line"></div>
-
-            <div class="media-options">
-                <a href="@Url.Page("./Access/Login", "SignInFacebook")" class="field facebook">
-                    <i class='bx bxl-facebook facebook-icon'></i>
-                    <span>Đăng nhập bằng Facebook</span>
-                </a>
-            </div>
-
-            <div class="media-options">
-                <a href="#" class="field google">
-                    <img src="~/image/google.png" alt="Google" class="google-img">
-                    <span>Đăng nhập bằng Google</span>
-                </a>
-            </div>
-
         </div>
-    </section>
 
-    <!-- JavaScript -->
-    <script src="~/js/loginMain.js"></script>
+        <div class="line"></div>
+
+        <div class="media-options">
+            <a href="@Url.Page("./Access/Login", "SignInFacebook")" class="field facebook">
+                <i class='bx bxl-facebook facebook-icon'></i>
+                <span>Đăng nhập bằng Facebook</span>
+            </a>
+        </div>
+
+        <div class="media-options">
+            <a href="#" class="field google">
+                <img src="~/image/google.png" alt="Google" class="google-img">
+                <span>Đăng nhập bằng Google</span>
+            </a>
+        </div>
+
+    </div>
+</section>
+
+<!-- JavaScript -->
+                  <script src="~/js/loginMain.js"></script>
     <script type="text/javascript">
         if (window.location.hash === '#_=_') {
             if (history.replaceState) {
@@ -134,6 +111,3 @@
             }
         }
     </script>
-</body>
-
-</html>

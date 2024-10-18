@@ -17,6 +17,7 @@ namespace PRN221_Admin
     /// </summary>
     public partial class App : Application
     {
+
         public static IServiceProvider ServiceProvider { get; private set; }
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -24,6 +25,7 @@ namespace PRN221_Admin
             ConfigureServices(serviceCollection);
             ServiceProvider = serviceCollection.BuildServiceProvider();
             var mainwindow = ServiceProvider.GetRequiredService<DashboardMU>();
+
             var studentViewModel = ServiceProvider.GetRequiredService<ExpertViewModel>();
             var newsViewModel = ServiceProvider.GetRequiredService<NewsViewModel>();
             var farmerViewModel = ServiceProvider.GetRequiredService<FarmerViewModel>();
@@ -31,11 +33,14 @@ namespace PRN221_Admin
             mainwindow.DataContext = newsViewModel;
             mainwindow.DataContext = farmerViewModel;
             mainwindow.Show();
+            
+            
         }
 
         private void ConfigureServices(IServiceCollection services)
         {
 
+             // Đăng ký các service, repository, DAO mà bạn đã có sẵn services.
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IAccountRepository, AccountRepository>();
             services.AddTransient<AccountDAO>();
@@ -44,8 +49,7 @@ namespace PRN221_Admin
             services.AddTransient<INewsService, NewsService>();
             services.AddTransient<INewsRepository, NewsRepository>();
             services.AddTransient<NewsDAO>();
-
-
+            
             services.AddTransient<ExpertViewModel>();
             services.AddTransient<NewsViewModel>();
             services.AddTransient<FarmerViewModel>();
@@ -59,8 +63,7 @@ namespace PRN221_Admin
             services.AddSingleton<DashboardMU>();
             // services.AddSingleton<AccountService>();
         }
-        // Đăng ký các service, repository, DAO mà bạn đã có sẵn
-
+       
     }
 }
 

@@ -1,11 +1,23 @@
 ﻿@using Microsoft.AspNetCore.Http;
 @inject IHttpContextAccessor HttpContextAccessor
 @inject PRN221_BusinessLogic.Interface.INewsService _newsService
+@inject PRN221_BusinessLogic.Interface.IAccountService _acccountService
 
 @{
     IEnumerable<PRN221_Models.Models.CategoryNews> categories;
     var isLoggedIn = HttpContextAccessor.HttpContext.Session.GetString("UserSession") != null;
-    categories = await _newsService.GetAllCategoryNews();
+    categories = await _newsService.GetCategoriesHaveNews();
+    int? getIdAccount = null;
+    if (HttpContextAccessor.HttpContext.Session.GetString("AccountID") != null)
+    {
+        getIdAccount = Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetInt32("AccountID"));
+    }
+    PRN221_Models.Models.Account getAcc = null;
+    if (getIdAccount.HasValue)
+    {
+        // Retrieve the account based on the account ID
+        getAcc = await _acccountService.GetByIdAccount(getIdAccount.Value);
+    }
 }
 
 <!DOCTYPE html>
@@ -21,7 +33,10 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ProjectPRNClient.styles.css" asp-append-version="true" />
-
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="~/css/plugins.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/responsive-style.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/colors/color-1.css" asp-append-version="true" id="changeColorScheme" />
@@ -31,6 +46,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.0/css/boxicons.min.css"
           integrity="sha512-pVCM5+SN2+qwj36KonHToF2p1oIvoU3bsqxphdOIWMYmgr4ZqD3t5DjKvvetKhXGc/ZG5REYTT6ltKfExEei/Q=="
           crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
     <script src="https://kit.fontawesome.com/1bd9fa3a2e.js" crossorigin="anonymous"></script>
 </head>
 <body class="wrapper">
@@ -163,17 +179,17 @@
                         </li>
 
                         <li class="dropdown">
-                            <a href="/News/Index" class="dropdown-toggle"><span>Tin tức</span></a>
-                            @* <a href="/News/Index" data-toggle="dropdown"> *@
-                            </a>
-
+                            <a href="/News/ListNews" class="dropdown-toggle"><span>Tin tức</span></a>
                             <ul class="dropdown-menu">
-                                @foreach(var category in categories)
+                                @foreach (var category in categories)
                                 {
-                                    <li><a href="">@category.CategoryNewsName</a></li>
+                                    <li>
+                                        <a asp-page="/News/ListNews" asp-route-cat="@category.CategoryNewsId">@category.CategoryNewsName</a>
+                                    </li>
                                 }
                             </ul>
                         </li>
+
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <span>Dịch vụ</span>
@@ -183,7 +199,11 @@
                             <ul class="dropdown-menu">
                                 <li><a href="">Danh sách chuyên gia</a></li>
                                 <li><a href="/Service/ListServices">Các dịch vụ</a></li>
-                                <li><a href="/Service/ServiceDetail">Dịch vụ 2</a></li>
+                                @* <li><a href="/Service/ListServiceExpert">ListServiceExpert</a></li> *@
+                                @if (getAcc != null && getAcc.RoleId == 2)
+                                {
+                                    <li><a href="/Service/ListServiceExpert">ListServiceExpert</a></li>
+                                }
                             </ul>
                         </li>
                         <li><a href=""><span>Liên hệ hỗ trợ</span></a></li>
@@ -448,13 +468,12 @@
         <!-- Footer Copyright End -->
     </footer>
 
-    <script src="~/js/plugins.min.js"></script>
-    <!-- ==== Color Switcher Plugin ==== -->
-    <script src="~/js/color-switcher.min.js"></script>
-    <!-- ==== Main Script ==== -->
-    <script src="~/js/main.js"></script>
     @* Search box js *@
     <script src="~/js/custom.js"></script>
+    <script src="~/js/plugins.min.js"></script>
+    <!-- ==== Main Script ==== -->
+    <script src="~/js/main.js"></script>
+    
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -470,6 +489,8 @@
             }
         }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

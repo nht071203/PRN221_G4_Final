@@ -27,8 +27,15 @@ namespace PRN221_BusinessLogic.Service
         }
         public async Task<Account> GetByIdAccount(int id)
         {
-            return await _accountRepo.GetById(id);
+            var getAcc = await _accountRepo.GetById(id);
+            return getAcc;
         }
+
+        public async Task<Account> GetByUsername(string username)
+        {
+            return await _accountRepo.GetByUsername(username);
+        }
+
         public async Task AddAccount(Account item)
         {
             await _accountRepo.Add(item);
@@ -37,14 +44,20 @@ namespace PRN221_BusinessLogic.Service
         {
             await _accountRepo.Update(item);
         }
-        public async Task DeleteAccount(int id)
+        public async Task DeleteAccount(Account item)
         {
-            await _accountRepo.Delete(id);
+            await _accountRepo.Delete(item);
         }
 
         public async Task<Account?> GetAccountByEmail(string email)
         {
             return await _accountRepo.GetAccountByEmail(email);
+        }
+
+
+        public async Task<int> GetTotalFarmerService()
+        {
+            return await _accountRepo.GetTotalFarmerRepo();
         }
         public async Task<Account> GetByIdFacebook(string fbId)
         {
@@ -74,6 +87,11 @@ namespace PRN221_BusinessLogic.Service
             };
 
             await _accountRepo.Add(newAcc);
+        }
+
+        public async Task<string?> GetFullNameByUsername(string username)
+        {
+            return await _accountRepo.GetFullnameByUsername(username);
         }
     }
 }
