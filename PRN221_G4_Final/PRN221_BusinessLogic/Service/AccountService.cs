@@ -85,7 +85,6 @@ namespace PRN221_BusinessLogic.Service
                 IsDeleted = false,
                 Otp = null
             };
-
             await _accountRepo.Add(newAcc);
         }
 
