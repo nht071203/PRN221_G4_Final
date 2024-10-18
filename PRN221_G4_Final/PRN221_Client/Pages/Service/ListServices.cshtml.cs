@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OxyPlot;
 using PRN221_BusinessLogic.Interface;
+using PRN221_BusinessLogic.Service;
 using PRN221_Models.Models;
 
 namespace PRN221_Client.Pages.Service
@@ -12,12 +13,14 @@ namespace PRN221_Client.Pages.Service
     {
         private readonly IRequirementService _requirementServices;
         private readonly IAccountService _accountService;
+        private readonly IBookingService _bookingService;
         private const int PageSize = 2; // Số dịch vụ trong 1 page
 
-        public ListServicesModel(IRequirementService requirementService, IAccountService accountService)
+        public ListServicesModel(IRequirementService requirementService, IAccountService accountService, IBookingService bookingService)
         {
             _requirementServices = requirementService;
             _accountService = accountService;
+            _bookingService = bookingService;
         }
         // Khai báo list chứa các dịch vụ
         public IEnumerable<PRN221_Models.Models.Service> ServiceList { get; set; }
@@ -76,6 +79,41 @@ namespace PRN221_Client.Pages.Service
             }
 
             return Page(); // Trả về trang đã cập nhật
+        }
+
+        [BindProperty]
+        public string InputRequestContent { get; set; }
+        [BindProperty]
+        public int InputServiceId { get; set; }
+        public async Task<IActionResult> OnPostRequestService()
+        {
+            int getAccId = Convert.ToInt32(HttpContext.Session.GetInt32("AccountID"));
+            var getAccount = await _accountService.GetByIdAccount(getAccId);
+
+            PRN221_Models.Models.BookingService newBooking = new PRN221_Models.Models.BookingService
+            {
+                ServiceId = InputServiceId,
+                BookingBy = getAccId,
+                BookingAt = DateOnly.FromDateTime(DateTime.Now),
+                BookingStatus = "sending",
+                IsDeletedFarmer = false,
+                Content = InputRequestContent,
+                IsDeletedExpert = false,
+            };
+
+            var addBooking = await _bookingService.AddBooking(newBooking);
+
+            if (addBooking == null)
+            {
+                Console.WriteLine("Book lịch thất bại");
+                return RedirectToPage("/Service/ListServices");
+            }
+
+            HttpContext.Session.SetString("UserSession", getAccount.Username);
+
+            Console.WriteLine("Book thành công");
+
+            return RedirectToPage("/Service/BookingSuccess");
         }
     }
 }

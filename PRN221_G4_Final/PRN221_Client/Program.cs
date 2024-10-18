@@ -12,6 +12,7 @@ using PRN221_DataAccess.DAOs;
 using PRN221_Models.DTO;
 using PRN221_Models.Models;
 using PRN221_Repository.AccountRepo;
+using PRN221_Repository.BookingRepo;
 using PRN221_Repository.NewsRepo;
 using PRN221_Repository.PostImageRepo;
 using PRN221_Repository.PostsRepo;
@@ -40,13 +41,13 @@ builder.Services.AddAuthentication(options =>
     options.AccessDeniedPath = "/Access/Login";
     options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
     options.Cookie.SecurePolicy = CookieSecurePolicy.None;
-});
-
-builder.Services.AddAuthentication(options =>
+})
+.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
 {
-    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = FacebookDefaults.AuthenticationScheme;
+    options.LoginPath = "/Access/Login";
+    options.LogoutPath = "/Access/Logout";
+    options.AccessDeniedPath = "/Access/Login";
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
 })
 .AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
 {
@@ -124,6 +125,10 @@ builder.Services.AddScoped<IRequirementService, RequirementService>();
 builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
 builder.Services.AddScoped<ServiceDAO>();
 builder.Services.AddScoped<Service>();
+
+builder.Services.AddScoped<IBookingService, PRN221_BusinessLogic.Service.BookingService>();
+builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+builder.Services.AddScoped<BookingDAO>();
 
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<FirebaseConfig>();

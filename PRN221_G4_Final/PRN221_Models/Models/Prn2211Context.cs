@@ -1,17 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using PRN221_Models.Models;
 
-namespace PRN221_DataAccess;
+namespace PRN221_Models.Models;
 
-
-
-public partial class Prn221Context : DbContext
+public partial class Prn2211Context : DbContext
 {
-    public Prn221Context()
+    public Prn2211Context()
     {
     }
 
-    public Prn221Context(DbContextOptions<Prn221Context> options)
+    public Prn2211Context(DbContextOptions<Prn2211Context> options)
         : base(options)
     {
     }
@@ -56,7 +55,7 @@ public partial class Prn221Context : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=DESKTOP-PU0SOEM\\SQLEXPRESS;Database=PRN221;uid=sa;pwd=123@123a;encrypt=true;trustServerCertificate=true;");
+        => optionsBuilder.UseSqlServer("Server=DESKTOP-5B3AKMH\\SQLEXPRESS;Database=PRN221_1;uid=sa;pwd=khoa31102003;encrypt=true;trustServerCertificate=true;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

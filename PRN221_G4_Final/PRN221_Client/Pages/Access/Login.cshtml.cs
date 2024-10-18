@@ -157,6 +157,7 @@ namespace PRN221_Client.Pages.Access
             // Store the session for the Google user
             HttpContext.Session.SetString("UserSession", account.Username);
             HttpContext.Session.SetString("UserEmail", email); // Store other info as needed
+            HttpContext.Session.SetInt32("AccountID", account.AccountId);
 
             Console.WriteLine("User signed in successfully with Google.");
 
@@ -226,6 +227,7 @@ namespace PRN221_Client.Pages.Access
 
             // Add Session login Facebook
             HttpContext.Session.SetString("UserSession", name);
+            HttpContext.Session.SetInt32("AccountID", account.AccountId);
 
             // Redirect to the Index page after successful login
             return RedirectToPage("/Index");
