@@ -6416,3 +6416,8 @@ p {
         background-color: #32CD32; /* Màu xanh lá đậm khi hover */
         transform: scale(1.05); /* Hiệu ứng phóng to nhẹ khi hover */
     }
+
+.star-cmt{
+    font-size:17px;
+    color:gold;
+}
