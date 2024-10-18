@@ -102,5 +102,9 @@ namespace PRN221_DataAccess.DAOs
             return await _context.Accounts.Where(a => a.Username.Equals(username)).Select(f => f.FullName).FirstOrDefaultAsync();
         }
 
+        public async Task<Account?> GetAccountById(int? accountId)
+        {
+            return await _context.Accounts.FirstOrDefaultAsync(a => a.AccountId == accountId);
+        }
     }
 }

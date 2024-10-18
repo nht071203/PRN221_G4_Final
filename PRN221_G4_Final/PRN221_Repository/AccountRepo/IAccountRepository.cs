@@ -20,5 +20,6 @@ namespace PRN221_Repository.AccountRepo
         Task Delete(Account item);
         Task<int> GetTotalFarmerRepo();
         Task<string?> GetFullnameByUsername(string username);
+        Task<Account?> GetAccountById(int? accountId);
     }
 }
