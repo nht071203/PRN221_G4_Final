@@ -13,11 +13,9 @@ public partial class BookingService
 
     public DateOnly BookingAt { get; set; }
 
-    public string BookingStatus { get; set; }
+    public string BookingStatus { get; set; } = null!;
 
     public bool? IsDeletedFarmer { get; set; }
 
     public bool? IsDeletedExpert { get; set; }
-
-    public string Content { get; set; }
 }

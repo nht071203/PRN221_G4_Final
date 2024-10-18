@@ -32,7 +32,7 @@ namespace PRN221_BusinessLogic.Service
             foreach (var item in listPost)
             {
                 var listImageByPost = await _postImageRepository.GetAllByPostId(item.PostId);
-                var account = await _accountRepository.GetById(item.AccountId);
+                var account = await _accountRepository.GetAccountById(item.AccountId);
                 var postItemDto = new PostDTO(item, listImageByPost, account);
 
                 response.Add(postItemDto);

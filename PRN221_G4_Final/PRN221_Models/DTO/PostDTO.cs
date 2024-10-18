@@ -11,11 +11,11 @@ namespace PRN221_Models.DTO
     {
         public Post post { get; set; }
         public IEnumerable<PostImage> postImages { get; set; }
-        public Account account { get; set; }
+        public Account? account { get; set; }
 
         public PostDTO() { }
 
-        public PostDTO(Post post, IEnumerable<PostImage> postImages, Account account)
+        public PostDTO(Post post, IEnumerable<PostImage> postImages, Account? account)
         {
             this.post = post;
             this.postImages = postImages;
