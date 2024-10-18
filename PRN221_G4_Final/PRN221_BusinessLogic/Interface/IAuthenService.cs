@@ -12,5 +12,6 @@ namespace PRN221_BusinessLogic.Interface
         Task<Account?> Login(string username, string password);
         Task<Role?> GetRoleById(int roleId);
         Task<Account?> Register(Account account);
+        Task<Account?> GetAccountByEmailForReset(string email);
     }
 }

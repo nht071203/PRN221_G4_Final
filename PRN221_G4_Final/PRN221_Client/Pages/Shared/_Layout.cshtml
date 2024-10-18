@@ -6,6 +6,7 @@
 @{
     IEnumerable<PRN221_Models.Models.CategoryNews> categories;
     var isLoggedIn = HttpContextAccessor.HttpContext.Session.GetString("UserSession") != null;
+    categories = await _newsService.GetCategoriesHaveNews();
     int? getIdAccount = null;
     if (HttpContextAccessor.HttpContext.Session.GetString("AccountID") != null)
     {
@@ -17,7 +18,6 @@
         // Retrieve the account based on the account ID
         getAcc = await _acccountService.GetByIdAccount(getIdAccount.Value);
     }
-    categories = await _newsService.GetCategoriesHaveNews();
 }
 
 <!DOCTYPE html>
@@ -33,7 +33,10 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ProjectPRNClient.styles.css" asp-append-version="true" />
-
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="~/css/plugins.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/responsive-style.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/colors/color-1.css" asp-append-version="true" id="changeColorScheme" />
@@ -43,6 +46,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.0/css/boxicons.min.css"
           integrity="sha512-pVCM5+SN2+qwj36KonHToF2p1oIvoU3bsqxphdOIWMYmgr4ZqD3t5DjKvvetKhXGc/ZG5REYTT6ltKfExEei/Q=="
           crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
     <script src="https://kit.fontawesome.com/1bd9fa3a2e.js" crossorigin="anonymous"></script>
 </head>
 <body class="wrapper">
@@ -464,13 +468,12 @@
         <!-- Footer Copyright End -->
     </footer>
 
-    <script src="~/js/plugins.min.js"></script>
-    <!-- ==== Color Switcher Plugin ==== -->
-    <script src="~/js/color-switcher.min.js"></script>
-    <!-- ==== Main Script ==== -->
-    <script src="~/js/main.js"></script>
     @* Search box js *@
     <script src="~/js/custom.js"></script>
+    <script src="~/js/plugins.min.js"></script>
+    <!-- ==== Main Script ==== -->
+    <script src="~/js/main.js"></script>
+    
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

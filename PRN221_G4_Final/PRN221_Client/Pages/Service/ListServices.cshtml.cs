@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OxyPlot;
 using PRN221_BusinessLogic.Interface;
@@ -6,11 +7,12 @@ using PRN221_Models.Models;
 
 namespace PRN221_Client.Pages.Service
 {
+    [Authorize]
     public class ListServicesModel : PageModel
     {
         private readonly IRequirementService _requirementServices;
         private readonly IAccountService _accountService;
-        private const int PageSize = 8; // Số dịch vụ trong 1 page
+        private const int PageSize = 2; // Số dịch vụ trong 1 page
 
         public ListServicesModel(IRequirementService requirementService, IAccountService accountService)
         {

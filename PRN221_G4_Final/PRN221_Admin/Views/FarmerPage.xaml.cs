@@ -1,4 +1,4 @@
-﻿using PRN221_Admin.ViewModels;
+using PRN221_Admin.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +21,8 @@ namespace PRN221_Admin.Views
     /// </summary>
     public partial class FarmerPage : Page
     {
-        public FarmerPage(FarmerModelView viewModel)
+
+        public FarmerPage(FarmerViewModel viewModel)
         {
             InitializeComponent();
             DataContext = viewModel;

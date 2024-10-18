@@ -13,6 +13,8 @@ public partial class News
 
     public string Content { get; set; } = null!;
 
+    public string? ImageUrl { get; set; }
+
     public DateOnly CreatedAt { get; set; }
 
     public DateOnly? UpdatedAt { get; set; }

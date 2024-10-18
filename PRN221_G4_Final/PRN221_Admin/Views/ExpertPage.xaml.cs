@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PRN221_Admin.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,11 @@ namespace PRN221_Admin.Views
     /// </summary>
     public partial class ExpertPage : Page
     {
-        public ExpertPage()
+        public ExpertPage(ExpertViewModel viewModel)
         {
             InitializeComponent();
+            DataContext = viewModel;
         }
+
     }
 }

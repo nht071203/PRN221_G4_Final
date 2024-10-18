@@ -1,15 +1,20 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Facebook;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using PRN221_BusinessLogic.Interface;
 using PRN221_BusinessLogic.Service;
 using PRN221_DataAccess;
 using PRN221_DataAccess.DAOs;
+using PRN221_Models.DTO;
 using PRN221_Models.Models;
 using PRN221_Repository.AccountRepo;
 using PRN221_Repository.NewsRepo;
+using PRN221_Repository.PostImageRepo;
+using PRN221_Repository.PostsRepo;
 using PRN221_Repository.RoleRepo;
 using PRN221_Repository.ServiceRepo;
 
@@ -21,14 +26,19 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<PRN221_DataAccess.Prn221Context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-
-
-builder.Services.AddAuthentication("CookiesPRN221").AddCookie("CookiesPRN221", options =>
+builder.Services.AddAuthentication(options =>
+{
+    // Sử dụng Cookie làm phương thức xác thực chính
+    options.DefaultScheme = "CookiesPRN221";
+})
+.AddCookie("CookiesPRN221", options =>
 {
     options.LoginPath = "/Access/Login";
     options.LogoutPath = "/Access/Logout";
+    options.Cookie.Path = "/";
     options.AccessDeniedPath = "/Access/Login";
     options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+    options.Cookie.SecurePolicy = CookieSecurePolicy.None;
 });
 
 builder.Services.AddAuthentication(options =>
@@ -36,16 +46,15 @@ builder.Services.AddAuthentication(options =>
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = FacebookDefaults.AuthenticationScheme;
-}).
-AddCookie().
-AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
+})
+.AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
 {
     options.ClientId = builder.Configuration.GetSection("GoogleKeys:ClientID").Value;
     options.ClientSecret = builder.Configuration.GetSection("GoogleKeys:ClientSecret").Value;
     options.CallbackPath = "/signin-google";
     options.Scope.Add("profile");
 })
-.AddFacebook(options =>
+.AddFacebook(FacebookDefaults.AuthenticationScheme, options =>
  {
      options.AppId = builder.Configuration["Facebook:AppId"];
      options.AppSecret = builder.Configuration["Facebook:AppSecret"];
@@ -59,7 +68,6 @@ AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
      options.Fields.Add("email");    // Email
      options.Fields.Add("picture");  // Avatar (Profile Picture)
 
-
      // Thêm sự kiện bắt trường hợp thoát đăng nhập Fb
      options.Events.OnRemoteFailure = context =>
      {
@@ -70,7 +78,14 @@ AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
      };
  });
 
+builder.Services.Configure<Sender>(builder.Configuration.GetSection("Sender"));
 
+// Thêm Scoped service cho Sender
+builder.Services.AddScoped<Sender>(sp =>
+{
+    var senderOptions = sp.GetRequiredService<IOptions<Sender>>().Value;
+    return senderOptions;
+});
 
 builder.Services.AddSession(options =>
 {
@@ -112,6 +127,18 @@ builder.Services.AddScoped<Service>();
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<FirebaseConfig>();
 
+
+builder.Services.AddScoped<IEmailSender, SmtpEmailSender>();
+
+builder.Services.AddScoped<IPostService, PostService>();
+builder.Services.AddScoped<IPostRepository, PostRepository>();
+builder.Services.AddScoped<PostDAO>();
+builder.Services.AddScoped<PostDTO>();
+
+builder.Services.AddScoped<IPostImageRepository, PostImageRepository>();
+builder.Services.AddScoped<PostImageDAO>();
+
+
 builder.Services.AddSession();
 builder.Services.AddDistributedMemoryCache(); // For storing session data in memory
 builder.Services.AddHttpContextAccessor();
@@ -129,7 +156,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseSession();
+
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapRazorPages();
 app.Run();

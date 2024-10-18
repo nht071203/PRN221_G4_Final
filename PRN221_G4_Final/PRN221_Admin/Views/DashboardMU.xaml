@@ -32,29 +32,9 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="241*"/>
                 <RowDefinition Height="343*"/>
+
             </Grid.RowDefinitions>
             <Frame NavigationUIVisibility="Hidden" x:Name="NoiDung" Grid.RowSpan="2" />
-            <!--<Grid.RowDefinitions>
-                <RowDefinition Height="421*"/>
-                <RowDefinition Height="6*"/>
-                <RowDefinition Height="7*"/>
-            </Grid.RowDefinitions>
-            <Label Content="Total Farmer" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Foreground="#FF37AF31" FontWeight="Bold" FontStyle="Italic"/>
-            <Label Content="Total Expert" HorizontalAlignment="Left" Margin="150,10,0,0" VerticalAlignment="Top" Foreground="#FF003FC8" FontWeight="Bold" FontStyle="Italic"/>
-            <Label Content="Total Post" HorizontalAlignment="Left" Margin="300,10,0,0" VerticalAlignment="Top" Foreground="#FF4400FF" FontWeight="Bold" FontStyle="Italic"/>
-            <Label Content="Total View" HorizontalAlignment="Left" Margin="450,10,0,0" VerticalAlignment="Top" Foreground="#FFF40000" FontWeight="Bold" FontStyle="Italic"/>
-
-            -->
-            <!-- TextBlocks for values -->
-            <!--
-            <TextBlock HorizontalAlignment="Left" Margin="32,30,0,0" Text="10" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
-            <TextBlock HorizontalAlignment="Left" Margin="182,30,0,0" Text="10" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
-            <TextBlock HorizontalAlignment="Left" Margin="332,30,0,0" Text="10" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
-            <TextBlock HorizontalAlignment="Left" Margin="482,30,0,0" Text="10" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
-
-            <oxy:PlotView x:Name="plotView"
-                          Model="{Binding PlotModel}"
-                          Margin="0,70,0,0" Grid.RowSpan="3" />-->
 
 
         </Grid>

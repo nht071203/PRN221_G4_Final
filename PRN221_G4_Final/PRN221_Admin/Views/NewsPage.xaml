@@ -4,16 +4,14 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PRN221_Admin"
+      xmlns:vm="clr-namespace:PRN221_Admin.ViewModels"
       mc:Ignorable="d" 
   Width="800" Height="600" MaxHeight="600"
       Title="NewsPage">
 
 
     <Grid Background="White" Margin="0,0,0,31" Width="800">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="107*"/>
-            <ColumnDefinition Width="93*"/>
-        </Grid.ColumnDefinitions>
+        
         <Grid.RowDefinitions>
             <RowDefinition  Height="198"></RowDefinition>
             <RowDefinition Height="33"></RowDefinition>
@@ -22,16 +20,15 @@
         </Grid.RowDefinitions>
 
 
-        <DataGrid  ItemsSource="{Binding Experts}" SelectedItem="{Binding SelectedExpert}" AutoGenerateColumns="False" Grid.Row="0" Grid.Column="0" Margin="0,37,0,5" Grid.ColumnSpan="2">
+        <DataGrid  ItemsSource="{Binding News}" SelectedItem="{Binding SelectedNews}" AutoGenerateColumns="False" Grid.Row="0" Grid.Column="0" Margin="0,37,0,5" Grid.ColumnSpan="2" >
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ExpertId" Binding="{Binding AccountId}" Width="55"/>
-                <DataGridTextColumn Header="UserName" Binding="{Binding Username}" Width="80"/>
-                <DataGridTextColumn Header="FullName" Binding="{Binding FullName}" Width="100"/>
-                <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="150"/>
-                <DataGridTextColumn Header="Phone" Binding="{Binding PhoneNumer}" Width="90"/>
-                <DataGridTextColumn Header="Gender" Binding="{Binding Gender}" Width="70"/>
-                <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="150"/>
-                <DataGridTextColumn Header="Major" Binding="{Binding Major}" Width="100"/>
+                <DataGridTextColumn Header="NewsId" Binding="{Binding NewsId}" Width="55"/>
+                <DataGridTextColumn Header="CategoryNewsId" Binding="{Binding CategoryNewsId}" Width="70"/>
+                <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="100"/>
+                <DataGridTextColumn Header="Content" Binding="{Binding Content}" Width="355"/>
+                <DataGridTextColumn Header="CreatedAt" Binding="{Binding CreatedAt}" Width="90"/>
+                <DataGridTextColumn Header="UpdatedAt" Binding="{Binding UpdatedAt}" Width="90"/>
+               
             </DataGrid.Columns>
         </DataGrid>
 
@@ -40,44 +37,42 @@
             <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Details" FontSize="20" FontWeight="Bold" Foreground="White"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="2" Grid.Column="0" Width="70" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Vertical" Margin="10, 0,0,0">
-            <Image x:Name="avatar" Source="/logo.jpg" Width="70" Height="70"/>
-        </StackPanel>
+        <StackPanel Grid.Row="2"  Width="70" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Vertical" Margin="10, 0,0,0"/>
 
-        <Label Content = "ID:" HorizontalAlignment = "Left" VerticalAlignment = "Top" FontWeight = "Bold" Margin="124,24,0,0" Grid.Row="2" />
-        <TextBox Text="123" BorderThickness="0" Background="Transparent" Padding="0,5,0,0" Margin="156,24,148,218" Grid.Row="2" RenderTransformOrigin="0.7,0.525"/>
 
 
 
         <!--BUTTON-->
         <Grid Grid.Row="2" Grid.RowSpan="2" Grid.ColumnSpan="2">
-            <Label Content = "Username:" HorizontalAlignment = "Left" VerticalAlignment = "Top" FontWeight = "Bold" Margin="10,74,0,0"  />
-            <TextBox Height = "22" Background="Transparent" Padding="0,5,0,0" Margin="85,78,532,238"/>
+            <Label Content = "Category:" HorizontalAlignment = "Left" VerticalAlignment = "Top" FontWeight = "Bold" Margin="18,49,0,0"  />
+            <TextBox Text = "{Binding SelectedNews.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Height = "22" Background="Transparent" Padding="0,5,0,0" Margin="92,89,525,227"/>
 
 
+            <Label Content = "ID:" HorizontalAlignment = "Left" VerticalAlignment = "Top" FontWeight = "Bold" Margin="56,10,0,0"  />
 
-            <Label Content = "Full Name:" HorizontalAlignment = "Left" Margin = "10,110,0,0" VerticalAlignment = "Top" FontWeight = "Bold" />
-            <Label Content = "Email:" HorizontalAlignment = "Left" Margin = "31,146,0,0" VerticalAlignment = "Top" FontWeight = "Bold" RenderTransformOrigin="0.496,1.513" />
-            <Label Content="Gender:" HorizontalAlignment="Left" Margin="20,178,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-            <Label Content = "Major:" HorizontalAlignment = "Right" Margin = "0,202,722,0" VerticalAlignment = "Top" FontWeight = "Bold" RenderTransformOrigin="0.95,0.516" />
-            <Label Content = "Address:" HorizontalAlignment = "Right" Margin = "0,238,718,0" VerticalAlignment = "Top" FontWeight = "Bold" RenderTransformOrigin="0.405,2.863" />
+            <Label Content = "Title:" HorizontalAlignment = "Left" Margin = "44,89,0,0" VerticalAlignment = "Top" FontWeight = "Bold" />
+            <Label Content = "Content:" HorizontalAlignment = "Left" Margin = "24,132,0,0" VerticalAlignment = "Top" FontWeight = "Bold" RenderTransformOrigin="0.496,1.513" />
+            <Label Content="CreatedAt:" HorizontalAlignment="Left" Margin="15,178,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+            <Label Content="UpdateAt:" HorizontalAlignment="Left" Margin="17,219,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+
+            <TextBox Text="{Binding SelectedNews.NewsId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" BorderThickness="0" Background="Transparent" Padding="0,5,0,0" Margin="85,10,665,302" RenderTransformOrigin="0.7,0.525"/>
+
+            <TextBox Text = "{Binding SelectedNews.CategoryNewsId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment = "Left" Margin = "92,49,0,0"  TextWrapping = "Wrap" VerticalAlignment = "Top" Width = "187" Height = "22"/>
+            <TextBox Text = "{Binding SelectedNews.Content, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment = "Left" Margin = "92,134,0,0"  TextWrapping = "Wrap" VerticalAlignment = "Top" Width = "187" Height = "22"/>
+            <DatePicker x:Name="datepicker_CreatedAtDate" Text="{Binding CreateDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Padding="2" Margin="92,178,525,134" BorderBrush="#888" BorderThickness="1"/>
+            <DatePicker x:Name="datepicker_UpdateAt" Text="{Binding UpdateDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Padding="2" Margin="92,219,525,93" BorderBrush="#888" BorderThickness="1"/>
 
 
-            <TextBox Text = "{Binding SelectedExpert.FullName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment = "Left" Margin = "85,114,0,0"  TextWrapping = "Wrap" VerticalAlignment = "Top" Width = "187" Height = "22" Grid.ColumnSpan="2"/>
-            <TextBox Text = "{Binding SelectedExpert.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment = "Left" Margin = "85,150,0,0"  TextWrapping = "Wrap" VerticalAlignment = "Top" Width = "187" Height = "22" Grid.ColumnSpan="2"/>
-            <RadioButton Content="Male" IsChecked="{Binding IsMale, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="85,184,0,0" VerticalAlignment="Top"/>
-            <RadioButton Content="Female" IsChecked="{Binding IsFemale, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="178,184,0,0" VerticalAlignment="Top"/>
-            <TextBox Text = "{Binding SelectedExpert.Major, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment = "Left" Margin = "85,204,0,0"  TextWrapping = "Wrap" VerticalAlignment = "Top" Width = "187" Height = "22" Grid.ColumnSpan="2" />
-            <TextBox Text = "{Binding SelectedExpert.Address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment = "Left" Margin = "85,240,0,0"  TextWrapping = "Wrap" VerticalAlignment = "Top" Width = "187" Height = "22" Grid.ColumnSpan="2"/>
-
-            <StackPanel Grid.Row="2" Grid.Column="0" Width="450" Height="200" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Vertical" Margin="285,2,0,0" Grid.ColumnSpan="2">
+            <StackPanel Grid.Row="2" Grid.Column="0" Width="450" Height="200" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Vertical" Margin="320,5,0,0" Grid.ColumnSpan="2">
                 <Image x:Name="Degree" Source="/logo.jpg" Width="450" Height="200"/>
             </StackPanel>
 
-            <Button x:Name="Add" Content="ADD" Command="{Binding AddStudentCommand}" Width="70"  Margin="451,227,279,56" Height="25"/>
-            <Button x:Name="Delete" Content="DELETE"  Command="{Binding RemoveStudentCommand}" Width="70"  Margin="565,227,165,54" Height="25"/>
-            <Button Content="Avatar" Visibility="{Binding ChooseImageVisibility}" Margin="335,227,400,56" Height="25"/>
-            <Button Content="Degree" Visibility="{Binding ChooseImageDegreeVisibility}" Margin="678,227,47,54" Height="25"/>
+            <Button x:Name="Add" Content="ADD" Command="{Binding AddStudentCommand}" Width="70"  Margin="454,237,276,76" Height="25"/>
+            <Button x:Name="Delete" Content="DELETE"  Command="{Binding RemoveStudentCommand}" Width="70"  Margin="674,237,56,76" Height="25"/>
+            <Button Content="Image" Visibility="{Binding ChooseImageVisibility}" Margin="351,237,384,76" Height="25" RenderTransformOrigin="0.182,0.384"/>
+            <Button Content="Edit" Visibility="{Binding ChooseImageDegreeVisibility}" Margin="562,237,163,76" Height="25" />
+            <Button x:Name="Clear" Content="Clear" Command="{Binding AddStudentCommand}" Width="70"  Margin="510,279,220,34" Height="25"/>
+
         </Grid>
         <Label Content="MANAGE NEWS" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold" FontSize="20" Grid.ColumnSpan="2" Margin="341,0,0,0"/>
     </Grid>

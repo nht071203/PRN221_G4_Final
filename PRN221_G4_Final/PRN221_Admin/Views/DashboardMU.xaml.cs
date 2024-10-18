@@ -26,11 +26,27 @@ namespace PRN221_Admin
     public partial class DashboardMU : Window
     {
         public PlotModel PlotModel { get; set; }
+
+        private ExpertViewModel _ExpertViewModel;
+        private NewsViewModel _NewsViewModel;
+        private FarmerViewModel _farmerViewModel;
         public FarmerModelView FarmerView { get; set; }
-        public DashboardMU()
+        
+        public DashboardMU(ExpertViewModel expertViewModel, NewsViewModel newsViewModel, FarmerViewModel farmerViewModel)
         {
             InitializeComponent();
+            _farmerViewModel = farmerViewModel;
+            _ExpertViewModel = expertViewModel;
+            _NewsViewModel = newsViewModel;
+          
         }
+
+        public DashboardMU()
+        {
+         InitializeComponent();
+        }
+
+        
        public DashboardMU(FarmerModelView farmerViewModel)
         {
             InitializeComponent();
@@ -46,15 +62,15 @@ namespace PRN221_Admin
 
         private void Button_ManagerNew(object sender, RoutedEventArgs e)
         {
-            NoiDung.Content = new NewsPage();
+            NoiDung.Content = new NewsPage(_NewsViewModel);
         }
 
         private void Button_ManageExpert(object sender, RoutedEventArgs e)
         {
-            NoiDung.Content = new ExpertPage();
+            NoiDung.Content = new ExpertPage(_ExpertViewModel);
         }
 
-   
+
         private void Button_ManageFarmer(object sender, RoutedEventArgs e)
         {
             NoiDung.Content = new FarmerPage(FarmerView);

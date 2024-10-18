@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using PRN221_BusinessLogic.Interface;
+using PRN221_DataAccess.DAOs;
 using PRN221_Models.Models;
 using PRN221_Repository.AccountRepo;
 using PRN221_Repository.RoleRepo;
@@ -67,6 +68,9 @@ namespace PRN221_BusinessLogic.Service
             }
         }
 
-        
+        public async Task<Account?> GetAccountByEmailForReset(string email)
+        {
+            return await _accountRepo.GetAccountByEmailForReset(email);
+        }
     }
 }
