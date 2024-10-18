@@ -2198,6 +2198,7 @@ label {
     float: none;
     margin-bottom: 20px;
     width: 100%;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
 }
 
     .activity--items > li + li {
@@ -5207,7 +5208,7 @@ body.isScrolling #backToTop {
 /* 10.1. MAIN CONTENT */
 .main--content-inner.drop--shadow {
     padding: 30px 20px;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+    /*box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);*/
 }
 
 /* 10.2. MAIN SIDEBAR */
@@ -6328,7 +6329,90 @@ body.isScrolling #backToTop {
     border: none;
 }
 
-.booking-btn:hover {
-    background-color: #ffffff;
-    color: #1da1f2;
+    .booking-btn:hover {
+        background-color: #ffffff;
+        color: #1da1f2;
+    }
+
+.price-th {
+    width: 200px;
 }
+
+.price-td {
+    width: 200px;
+}
+
+dialog {
+    padding: 1rem 3rem;
+    background: white;
+    max-width: 400px;
+    padding-top: 2rem;
+    border-radius: 20px;
+    border: 0;
+    box-shadow: 0 5px 30px 0 rgb(0 0 0 / 10%);
+    animation: fadeIn 1s ease both;
+    &::backdrop{
+        animation: fadeIn 1s ease both;
+        background: rgb(255 255 255 / 40%);
+        z-index: 2;
+        backdrop-filter: blur(20px);
+    }
+
+.x {
+    filter: grayscale(1);
+    border: none;
+    background: none;
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    transition: ease filter, transform 0.3s;
+    cursor: pointer;
+    transform-origin: center;
+    &:hover
+
+{
+    filter: grayscale(0);
+    transform: scale(1.1);
+}
+
+}
+
+h2 {
+    font-weight: 600;
+    font-size: 2rem;
+    padding-bottom: 1rem;
+}
+
+p {
+    font-size: 1rem;
+    line-height: 1.3rem;
+    padding: 0.5rem 0;
+    a
+
+{
+    &:visited
+
+{
+    color: rgb(var(--vs-primary));
+}
+
+}
+}
+}
+
+.login-btn {
+    background-color: #90EE90; /* Màu xanh lá nhạt */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-top: 1rem;
+}
+
+    .login-btn:hover {
+        background-color: #32CD32; /* Màu xanh lá đậm khi hover */
+        transform: scale(1.05); /* Hiệu ứng phóng to nhẹ khi hover */
+    }

@@ -115,14 +115,14 @@
                     </StackPanel>
                 </Button>
 
-                <Button Width="154" Height="40" Background="Transparent" BorderThickness="0" Click="Button_Click_1">
+                <Button Width="154" Height="40" Background="Transparent" BorderThickness="0" Click="Button_ManageExpert">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="16" Text="&#xE8B8;" Margin="5"/>
                         <TextBlock Text="Manage Expert" VerticalAlignment="Center" Margin="10,0,0,0" FontWeight="Bold" Foreground="Black" FontSize="16" Width="121"/>
                     </StackPanel>
                 </Button>
 
-                <Button Width="150" Height="40" Background="Transparent" BorderThickness="0" Foreground="Black">
+                <Button Width="150" Height="40" Background="Transparent" BorderThickness="0" Foreground="Black" Click="Button_Click">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="16" Text="&#xE835;" Margin="5"/>
                         <TextBlock Text="Manage News" VerticalAlignment="Center" Margin="10,0,0,0" FontWeight="Bold" Foreground="Black" FontSize="16"/>

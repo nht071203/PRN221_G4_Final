@@ -24,7 +24,7 @@ namespace PRN221_DataAccess.DAOs
 
         public async Task<IEnumerable<News>> GetAllNews()
         {
-            return await _context.News.ToListAsync();
+            return await _context.News.Where(n => n.IsDeleted == false).ToListAsync();
         }
         public async Task<IEnumerable<News>> GetAll()
         {
@@ -36,18 +36,6 @@ namespace PRN221_DataAccess.DAOs
             var item = await _context.News.FirstOrDefaultAsync(obj => obj.NewsId == id);
             if (item == null) return null;
             return item;
-        }
-
-        public async Task<CategoryNews> GetCategoryNewsById(int id)
-        {
-            var item = await _context.CategoryNews.FirstOrDefaultAsync(obj => obj.CategoryNewsId == id);
-            if (item == null) return null;
-            return item;
-        }
-
-        public async Task<IEnumerable<CategoryNews>> GetAllCategoryNews()
-        {
-            return await _context.CategoryNews.ToListAsync();
         }
 
         public async Task Add(News item)
@@ -95,8 +83,43 @@ namespace PRN221_DataAccess.DAOs
         {
             return await _context.News.CountAsync(n => n.IsDeleted == false);
         }
+        
+        public async Task<IEnumerable<News>> GetAllNewsByCategoryId(int categoryId)
+        {
+            return await _context.News.Where(n => n.CategoryNewsId == categoryId).ToListAsync();
+        }
 
+        public async Task<IEnumerable<News>> SearchNews(int category, string searchString)
+        {
+            var query = _context.News.AsQueryable();
 
+            if (category > 0)
+            {
+                query = query.Where(n => n.CategoryNewsId == category);
+            }
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                query = query.Where(n => n.Title.Contains(searchString) || n.Content.Contains(searchString));
+            }
+
+            return await query.ToListAsync();
+        }
+
+        public async Task<IEnumerable<News>> GetNewsPaged(int pageNumber, int pageSize)
+        {
+            return await _context.News
+                .Where(s => s.IsDeleted == false) // Adjust based on your business logic
+                .OrderBy(s => s.NewsId) // Ensure consistent ordering
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+        }
+
+        public async Task<int> GetTotalNewsCount()
+        {
+            return await _context.News.CountAsync(s => s.IsDeleted == false);
+        }
 
     }
 }

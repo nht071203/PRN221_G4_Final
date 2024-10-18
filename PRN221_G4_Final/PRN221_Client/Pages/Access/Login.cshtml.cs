@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Facebook;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
 using PRN221_BusinessLogic.Interface;
 using PRN221_Client.Hashing;
 using PRN221_Models.Models;
@@ -15,11 +17,13 @@ namespace PRN221_Client.Pages.Access
 {
     public class LoginModel : PageModel
     {
+        private readonly ILogger<LoginModel> _logger;
         private readonly IAuthenService _authenService;
         private readonly IAccountService _accountService;
 
-        public LoginModel(IAuthenService authenticationService, IAccountService accountService)
+        public LoginModel(ILogger<LoginModel> logger, IAuthenService authenticationService, IAccountService accountService)
         {
+            _logger = logger;
             _authenService = authenticationService;
             _accountService = accountService;
         }
@@ -62,9 +66,10 @@ namespace PRN221_Client.Pages.Access
                 ExpiresUtc = DateTime.UtcNow.AddMinutes(30)
             };
 
-            await HttpContext.SignInAsync("CookiesPRN221", new ClaimsPrincipal(claimsIdentity), authProperties);
+            await HttpContext.SignInAsync("CookiesPRN221", claimsPrincipal, authProperties);
             HttpContext.Session.SetString("UserSession", Username);
-
+            HttpContext.Session.SetString("UserRole", role.RoleName);
+            HttpContext.Session.SetInt32("AccountID", account.AccountId);
             return RedirectToPage("/Index");
         }
 
@@ -72,6 +77,7 @@ namespace PRN221_Client.Pages.Access
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             HttpContext.Session.Remove("UserSession");
+            HttpContext.Session.Remove("AccountID");
 
             await HttpContext.SignOutAsync("CookiesPRN221");
 
@@ -151,6 +157,7 @@ namespace PRN221_Client.Pages.Access
             // Store the session for the Google user
             HttpContext.Session.SetString("UserSession", account.Username);
             HttpContext.Session.SetString("UserEmail", email); // Store other info as needed
+            HttpContext.Session.SetInt32("AccountID", account.AccountId);
 
             Console.WriteLine("User signed in successfully with Google.");
 
@@ -167,10 +174,11 @@ namespace PRN221_Client.Pages.Access
 
         public async Task<IActionResult> OnGetExternalLoginCallbackAsync()
         {
-            var authenticateResult = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            var authenticateResult = await HttpContext.AuthenticateAsync(FacebookDefaults.AuthenticationScheme);
 
-            if (!authenticateResult.Succeeded)
+            if (!authenticateResult.Succeeded || authenticateResult?.Principal == null)
             {
+                Console.WriteLine("Đăng nhập Fb thất bại");
                 // Authentication failed, return to login page
                 return RedirectToPage("/Access/Login");
             }
@@ -219,6 +227,7 @@ namespace PRN221_Client.Pages.Access
 
             // Add Session login Facebook
             HttpContext.Session.SetString("UserSession", name);
+            HttpContext.Session.SetInt32("AccountID", account.AccountId);
 
             // Redirect to the Index page after successful login
             return RedirectToPage("/Index");

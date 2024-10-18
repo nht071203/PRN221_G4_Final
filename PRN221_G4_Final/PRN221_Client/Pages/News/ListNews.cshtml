@@ -1,239 +1,200 @@
 ﻿@page
 @model PRN221_Client.Pages.News.ListNewsModel
+
 @{
-    ViewData["Title"] = "Danh sách tin tức";
+    ViewData["Title"] = "Tin tức";
 }
+
 <section class="page--wrapper pb--20" style="transform: none;">
     <div class="container" style="transform: none;">
-        <h2 class="pb--20">Tin tức</h2>
+        <div class="d-flex">
+            <a href="/News/ListNews"><h2 class="pb--20">Tin tức</h2></a>
+            @if (@Model.NewsListByCategory != null)
+            {
+                <i class="ml--10 text- fa fa-caret-right" style="padding: 35px 20px 0 10px"></i>
+                <a asp-page="/News/ListNews" asp-route-cat="@Model.NewsListByCategory.First().CategoryNewsId"><h2 class="pb--20">@await Model.GetCategoryName(Model.NewsListByCategory.First().CategoryNewsId)</h2></a>
+            }
+        </div>
         <div class="row" style="transform: none;">
             <!-- Main Content Start -->
             <div class="main--content col-md-8 pb--30" data-trigger="stickyScroll" style="position: relative; overflow: visible; box-sizing: border-box; min-height: 1px;">
                 <div class="theiaStickySidebar" style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none;">
                     <div class="main--content-inner" style="background-color: white">
                         <div class="row MasonryRow" style="position: relative; height: 1681.88px;">
-
-                            <div class="col-sm-6 col-xs-12 pb--30" style="position: absolute; left: 390px; top: 0px;">
-                                <!-- Post Item Start -->
-                                <div class="post--item" data-scroll-reveal="bottom" data-sr-id="1" style="; visibility: visible;  -webkit-transform: translateY(0) scale(1); opacity: 1;transform: translateY(0) scale(1); opacity: 1;-webkit-transition: box-shadow 0.25s ease-in-out, -webkit-transform 0.8s cubic-bezier(0.6, 0.2, 0.1, 1) 0s, opacity 0.8s cubic-bezier(0.6, 0.2, 0.1, 1) 0s; transition: box-shadow 0.25s ease-in-out, transform 0.8s cubic-bezier(0.6, 0.2, 0.1, 1) 0s, opacity 0.8s cubic-bezier(0.6, 0.2, 0.1, 1) 0s; ">
-                                    <!-- Post Image Start -->
-                                    <div class="post--img">
-                                        <a href=""><img src="~/image/background2.jpeg" alt=""></a>
+                            @if (Model.NewsList != null)
+                            {
+                                @foreach (var news in Model.NewsList)
+                                {
+                                    <div class="col-sm-6 col-xs-12 pb--30" style="position: absolute; left: 390px; top: 0px;">
+                                        <!-- Post Item Start -->
+                                        <div class="post--item" data-scroll-reveal="bottom" data-sr-id="1" style="; visibility: visible;  -webkit-transform: translateY(0) scale(1); opacity: 1;transform: translateY(0) scale(1); opacity: 1;-webkit-transition: box-shadow 0.25s ease-in-out, -webkit-transform 0.8s cubic-bezier(0.6, 0.2, 0.1, 1) 0s, opacity 0.8s cubic-bezier(0.6, 0.2, 0.1, 1) 0s; transition: box-shadow 0.25s ease-in-out, transform 0.8s cubic-bezier(0.6, 0.2, 0.1, 1) 0s, opacity 0.8s cubic-bezier(0.6, 0.2, 0.1, 1) 0s; ">
+                                            <!-- Post Image Start -->
+                                            <div class="post--img">
+                                                <a asp-page="/News/NewsDetail" asp-route-id="@news.NewsId">
+                                                    <img src="@news.ImageUrl" alt="" style="width: 100%;height: 200px;object-fit: cover;">
+                                                </a>
+                                            </div>
+                                            <!-- Post Image End -->
+                                            <!-- Post Info Start -->
+                                            <div class="post--info">
+                                                <!-- Post Meta Start -->
+                                                <div class="post--meta">
+                                                    <ul class="nav">
+                                                        <li>
+                                                            <a asp-page="/News/NewsDetail" asp-route-id="@news.NewsId">
+                                                                <img src="~/image/logo.jpg" alt="">
+                                                                <span>Farm Family</span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <p>
+                                                                <i class="mr--8 fa fa-calendar-o"></i>
+                                                                <span>@news.CreatedAt</span>
+                                                            </p>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <!-- Post Meta End -->
+                                                <!-- Post Title Start -->
+                                                <div class="post--title mt--10">
+                                                    <h3 class="h6">
+                                                        <a asp-page="/News/NewsDetail" asp-route-id="@news.NewsId" class="btn-link">@news.Title</a>
+                                                    </h3>
+                                                </div>
+                                                <!-- Post Title End -->
+                                                <!-- Post Meta Start -->
+                                                <div class="post--meta">
+                                                    <ul class="nav">
+                                                        <li>
+                                                            <i class="mr--8 fa fa-folder-open-o"></i>
+                                                            <a asp-page="/News/ListNews" asp-route-cat="@news.CategoryNewsId"><span>@await Model.GetCategoryName(news.CategoryNewsId)</span></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <!-- Post Meta End -->
+                                                <!-- Post Content Start -->
+                                                @* <div class="post--content text-darker mt--10">
+                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley.</p>
+                                        </div> *@
+                                                <!-- Post Content End -->
+                                                <!-- Post Action Start -->
+                                                <div class="post--action text-darkest mt--8">
+                                                    <a asp-page="/News/NewsDetail" asp-route-id="@news.NewsId" class="btn-link">Chi tiết tin tức<i class="ml--10 text-primary fa fa-caret-right"></i></a>
+                                                </div>
+                                                <!-- Post Action End -->
+                                            </div>
+                                            <!-- Post Info End -->
+                                        </div>
+                                        <!-- Post Item End -->
                                     </div>
-                                    <!-- Post Image End -->
-                                    <!-- Post Info Start -->
-                                    <div class="post--info">
-                                        <!-- Post Meta Start -->
-                                        <div class="post--meta">
-                                            <ul class="nav">
-                                                <li>
-                                                    <a href="https://themelooks.us/demo/socifly/html/blog-sidebar-right.html#">
-                                                        <img src="~/image/logo.jpg" alt="">
-                                                        <span>Tên nguời viết</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="https://themelooks.us/demo/socifly/html/blog-sidebar-right.html#">
-                                                        <i class="mr--8 fa fa-calendar-o"></i>
-                                                        <span>Ngày tạo News</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <!-- Post Meta End -->
-                                        <!-- Post Title Start -->
-                                        <div class="post--title mt--10">
-                                            <h3 class="h6">
-                                                <a href="https://themelooks.us/demo/socifly/html/blog-details.html" class="btn-link">Tiêu đề tin tức</a>
-                                            </h3>
-                                        </div>
-                                        <!-- Post Title End -->
-                                        <!-- Post Meta Start -->
-                                        <div class="post--meta">
-                                            <ul class="nav">
-                                                <li>
-                                                    <i class="mr--8 fa fa-folder-open-o"></i>
+                                }
+                                
+                            }
+                            @if (TempData["Message"] != null)
+                            {
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        Swal.fire({
+                                            title: 'Alert',
+                                            text: '@TempData["Message"]',
+                                            icon: 'warning',
+                                            confirmButtonText: 'OK'
+                                        });
+                                    });
+                                </script>
+                                <div class="p-3 mb-3 alert alert-warning">@TempData["Message"]</div>
+                            }
+                            else
+                            {
+                                int pageWindow = 2; // Số lượng trang hiển thị xung quanh trang hiện tại
+                                int totalPages = Model.TotalPages;
+                                int currentPage = Model.CurrentPage;
+                                @* <div class="col-xs-12 pb--30" style="position: absolute; left: 0px; top: 1621px;">
+                                    <!-- Page Count Start -->
+                                    <div class="page--count">
+                                        <label class="ff--primary fs--14 fw--500 text-darker d-flex">
+                                            <span>Viewing</span>
 
-                                                    <a href="#"><span>Category news</span></a>
-                                                </li>
-                                                @* <li>
-                                                <i class="mr--8 fa fa-tags"></i>
-
-                                                <a href="https://themelooks.us/demo/socifly/html/blog-sidebar-right.html#"><span>Lifestyle</span></a>
-                                                <a href="https://themelooks.us/demo/socifly/html/blog-sidebar-right.html#"><span>Study</span></a>
-                                                <a href="https://themelooks.us/demo/socifly/html/blog-sidebar-right.html#"><span>Walkout</span></a>
-                                                </li> *@
-                                            </ul>
-                                        </div>
-                                        <!-- Post Meta End -->
-                                        <!-- Post Content Start -->
-                                        <div class="post--content text-darker mt--10">
-                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley.</p>
-                                        </div>
-                                        <!-- Post Content End -->
-                                        <!-- Post Action Start -->
-                                        <div class="post--action text-darkest mt--8">
-                                            <a href="/News/NewsDetail" class="btn-link">Continue Reading<i class="ml--10 text-primary fa fa-caret-right"></i></a>
-                                        </div>
-                                        <!-- Post Action End -->
+                                            @if (Model.CurrentPage > 1)
+                                            {
+                                                <a class="btn-link" asp-page-handler="Pagination" asp-route-p="@(Model.CurrentPage - 1)"><i class="fa fa-caret-left"></i></a>
+                                            }
+                                            @for (int i = 1; i <= Model.TotalPages; i++)
+                                            {
+                                                <a class="form-control form-sm" style="width: 30px" asp-page-handler="Pagination" asp-route-p="@i" class="@(i == Model.CurrentPage ? "active" : "")">@i</a>
+                                            }
+                                            @if (Model.CurrentPage < Model.TotalPages)
+                                            {
+                                                <a class="btn-link" asp-page-handler="Pagination" asp-route-p="@(Model.CurrentPage + 1)"><i class="fa fa-caret-right"></i></a>
+                                            }
+                                            <span>of @Model.TotalPages</span>
+                                        </label>
                                     </div>
-                                    <!-- Post Info End -->
-                                </div>
-                                <!-- Post Item End -->
-                            </div>
-                            <div class="col-sm-6 col-xs-12 pb--30" style="position: absolute; left: 390px; top: 0px;">
-                                <!-- Post Item Start -->
-                                <div class="post--item" data-scroll-reveal="bottom" data-sr-id="1" style="; visibility: visible;  -webkit-transform: translateY(0) scale(1); opacity: 1;transform: translateY(0) scale(1); opacity: 1;-webkit-transition: box-shadow 0.25s ease-in-out, -webkit-transform 0.8s cubic-bezier(0.6, 0.2, 0.1, 1) 0s, opacity 0.8s cubic-bezier(0.6, 0.2, 0.1, 1) 0s; transition: box-shadow 0.25s ease-in-out, transform 0.8s cubic-bezier(0.6, 0.2, 0.1, 1) 0s, opacity 0.8s cubic-bezier(0.6, 0.2, 0.1, 1) 0s; ">
-                                    <!-- Post Image Start -->
-                                    <div class="post--img">
-                                        <a href=""><img src="~/image/background.jpeg" alt=""></a>
-                                    </div>
-                                    <!-- Post Image End -->
-                                    <!-- Post Info Start -->
-                                    <div class="post--info">
-                                        <!-- Post Meta Start -->
-                                        <div class="post--meta">
-                                            <ul class="nav">
-                                                <li>
-                                                    <a href="https://themelooks.us/demo/socifly/html/blog-sidebar-right.html#">
-                                                        <img src="~/image/logo.jpg" alt="">
-                                                        <span>Tên nguời viết</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="https://themelooks.us/demo/socifly/html/blog-sidebar-right.html#">
-                                                        <i class="mr--8 fa fa-calendar-o"></i>
-                                                        <span>Ngày tạo News</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <!-- Post Meta End -->
-                                        <!-- Post Title Start -->
-                                        <div class="post--title mt--10">
-                                            <h3 class="h6">
-                                                <a href="https://themelooks.us/demo/socifly/html/blog-details.html" class="btn-link">Tiêu đề tin tức</a>
-                                            </h3>
-                                        </div>
-                                        <!-- Post Title End -->
-                                        <!-- Post Meta Start -->
-                                        <div class="post--meta">
-                                            <ul class="nav">
-                                                <li>
-                                                    <i class="mr--8 fa fa-folder-open-o"></i>
+                                    <!-- Page Count End -->
+                                </div> *@
 
-                                                    <a href="#"><span>Category news</span></a>
-                                                </li>
-                                                @* <li>
-                                                <i class="mr--8 fa fa-tags"></i>
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination">
+                                        @if (currentPage > 1)
+                                        {
+                                            // Hiển thị nút Previous
+                                            <li class="page-item">
+                                                <a class="page-link" asp-page-handler="Pagination" asp-route-p="@(currentPage - 1)">Previous</a>
+                                            </li>
+                                        }
 
-                                                <a href="https://themelooks.us/demo/socifly/html/blog-sidebar-right.html#"><span>Lifestyle</span></a>
-                                                <a href="https://themelooks.us/demo/socifly/html/blog-sidebar-right.html#"><span>Study</span></a>
-                                                <a href="https://themelooks.us/demo/socifly/html/blog-sidebar-right.html#"><span>Walkout</span></a>
-                                                </li> *@
-                                            </ul>
-                                        </div>
-                                        <!-- Post Meta End -->
-                                        <!-- Post Content Start -->
-                                        <div class="post--content text-darker mt--10">
-                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley.</p>
-                                        </div>
-                                        <!-- Post Content End -->
-                                        <!-- Post Action Start -->
-                                        <div class="post--action text-darkest mt--8">
-                                            <a href="/News/NewsDetail" class="btn-link">Continue Reading<i class="ml--10 text-primary fa fa-caret-right"></i></a>
-                                        </div>
-                                        <!-- Post Action End -->
-                                    </div>
-                                    <!-- Post Info End -->
-                                </div>
-                                <!-- Post Item End -->
-                            </div>
-                            <div class="col-sm-6 col-xs-12 pb--30" style="position: absolute; left: 390px; top: 0px;">
-                                <!-- Post Item Start -->
-                                <div class="post--item" data-scroll-reveal="bottom" data-sr-id="1" style="; visibility: visible;  -webkit-transform: translateY(0) scale(1); opacity: 1;transform: translateY(0) scale(1); opacity: 1;-webkit-transition: box-shadow 0.25s ease-in-out, -webkit-transform 0.8s cubic-bezier(0.6, 0.2, 0.1, 1) 0s, opacity 0.8s cubic-bezier(0.6, 0.2, 0.1, 1) 0s; transition: box-shadow 0.25s ease-in-out, transform 0.8s cubic-bezier(0.6, 0.2, 0.1, 1) 0s, opacity 0.8s cubic-bezier(0.6, 0.2, 0.1, 1) 0s; ">
-                                    <!-- Post Image Start -->
-                                    <div class="post--img">
-                                        <a href=""><img src="~/image/background.jpeg" alt=""></a>
-                                    </div>
-                                    <!-- Post Image End -->
-                                    <!-- Post Info Start -->
-                                    <div class="post--info">
-                                        <!-- Post Meta Start -->
-                                        <div class="post--meta">
-                                            <ul class="nav">
-                                                <li>
-                                                    <a href="https://themelooks.us/demo/socifly/html/blog-sidebar-right.html#">
-                                                        <img src="~/image/logo.jpg" alt="">
-                                                        <span>Tên nguời viết</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="https://themelooks.us/demo/socifly/html/blog-sidebar-right.html#">
-                                                        <i class="mr--8 fa fa-calendar-o"></i>
-                                                        <span>Ngày tạo News</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <!-- Post Meta End -->
-                                        <!-- Post Title Start -->
-                                        <div class="post--title mt--10">
-                                            <h3 class="h6">
-                                                <a href="https://themelooks.us/demo/socifly/html/blog-details.html" class="btn-link">Tiêu đề tin tức</a>
-                                            </h3>
-                                        </div>
-                                        <!-- Post Title End -->
-                                        <!-- Post Meta Start -->
-                                        <div class="post--meta">
-                                            <ul class="nav">
-                                                <li>
-                                                    <i class="mr--8 fa fa-folder-open-o"></i>
+                                        <li class="page-item @(currentPage == 1 ? "active" : "")">
+                                            <a class="page-link" asp-page-handler="Pagination" asp-route-p="1">1</a>
+                                        </li>
 
-                                                    <a href="#"><span>Category news</span></a>
-                                                </li>
-                                                @* <li>
-                                                <i class="mr--8 fa fa-tags"></i>
+                                        @if (currentPage - pageWindow > 2)
+                                        {
+                                            <li class="page-item disabled">
+                                                <span class="page-link">...</span>
+                                            </li>
+                                        }
 
-                                                <a href="https://themelooks.us/demo/socifly/html/blog-sidebar-right.html#"><span>Lifestyle</span></a>
-                                                <a href="https://themelooks.us/demo/socifly/html/blog-sidebar-right.html#"><span>Study</span></a>
-                                                <a href="https://themelooks.us/demo/socifly/html/blog-sidebar-right.html#"><span>Walkout</span></a>
-                                                </li> *@
-                                            </ul>
-                                        </div>
-                                        <!-- Post Meta End -->
-                                        <!-- Post Content Start -->
-                                        <div class="post--content text-darker mt--10">
-                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley.</p>
-                                        </div>
-                                        <!-- Post Content End -->
-                                        <!-- Post Action Start -->
-                                        <div class="post--action text-darkest mt--8">
-                                            <a href="/News/NewsDetail" class="btn-link">Continue Reading<i class="ml--10 text-primary fa fa-caret-right"></i></a>
-                                        </div>
-                                        <!-- Post Action End -->
-                                    </div>
-                                    <!-- Post Info End -->
-                                </div>
-                                <!-- Post Item End -->
-                            </div>
-                            <div class="col-xs-12 pb--30" style="position: absolute; left: 0px; top: 1621px;">
-                                <!-- Page Count Start -->
-                                <div class="page--count">
-                                    <label class="ff--primary fs--14 fw--500 text-darker">
-                                        <span>Viewing</span>
+                                        @for (int i = Math.Max(2, currentPage - pageWindow); i <= Math.Min(totalPages - 1, currentPage + pageWindow); i++)
+                                        {
+                                            <li class="page-item @(i == currentPage ? "active" : "")">
+                                                <a class="page-link" asp-page-handler="Pagination" asp-route-p="@i">@i</a>
+                                            </li>
+                                        }
 
-                                        <a href="https://themelooks.us/demo/socifly/html/blog-sidebar-right.html#" class="btn-link"><i class="fa fa-caret-left"></i></a>
-                                        <input type="number" name="page-count" value="01" class="form-control form-sm">
-                                        <a href="https://themelooks.us/demo/socifly/html/blog-sidebar-right.html#" class="btn-link"><i class="fa fa-caret-right"></i></a>
+                                        @if (currentPage + pageWindow < totalPages - 1)
+                                        {
+                                            <li class="page-item disabled">
+                                                <span class="page-link">...</span>
+                                            </li>
+                                        }
 
-                                        <span>of 68</span>
-                                    </label>
-                                </div>
-                                <!-- Page Count End -->
-                            </div>
+                                        @if (totalPages > 1)
+                                        {
+                                            <li class="page-item @(currentPage == totalPages ? "active" : "")">
+                                                <a class="page-link" asp-page-handler="Pagination" asp-route-p="@totalPages">@totalPages</a>
+                                            </li>
+                                        }
+
+                                        @if (currentPage < totalPages)
+                                        {
+                                            // Hiển thị nút Next
+                                            <li class="page-item">
+                                                <a class="page-link" asp-page-handler="Pagination" asp-route-p="@(currentPage + 1)">Next</a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </nav>
+                            }
                         </div>
-                    </div><div class="resize-sensor" style="position: absolute; inset: 0px; overflow: hidden; z-index: -1; visibility: hidden;"><div class="resize-sensor-expand" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;"><div style="position: absolute; left: 0px; top: 0px; transition: all; width: 790px; height: 1723px;"></div></div><div class="resize-sensor-shrink" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;"><div style="position: absolute; left: 0; top: 0; transition: 0s; width: 200%; height: 200%"></div></div></div>
+                    </div>
+                    <div class="resize-sensor" style="position: absolute; inset: 0px; overflow: hidden; z-index: -1; visibility: hidden;">
+                        <div class="resize-sensor-expand" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;">
+                            <div style="position: absolute; left: 0px; top: 0px; transition: all; width: 790px; height: 1723px;"></div>
+                        </div>
+                        <div class="resize-sensor-shrink" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;">
+                            <div style="position: absolute; left: 0; top: 0; transition: 0s; width: 200%; height: 200%"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- Main Content End -->
@@ -241,96 +202,43 @@
             <div class="main--sidebar col-md-4 pb--60" data-trigger="stickyScroll" style="position: relative; overflow: visible; box-sizing: border-box; min-height: 1px;">
                 <!-- Widget Start -->
                 <!-- Widget End -->
-                <div class="theiaStickySidebar" style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none;">
-                    <div class="widget">
-                        <h2 class="h4 fw--700 widget--title">Find A Buddy</h2>
+                <div class="widget">
+                    <h2 class="h4 fw--700 widget--title">Tìm kiếm tin tức</h2>
 
-                        <!-- Buddy Finder Widget Start -->
-                        <div class="buddy-finder--widget">
-                            <form action="https://themelooks.us/demo/socifly/html/blog-sidebar-right.html#">
-                                <div class="row">
-                                    <div class="col-xs-6 col-xxs-12">
-                                        <div class="form-group">
-                                            <label>
-                                                <span class="text-darker ff--primary fw--500">I Am</span>
-
-                                                <select name="gender" class="form-control form-sm" data-trigger="selectmenu" style="display: none;">
-                                                    <option value="male">Male</option>
-                                                    <option value="female">Female</option>
-                                                    <option value="other">Other</option>
-                                                </select>
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xs-6 col-xxs-12">
-                                        <div class="form-group">
-                                            <label>
-                                                <span class="text-darker ff--primary fw--500">Looking For</span>
-
-                                                <select name="lookingfor" class="form-control form-sm" data-trigger="selectmenu" style="display: none;">
-                                                    <option value="female">Female</option>
-                                                    <option value="male">Male</option>
-                                                    <option value="other">Other</option>
-                                                </select>
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xs-6 col-xxs-12">
-                                        <div class="form-group">
-                                            <label>
-                                                <span class="text-darker ff--primary fw--500">Age</span>
-
-                                                <select name="age" class="form-control form-sm" data-trigger="selectmenu" style="display: none;">
-                                                    <option value="18to25">18 to 25</option>
-                                                    <option value="25to30">25 to 30</option>
-                                                    <option value="30to35">30 to 35</option>
-                                                    <option value="35to40">35 to 40</option>
-                                                    <option value="40plus">40+</option>
-                                                </select>
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xs-6 col-xxs-12">
-                                        <div class="form-group">
-                                            <label>
-                                                <span class="text-darker ff--primary fw--500">City</span>
-
-                                                <select name="city" class="form-control form-sm" data-trigger="selectmenu" style="display: none;">
-                                                    <option value="newyork">New York</option>
-                                                    <option value="California">California</option>
-                                                    <option value="Atlanta">Atlanta</option>
-                                                </select>
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xs-12">
-                                        <div class="form-group">
-                                            <label>
-                                                <span class="text-darker ff--primary fw--500">Filter Country</span>
-
-                                                <select name="city" class="form-control form-sm" data-trigger="selectmenu" style="display: none;">
-                                                    <option value="unitedstates">United States</option>
-                                                    <option value="australia">Australia</option>
-                                                    <option value="turkey">Turkey</option>
-                                                    <option value="vietnam">Vietnam</option>
-                                                </select>
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xs-12">
-                                        <button type="submit" class="btn btn-primary">Search</button>
+                    <div class="buddy-finder--widget">
+                        <form method="get">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="form-group">
+                                        <label>
+                                            <span class="text-darker ff--primary fw--500">Tìm kiếm tin tức</span>
+                                            <input class="form-control form-sm" name="searchKey" placeholder="Nhập từ khóa tin tức bạn muốn tìm" value="@Model.SearchKey" />
+                                        </label>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
-                        <!-- Buddy Finder Widget End -->
-                    </div>       
+                                <div class="col-xs-12">
+                                    <div class="form-group">
+                                        <label>
+                                            <span class="text-darker ff--primary fw--500">Danh mục tin tức</span>
+                                            <select class="form-control form-sm" name="cat">
+                                                <option value="">Chọn danh mục</option>
+                                                @foreach (var category in Model.CategoryNewsList)
+                                                {
+                                                    <option value="@category.CategoryNewsId">@category.CategoryNewsName</option>
+                                                }
+                                            </select>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12">
+                                    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
+
             </div>
             <!-- Main Sidebar End -->
         </div>

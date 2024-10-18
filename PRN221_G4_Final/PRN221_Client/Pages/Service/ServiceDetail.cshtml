@@ -1,7 +1,13 @@
 ﻿@page "/Service/ServiceDetail"
+@inject IHttpContextAccessor HttpContextAccessor
 @model PRN221_Client.Pages.Service.ServiceDetailModel
 @{
+    //var isLoggedIn = HttpContext.Session.GetString("UserSession") != null;
+    var isLoggedIn = HttpContextAccessor.HttpContext.Session.GetString("UserSession") != null;
+    //var isLoggedIn = HttpContextAccessor.HttpContext?.Session?.GetString("UserSession") != null;
+    //var isLoggedIn = HttpContextAccessor?.HttpContext?.Session?.GetString("UserSession") != null;
 }
+
 <link href="~/css/serviceDetailStyle.css" rel="stylesheet" />
 <link media="all" type="text/css" rel="preload" as="style" onload="this.onload=null;this.rel=&#039;stylesheet&#039;"
       href="~/plugin/animatecss/animate.css">
@@ -36,6 +42,8 @@
 <link rel="icon" type="image/png" sizes="32x32" href="~/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="96x96" href="~/favicon-96x96.png">
 <link rel="icon" type="image/png" sizes="16x16" href="~/favicon-16x16.png">
+
+@* <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet" /> *@
 
 
 @*     <div>Khoa test</div>
@@ -690,51 +698,46 @@
             <div class="my-5" id="reviews">
                 <div class="container">
                     <div class="main-content">
-                        <p class="f-32 fw-500 mb-3">Đánh giá dịch vụ</p>
-                        <div class="d-flex align-items-center justify-content-center border my-3">
-                            <form class="card">
+                        @if (isLoggedIn)
+                        {
+                            <p class="f-32 fw-500 mb-3">Đánh giá dịch vụ</p>
+                            <div class="d-flex align-items-center justify-content-center border my-3">
+                                <form class="card">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <img src="https://i.imgur.com/xELPaag.jpg" width="70" class="rounded-circle mt-2">
+                                        </div>
+                                        <div class="col-10">
+                                            <div class="comment-box ml-2">
+                                                <h4>Thêm đánh giá</h4>
 
-                                <div class="row">
+                                                <div class="rating">
+                                                    <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label>
+                                                    <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label>
+                                                    <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label>
+                                                    <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label>
+                                                    <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label>
+                                                </div>
 
-                                    <div class="col-2">
+                                                <div class="comment-area">
 
+                                                    <textarea class="form-control" placeholder="Ý kiến của bạn" rows="4"></textarea>
 
-                                        <img src="https://i.imgur.com/xELPaag.jpg" width="70" class="rounded-circle mt-2">
+                                                </div>
 
+                                                <div class="comment-btns mt-2">
 
-                                    </div>
+                                                    <div class="row">
 
-                                    <div class="col-10">
+                                                        <div class="">
 
-                                        <div class="comment-box ml-2">
+                                                            <div class="pull-right">
 
-                                            <h4>Thê đánh giá</h4>
+                                                                <button class="btn btn-success send btn-sm">
+                                                                    Gửi <i class="fa fa-long-arrow-right ml-1"></i>
+                                                                </button>
 
-                                            <div class="rating">
-                                                <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label>
-                                                <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label>
-                                                <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label>
-                                                <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label>
-                                                <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label>
-                                            </div>
-
-                                            <div class="comment-area">
-
-                                                <textarea class="form-control" placeholder="Ý kiến của bạn" rows="4"></textarea>
-
-                                            </div>
-
-                                            <div class="comment-btns mt-2">
-
-                                                <div class="row">
-
-                                                    <div class="">
-
-                                                        <div class="pull-right">
-
-                                                            <button class="btn btn-success send btn-sm">
-                                                                Gửi <i class="fa fa-long-arrow-right ml-1"></i>
-                                                            </button>
+                                                            </div>
 
                                                         </div>
 
@@ -742,19 +745,18 @@
 
                                                 </div>
 
-                                            </div>
 
+                                            </div>
 
                                         </div>
 
+
                                     </div>
 
-
-                                </div>
-
-                            </form>
-                        </div>
-                        <p class="f-32 fw-500 mb-3">Đánh giá khách hàng</p>
+                                </form>
+                            </div>
+                        }
+                        <p class="f-32 fw-500 mb-3 rate-customer">Đánh giá khách hàng</p>
                         <div class="d-flex align-items-center justify-content-center border my-3">
                             <div class="px-3 text-center" style="min-width: 30%">
                                 <p class="f-24">
@@ -928,7 +930,12 @@
 
 
                         <div class="list_reviews">
-                            @foreach(var ratingList in Model.ServiceRatingList){
+                            @{
+                                int count = 0;
+                            }
+                            @foreach (var ratingList in Model.ServiceRatingList)
+                            {
+                                count++;
                                 <div class="border p-3 mb-2">
                                     <div class="d-flex mb-2">
                                         <img src="../frontend/img/gitiho_v2/placehover_18x18.png"
@@ -967,169 +974,17 @@
                                     </div>
                                 </div>
                             }
-                            @* <div class="border p-3 mb-2">
-                                <div class="d-flex mb-2">
-                                    <img src="../frontend/img/gitiho_v2/placehover_18x18.png" alt=""
-                                         data-src="../images/avatar/folder_89/bui-lan.png"
-                                         class="my-auto rounded-circle lazyload mr-3" width="36px"
-                                         height="36px" />
-                                    <div class="user-right-new">
-                                        <p class="mb-0 f-16 user-name color_label fw-700">
-                                            <a target="_blank" href="https://gitiho.com/u/89168-bui-thi-lan">
-                                                Bùi
-                                                Thị Lan
-                                            </a>
-                                        </p>
-                                        <div class="d-flex">
-                                            <div class="cou-rating mr-3">
-                                                <div class="gen-star">
-                                                    <div class="stars">
-                                                        <div class="stars-content">
-                                                            <div class="fas fa-star star-on"
-                                                                 style="width: 92px"></div>
-                                                            <div class="fas fa-star star-off"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <p class="mb-0 color_text2">01:16 03/12/2022</p>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="f-16" style="word-break: break-word">
-                                    Cảm ơn gitiho đã cung cấp khóa học tuyệt vời này. Xem video, mình thấy vô
-                                    cùng hữu ích. Chúc gitiho ngày càng phát triển ạ! Mình hy vọng sẽ được
-                                    gitiho giới thiệu và tư vấn các khoá học mà gitiho thấy hữu ích cho dân kế
-                                    toán ạ.
-                                </div>
-                            </div>
-                            <div class="border p-3 mb-2">
-                                <div class="d-flex mb-2">
-                                    <img src="../frontend/img/gitiho_v2/placehover_18x18.png"
-                                         alt="" data-src="../caches/ua_small/users/1657338940.jpg"
-                                         class="my-auto rounded-circle lazyload mr-3" width="36px"
-                                         height="36px" />
-                                    <div class="user-right-new">
-                                        <p class="mb-0 f-16 user-name color_label fw-700">
-                                            <a target="_blank"
-                                               href="https://gitiho.com/u/232983-hoang-thi-lan">
-                                                Hoàng Thị
-                                                Lan
-                                            </a>
-                                        </p>
-                                        <div class="d-flex">
-                                            <div class="cou-rating mr-3">
-                                                <div class="gen-star">
-                                                    <div class="stars">
-                                                        <div class="stars-content">
-                                                            <div class="fas fa-star star-on"
-                                                                 style="width: 92px"></div>
-                                                            <div class="fas fa-star star-off"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <p class="mb-0 color_text2">04:39 25/08/2022</p>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="f-16" style="word-break: break-word">
-                                    Các bài giảng khá hay và bổ ích................... Tuy nhiên nhiều bài công
-                                    thức khó và rắc rối quá em không học được..
-                                    Rất cám ơn khóa học của Gitiho đã giúp em mở mang thêm được nhiều kiến thức
-                                    ...
-                                </div>
-                            </div>
-                            <div class="border p-3 mb-2">
-                                <div class="d-flex mb-2">
-                                    <img src="../frontend/img/gitiho_v2/placehover_18x18.png"
-                                         alt=""
-                                         data-src="../caches/ua_small/users/1600765018.jpg"
-                                         class="my-auto rounded-circle lazyload mr-3" width="36px"
-                                         height="36px" />
-                                    <div class="user-right-new">
-                                        <p class="mb-0 f-16 user-name color_label fw-700">
-                                            <a target="_blank"
-                                               href="https://gitiho.com/teacher/100283-nguyen-cao-cuong">
-                                                Nguyễn
-                                                Cao Cường
-                                            </a>
-                                        </p>
-                                        <div class="d-flex">
-                                            <div class="cou-rating mr-3">
-                                                <div class="gen-star">
-                                                    <div class="stars">
-                                                        <div class="stars-content">
-                                                            <div class="fas fa-star star-on"
-                                                                 style="width: 92px"></div>
-                                                            <div class="fas fa-star star-off"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <p class="mb-0 color_text2">09:38 15/02/2022</p>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="f-16" style="word-break: break-word">
-                                    Giảng viên giảng rất dễ hiểu, nghe xong có thể thực hiện được ngay. Cảm ơn
-                                    Gitiho.
-                                    HIện tại xu thế các nhân viên văn phòng, giáo viên và hssv đang rất cần sử
-                                    dụng excel và đây là khóa học hữu ích.
-                                    chúc Gitiho thành công nhiều hơn!
-                                </div>
-                            </div>
-                            <div class="border p-3 mb-2">
-                                <div class="d-flex mb-2">
-                                    <img src="../frontend/img/gitiho_v2/placehover_18x18.png"
-                                         alt=""
-                                         data-src="../images/avatar/folder_117/nguyen-duc.png"
-                                         class="my-auto rounded-circle lazyload mr-3" width="36px"
-                                         height="36px" />
-                                    <div class="user-right-new">
-                                        <p class="mb-0 f-16 user-name color_label fw-700">
-                                            <a target="_blank"
-                                               href="https://gitiho.com/u/117246-nguyen-ngoc-duc">
-                                                Nguyễn Ngọc
-                                                Đức
-                                            </a>
-                                        </p>
-                                        <div class="d-flex">
-                                            <div class="cou-rating mr-3">
-                                                <div class="gen-star">
-                                                    <div class="stars">
-                                                        <div class="stars-content">
-                                                            <div class="fas fa-star star-on"
-                                                                 style="width: 73.4px"></div>
-                                                            <div class="fas fa-star star-off"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <p class="mb-0 color_text2">01:35 12/02/2022</p>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="f-16" style="word-break: break-word">
-                                    Các thủ thuật nhanh gọn chính xác ,nhưng ví dụ khá ít để học viện có thể
-                                    thực hành , đặc biết tính sáng tạo chưa có , đôi lúc quá cơ bản , và ko có
-                                    nhiều option cho từng công cụ , Đặc biệt những công thức được áp dụng cho
-                                    từng loại cần được mô tả giải thích để học viên biết lý do tại sao cần công
-                                    thức này khi áp dụng
-                                </div>
-                            </div> *@
                         </div>
 
-                        <div class="m-auto btn--more-review" style="max-width: 200px">
-                            <button class="round-10 py-2 px-3 w-100 color_label btn btn-more btn-default font-weight-bold text-decoration-none justify-content-center"
-                                    onclick="viewMoreReview('same',this)" style="outline: none;box-shadow: none">
-                                Xem thêm <i class="fal fa-angle-down"></i>
-                            </button>
-                        </div>
+                        @if (count >= 5)
+                        {
+                            <div class="m-auto btn--more-review" style="max-width: 200px">
+                                <button class="round-10 py-2 px-3 w-100 color_label btn btn-more btn-default font-weight-bold text-decoration-none justify-content-center"
+                                        onclick="viewMoreReview('same',this)" style="outline: none;box-shadow: none">
+                                    Xem thêm <i class="fal fa-angle-down"></i>
+                                </button>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -1143,35 +998,14 @@
                             <div class="info-text mb-auto mt-4 mt-md-auto">
                                 <p class="color-label fw-600 mb-2 fw-700">
                                     <a href="https://gitiho.com/teacher/82540-g-learning"
-                                       class="color_label"><u>G-LEARNING</u></a>
-                                    <img alt="Chuyên gia"
-                                         data-src="https://gitiho.com/frontend/img/gitiho_v2/icon/icon-profile-police.svg"
-                                         width="16px" class="lazyload" />
+                                       class="color_label"><u>@Model.CreatorService.FullName</u></a>
                                 </p>
-                                <p class="color_text2 mb-0">
-                                    Trường đào tạo &amp; phát triển kỹ năng ứng dụng tin
-                                    học văn phòng
-                                </p>
-                                <div class="my-3 d-flex">
-                                    <div class="pointer rounded-circle link-profile link-fb d-flex text-white mr-3 link-user"
-                                         title="https://www.facebook.com/Gitihovietnam"
-                                         data-href="https://www.facebook.com/Gitihovietnam">
-                                        <i class="fab fa-facebook-f m-auto"></i>
-                                    </div>
-
-                                    <div class="pointer rounded-circle link-profile link-in d-flex color_label mr-3 link-user"
-                                         title="https://www.linkedin.com/company/gitiho-com/"
-                                         data-href="https://www.linkedin.com/company/gitiho-com/">
-                                        <i class="fab fa-linkedin m-auto"></i>
-                                    </div>
-                                </div>
-
                             </div>
 
                             <div class="d-flex mt-4">
                                 <div style="box-shadow: 0px 6px 22px 0px #BDCCE099;width: 125px;height: 125px"
                                      class="rounded-circle mr-4 my-auto">
-                                    <img src="~/image/logo.jpg" width="125px"
+                                    <img src="@Model.CreatorService.Avatar" width="125px"
                                          height="125px" class="avatar rounded-circle lazyload mx-auto"
                                          alt="G-LEARNING" data-src="../caches/ua_medium/users/1606461286.png" />
                                 </div>
@@ -1179,35 +1013,30 @@
                                     <ul class="list-unstyled">
                                         <li>
                                             <div class="d-flex mb-3">
-                                                <i class="fas fa-star my-auto mr-3" style="width: 17px"></i>
+                                                <i class="fa-solid fa-phone my-auto mr-3" style="width: 17px"></i>
                                                 <p class="mb-0 my-auto">
-                                                    4.8 điểm đánh
-                                                    giá
+                                                    @Model.CreatorService.Phone
                                                 </p>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="d-flex mb-3">
-                                                <i class="far fa-badge-check my-auto mr-3"
-                                                   style="width: 17px"></i>
-                                                <p class="mb-0 my-auto">972 đánh giá</p>
+                                                <i class="fa-solid fa-envelope my-auto mr-3" style="width: 17px"></i>
+                                                <p class="mb-0 my-auto">
+                                                    @Model.CreatorService.Email
+                                                </p>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="d-flex mb-3">
-                                                <i class="fad fa-user-check my-auto mr-3"
-                                                   style="width: 17px"></i>
-                                                <p class="mb-0 my-auto">
-                                                    342,921
-                                                    học viên
-                                                </p>
+                                                <i class="fa-solid fa-graduation-cap my-auto mr-3" style="width: 17px"></i>
+                                                <p class="mb-0 my-auto">@Model.CreatorService.Major</p>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="d-flex">
-                                                <i class="fas fa-play-circle my-auto mr-3"
-                                                   style="width: 17px"></i>
-                                                <p class="mb-0 my-auto">101 khóa học</p>
+                                                <i class="fa-solid fa-seedling my-auto mr-3" style="width: 17px"></i>
+                                                <p class="mb-0 my-auto">1 dịch vụ</p>
                                             </div>
                                         </li>
                                     </ul>
@@ -1228,185 +1057,185 @@
                 </div>
             </div>
 
-            <div class="my-5">
-                <div class="container">
-                    <div class="main-content">
-                        <p class="f-32 fw-500 mb-3">Dịch vụ liên quan</p>
-                        <div>
-                            <div class="course-comparison--show-more">
-                                <span id="show-more" data-type="checkbox" class="d-none" data-checked></span>
-                                <div class="show-more-module--content" style="max-height: 30rem;">
-                                    <div class="course-comparison--container">
-                                        <div>
-                                            <div class="course-comparison--course-container">
-                                                <div class="course-comparison--main-content">
-                                                    <a href="ebook-tuyet-dinh-excel-khai-pha-10-ky-thuat-ung-dung-excel-ma-dai-hoc-khong-day-ban.html"
-                                                       class="course-comparison--course-title color_label fw-700 f-16">
-                                                        Ebook Tuyệt đỉnh Excel - Khai phá 10 kỹ thuật ứng dụng
-                                                        Excel mà đại học không dạy bạn
-                                                    </a>
-                                                    <div class="course-comparison--course-info">
-                                                        <div class="course-comparison--meta-items">
-                                                            <span class="course-comparison--content-info">
-                                                                Tổng số 2+ giờ
-                                                            </span>
-                                                            <span>
-                                                                1 bài giảng
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="course-comparison--comparison-content">
-                                                    <div class="star-rating-module--star">
-                                                        <span class="star-rating-module--rating-number fw-700">
-                                                            4.75
-                                                        </span>
-                                                        <i class="fas fa-star star-rating-module--icon"></i>
-                                                    </div>
-                                                    <div class="course-comparison--num-students">
-                                                        <i class="fas fa-users my-auto"></i>
-                                                        <span>77,806</span>
-                                                    </div>
-
-                                                    <div class="course-comparison--price-text-container">
-                                                        <div class="course-comparison--discount-price">
-                                                            <span class="fw-700">69,000 đ</span>
-                                                        </div>
-
-                                                        <div class="course-comparison--origin-price">
-                                                            <s><span>99,000 đ</span></s>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="course-comparison--image-wrapper">
-                                                    <img class="lazyload"
-                                                         src="../frontend/img/gitiho_v2/placehover_36x36.png"
-                                                         width="64px" height="64px"
-                                                         data-src="https://gitiho.com/caches/cc_small/cou_avatar/2020/06_09/aed7e51774b9757a335f47ba47f1ecb7.png"
-                                                         alt="#" />
-                                                </div>
-                                                <a class="course-comparison--whole-card-link"
-                                                   href="ebook-tuyet-dinh-excel-khai-pha-10-ky-thuat-ung-dung-excel-ma-dai-hoc-khong-day-ban.html"></a>
-                                            </div>
-                                        </div>
-
-                                        <div>
-                                            <div class="course-comparison--course-container">
-                                                <div class="course-comparison--main-content">
-                                                    <a href="exg01-tuyet-dinh-excel-tro-thanh-bac-thay-excel-trong-16-gio-2.html"
-                                                       class="course-comparison--course-title color_label fw-700 f-16">
-                                                        EXG01: Tuyệt đỉnh Excel | Khóa học Excel online từ cơ
-                                                        bản đến nâng cao
-                                                    </a>
-                                                    <div class="course-comparison--course-info">
-                                                        <div class="course-comparison--meta-items">
-                                                            <span class="course-comparison--content-info">
-                                                                Tổng số 18 giờ
-                                                            </span>
-                                                            <span>
-                                                                207 bài giảng
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="course-comparison--comparison-content">
-                                                    <div class="star-rating-module--star">
-                                                        <span class="star-rating-module--rating-number fw-700">
-                                                            4.86
-                                                        </span>
-                                                        <i class="fas fa-star star-rating-module--icon"></i>
-                                                    </div>
-                                                    <div class="course-comparison--num-students">
-                                                        <i class="fas fa-users my-auto"></i>
-                                                        <span>45,643</span>
-                                                    </div>
-
-                                                    <div class="course-comparison--price-text-container">
-                                                        <div class="course-comparison--discount-price">
-                                                            <span class="fw-700">499,000 đ</span>
-                                                        </div>
-
-                                                        <div class="course-comparison--origin-price">
-                                                            <s><span>799,000 đ</span></s>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="course-comparison--image-wrapper">
-                                                    <img class="lazyload"
-                                                         src="../frontend/img/gitiho_v2/placehover_36x36.png"
-                                                         width="64px" height="64px"
-                                                         data-src="https://gitiho.com/caches/cc_small/cou_avatar/2022/03_16/845cf112bcb9aff731c74785849db37d.png"
-                                                         alt="#" />
-                                                </div>
-                                                <a class="course-comparison--whole-card-link"
-                                                   href="exg01-tuyet-dinh-excel-tro-thanh-bac-thay-excel-trong-16-gio-2.html"></a>
-                                            </div>
-                                        </div>
-
-                                        <div>
-                                            <div class="course-comparison--course-container">
-                                                <div class="course-comparison--main-content">
-                                                    <a href="vbag01-tuyet-dinh-vba-viet-code-trong-tam-tay.html"
-                                                       class="course-comparison--course-title color_label fw-700 f-16">
-                                                        VBAG01: Tuyệt đỉnh VBA - Tự động hóa Excel với lập trình
-                                                        VBA
-                                                    </a>
-                                                    <div class="course-comparison--course-info">
-                                                        <div class="course-comparison--meta-items">
-                                                            <span class="course-comparison--content-info">
-                                                                Tổng số 14 giờ
-                                                            </span>
-                                                            <span>
-                                                                143 bài giảng
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="course-comparison--comparison-content">
-                                                    <div class="star-rating-module--star">
-                                                        <span class="star-rating-module--rating-number fw-700">
-                                                            4.86
-                                                        </span>
-                                                        <i class="fas fa-star star-rating-module--icon"></i>
-                                                    </div>
-                                                    <div class="course-comparison--num-students">
-                                                        <i class="fas fa-users my-auto"></i>
-                                                        <span>22,826</span>
-                                                    </div>
-
-                                                    <div class="course-comparison--price-text-container">
-                                                        <div class="course-comparison--discount-price">
-                                                            <span class="fw-700">499,000 đ</span>
-                                                        </div>
-
-                                                        <div class="course-comparison--origin-price">
-                                                            <s><span>799,000 đ</span></s>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="course-comparison--image-wrapper">
-                                                    <img class="lazyload"
-                                                         src="../frontend/img/gitiho_v2/placehover_36x36.png"
-                                                         width="64px" height="64px"
-                                                         data-src="https://gitiho.com/caches/cc_small/cou_avatar/2022/03_16/1543404fe8a20cd52c3bcc28584de24e.png"
-                                                         alt="#" />
-                                                </div>
-                                                <a class="course-comparison--whole-card-link"
-                                                   href="vbag01-tuyet-dinh-vba-viet-code-trong-tam-tay.html"></a>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
+            @* <div class="my-5">
+            <div class="container">
+            <div class="main-content">
+            <p class="f-32 fw-500 mb-3">Dịch vụ liên quan</p>
+            <div>
+            <div class="course-comparison--show-more">
+            <span id="show-more" data-type="checkbox" class="d-none" data-checked></span>
+            <div class="show-more-module--content" style="max-height: 30rem;">
+            <div class="course-comparison--container">
+            <div>
+            <div class="course-comparison--course-container">
+            <div class="course-comparison--main-content">
+            <a href="ebook-tuyet-dinh-excel-khai-pha-10-ky-thuat-ung-dung-excel-ma-dai-hoc-khong-day-ban.html"
+            class="course-comparison--course-title color_label fw-700 f-16">
+            Ebook Tuyệt đỉnh Excel - Khai phá 10 kỹ thuật ứng dụng
+            Excel mà đại học không dạy bạn
+            </a>
+            <div class="course-comparison--course-info">
+            <div class="course-comparison--meta-items">
+            <span class="course-comparison--content-info">
+            Tổng số 2+ giờ
+            </span>
+            <span>
+            1 bài giảng
+            </span>
             </div>
+            </div>
+            </div>
+            <div class="course-comparison--comparison-content">
+            <div class="star-rating-module--star">
+            <span class="star-rating-module--rating-number fw-700">
+            4.75
+            </span>
+            <i class="fas fa-star star-rating-module--icon"></i>
+            </div>
+            <div class="course-comparison--num-students">
+            <i class="fas fa-users my-auto"></i>
+            <span>77,806</span>
+            </div>
+
+            <div class="course-comparison--price-text-container">
+            <div class="course-comparison--discount-price">
+            <span class="fw-700">69,000 đ</span>
+            </div>
+
+            <div class="course-comparison--origin-price">
+            <s><span>99,000 đ</span></s>
+            </div>
+            </div>
+            </div>
+
+            <div class="course-comparison--image-wrapper">
+            <img class="lazyload"
+            src="../frontend/img/gitiho_v2/placehover_36x36.png"
+            width="64px" height="64px"
+            data-src="https://gitiho.com/caches/cc_small/cou_avatar/2020/06_09/aed7e51774b9757a335f47ba47f1ecb7.png"
+            alt="#" />
+            </div>
+            <a class="course-comparison--whole-card-link"
+            href="ebook-tuyet-dinh-excel-khai-pha-10-ky-thuat-ung-dung-excel-ma-dai-hoc-khong-day-ban.html"></a>
+            </div>
+            </div>
+
+            <div>
+            <div class="course-comparison--course-container">
+            <div class="course-comparison--main-content">
+            <a href="exg01-tuyet-dinh-excel-tro-thanh-bac-thay-excel-trong-16-gio-2.html"
+            class="course-comparison--course-title color_label fw-700 f-16">
+            EXG01: Tuyệt đỉnh Excel | Khóa học Excel online từ cơ
+            bản đến nâng cao
+            </a>
+            <div class="course-comparison--course-info">
+            <div class="course-comparison--meta-items">
+            <span class="course-comparison--content-info">
+            Tổng số 18 giờ
+            </span>
+            <span>
+            207 bài giảng
+            </span>
+            </div>
+            </div>
+            </div>
+            <div class="course-comparison--comparison-content">
+            <div class="star-rating-module--star">
+            <span class="star-rating-module--rating-number fw-700">
+            4.86
+            </span>
+            <i class="fas fa-star star-rating-module--icon"></i>
+            </div>
+            <div class="course-comparison--num-students">
+            <i class="fas fa-users my-auto"></i>
+            <span>45,643</span>
+            </div>
+
+            <div class="course-comparison--price-text-container">
+            <div class="course-comparison--discount-price">
+            <span class="fw-700">499,000 đ</span>
+            </div>
+
+            <div class="course-comparison--origin-price">
+            <s><span>799,000 đ</span></s>
+            </div>
+            </div>
+            </div>
+
+            <div class="course-comparison--image-wrapper">
+            <img class="lazyload"
+            src="../frontend/img/gitiho_v2/placehover_36x36.png"
+            width="64px" height="64px"
+            data-src="https://gitiho.com/caches/cc_small/cou_avatar/2022/03_16/845cf112bcb9aff731c74785849db37d.png"
+            alt="#" />
+            </div>
+            <a class="course-comparison--whole-card-link"
+            href="exg01-tuyet-dinh-excel-tro-thanh-bac-thay-excel-trong-16-gio-2.html"></a>
+            </div>
+            </div>
+
+            <div>
+            <div class="course-comparison--course-container">
+            <div class="course-comparison--main-content">
+            <a href="vbag01-tuyet-dinh-vba-viet-code-trong-tam-tay.html"
+            class="course-comparison--course-title color_label fw-700 f-16">
+            VBAG01: Tuyệt đỉnh VBA - Tự động hóa Excel với lập trình
+            VBA
+            </a>
+            <div class="course-comparison--course-info">
+            <div class="course-comparison--meta-items">
+            <span class="course-comparison--content-info">
+            Tổng số 14 giờ
+            </span>
+            <span>
+            143 bài giảng
+            </span>
+            </div>
+            </div>
+            </div>
+            <div class="course-comparison--comparison-content">
+            <div class="star-rating-module--star">
+            <span class="star-rating-module--rating-number fw-700">
+            4.86
+            </span>
+            <i class="fas fa-star star-rating-module--icon"></i>
+            </div>
+            <div class="course-comparison--num-students">
+            <i class="fas fa-users my-auto"></i>
+            <span>22,826</span>
+            </div>
+
+            <div class="course-comparison--price-text-container">
+            <div class="course-comparison--discount-price">
+            <span class="fw-700">499,000 đ</span>
+            </div>
+
+            <div class="course-comparison--origin-price">
+            <s><span>799,000 đ</span></s>
+            </div>
+            </div>
+            </div>
+
+            <div class="course-comparison--image-wrapper">
+            <img class="lazyload"
+            src="../frontend/img/gitiho_v2/placehover_36x36.png"
+            width="64px" height="64px"
+            data-src="https://gitiho.com/caches/cc_small/cou_avatar/2022/03_16/1543404fe8a20cd52c3bcc28584de24e.png"
+            alt="#" />
+            </div>
+            <a class="course-comparison--whole-card-link"
+            href="vbag01-tuyet-dinh-vba-viet-code-trong-tam-tay.html"></a>
+            </div>
+            </div>
+
+            </div>
+            </div>
+            </div>
+
+            </div>
+            </div>
+            </div>
+            </div> *@
         </div>
 
 
@@ -1435,7 +1264,7 @@
                     <div>
                         <div class="try-content">
                         </div>
-                        
+
                         <div class="py-3 px-3">
                             <div class="text-white-change f-26 fw-600">Giá dịch vụ</div>
                             <div class="d-flex justify-content-between" style="margin-top:10px; margin-bottom:0px;">
@@ -1445,11 +1274,23 @@
                             </div>
 
                             <div class="button-cou-register" data-role="guess">
-                                <button class="btn btn-custom-second text-uppercase btn-block text-bold"
-                                        style="padding: 0.375rem 0.75rem;" id="Preview_Button_Dangkyhocngay2"
-                                        onclick="registerCourse(this,'white')">
-                                    Đặt lịch
-                                </button>
+                                @if (isLoggedIn)
+                                {
+                                    <button class="btn btn-custom-second text-uppercase btn-block text-bold"
+                                            style="padding: 0.375rem 0.75rem;" id="Preview_Button_Dangkyhocngay2"
+                                            onclick="registerCourse(this,'white'); showModalForm();">
+                                        Đặt lịch
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button class="btn btn-custom-second text-uppercase btn-block text-bold"
+                                            style="padding: 0.375rem 0.75rem;" id="Preview_Button_Dangkyhocngay2"
+                                            onclick="registerCourse(this,'white'); window.dialog.showModal();">
+                                        Đặt lịch
+                                    </button>
+                                }
+
                                 <div class="form-registed-user text-center mt-3">
                                     <div class="change-register hide">
                                         <i class="fas fa-users-medical color_label"></i>
@@ -1462,57 +1303,59 @@
                         </div>
 
                         @* <div class="p-3" style="border-top: 1px solid rgba(193, 209, 231, 0.47)">
-                            <p class="fw-700 color_label mb-1">Tư vấn dịch vụ</p>
-                            <p class="mb-3 color_label">
-                                Giải thích những thắc mắc về dịch vụ
-                            </p>
+                        <p class="fw-700 color_label mb-1">Tư vấn dịch vụ</p>
+                        <p class="mb-3 color_label">
+                        Giải thích những thắc mắc về dịch vụ
+                        </p>
 
-                            <a href="https://business.gitiho.com/?utm_source=Gitiho&amp;utm_campaign=Button_Course_Gbiz"
-                               target="_blank" rel="noreferrer nofollow noopener">
-                                <button class="btn btn-custom-white w-100 round-4"
-                                        style="border: 1px solid #333333">
-                                    Tư vấn cho doanh nghiệp
-                                </button>
-                            </a>
+                        <a href="https://business.gitiho.com/?utm_source=Gitiho&amp;utm_campaign=Button_Course_Gbiz"
+                        target="_blank" rel="noreferrer nofollow noopener">
+                        <button class="btn btn-custom-white w-100 round-4"
+                        style="border: 1px solid #333333">
+                        Tư vấn cho doanh nghiệp
+                        </button>
+                        </a>
                         </div> *@
 
                         @* <div class="form-code-discount p-3 d-flex flex-column"
-                             style="border-top: 1px solid rgba(193, 209, 231, 0.47)">
-                            <div class="d-flex justify-content-center pointer" onclick="openCodeDiscount(this)">
-                                <u class="mb-0 pointer fw-700" style="color:#6CB1E5!important;">
-                                    Áp dụng mã giảm
-                                    giá
-                                </u>
-                            </div>
-                            <div class="form-code box-voucher voucher-item my-3 border-0"
-                                 style="border-radius: 6px;">
-                                <div class="d-lg-flex justify-content-between">
-                                    <div class="mt-0 d-flex justify-content-between w-100 bg-white"
-                                         style="border: 1px solid #90A0B7;border-radius: 6px">
-                                        <div class="my-auto mx-2">
-                                            <i class="far fa-badge-percent"></i>
-                                        </div>
-                                        <input type="text"
-                                               class="form-control coupon-input f-14 border-0 p-0 fw-600"
-                                               style="height:41px;outline: none;box-shadow: none;border-radius: 6px;border-color: #B8B8B8!important;"
-                                               name="coupon-input" placeholder="Mã giảm giá">
+                        style="border-top: 1px solid rgba(193, 209, 231, 0.47)">
+                        <div class="d-flex justify-content-center pointer" onclick="openCodeDiscount(this)">
+                        <u class="mb-0 pointer fw-700" style="color:#6CB1E5!important;">
+                        Áp dụng mã giảm
+                        giá
+                        </u>
+                        </div>
+                        <div class="form-code box-voucher voucher-item my-3 border-0"
+                        style="border-radius: 6px;">
+                        <div class="d-lg-flex justify-content-between">
+                        <div class="mt-0 d-flex justify-content-between w-100 bg-white"
+                        style="border: 1px solid #90A0B7;border-radius: 6px">
+                        <div class="my-auto mx-2">
+                        <i class="far fa-badge-percent"></i>
+                        </div>
+                        <input type="text"
+                        class="form-control coupon-input f-14 border-0 p-0 fw-600"
+                        style="height:41px;outline: none;box-shadow: none;border-radius: 6px;border-color: #B8B8B8!important;"
+                        name="coupon-input" placeholder="Mã giảm giá">
 
-                                        <button type="button"
-                                                class="fw-600 btn btn-gitiho-default ml-2 round-4 button-apply-coupon text-nowrap my-2"
-                                                data-course=""
-                                                style="outline: none;box-shadow: none;border-left: 1px solid #90A0B7;padding: 0 0.7rem;background:white;color: #90A0B7;font-size: 14px;border-radius: 0 4px 4px 0!important;"
-                                                onclick="applyCoupon(this)">
-                                            Áp dụng
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                        <button type="button"
+                        class="fw-600 btn btn-gitiho-default ml-2 round-4 button-apply-coupon text-nowrap my-2"
+                        data-course=""
+                        style="outline: none;box-shadow: none;border-left: 1px solid #90A0B7;padding: 0 0.7rem;background:white;color: #90A0B7;font-size: 14px;border-radius: 0 4px 4px 0!important;"
+                        onclick="applyCoupon(this)">
+                        Áp dụng
+                        </button>
+                        </div>
+                        </div>
+                        </div>
                         </div> *@
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
 
     <div class="modal fade bd-show-video-try-modal-lg" tabindex="-1" role="dialog"
          aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -1536,13 +1379,27 @@
                         </div>
                     </div>
                 </div>
-
                 <div>
                 </div>
-
             </div>
         </div>
     </div>
+    <dialog id="dialog">
+        <h2>Bạn chưa đăng nhập</h2>
+        <p>Cần tài khoản để tiến hành đăng nhập</p>
+        <a asp-page="/Access/Login" class="login-btn">Đăng nhập</a>
+        <button onclick="window.dialog.close();" aria-label="close" class="x">❌</button>
+    </dialog>
+    <div id="requestModal" class="modal" style="display: none;">
+        <form class="modal-content" method="post" asp-page-handler="RequestService">
+            <input type="hidden" asp-for="InputServiceId" value="@Model.ServiceDetail.ServiceId" />
+            <span class="close" onclick="closeModalForm()">&times;</span>
+            <h2>Nhập yêu cầu của bạn</h2>
+            <textarea id="userRequest" rows="4" placeholder="Nhập yêu cầu..." asp-for="InputRequestContent"></textarea>
+            <button id="submitRequest">Gửi yêu cầu</button>
+        </form>
+    </div>
+
     <input type="hidden" name="coupon_id" value="">
     <input type="hidden" name="voucher_id">
     <div class="overlay hide"></div>
@@ -1834,6 +1691,14 @@
 
         });
     })
+
+    function showModalForm() {
+        document.getElementById("requestModal").style.display = "block";
+    }
+
+    function closeModalForm() {
+        document.getElementById("requestModal").style.display = "none";
+    }
 
     function sendDiscussion(el, type = null) {
 

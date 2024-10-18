@@ -1,0 +1,169 @@
+﻿@page "/Profile/ListPhotos/{id:int}"
+@model PRN221_Client.Pages.Profile.ListPhotosModel
+@{
+    ViewData["Title"] = @Model.Profile.FullName;
+}
+
+<style>
+    html,
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+        font-family: "Open Sans", sans-serif
+    }
+</style>
+
+<div class="w3-theme-l5">
+    <!-- Page Container -->
+    <div class="w3-container w3-content" style="max-width:1400px;margin-top:30px; background-color: white">
+        <!-- The Grid -->
+        <div class="w3-row">
+            <!-- Left Column -->
+            <div class="w3-col m3">
+                <!-- Profile -->
+                <div class="w3-card w3-round w3-white pb-3">
+                    <div class="w3-container">
+                        <h4 class="w3-center">@Model.Profile.FullName </h4>
+                        <p class="w3-center">
+                            <img src="@Model.Profile.Avatar" class="w3-circle" style="height:106px;width:106px"
+                                 alt="Avatar">
+                        </p>
+                        <hr>
+                        @if (Model.Profile.Major != null)
+                        {
+                            <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> @Model.Profile.Major</p>
+                        }
+                        @if (Model.Profile.Address != null)
+                        {
+                            <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> @Model.Profile.Address</p>
+                        }
+                        @if (Model.Profile.Gender != null)
+                        {
+                            if (Model.Profile.Gender.ToLower() == "female")
+                            {
+                                <p><i class="fa fa-venus  fa-fw w3-margin-right w3-text-theme"></i> @Model.Profile.Gender</p>
+                            }
+                            else if (Model.Profile.Gender.ToLower() == "male")
+                            {
+                                <p><i class="fa fa-mars fa-fw w3-margin-right w3-text-theme"></i> @Model.Profile.Gender</p>
+                            }
+                            else
+                            {
+                                <p><i class="fa fa-genderless fa-fw w3-margin-right w3-text-theme"></i> @Model.Profile.Gender</p>
+                            }
+                        }
+                        @* @if (Model.Profile.DegreeUrl != null)
+                        {
+                        <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> @Model.Profile.DegreeUrl</p>
+                        } *@
+                        @* <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> April 1, 1988</p> *@
+                    </div>
+                </div>
+                <br>
+
+                <!-- Accordion -->
+                <div class="w3-card w3-round">
+                    <div class="w3-white">
+                        <a class="w3-button w3-block w3-theme-l1 w3-left-align">
+                            <i class="fa fa-info-circle fa-fw w3-margin-right"></i> My Information
+                        </a>
+                        <a class="w3-button w3-block w3-theme-l1 w3-left-align">
+                            <i class="fa fa-user-friends fa-fw w3-margin-right"></i> My Friends
+                        </a>
+                        <a class="w3-button w3-block w3-theme-l1 w3-left-align">
+                            <i class="fa fa-user-plus fa-fw w3-margin-right"></i> My Followers
+                        </a>
+                        <a class="w3-button w3-block w3-theme-l1 w3-left-align">
+                            <i class="fa fa-user-check fa-fw w3-margin-right"></i> My Following
+                        </a>
+                        <a class="w3-button w3-block w3-theme-l1 w3-left-align">
+                            <i class="fa fa-picture-o fa-fw w3-margin-right"></i> My Photos
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Middle Column -->
+            <div class="w3-col m7">
+
+                <div class="w3-row-padding">
+                    <div class="w3-col m12">
+                        <div class="w3-card w3-round w3-white">
+                            <div class="w3-container w3-padding">
+                                <h6 class="w3-opacity">Social Media template by w3.css</h6>
+                                <button type="button" class="w3-button w3-theme"><i class="fa fa-pencil"></i>  Post</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="w3-container w3-card w3-white w3-round w3-margin">
+                    <div >
+                        <h5>Tất cả hình ảnh</h5>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-4 col-sm-6 mb-4 p-2 pb-0 pt-0">
+                            <a href="/Profile/PersonalPage/2" ><img src="https://firebasestorage.googleapis.com/v0/b/prn221-69738.appspot.com/o/image%2Fforest.jpg?alt=media&token=773588f3-0ca5-485b-ac33-53f16e3a146f" class="img-fluid rounded" alt="Forest" /></a>
+                        </div>
+                        <div class="col-md-4 col-sm-6 mb-4 p-2 pb-0 pt-0">
+                            <a href="/Profile/PersonalPage/2"><img src="https://firebasestorage.googleapis.com/v0/b/prn221-69738.appspot.com/o/image%2Fforest.jpg?alt=media&token=773588f3-0ca5-485b-ac33-53f16e3a146f" class="img-fluid rounded" alt="Forest" /></a>
+                        </div>
+                        <div class="col-md-4 col-sm-6 mb-4 p-2 pb-0 pt-0">
+                            <a href="/Profile/PersonalPage/2" ><img src="https://firebasestorage.googleapis.com/v0/b/prn221-69738.appspot.com/o/image%2Fforest.jpg?alt=media&token=773588f3-0ca5-485b-ac33-53f16e3a146f" class="img-fluid rounded" alt="Forest" /></a>
+                        </div>
+                        <div class="col-md-4 col-sm-6 mb-4 p-2 pb-0 pt-0">
+                            <a href="/Profile/PersonalPage/2"><img src="https://firebasestorage.googleapis.com/v0/b/prn221-69738.appspot.com/o/image%2Fforest.jpg?alt=media&token=773588f3-0ca5-485b-ac33-53f16e3a146f" class="img-fluid rounded" alt="Forest" /></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Middle Column -->
+            </div>
+
+            <!-- Right Column -->
+            <div class="w3-col m2">
+                <div class="w3-card w3-round w3-white w3-center pt-2 pb-3">
+                    <div class="w3-container">
+                        <p>Upcoming Events:</p>
+                        <img src="~/image/forest.jpg" alt="Forest" style="width:100%;">
+                        <p><strong>Holiday</strong></p>
+                        <p>Friday 15:00</p>
+                        <p><button class="w3-button w3-block w3-theme-l4">Info</button></p>
+                    </div>
+                </div>
+                <br>
+
+                <div class="w3-card w3-round w3-white w3-center">
+                    <div class="w3-container">
+                        <p>Friend Request</p>
+                        <img src="~/image/avatar6.png" alt="Avatar" style="width:50%"><br>
+                        <span>Jane Doe</span>
+                        <div class="w3-row w3-opacity">
+                            <div class="w3-half">
+                                <button class="w3-button w3-block w3-green w3-section" title="Accept">
+                                    <i class="fa fa-check"></i>
+                                </button>
+                            </div>
+                            <div class="w3-half">
+                                <button class="w3-button w3-block w3-red w3-section" title="Decline">
+                                    <i class="fa fa-remove"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="w3-card w3-round w3-white w3-padding-32 w3-center">
+                    <p><i class="fa fa-bug w3-xxlarge"></i></p>
+                </div>
+                <!-- End Right Column -->
+            </div>
+            <!-- End Grid -->
+        </div>
+        <!-- End Page Container -->
+    </div>
+</div>

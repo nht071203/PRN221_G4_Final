@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PRN221_Admin.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,11 @@ namespace PRN221_Admin
     /// </summary>
     public partial class NewsPage : Page
     {
-        public NewsPage()
+        public NewsPage(NewsViewModel viewModel)
         {
             InitializeComponent();
+            DataContext = viewModel;
         }
+
     }
 }

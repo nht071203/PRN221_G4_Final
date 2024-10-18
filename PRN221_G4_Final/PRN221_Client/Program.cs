@@ -1,16 +1,24 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Facebook;
 using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using PRN221_BusinessLogic.Interface;
 using PRN221_BusinessLogic.Service;
 using PRN221_DataAccess;
 using PRN221_DataAccess.DAOs;
+using PRN221_Models.DTO;
 using PRN221_Models.Models;
 using PRN221_Repository.AccountRepo;
+using PRN221_Repository.BookingRepo;
 using PRN221_Repository.NewsRepo;
+using PRN221_Repository.PostImageRepo;
+using PRN221_Repository.PostsRepo;
 using PRN221_Repository.RoleRepo;
 using PRN221_Repository.ServiceRepo;
+using PRN221_Repository.ViewRepo;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,31 +28,35 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<PRN221_DataAccess.Prn221Context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-
-
-builder.Services.AddAuthentication("CookiesPRN221").AddCookie("CookiesPRN221", options =>
+builder.Services.AddAuthentication(options =>
+{
+    // Sử dụng Cookie làm phương thức xác thực chính
+    options.DefaultScheme = "CookiesPRN221";
+})
+.AddCookie("CookiesPRN221", options =>
 {
     options.LoginPath = "/Access/Login";
     options.LogoutPath = "/Access/Logout";
-    options.AccessDeniedPath = "/Access/AccessDenied";
+    options.Cookie.Path = "/";
+    options.AccessDeniedPath = "/Access/Login";
     options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
-});
-
-builder.Services.AddAuthentication(options =>
+    options.Cookie.SecurePolicy = CookieSecurePolicy.None;
+})
+.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
 {
-    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = FacebookDefaults.AuthenticationScheme;
-}).
-AddCookie().
-AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
+    options.LoginPath = "/Access/Login";
+    options.LogoutPath = "/Access/Logout";
+    options.AccessDeniedPath = "/Access/Login";
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+})
+.AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
 {
     options.ClientId = builder.Configuration.GetSection("GoogleKeys:ClientID").Value;
     options.ClientSecret = builder.Configuration.GetSection("GoogleKeys:ClientSecret").Value;
     options.CallbackPath = "/signin-google";
     options.Scope.Add("profile");
 })
-.AddFacebook(options =>
+.AddFacebook(FacebookDefaults.AuthenticationScheme, options =>
  {
      options.AppId = builder.Configuration["Facebook:AppId"];
      options.AppSecret = builder.Configuration["Facebook:AppSecret"];
@@ -57,9 +69,25 @@ AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
      options.Fields.Add("name");     // Name
      options.Fields.Add("email");    // Email
      options.Fields.Add("picture");  // Avatar (Profile Picture)
+
+     // Thêm sự kiện bắt trường hợp thoát đăng nhập Fb
+     options.Events.OnRemoteFailure = context =>
+     {
+         context.Response.Redirect("/Access/Login");
+         context.HandleResponse();
+
+         return Task.FromResult(0);
+     };
  });
 
+builder.Services.Configure<Sender>(builder.Configuration.GetSection("Sender"));
 
+// Thêm Scoped service cho Sender
+builder.Services.AddScoped<Sender>(sp =>
+{
+    var senderOptions = sp.GetRequiredService<IOptions<Sender>>().Value;
+    return senderOptions;
+});
 
 builder.Services.AddSession(options =>
 {
@@ -89,13 +117,36 @@ builder.Services.AddScoped<NewsDAO>();
 builder.Services.AddScoped<NewsService>();
 builder.Services.AddScoped<NewsRepository>();
 
+builder.Services.AddScoped<ICategoryNewsRepository, CategoryNewsRepository>();
+builder.Services.AddScoped<CategoryNewsDAO>();
+builder.Services.AddScoped<CategoryNewsRepository>();
+
 builder.Services.AddScoped<IRequirementService, RequirementService>();
 builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
 builder.Services.AddScoped<ServiceDAO>();
 builder.Services.AddScoped<Service>();
 
+builder.Services.AddScoped<IBookingService, PRN221_BusinessLogic.Service.BookingService>();
+builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+builder.Services.AddScoped<BookingDAO>();
+
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<FirebaseConfig>();
+
+
+builder.Services.AddScoped<IEmailSender, SmtpEmailSender>();
+
+builder.Services.AddScoped<IPostService, PostService>();
+builder.Services.AddScoped<IPostRepository, PostRepository>();
+builder.Services.AddScoped<PostDAO>();
+builder.Services.AddScoped<PostDTO>();
+
+builder.Services.AddScoped<IPostImageRepository, PostImageRepository>();
+builder.Services.AddScoped<PostImageDAO>();
+
+builder.Services.AddScoped<IViewService, ViewService>();
+builder.Services.AddScoped<IViewRepository, ViewRepository>();
+builder.Services.AddScoped<ViewDAO>();
 
 builder.Services.AddSession();
 builder.Services.AddDistributedMemoryCache(); // For storing session data in memory
@@ -114,7 +165,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseSession();
+
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapRazorPages();
 app.Run();

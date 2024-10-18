@@ -12,6 +12,7 @@ namespace PRN221_Repository.NewsRepo
     public class NewsRepository : INewsRepository
     {
         private readonly NewsDAO _newsDAO;
+        private readonly CategoryNewsDAO _categoryNewsDAO;
 
         public NewsRepository(NewsDAO newsDAO)
         {
@@ -24,18 +25,25 @@ namespace PRN221_Repository.NewsRepo
         }
 
         public async Task<News> GetById(int id) => await _newsDAO.FindById(id);
-        //public async Task<CategoryNews> GetCategoryNewsById(int id) => await _newsDAO.GetCategoryNewsById(id);
         public async Task Add(News news) => await _newsDAO.Add(news);
         public async Task Update(News news) => await _newsDAO.Update(news);
 
         public async Task Delete(int id) => await _newsDAO.Delete(id);
 
-        public async Task<CategoryNews> GetCategoryNewsById(int id) => await _newsDAO.GetCategoryNewsById(id);
+        public async Task<IEnumerable<News>> GetAllNewsByCategoryId(int categoryId) => await _newsDAO.GetAllNewsByCategoryId(categoryId);
+
+        public async Task<CategoryNews> GetCategoryNewsById(int id) => await _categoryNewsDAO.GetCategoryNewsById(id);
 
         public async Task<int> GetTotalNewsRepo()
         {
             return await _newsDAO.GetTotalNewsCountAsync();
         }
-        public async Task<IEnumerable<CategoryNews>> GetAllCategoryNews() => await _newsDAO.GetAllCategoryNews();
+        public async Task<IEnumerable<CategoryNews>> GetAllCategoryNews() => await _categoryNewsDAO.GetAllCategoryNews();
+
+        public async Task<IEnumerable<News>> SearchNews(int category, string searchString) => await _newsDAO.SearchNews(category, searchString);
+
+        public Task<IEnumerable<News>> GetNewsPaged(int pageNumber, int pageSize) => _newsDAO.GetNewsPaged(pageNumber, pageSize);   
+
+        public Task<int> GetTotalNewsCount() => _newsDAO.GetTotalNewsCount();
     }
 }

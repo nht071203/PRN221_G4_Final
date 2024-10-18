@@ -1,7 +1,11 @@
 ﻿@page "/Service/ListServices"
+@inject IHttpContextAccessor HttpContextAccessor
 @model PRN221_Client.Pages.Service.ListServicesModel
 @{
+    var isLoggedIn = HttpContextAccessor.HttpContext.Session.GetString("UserSession") != null;
 }
+<link rel="stylesheet" href="~/css/modalFormBookingStyle.css" />
+
 <!-- Page Wrapper Start -->
 <!-- Hiển thị danh sách dịch vụ -->
 <section class="page--wrapper pt--80 pb--20">
@@ -16,7 +20,7 @@
                             <thead class="ff--primary fs--14 text-darkest">
                                 <tr>
                                     <th>Dịch vụ</th>
-                                    <th>Giá</th>
+                                    <th class="price-th">Giá</th>
                                     <th>Tác giả</th>
                                     <th></th>
                                 </tr>
@@ -49,7 +53,7 @@
                                             </div>
                                             <p class="count-rate">(@service.RatingCount)</p>
                                         </td>
-                                        <td>
+                                        <td class="price-td">
                                             <div class="ff--primary fw--500 fs--14 text-darkest d-flex-price">
                                                 <p>@service.Price</p>
                                                 <p>đ</p>
@@ -64,12 +68,30 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <button class="booking-btn btn btn-primary">Đặt lịch</button>
+                                            <div>
+                                                @if (isLoggedIn)
+                                                {
+                                                    <button class="booking-btn btn btn-primary" onclick="showModalForm(@service.ServiceId);">Đặt lịch</button>
+                                                }
+                                                else
+                                                {
+                                                    <button class="booking-btn btn btn-primary" onclick="window.dialog.showModal();">Đặt lịch</button>
+                                                }
+                                            </div>
                                         </td>
                                     </tr>
                                 }
                             </tbody>
                         </table>
+                    </div>
+                    <div id="requestModal" class="modal" style="display: none;">
+                        <form class="modal-content" method="post" asp-page-handler="RequestService">
+                            <input type="hidden" id="serviceIdInput" asp-for="InputServiceId" value="" />
+                            <span class="close" onclick="closeModalForm()">&times;</span>
+                            <h2>Nhập yêu cầu của bạn</h2>
+                            <textarea id="userRequest" rows="4" placeholder="Nhập yêu cầu..." asp-for="InputRequestContent"></textarea>
+                            <button id="submitRequest">Gửi yêu cầu</button>
+                        </form>
                     </div>
                     <!-- Topics List End -->
                     <!-- Page Count Start -->
@@ -94,6 +116,13 @@
                             <span>@Model.TotalPages</span>
                         </label>
                     </div>
+
+                    <dialog id="dialog">
+                        <h2>Bạn chưa đăng nhập</h2>
+                        <p>Cần tài khoản để tiến hành đăng nhập</p>
+                        <a asp-page="/Access/Login" class="login-btn">Đăng nhập</a>
+                        <button onclick="window.dialog.close();" aria-label="close" class="x">❌</button>
+                    </dialog>
                     <!-- Page Count End -->
                 </div>
             </div>
@@ -182,3 +211,13 @@
     </div>
 </section>
 <!-- Page Wrapper End -->
+<script>
+    function showModalForm(serviceId) {
+        document.getElementById('serviceIdInput').value = serviceId;
+        document.getElementById("requestModal").style.display = "block";
+    }
+
+    function closeModalForm() {
+        document.getElementById("requestModal").style.display = "none";
+    }
+</script>

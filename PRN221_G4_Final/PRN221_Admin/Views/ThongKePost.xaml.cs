@@ -57,20 +57,7 @@ namespace PRN221_Admin
             ThemeToggleButton.Foreground = new SolidColorBrush(Colors.Black);
         }
 
-        private void UpdateThemeIcon()
-        {
-            // Cập nhật biểu tượng dựa trên trạng thái
-            if (ThemeToggleButton.IsChecked == true)
-            {
-                // Biểu tượng cho chế độ tối
-                ThemeIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.MoonFull; // Biểu tượng mặt trăng
-            }
-            else
-            {
-                // Biểu tượng cho chế độ sáng
-                ThemeIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.Lightbulb; // Biểu tượng mặt trời
-            }
-        }
+   
 
     }
 }

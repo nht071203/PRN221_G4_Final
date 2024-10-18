@@ -11,7 +11,7 @@ public partial class Account
 
     public string Username { get; set; } = null!;
 
-    public string? Password { get; set; }
+    public string Password { get; set; } = null!;
 
     public string? FullName { get; set; }
 
@@ -24,6 +24,14 @@ public partial class Account
     public int? PhoneConfirmed { get; set; }
 
     public string? Gender { get; set; }
+
+    public DateOnly? DateOfBirth { get; set; }
+
+    public string? ShortBio { get; set; }
+
+    public string? EducationUrl { get; set; }
+
+    public int? YearOfExperience { get; set; }
 
     public string? DegreeUrl { get; set; }
 

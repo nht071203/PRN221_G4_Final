@@ -131,12 +131,12 @@
             NoiDung.Content = new FarmerPage(FarmerView);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_ManageExpert(object sender, RoutedEventArgs e)
         {
-            NoiDung.Content = new BieuDo();
+
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
 
         }

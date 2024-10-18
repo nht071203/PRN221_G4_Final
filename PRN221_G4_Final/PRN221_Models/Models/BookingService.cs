@@ -17,7 +17,7 @@ public partial class BookingService
 
     public bool? IsDeletedFarmer { get; set; }
 
-    public int? Rating { get; set; }
-
     public bool? IsDeletedExpert { get; set; }
+
+    public string? Content { get; set; }
 }

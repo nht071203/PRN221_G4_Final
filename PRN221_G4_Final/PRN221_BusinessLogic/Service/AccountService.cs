@@ -35,6 +35,7 @@ namespace PRN221_BusinessLogic.Service
         {
             return await _accountRepo.GetByUsername(username);
         }
+
         public async Task AddAccount(Account item)
         {
             await _accountRepo.Add(item);
@@ -74,7 +75,7 @@ namespace PRN221_BusinessLogic.Service
                 RoleId = 1,
                 FacebookId = fbId,
                 Username = name,
-                Password = "1", 
+                Password = "1",
                 FullName = name,
                 Email = email,
                 EmailConfirmed = 1,
@@ -88,10 +89,16 @@ namespace PRN221_BusinessLogic.Service
                 IsDeleted = false,
                 Otp = null
             };
-
             await _accountRepo.Add(newAcc);
+        }
+
+        public async Task<string?> GetFullNameByUsername(string username)
+        {
+            return await _accountRepo.GetFullnameByUsername(username);
+        }
+
        }
 
 
     }
-}
+
