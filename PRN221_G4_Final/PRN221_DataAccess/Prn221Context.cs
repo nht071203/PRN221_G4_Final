@@ -4,6 +4,7 @@ using PRN221_Models.Models;
 namespace PRN221_DataAccess;
 
 
+
 public partial class Prn221Context : DbContext
 {
     public Prn221Context()
@@ -64,8 +65,6 @@ public partial class Prn221Context : DbContext
             entity.HasKey(e => e.AccountId).HasName("PK__Account__46A222CDDA4DC2DA");
 
             entity.ToTable("Account");
-
-            entity.HasIndex(e => e.Phone, "UQ__Account__B43B145F2EBBAE94").IsUnique();
 
             entity.HasIndex(e => e.Username, "UQ__Account__F3DBC572EC0B8408").IsUnique();
 

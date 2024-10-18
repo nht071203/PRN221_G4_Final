@@ -22,7 +22,7 @@ namespace PRN221_Admin.Views
     public partial class FarmerPage : Page
     {
 
-        public FarmerPage(FarmerViewModel viewModel)
+        public FarmerPage(FarmerModelView viewModel)
         {
             InitializeComponent();
             DataContext = viewModel;

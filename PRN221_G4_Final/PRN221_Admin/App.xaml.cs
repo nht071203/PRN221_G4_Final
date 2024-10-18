@@ -28,10 +28,13 @@ namespace PRN221_Admin
 
             var studentViewModel = ServiceProvider.GetRequiredService<ExpertViewModel>();
             var newsViewModel = ServiceProvider.GetRequiredService<NewsViewModel>();
-            var farmerViewModel = ServiceProvider.GetRequiredService<FarmerViewModel>();
+        //    var farmerViewModel = ServiceProvider.GetRequiredService<FarmerViewModel>();
+            var farmerMU = ServiceProvider.GetRequiredService<FarmerModelView>();
+
             mainwindow.DataContext = studentViewModel;
             mainwindow.DataContext = newsViewModel;
-            mainwindow.DataContext = farmerViewModel;
+            //mainwindow.DataContext = farmerViewModel;
+            mainwindow.DataContext = farmerMU;
             mainwindow.Show();
             
             
@@ -46,13 +49,18 @@ namespace PRN221_Admin
             services.AddTransient<AccountDAO>();
 
 
+            services.AddTransient<ICategoryNewsRepository, CategoryNewsRepository>();
             services.AddTransient<INewsService, NewsService>();
             services.AddTransient<INewsRepository, NewsRepository>();
+
             services.AddTransient<NewsDAO>();
             
             services.AddTransient<ExpertViewModel>();
             services.AddTransient<NewsViewModel>();
-            services.AddTransient<FarmerViewModel>();
+            services.AddTransient<CategoryNewsDAO>();
+            //services.AddTransient<FarmerViewModel>();
+            services.AddTransient<FarmerModelView>();
+
 
             /*// Đăng ký ViewModel
             services.AddSingleton<ExpertViewModel>();
