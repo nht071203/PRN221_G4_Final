@@ -10,5 +10,6 @@ namespace PRN221_Repository.PostsRepo
     public interface IPostRepository
     {
         Task<IEnumerable<Post>> GetAll();
+        Task<Post?> GetById(int postId);
     }
 }

@@ -17,6 +17,7 @@ using PRN221_Repository.PostImageRepo;
 using PRN221_Repository.PostsRepo;
 using PRN221_Repository.RoleRepo;
 using PRN221_Repository.ServiceRepo;
+using PRN221_Repository.ViewRepo;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -138,6 +139,9 @@ builder.Services.AddScoped<PostDTO>();
 builder.Services.AddScoped<IPostImageRepository, PostImageRepository>();
 builder.Services.AddScoped<PostImageDAO>();
 
+builder.Services.AddScoped<IViewService, ViewService>();
+builder.Services.AddScoped<IViewRepository, ViewRepository>();
+builder.Services.AddScoped<ViewDAO>();
 
 builder.Services.AddSession();
 builder.Services.AddDistributedMemoryCache(); // For storing session data in memory

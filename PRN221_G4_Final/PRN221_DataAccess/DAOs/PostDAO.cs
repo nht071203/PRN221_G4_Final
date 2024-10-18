@@ -15,5 +15,9 @@ namespace PRN221_DataAccess.DAOs
             return await _context.Posts.ToListAsync();
         }
 
+        public async Task<Post?> GetById(int postId)
+        {
+            return await _context.Posts.FirstOrDefaultAsync(p => p.PostId == postId);
+        }
     }
 }

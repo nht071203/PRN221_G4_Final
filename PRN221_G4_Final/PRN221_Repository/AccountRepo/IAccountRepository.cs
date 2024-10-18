@@ -21,10 +21,6 @@ namespace PRN221_Repository.AccountRepo
         Task<int> GetTotalFarmerRepo();
         Task<Account?> GetAccountByEmailForReset(string email);
         Task<string?> GetFullnameByUsername(string username);
-<<<<<<< HEAD
         Task<Account?> GetAccountById(int? accountId);
-=======
-
->>>>>>> main
     }
 }
