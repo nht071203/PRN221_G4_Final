@@ -32,10 +32,10 @@ namespace PRN221_Admin
         private FarmerViewModel _farmerViewModel;
         public FarmerModelView FarmerView { get; set; }
         
-        public DashboardMU(ExpertViewModel expertViewModel, NewsViewModel newsViewModel, FarmerViewModel farmerViewModel)
+        public DashboardMU(ExpertViewModel expertViewModel, NewsViewModel newsViewModel, FarmerModelView farmerViewModel)
         {
             InitializeComponent();
-            _farmerViewModel = farmerViewModel;
+            FarmerView = farmerViewModel;
             _ExpertViewModel = expertViewModel;
             _NewsViewModel = newsViewModel;
           
