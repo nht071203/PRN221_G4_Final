@@ -76,6 +76,16 @@ namespace PRN221_BusinessLogic.Service
             return accountPost;
         }
 
+        public async Task<Account?> ExpertWithMostPosts()
+        {
+            return await _postRepository.ExpertWithMostPosts();
+        }
+
+        public async Task<Account?> FarmerWithMostPosts()
+        {
+            return await _postRepository.FarmerWithMostPosts();
+        }
+
         public async Task<List<PostDTO>> GetListPostAndImage()
         {
             var response = new List<PostDTO>();

@@ -12,10 +12,17 @@ namespace PRN221_BusinessLogic.Interface
     {
         Task<List<PostDTO>> GetListPostAndImage();
         Task<PostDTO> GetPostAndImage(int postId);
+
+
+        Task<Account?> FarmerWithMostPosts();
+
+        Task<Account?> ExpertWithMostPosts();
+
         Task<bool> LikePost(int postId, int accountId);
         Task<bool> UnlikePost(int postId, int accountId);
         Task<bool> IsPostLikedByUser(int postId, int accountId);
         Task<List<PostDTO>> GetAllPostByAccountId(int id);
         Task<List<PostDTO>> GetAllPostImagesByAccountId(int id);
+
     }
 }
