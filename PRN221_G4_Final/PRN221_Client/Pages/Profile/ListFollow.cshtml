@@ -117,7 +117,7 @@
                         <h5>Danh sách theo dõi</h5>
                     </div>
                     <div class="row">
-                        @if (Model.ActiveTab.ToLower() == "friends")
+                        @if (Model.ActiveTab == "friends")
                         {
                             foreach (var item in Model.Friends)
                             {
@@ -141,7 +141,7 @@
                                 </div>
                             }
                         }
-                        else if (Model.ActiveTab.ToLower() == "followers")
+                        else if (Model.ActiveTab == "followers")
                         {
                             foreach (var item in Model.Followers)
                             {
@@ -165,7 +165,7 @@
                                 </div>
                             }
                         }
-                        else if (Model.ActiveTab.ToLower() == "following")
+                        else if (Model.ActiveTab == "following")
                         {
                             foreach (var item in Model.Following)
                             {
