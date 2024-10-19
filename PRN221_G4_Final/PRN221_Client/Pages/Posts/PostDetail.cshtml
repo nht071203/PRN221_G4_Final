@@ -34,7 +34,7 @@
                                     }
                                     else
                                     {
-                                        <a href="#">
+                                        <a asp-page="/Profile/PersonalPage" asp-route-id="@Model.PostDTO.account.AccountId">
                                             <img src="@Model.PostDTO.account.Avatar" alt="Alternate Text" />
                                         </a>
                                     }
@@ -92,14 +92,29 @@
                                     </div>
 
                                     <div class="col-sm-6">
-
                                         <!-- Post Social Start -->
                                         <div class="post--social-share clearfix">
                                             <ul class="nav">
-                                                <li>
-                                                    <a href="#"><i class="fa-solid fa-thumbs-up"></i></a>
+                                                <li class="d-flex align-items-center">
+                                                    @if (!Model.IsLikedByUser)
+                                                    {
+                                                        <form method="post" asp-page-handler="Like" asp-route-postId="@Model.PostId">
+                                                            <button type="submit" class="rounded-circle border-0" style="width: 35px; height: 35px; margin: 0 7.5px">
+                                                                <i class="fa-solid fa-thumbs-up"></i>
+                                                            </button>
+                                                        </form>
+                                                    }
+                                                    else
+                                                    {
+                                                        <form method="post" asp-page-handler="Unlike" asp-route-postId="@Model.PostId">
+                                                            <button type="submit" class="rounded-circle border-0" style="background-color: #1da1f2; width: 35px; height: 35px; margin: 0 7.5px">
+                                                                <i class="fa-solid fa-thumbs-up" style="color: white"></i>
+                                                            </button>
+                                                        </form>
+                                                    }
                                                     <span>@Model.CountLikePost lượt thích</span>
                                                 </li>
+
                                                 <li>
                                                     <a href="#"><i class="fa-solid fa-share"></i></a>
                                                     <span>@Model.CountSharePost lượt chia sẻ</span>
@@ -107,8 +122,8 @@
                                             </ul>
                                         </div>
                                         <!-- Post Social End -->
-
                                     </div>
+
                                 </div>
                             </div>
                             <!-- Post Footer End -->
