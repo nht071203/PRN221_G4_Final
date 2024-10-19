@@ -122,5 +122,12 @@ namespace PRN221_DataAccess.DAOs
         {
             return await _context.Accounts.FirstOrDefaultAsync(a => a.AccountId == accountId);
         }
+
+        public async Task<List<Account>> GetAccountsByIds(List<int> ids)
+        {
+            return await _context.Accounts
+                .Where(account => ids.Contains(account.AccountId))
+                .ToListAsync();
+        }
     }
 }
