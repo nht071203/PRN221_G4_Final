@@ -94,8 +94,8 @@
                                                     </a>
                                                 } else
                                                 {
-                                                    <a href="member-activity-personal.html">
-                                                        <img src="@post.account.Avatar" alt="" onerror="this.onerror=null; this.src='https://firebasestorage.googleapis.com/v0/b/prn221-69738.appspot.com/o/image%2Fuser.png?alt=media&token=e669a837-b9c8-4983-b2bd-8eb5c091d48f';">
+                                                    <a asp-page="/Profile/PersonalPage" asp-route-id="@post.account.AccountId">
+                                                        <img src="@post.account.Avatar" alt="">
                                                     </a>
                                                 }
                                                
@@ -108,7 +108,7 @@
                                                         <p><a href="/Access/Login">Người dùng ẩn danh</a> vừa đăng 1 bài viết</p>
                                                     } else
                                                     {
-                                                        <p><a href="member-activity-personal.html">@post.account.FullName</a> vừa đăng 1 bài viết</p>
+                                                        <p><a asp-page="/Profile/PersonalPage" asp-route-id="@post.account.AccountId">@post.account.FullName</a> vừa đăng 1 bài viết</p>
                                                     }
                                                     
                                                 </div>

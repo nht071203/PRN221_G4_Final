@@ -1,5 +1,6 @@
 ﻿@page "/Service/ServiceDetail"
 @inject IHttpContextAccessor HttpContextAccessor
+@inject PRN221_BusinessLogic.Interface.IAccountService _accountService;
 @model PRN221_Client.Pages.Service.ServiceDetailModel
 @{
     //var isLoggedIn = HttpContext.Session.GetString("UserSession") != null;
@@ -523,17 +524,8 @@
                     <div class="main-content">
                         <a href="#reviews">
                             <div class="cou-rating d-inline-block text-white">
-                                <div class="gen-star">
-                                    <div class="stars">
-                                        <div class="stars-content">
-                                            <div class="fas fa-star star-on"
-                                                 style="width: 106.36px;line-height:18px;font-family: 'Font Awesome 5 Pro'">
-                                            </div>
-                                            <div class="fas fa-star star-off"
-                                                 style="line-height:18px;font-family: 'Font Awesome 5 Pro'">
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="gen-star gen-star-head">
+                                    <div class="stars-rate" id="star-container"></div>
                                     <span class="review-count pull-left">
                                         <strong>@Model.ServiceDetail.AverageRating</strong> (<u>
                                             @Model.ServiceDetail.RatingCount đánh
@@ -702,27 +694,28 @@
                         {
                             <p class="f-32 fw-500 mb-3">Đánh giá dịch vụ</p>
                             <div class="d-flex align-items-center justify-content-center border my-3">
-                                <form class="card">
+                                <form class="card" method="post" asp-page-handler="RateService">
                                     <div class="row">
                                         <div class="col-2">
                                             <img src="https://i.imgur.com/xELPaag.jpg" width="70" class="rounded-circle mt-2">
                                         </div>
                                         <div class="col-10">
                                             <div class="comment-box ml-2">
+                                                <input type="hidden" asp-for="InputServiceId" value="@Model.ServiceDetail.ServiceId" />
                                                 <h4>Thêm đánh giá</h4>
 
                                                 <div class="rating">
-                                                    <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label>
-                                                    <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label>
-                                                    <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label>
-                                                    <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label>
-                                                    <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label>
+                                                    <input type="radio" asp-for="RatingPoint" value="5" id="5"><label for="5">☆</label>
+                                                    <input type="radio" asp-for="RatingPoint" value="4" id="4"><label for="4">☆</label>
+                                                    <input type="radio" asp-for="RatingPoint" value="3" id="3"><label for="3">☆</label>
+                                                    <input type="radio" asp-for="RatingPoint" value="2" id="2"><label for="2">☆</label>
+                                                    <input type="radio" asp-for="RatingPoint" value="1" id="1"><label for="1">☆</label>
                                                 </div>
 
                                                 <div class="comment-area">
 
-                                                    <textarea class="form-control" placeholder="Ý kiến của bạn" rows="4"></textarea>
-
+                                                    <textarea class="form-control" asp-for="CommentService" placeholder="Ý kiến của bạn" rows="4"></textarea>
+                                                    <span asp-validation-for="CommentService" class="text-danger"></span>
                                                 </div>
 
                                                 <div class="comment-btns mt-2">
@@ -935,6 +928,7 @@
                             }
                             @foreach (var ratingList in Model.ServiceRatingList)
                             {
+                                var getAccInList = await _accountService.GetByIdAccount(ratingList.UserId);
                                 count++;
                                 <div class="border p-3 mb-2">
                                     <div class="d-flex mb-2">
@@ -946,17 +940,30 @@
                                             <p class="mb-0 f-16 user-name color_label fw-700">
                                                 <a target="_blank"
                                                    href="https://gitiho.com/u/79716-lam-phuong-chi">
-                                                    @ratingList.UserId
+                                                    @getAccInList.Username
                                                 </a>
                                             </p>
                                             <div class="d-flex">
                                                 <div class="cou-rating mr-3">
                                                     <div class="gen-star">
                                                         <div class="stars">
+                                                            @{
+                                                                // Tính số sao đầy và trống dựa trên Rating
+                                                                int fullStars = (int)Math.Floor(ratingList.Rating); // Lấy phần nguyên
+                                                                int emptyStars = 5 - fullStars; // Tính số sao còn lại
+                                                                Console.WriteLine($"{fullStars}, {emptyStars}");
+                                                            }
                                                             <div class="stars-content">
-                                                                <div class="fas fa-star star-on"
-                                                                     style="width: 92px"></div>
-                                                                <div class="fas fa-star star-off"></div>
+                                                                @for (int i = 1; i <= fullStars; i++)
+                                                                {
+                                                                @* <div class="fas fa-star star-on"
+                                                                     style="width: 92px"></div> *@
+                                                                    <label class="star-cmt" title="Full star">★</label>
+                                                                }
+                                                                @for (int i = 1; i <= emptyStars; i++)
+                                                                {
+                                                                }
+                                                                @* <div class="fas fa-star star-off"></div> *@
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1993,75 +2000,6 @@
         })
     }
 
-    // function showModalReview() {
-    //     $('.modal-review').modal('show');
-    // }
-
-    // if ($('.body-content').offset().top <= 50 + $(window).scrollTop()) {
-    //     console.log("kitra");
-    //     $('.paid-course').addClass('show-fixed');
-    //     $('.paid-course').removeClass('show-bottom');
-    // }
-
-    // if ($('.footer').offset().top <= $(window).scrollTop() + $(window).height()) {
-    //     $('.paid-course').addClass('show-bottom');
-    //     $('.paid-course').removeClass('show-fixed');
-    // }
-
-    // $(window).on('scroll', function () {
-    //     if ($('.body-content').offset().top <= 50 + $(this).scrollTop()) {
-    //         $('.paid-course').addClass('show-fixed');
-    //         $('.paid-course').removeClass('show-bottom');
-    //     } else {
-    //         $('.paid-course').removeClass('show-fixed');
-    //     }
-
-    //     if ($('.footer').offset().top <= $(this).scrollTop() + $(window).height()) {
-    //         $('.paid-course').addClass('show-bottom');
-    //         $('.paid-course').removeClass('show-fixed');
-    //     } else {
-    //         $('.oourse').removeClass('show-bottom');
-    //     }
-    // })
-
-    //$(document).ready(function () {
-    //    function updatePaidCourseVisibility() {
-    //        // Check if body-content is within the scroll range
-    //        if ($('.body-content').length && $('.body-content').offset().top <= 50 + $(window).scrollTop()) {
-    //            $('.paid-course').addClass('show-fixed');
-    //            $('.paid-course').removeClass('show-bottom');
-    //        } else {
-    //            $('.paid-course').removeClass('show-fixed');
-    //        }
-
-    //        // Check if footer is visible within the scroll range
-    //        if ($('.footer').length && $('.footer').offset().top <= $(window).scrollTop() + $(window).height()) {
-    //            $('.paid-course').addClass('show-bottom');
-    //            $('.paid-course').removeClass('show-fixed');
-    //        } else {
-    //            $('.paid-course').removeClass('show-bottom');
-    //        }
-    //    }
-
-    //    // Trigger on scroll
-    //    $(window).on('scroll', function () {
-    //        updatePaidCourseVisibility();
-    //    });
-
-    //    // Call function initially on page load
-    //    updatePaidCourseVisibility();
-    //});
-
-    //var $stickyScroll = $('[data-trigger="stickyScroll"]');
-
-    //if ($stickyScroll.length) {
-    //    $stickyScroll.slideScroll({
-    //        additionalMarginTop: $headerNavbar.length ? $headerNavbar.outerHeight() + 40 : 40
-    //    });
-    //}
-
-    //var ajaxRv = false;
-    //var type_review = 'all';
 
     function viewMoreReview(star, el) {
 
@@ -2274,4 +2212,47 @@
     if (searchParams.get('popup_try') == '1' && $('#buttonVideoTry').length > 0) {
         $('#buttonVideoTry').click();
     }
+
+    // Giá trị AverageRating từ model
+    var averageRating = @Model.ServiceDetail.AverageRating ?? 0; // Nếu không có rating thì gán giá trị 0.
+
+    // Hàm để tạo sao
+    function renderStars(rating) {
+        const starContainer = document.getElementById('star-container');
+        starContainer.innerHTML = ''; // Clear any existing stars
+
+        const fullStar = '<i class="fas star-point fa-star"></i>'; // Icon cho ngôi sao đầy
+        const halfStar = '<i class="fas star-point fa-star-half-alt"></i>'; // Icon cho nửa sao
+        const emptyStar = '<i class="far star-point fa-star"></i>'; // Icon cho ngôi sao trống
+
+        // Tính số sao đầy
+        let fullStars = Math.floor(rating);
+        // Tính nửa sao
+        let halfStarValue = rating - fullStars >= 0.5 ? 1 : 0;
+        // Số sao trống còn lại
+        let emptyStars = 5 - fullStars - halfStarValue;
+
+        // Hiển thị sao đầy
+        for (let i = 0; i < fullStars; i++) {
+            starContainer.innerHTML += fullStar;
+        }
+
+        // Hiển thị nửa sao nếu có
+        if (halfStarValue) {
+            starContainer.innerHTML += halfStar;
+        }
+
+        // Hiển thị sao trống
+        for (let i = 0; i < emptyStars; i++) {
+            starContainer.innerHTML += emptyStar;
+        }
+    }
+
+    // Gọi hàm renderStars với giá trị AverageRating
+    renderStars(averageRating);
+
 </script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -13,11 +13,15 @@ using PRN221_Models.DTO;
 using PRN221_Models.Models;
 using PRN221_Repository.AccountRepo;
 using PRN221_Repository.BookingRepo;
+using PRN221_Repository.CommentRepo;
+using PRN221_Repository.LikePostRepo;
 using PRN221_Repository.NewsRepo;
 using PRN221_Repository.PostImageRepo;
 using PRN221_Repository.PostsRepo;
+using PRN221_Repository.RateRepo;
 using PRN221_Repository.RoleRepo;
 using PRN221_Repository.ServiceRepo;
+using PRN221_Repository.SharePostRepo;
 using PRN221_Repository.ViewRepo;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -130,6 +134,10 @@ builder.Services.AddScoped<IBookingService, PRN221_BusinessLogic.Service.Booking
 builder.Services.AddScoped<IBookingRepository, BookingRepository>();
 builder.Services.AddScoped<BookingDAO>();
 
+builder.Services.AddScoped<IRateService, RateService>();
+builder.Services.AddScoped<IRateRepository, RateRepository>();
+builder.Services.AddScoped<RateDAO>();
+
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<FirebaseConfig>();
 
@@ -143,6 +151,18 @@ builder.Services.AddScoped<PostDTO>();
 
 builder.Services.AddScoped<IPostImageRepository, PostImageRepository>();
 builder.Services.AddScoped<PostImageDAO>();
+
+builder.Services.AddScoped<ILikePostRepository, LikePostRepository>();
+builder.Services.AddScoped<LikePostRepository>();
+builder.Services.AddScoped<LikePostDAO>();
+
+builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+builder.Services.AddScoped<CommentRepository>();
+builder.Services.AddScoped<CommentPostDAO>();
+
+builder.Services.AddScoped<ISharePostRepository, SharePostRepository>();
+builder.Services.AddScoped<SharePostRepository>();
+builder.Services.AddScoped<SharePostDAO>();
 
 builder.Services.AddScoped<IViewService, ViewService>();
 builder.Services.AddScoped<IViewRepository, ViewRepository>();

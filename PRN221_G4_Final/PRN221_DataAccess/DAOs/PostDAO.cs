@@ -22,6 +22,7 @@ namespace PRN221_DataAccess.DAOs
         {
             return await _context.Posts.FirstOrDefaultAsync(p => p.PostId == postId);
         }
+
         public async Task<Account?> FarmerWithMostPosts()
         {
             var currentYear = DateTime.Now.Year;
@@ -128,6 +129,13 @@ namespace PRN221_DataAccess.DAOs
             return null; // Trả về null nếu không tìm thấy
         }
 
+
+
+
+        public async Task<IEnumerable<Post>> GetAllPostByAccountId(int id)
+        {
+            return await _context.Posts.Where(p => p.AccountId == id).ToListAsync();
+        }
 
     }
 }
