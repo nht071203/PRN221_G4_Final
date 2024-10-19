@@ -1,5 +1,6 @@
 ﻿using PRN221_BusinessLogic.Interface;
 using PRN221_Models.DTO;
+using PRN221_Models.Models;
 using PRN221_Repository.AccountRepo;
 using PRN221_Repository.PostImageRepo;
 using PRN221_Repository.PostsRepo;
@@ -22,6 +23,16 @@ namespace PRN221_BusinessLogic.Service
             _postRepository = postRepository;
             _postImageRepository = postImageRepository;
             _accountRepository = accountRepository;
+        }
+
+        public async Task<Account?> ExpertWithMostPosts()
+        {
+            return await _postRepository.ExpertWithMostPosts();
+        }
+
+        public async Task<Account?> FarmerWithMostPosts()
+        {
+            return await _postRepository.FarmerWithMostPosts();
         }
 
         public async Task<List<PostDTO>> GetListPostAndImage()

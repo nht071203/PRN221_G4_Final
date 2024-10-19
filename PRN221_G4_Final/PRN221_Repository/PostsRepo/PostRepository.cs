@@ -16,6 +16,16 @@ namespace PRN221_Repository.PostsRepo
             _postDAO = postDAO;
         }
 
+        public async Task<Account> ExpertWithMostPosts()
+        {
+            return await _postDAO.ExpertWithMostPosts();
+        }
+
+        public async Task<Account> FarmerWithMostPosts()
+        {
+            return await _postDAO.FarmerWithMostPosts();    
+        }
+
         public async Task<IEnumerable<Post>> GetAll()
         {
             return await _postDAO.GetAll();

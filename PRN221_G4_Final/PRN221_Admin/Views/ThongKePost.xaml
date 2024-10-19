@@ -1,6 +1,4 @@
-﻿
-
-<Page x:Class="PRN221_Admin.ThongKePost"
+﻿<Page x:Class="PRN221_Admin.ThongKePost"
            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -10,13 +8,14 @@
         xmlns:local="clr-namespace:PRN221_Admin"
            xmlns:oxy="http://oxyplot.org/wpf"
         mc:Ignorable="d"
-        Title="ThongKePost" d:DesignHeight="850" d:DesignWidth="1100">
+        Title="ThongKePost"   Width="800" Height="600" MaxHeight="600">
     <Grid>
         <Grid.ColumnDefinitions>
 
-            <ColumnDefinition Width="0*" />
-            <ColumnDefinition Width="783*"/>
-            <ColumnDefinition Width="317*" />
+            <ColumnDefinition Width="503*"/>
+
+            <ColumnDefinition Width="223*" />
+
 
         </Grid.ColumnDefinitions>
 
@@ -28,10 +27,10 @@
                 <Setter Property="Height" Value="30"></Setter>
             </Style>
         </Grid.Resources>
-        
-    
 
-        <Grid x:Name="MainGrid" Background="White" Margin="35,0,0,0" Grid.ColumnSpan="2">
+
+
+        <Grid x:Name="MainGrid" Background="White" Margin="0,0,0,0" Grid.ColumnSpan="1">
 
 
             <StackPanel Margin="10">
@@ -47,7 +46,7 @@
                 </ComboBox>-->
 
                 <WrapPanel HorizontalAlignment="Center">
-                    <Border BorderBrush="White" BorderThickness="5" Margin="20 0" CornerRadius="15" RenderTransformOrigin="0.5,0.5">
+                    <Border BorderBrush="White" BorderThickness="5" Margin="0 0" CornerRadius="15" RenderTransformOrigin="0.5,0.5">
                         <Border.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -57,18 +56,17 @@
                             </TransformGroup>
                         </Border.RenderTransform>
                         <materialDesign:Card UniformCornerRadius="15" BorderThickness="5"
-                         BorderBrush="White" Width="110" Height="130" Background="#F6F6F8">
+                         BorderBrush="White" Width="95" Height="109" Background="#F6F6F8">
                             <StackPanel Margin="10">
                                 <materialDesign:PackIcon Kind="AccountCowboyHat" Foreground="#29A3EC" />
                                 <TextBlock FontWeight="SemiBold" FontSize="25" Text="{Binding TotalFarmerCount}" Height="31" Width="40" />
                                 <TextBlock FontSize="15" Text="Farmers" />
-                                <materialDesign:PackIcon Kind="EllipsisHorizontal" HorizontalAlignment="Right" />
                             </StackPanel>
                         </materialDesign:Card>
                     </Border>
-                    <Border BorderBrush="White" BorderThickness="5" Margin="20 0" CornerRadius="15">
+                    <Border BorderBrush="White" BorderThickness="5" Margin="0 0" CornerRadius="15">
                         <materialDesign:Card UniformCornerRadius="15" BorderThickness="5"
-                         BorderBrush="White" Width="110" Height="130" Background="#F6F6F8">
+                         BorderBrush="White" Width="86" Height="109" Background="#F6F6F8">
                             <StackPanel Margin="10">
                                 <materialDesign:PackIcon Kind="AccountSchoolOutline">
                                     <materialDesign:PackIcon.Foreground>
@@ -80,47 +78,86 @@
                                 </materialDesign:PackIcon>
                                 <TextBlock FontWeight="SemiBold" FontSize="25" Text="{Binding TotalExpertCount}" Height="30" Width="42" />
                                 <TextBlock FontSize="15" Text="Experts" />
-                                <materialDesign:PackIcon Kind="EllipsisHorizontal" HorizontalAlignment="Right" />
                             </StackPanel>
                         </materialDesign:Card>
                     </Border>
-                    <Border BorderBrush="White" BorderThickness="5" Margin="20 0" CornerRadius="15">
+                    <Border BorderBrush="White" BorderThickness="5" Margin="0 0" CornerRadius="15">
                         <materialDesign:Card UniformCornerRadius="15" BorderThickness="5"
-                         BorderBrush="White" Width="110" Height="130" Background="#F6F6F8">
+                         BorderBrush="White" Width="92" Height="109" Background="#F6F6F8">
                             <StackPanel Margin="10">
                                 <materialDesign:PackIcon Kind="NewspaperCheck" Foreground="Red" />
                                 <TextBlock FontWeight="SemiBold" FontSize="25" Text="{Binding TotalNewsCount}" Height="30" Width="32" />
                                 <TextBlock FontSize="15" Text="News" />
-                                <materialDesign:PackIcon Kind="EllipsisHorizontal" HorizontalAlignment="Right" />
                             </StackPanel>
                         </materialDesign:Card>
                     </Border>
-                    <Border BorderBrush="White" BorderThickness="5" Margin="20 0" CornerRadius="15">
+                    <Border BorderBrush="White" BorderThickness="5" Margin="0 0" CornerRadius="15">
                         <materialDesign:Card UniformCornerRadius="15" BorderThickness="5"
-                         BorderBrush="White" Width="110" Height="130" Background="#F6F6F8">
+                         BorderBrush="White" Width="88" Height="109" Background="#F6F6F8">
                             <StackPanel Margin="10">
                                 <materialDesign:PackIcon Kind="FaceAgent" Foreground="#29A3EC" />
                                 <TextBlock FontWeight="SemiBold" FontSize="25" Text="{Binding TotalServiceCount}" Height="31" Width="36" />
                                 <TextBlock FontSize="15" Text="Services" />
-                                <materialDesign:PackIcon Kind="EllipsisHorizontal" HorizontalAlignment="Right" />
                             </StackPanel>
                         </materialDesign:Card>
                     </Border>
                 </WrapPanel>
 
-                <WrapPanel HorizontalAlignment="Center" Width="659" Height="295">
-                    <materialDesign:Card UniformCornerRadius="20" Height="295" Width="662">
+                <WrapPanel HorizontalAlignment="Center" Width="492" Height="250">
+                    <materialDesign:Card UniformCornerRadius="20" Height="250" Width="492">
                         <StackPanel>
-                            <oxy:PlotView x:Name="plotView" Model="{Binding PlotModel}" Margin="0,0,0,0" Height="295" />
+                            <oxy:PlotView x:Name="plotView" Model="{Binding PlotModel}" Margin="0,0,0,0" Height="249" />
                         </StackPanel>
                     </materialDesign:Card>
                 </WrapPanel>
-                <WrapPanel HorizontalAlignment="Center" Width="659" Height="245">
-                    <materialDesign:Card Margin="10" UniformCornerRadius="20" Padding="10">
+
+
+                <!--<WrapPanel Margin="10,0">
+                    <materialDesign:PackIcon Kind="CalendarMonth" Margin="10,5,0,0" HorizontalAlignment="Right" />
+                    <TextBlock Text="Monthly Ranking" Margin="0,0" Padding="10,10,10,0" FontWeight="Bold" Foreground="Red" FontSize="18" />
+                </WrapPanel>-->
+
+                <WrapPanel Margin="0,10,5,0" HorizontalAlignment="Center" Width="499" Height="215">
+
+
+                    <WrapPanel Margin="35,0" Orientation="Vertical">
+                        <materialDesign:PackIcon Kind="CalendarMonth" Margin="20,5,0,0" />
+                        <TextBlock Text="Monthly" FontWeight="Bold" Foreground="Red" FontSize="18" />
+                        <TextBlock Text="Ranking" FontWeight="Bold" Foreground="Red" FontSize="18" />
+                    </WrapPanel>
+                    <materialDesign:Card  UniformCornerRadius="20" Background="#FF29B44A" Width="146" Height="154">
                         <StackPanel>
-                            <TextBlock Text="What" Margin="10 20" FontWeight="SemiBold" />
-                            <Grid Height="150">
-                                <Grid.ColumnDefinitions>
+                            <WrapPanel>
+                                <materialDesign:PackIcon Kind="Stars" Foreground="#FFC83D" VerticalAlignment="Center" Width="35" />
+                                <TextBlock Text="Best Farmer" FontSize="16" Foreground="White" TextAlignment="Center" FontWeight="Bold" FontStyle="Italic" TextDecorations="Underline" Height="20" />
+                            </WrapPanel>
+
+
+                            <TextBlock Text="{Binding TopFarmer.FullName}" TextAlignment="Center" Margin="0 5" Foreground="White" FontSize="20" Height="19" />
+
+                            <Image Margin="0,0,0,0" Height="91" Width="123">
+                                <Image.Style>
+                                    <Style TargetType="{x:Type Image}">
+                                        <Setter Property="Source" Value="{Binding TopFarmer.Avatar}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding TopFarmer.FullName}" Value="{x:Null}">
+                                                <Setter Property="Source" Value="/logo.jpg" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+
+                        </StackPanel>
+                    </materialDesign:Card>
+
+
+                    <!--<materialDesign:PackIcon Kind="CalendarMonth" Margin="10,5,0,0" HorizontalAlignment="Right" />
+                        <TextBlock Text="Monthly Ranking" Margin="0,0" Padding="10,10,10,0" FontWeight="Bold" Foreground="Red" FontSize="18" />-->
+
+                    <!--<TextBlock Text="What" Margin="90 20" FontWeight="SemiBold" />-->
+                    <!--<Grid Height="150">-->
+                    <!--<Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
@@ -129,12 +166,12 @@
                                     <RowDefinition />
                                     <RowDefinition />
                                     <RowDefinition />
-                                </Grid.RowDefinitions>
-                                <TextBlock Text="What" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="13" FontWeight="SemiBold" />
+                                </Grid.RowDefinitions>-->
+                    <!--<TextBlock Text="What" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="13" FontWeight="SemiBold" />
                                 <TextBlock Text="What" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="13" FontWeight="SemiBold" />
                                 <TextBlock Text="What" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="13" FontWeight="SemiBold" />
-                                <TextBlock Text="What" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="13" FontWeight="SemiBold" />
-                                <StackPanel Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+                                <TextBlock Text="What" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="13" FontWeight="SemiBold" />-->
+                    <!--<StackPanel Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
                                     <ProgressBar Margin="5 0" Width="100" Height="8" Foreground="#FFFFFF13" Background="#FFE8E8E8" BorderBrush="#FFF3F349" Value="78" />
                                     <TextBlock Text="12K" FontWeight="SemiBold" />
                                 </StackPanel>
@@ -149,38 +186,34 @@
                                 <StackPanel Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
                                     <ProgressBar Margin="5 0" Width="100" Height="8" Foreground="SeaGreen" Background="#FFE8E8E8" BorderBrush="SeaGreen" Value="78" />
                                     <TextBlock Text="12K" FontWeight="SemiBold" />
-                                </StackPanel>
-                            </Grid>
-                        </StackPanel>
-                    </materialDesign:Card>
-                    <materialDesign:Card Margin="10" UniformCornerRadius="20" Background="#FF29B44A">
-                        <StackPanel Margin="10">
-                            <TextBlock Text="Best Farmer" FontSize="14" Foreground="White" TextAlignment="Center" />
-                            <TextBlock Text="Vũ Minh Uyên" TextAlignment="Center" Margin="0 5" Foreground="White" FontSize="18" />
-                            <lvc:CartesianChart Margin="0 5" Series="{Binding LastHourSeries}" Hoverable="False" DataTooltip="{x:Null}" Height="113" Width="160">
-                                <lvc:CartesianChart.AxisX>
-                                    <lvc:Axis MinValue="0" />
-                                </lvc:CartesianChart.AxisX>
-                            </lvc:CartesianChart>
-                            <materialDesign:PackIcon Kind="ArrowUp" HorizontalAlignment="Center" Margin="0 5" Width="20" Height="20" Foreground="#62A78B" />
-                        </StackPanel>
-                    </materialDesign:Card>
-                    <materialDesign:Card Margin="10" UniformCornerRadius="20" Background="#FF43AE45">
-                        <StackPanel Margin="10">
-                            <TextBlock Text="Best Expert" FontSize="14" Foreground="White" TextAlignment="Center" />
-                            <TextBlock Text="Vũ Minh Uyên" TextAlignment="Center" Margin="0 5" Foreground="White" FontSize="18" />
-                            <lvc:CartesianChart Series="{Binding LastHourSeries1}" Hoverable="False" DataTooltip="{x:Null}" Height="124" Width="160">
-                                <lvc:CartesianChart.AxisX>
-                                    <lvc:Axis MinValue="0" />
-                                </lvc:CartesianChart.AxisX>
-                            </lvc:CartesianChart>
-                            <materialDesign:PackIcon Kind="ArrowUp" HorizontalAlignment="Center" Margin="0 5" Width="20" Height="20" Foreground="#62A78B" />
+                                </StackPanel>-->
+                    <!--</Grid>-->
+                    <materialDesign:Card Margin="10,0" UniformCornerRadius="20" Background="#FF43AE45" Width="140" Height="155">
+
+                        <StackPanel>
+                            <WrapPanel>
+                                <materialDesign:PackIcon Kind="Stars" Foreground="#FFC83D" VerticalAlignment="Center" HorizontalAlignment="Center" Width="29" />
+                                <TextBlock Text="Best Expert" FontSize="16" Foreground="White" TextAlignment="Center" FontWeight="Bold" FontStyle="Italic" TextDecorations="Underline" Height="20" />
+                            </WrapPanel>
+                            <TextBlock Text="{Binding TopExpert.FullName}" TextAlignment="Center" Margin="0 5" Foreground="White" FontSize="20" Height="19" />
+                            <Image Margin="0,0,0,0" Height="92" Width="135">
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Setter Property="Source" Value="{Binding TopExpert.Avatar}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding TopExpert.FullName}" Value="{x:Null}">
+                                                <Setter Property="Source" Value="/logo.jpg" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
                         </StackPanel>
                     </materialDesign:Card>
                 </WrapPanel>
             </StackPanel>
         </Grid>
-        <StackPanel Background="White" Margin="0,0,-2,0" RenderTransformOrigin="0.5,0.5" Grid.Column="2">
+        <StackPanel Background="White" Margin="0,0,-2,0" RenderTransformOrigin="0.5,0.5" Grid.Column="3" Grid.ColumnSpan="2">
             <StackPanel.RenderTransform>
                 <TransformGroup>
 
@@ -211,13 +244,13 @@
                   Margin="10,0,0,0" 
                   Checked="ThemeToggleButton_Checked" 
                   Unchecked="ThemeToggleButton_Unchecked">
-                    <materialDesign:PackIcon Kind="Lightbulb" Width="24" Height="24" />
+                    <materialDesign:PackIcon Kind="BrightnessMedium" Width="24" Height="24" />
                 </ToggleButton>
             </WrapPanel>
             <Border Margin="40 10" CornerRadius="20" Background="#FFFFEEFA">
-                <Image  Stretch="Uniform" x:Name="ImgCartoon" Height="150" />
+                <Image  Stretch="Uniform" x:Name="ImgCartoon" Height="89" />
             </Border>
-            <Calendar>
+            <Calendar Height="151" Width="170">
                 <Calendar.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FFE4EAF0"/>
@@ -227,19 +260,19 @@
                     </LinearGradientBrush>
                 </Calendar.Background>
             </Calendar>
-            
-            
-            
-            
-            <WrapPanel Margin="20,10,0,0">
+
+
+
+
+            <WrapPanel Margin="20,0,0,0">
                 <materialDesign:PackIcon Kind="Clock" Width="34" Height="38" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                <Label  Content="123" x:Name="lblTime" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FF000FFF" FontWeight="Bold" FontStyle="Italic" FontSize="36" />
+                <Label  Content="12:21:12" x:Name="lblTime" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FF000FFF" FontWeight="Bold" FontStyle="Italic" FontSize="36" />
             </WrapPanel>
 
 
 
 
-            <materialDesign:Card Margin="20 10" Padding="5" UniformCornerRadius="20" HorizontalAlignment="Center">
+            <materialDesign:Card Margin="20 10" Padding="5" UniformCornerRadius="20" HorizontalAlignment="Center" Height="56" Width="210">
                 <WrapPanel Margin="10">
                     <materialDesign:PackIcon Kind="HandPeace" Foreground="#FFC83D" VerticalAlignment="Center" Margin="10 0" />
                     <TextBlock Margin="10 0" VerticalAlignment="Center">
@@ -251,7 +284,15 @@
                     <Image Width="40" Height="40" Margin="10 0" x:Name="avatar1" />
                 </WrapPanel>
             </materialDesign:Card>
-            <materialDesign:Card Margin="20 10" Padding="5" UniformCornerRadius="20" HorizontalAlignment="Center">
+            <materialDesign:Card Margin="20 10" Padding="5" UniformCornerRadius="20" HorizontalAlignment="Center" Height="57" Width="210" RenderTransformOrigin="0.5,0.5">
+                <materialDesign:Card.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform AngleX="-1.58"/>
+                        <RotateTransform/>
+                        <TranslateTransform X="-1.172"/>
+                    </TransformGroup>
+                </materialDesign:Card.RenderTransform>
                 <WrapPanel Margin="10">
                     <materialDesign:PackIcon Kind="HandPeace" Foreground="#FFC83D" VerticalAlignment="Center" Margin="10 0" />
                     <TextBlock Margin="10 0" VerticalAlignment="Center">

@@ -11,5 +11,9 @@ namespace PRN221_Repository.PostsRepo
     {
         Task<IEnumerable<Post>> GetAll();
         Task<Post?> GetById(int postId);
+
+        Task<Account> FarmerWithMostPosts();
+
+        Task<Account> ExpertWithMostPosts();
     }
 }

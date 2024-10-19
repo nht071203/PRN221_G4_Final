@@ -1,10 +1,13 @@
 ﻿using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
+using PRN221_BusinessLogic.Interface;
 using PRN221_DataAccess.DAOs;
+using PRN221_Models.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,6 +48,31 @@ namespace PRN221_Admin.ViewModels
             TotalFarmerCount = await AccountDAO.Instance.GetTotalFarmerCountAsync();
             TotalExpertCount = await AccountDAO.Instance.GetTotaExpertCountAsync();
             TotalServiceCount = await ServiceDAO.Instance.GetTotalServicesCount();
+
+            var topFarmer = await PostDAO.Instance.FarmerWithMostPosts();
+
+
+            if (topFarmer != null)
+            {
+                TopFarmer = topFarmer;
+            }
+            else
+            {
+                TopFarmer = new Account();
+            }
+
+            var topExpert = await PostDAO.Instance.ExpertWithMostPosts();
+            if (topExpert != null)
+            {
+                TopExpert = topExpert;
+            }
+            else
+            {
+                TopExpert = new Account();
+            }
+
+
+
 
             var lineSeries = new LineSeries
             {
@@ -119,6 +147,26 @@ namespace PRN221_Admin.ViewModels
             }
         }
 
+        private Account _topFarmer;
+        public Account TopFarmer
+        {
+            get => _topFarmer;
+            set
+            {
+                _topFarmer = value;
+                OnPropertyChanged(nameof(TopFarmer));
+            }
+        }
+        private Account _topExpert;
+        public Account TopExpert
+        {
+            get => _topExpert;
+            set
+            {
+                _topExpert = value;
+                OnPropertyChanged(nameof(TopExpert));
+            }
+        }
 
 
     }
