@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Identity.Client;
 using PRN221_BusinessLogic.Interface;
 using PRN221_BusinessLogic.Service;
 using PRN221_Models.DTO;
 using PRN221_Models.Models;
+using System.Security.Claims;
 
 namespace PRN221_Client.Pages.Posts
 {
@@ -20,7 +22,8 @@ namespace PRN221_Client.Pages.Posts
         public int View {  get; set; }
         public IEnumerable<Comment> ListComment { get; set; }
         public Dictionary<int, Account> CommentAccounts { get; set; } = new Dictionary<int, Account>();
-
+        public bool IsLikedByUser { get; set; } // Cờ kiểm tra đã like hay chưa
+        public int AccountLogin { get; set; }
         public PostDetailModel(IPostService postService, IViewService viewService, IAccountService accountService)
         {
             _postService = postService;
@@ -32,7 +35,9 @@ namespace PRN221_Client.Pages.Posts
         {
             PostId = postId;
             PostDTO = await _postService.GetPostAndImage(PostId);
-            CountLikePost = PostDTO.likePosts.Count();
+            CountLikePost = PostDTO.likePosts.Count(lp => lp.UnLike == 0);
+            AccountLogin = GetLoggedInUserId();
+            IsLikedByUser = await _postService.IsPostLikedByUser(PostId, AccountLogin);
             CountSharePost = PostDTO.sharePosts.Count();
             CountCommentPost = PostDTO.comments.Count();
             ListComment = PostDTO.comments.ToList();
@@ -46,6 +51,32 @@ namespace PRN221_Client.Pages.Posts
                 }
             }
             View = await _viewService.GetViewByPostId(PostId);
+        }
+
+        public async Task<IActionResult> OnPostLikeAsync(int postId)
+        {
+            AccountLogin = GetLoggedInUserId();
+            if (AccountLogin != -1)
+            {
+                await _postService.LikePost(postId, AccountLogin);
+            }
+            return RedirectToPage(new { postId });
+        }
+
+        public async Task<IActionResult> OnPostUnlikeAsync(int postId)
+        {
+            AccountLogin = GetLoggedInUserId();
+            if (AccountLogin != -1)
+            {
+                await _postService.UnlikePost(postId, AccountLogin);
+            }
+            return RedirectToPage(new { postId });
+        }
+
+
+        private int GetLoggedInUserId()
+        {
+            return HttpContext.Session.GetInt32("AccountID") ?? -1;
         }
     }
 }

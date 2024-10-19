@@ -21,6 +21,8 @@ namespace PRN221_Repository.PostsRepo
             return await _postDAO.GetAll();
         }
 
+        public async Task<IEnumerable<Post>> GetAllPostByAccountId(int id) => await _postDAO.GetAllPostByAccountId(id);
+
         public async Task<Post?> GetById(int postId)
         {
             return await _postDAO.GetById(postId);

@@ -1,5 +1,6 @@
 ﻿using PRN221_BusinessLogic.Interface;
 using PRN221_Models.DTO;
+using PRN221_Models.Models;
 using PRN221_Repository.AccountRepo;
 using PRN221_Repository.CommentRepo;
 using PRN221_Repository.LikePostRepo;
@@ -31,6 +32,48 @@ namespace PRN221_BusinessLogic.Service
             _likePostRepository = likePostRepository;
             _commentRepository = commentRepository;
             _sharePostRepository = sharePostRepository;
+        }
+
+        public async Task<List<PostDTO>> GetAllPostByAccountId(int id)
+        {
+            var response = new List<PostDTO>();
+            var listPost = await _postRepository.GetAllPostByAccountId(id);
+
+            foreach (var item in listPost)
+            {
+                var listImageByPost = await _postImageRepository.GetAllByPostId(item.PostId);
+                var account = await _accountRepository.GetAccountById((int)item.AccountId);
+                var likePost = await _likePostRepository.GetAllLikePostByPostId(item.PostId);
+                var comment = await _commentRepository.GetAllCommentPostByPostId(item.PostId);
+                var sharePost = await _sharePostRepository.GetAllSharePostByPostId(item.PostId);
+
+                var postItemDto = new PostDTO(item, listImageByPost, account, likePost, comment, sharePost);
+
+                response.Add(postItemDto);
+            }
+
+            return response;
+        }
+
+        public async Task<List<PostDTO>> GetAllPostImagesByAccountId(int id)
+        {
+            var accountPost = new List<PostDTO>();
+            //var listImagePost = await _postRepository.GetAllPostByAccountId(id);
+
+            //foreach (var item in listImagePost)
+            //{
+            //    var listImageByPost = await _postImageRepository.GetAllByPostId(item.PostId);
+            //    var account = await _accountRepository.GetAccountById((int)item.AccountId);
+            //    var likePost = await _likePostRepository.GetAllLikePostByPostId(item.PostId);
+            //    var comment = await _commentRepository.GetAllCommentPostByPostId(item.PostId);
+            //    var sharePost = await _sharePostRepository.GetAllSharePostByPostId(item.PostId);
+
+            //    var postItemDto = new PostDTO(item, listImageByPost, account, likePost, comment, sharePost);
+
+            //    accountPost.Add(postItemDto);
+            //}
+
+            return accountPost;
         }
 
         public async Task<List<PostDTO>> GetListPostAndImage()
@@ -70,5 +113,11 @@ namespace PRN221_BusinessLogic.Service
 
             return response;
         }
+
+        public async Task<bool> IsPostLikedByUser(int postId, int accountId) => await _likePostRepository.IsPostLikedByUser(postId, accountId);
+
+        public async Task<bool> LikePost(int postId, int accountId) => await _likePostRepository.LikePost(postId, accountId);
+
+        public async Task<bool> UnlikePost(int postId, int accountId) => await _likePostRepository.UnlikePost(postId, accountId);
     }
 }
