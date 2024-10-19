@@ -14,6 +14,7 @@ using PRN221_Models.Models;
 using PRN221_Repository.AccountRepo;
 using PRN221_Repository.BookingRepo;
 using PRN221_Repository.CommentRepo;
+using PRN221_Repository.FollowRepo;
 using PRN221_Repository.LikePostRepo;
 using PRN221_Repository.NewsRepo;
 using PRN221_Repository.PostImageRepo;
@@ -167,6 +168,12 @@ builder.Services.AddScoped<SharePostDAO>();
 builder.Services.AddScoped<IViewService, ViewService>();
 builder.Services.AddScoped<IViewRepository, ViewRepository>();
 builder.Services.AddScoped<ViewDAO>();
+
+builder.Services.AddScoped<IFollowService, FollowService>();
+builder.Services.AddScoped<IFollowRepository, FollowRepository>();
+builder.Services.AddScoped<FollowService>();
+builder.Services.AddScoped<FollowRepository>();
+builder.Services.AddScoped<FollowDAO>();
 
 builder.Services.AddSession();
 builder.Services.AddDistributedMemoryCache(); // For storing session data in memory

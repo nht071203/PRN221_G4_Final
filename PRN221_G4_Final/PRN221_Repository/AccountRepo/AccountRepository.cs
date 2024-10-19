@@ -59,5 +59,6 @@ namespace PRN221_Repository.AccountRepo
             return await _accountDAO.GetAccountByEmailForReset(email);
         }
 
+        public async Task<List<Account>> GetAccountsByIds(List<int> ids) => await _accountDAO.GetAccountsByIds(ids);
     }
 }

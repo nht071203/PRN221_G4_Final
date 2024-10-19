@@ -25,6 +25,6 @@ namespace PRN221_Repository.AccountRepo
         Task<Account?> GetAccountByEmailForReset(string email);
         Task<string?> GetFullnameByUsername(string username);
         Task<Account?> GetAccountById(int? accountId);
-
+        Task<List<Account>> GetAccountsByIds(List<int> ids);
     }
 }
