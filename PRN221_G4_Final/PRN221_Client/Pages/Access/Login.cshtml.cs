@@ -204,12 +204,6 @@ namespace PRN221_Client.Pages.Access
                 avatar = $"https://graph.facebook.com/{fbId}/picture?type=large";
             }
 
-            //var claims = new List<Claim>
-            //{
-            //    new Claim(ClaimTypes.Name, account.Username),
-            //    new Claim(ClaimTypes.Email, email)
-            //};
-
             var claims2 = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, name),

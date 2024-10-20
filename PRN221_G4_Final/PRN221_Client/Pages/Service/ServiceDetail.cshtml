@@ -712,6 +712,13 @@
                                                     <input type="radio" asp-for="RatingPoint" value="1" id="1"><label for="1">☆</label>
                                                 </div>
 
+                                                <div class="text-danger no-rating" style="margin-top:27px">
+                                                    @if (TempData["NoRating"] != null)
+                                                    {
+                                                        <span>@TempData["NoRating"]</span>
+                                                    }
+                                                </div>
+
                                                 <div class="comment-area">
 
                                                     <textarea class="form-control" asp-for="CommentService" placeholder="Ý kiến của bạn" rows="4"></textarea>
