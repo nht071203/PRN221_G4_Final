@@ -86,6 +86,7 @@ namespace PRN221_BusinessLogic.Service
             return await _postRepository.FarmerWithMostPosts();
         }
 
+        //Lấy toàn bộ post bao gồm đã bị xóa
         public async Task<List<PostDTO>> GetListPostAndImage()
         {
             var response = new List<PostDTO>();
@@ -129,5 +130,47 @@ namespace PRN221_BusinessLogic.Service
         public async Task<bool> LikePost(int postId, int accountId) => await _likePostRepository.LikePost(postId, accountId);
 
         public async Task<bool> UnlikePost(int postId, int accountId) => await _likePostRepository.UnlikePost(postId, accountId);
+
+        public async Task<Post> AddPost(int categoryId, int accountId, string content)
+        {
+            DateTime currentUtcDateTime = DateTime.UtcNow;
+
+            var post = new Post
+            {
+                CategoryPostId = categoryId,
+                AccountId = accountId,
+                PostContent = content,
+                CreatedAt = currentUtcDateTime,
+                IsDeleted = false
+            };
+
+            return await _postRepository.AddPost(post);
+
+        }
+
+        //Lấy list post không bị xóa
+        public async Task<List<PostDTO>> GetListPostAvailable()
+        {
+            var response = new List<PostDTO>();
+            var listPost = await _postRepository.GetAll();
+
+            foreach (var item in listPost)
+            {
+                var listImageByPost = await _postImageRepository.GetAllByPostId(item.PostId);
+                var account = await _accountRepository.GetAccountById((int)item.AccountId);
+                var likePost = await _likePostRepository.GetAllLikePostByPostId(item.PostId);
+                var comment = await _commentRepository.GetAllCommentPostByPostId(item.PostId);
+                var sharePost = await _sharePostRepository.GetAllSharePostByPostId(item.PostId);
+
+                var postItemDto = new PostDTO(item, listImageByPost, account, likePost, comment, sharePost);
+
+                if(item.IsDeleted == false)
+                {
+                    response.Add(postItemDto);
+                }
+            }
+
+            return response;
+        }
     }
 }

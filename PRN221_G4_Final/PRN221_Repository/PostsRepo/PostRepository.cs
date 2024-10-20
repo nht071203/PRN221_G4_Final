@@ -16,6 +16,11 @@ namespace PRN221_Repository.PostsRepo
             _postDAO = postDAO;
         }
 
+        public async Task<Post> AddPost(Post post)
+        {
+            return await _postDAO.Add(post);
+        }
+
         public async Task<Account> ExpertWithMostPosts()
         {
             return await _postDAO.ExpertWithMostPosts();

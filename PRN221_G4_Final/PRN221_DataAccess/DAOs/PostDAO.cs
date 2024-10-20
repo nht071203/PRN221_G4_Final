@@ -23,6 +23,13 @@ namespace PRN221_DataAccess.DAOs
             return await _context.Posts.FirstOrDefaultAsync(p => p.PostId == postId);
         }
 
+        public async Task<Post?> Add(Post post)
+        {
+            _context.Posts.Add(post);
+            await _context.SaveChangesAsync();
+            return post;
+        }
+
         public async Task<Account?> FarmerWithMostPosts()
         {
             var currentYear = DateTime.Now.Year;
@@ -30,8 +37,9 @@ namespace PRN221_DataAccess.DAOs
 
             var farmerWithMostPosts = await _context.Posts
                 .Where(p => p.IsDeleted == false &&
-                             p.CreatedAt.Year == currentYear &&
-                             p.CreatedAt.Month == currentMonth) // Chỉ lấy các bài viết không bị xóa và thuộc tháng/năm hiện tại
+                            p.CreatedAt.HasValue &&
+                             p.CreatedAt.Value.Year == currentYear &&
+                             p.CreatedAt.Value.Month == currentMonth) // Chỉ lấy các bài viết không bị xóa và thuộc tháng/năm hiện tại
                 .Join(_context.Accounts, // Kết hợp với bảng Accounts để lấy RoleId
                     post => post.AccountId,
                     account => account.AccountId,
@@ -84,8 +92,9 @@ namespace PRN221_DataAccess.DAOs
 
             var expertWithMostPosts = await _context.Posts
                 .Where(p => p.IsDeleted == false &&
-                             p.CreatedAt.Year == currentYear &&
-                             p.CreatedAt.Month == currentMonth) // Chỉ lấy các bài viết không bị xóa
+                            p.CreatedAt.HasValue &&
+                             p.CreatedAt.Value.Year == currentYear &&
+                             p.CreatedAt.Value.Month == currentMonth) // Chỉ lấy các bài viết không bị xóa
                 .Join(_context.Accounts, // Kết hợp với bảng Accounts để lấy RoleId
                     post => post.AccountId,
                     account => account.AccountId,

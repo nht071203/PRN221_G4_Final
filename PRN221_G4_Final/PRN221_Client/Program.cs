@@ -7,12 +7,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using PRN221_BusinessLogic.Interface;
 using PRN221_BusinessLogic.Service;
+using PRN221_Client.ViewModel;
 using PRN221_DataAccess;
 using PRN221_DataAccess.DAOs;
 using PRN221_Models.DTO;
 using PRN221_Models.Models;
 using PRN221_Repository.AccountRepo;
 using PRN221_Repository.BookingRepo;
+using PRN221_Repository.CategoryPostRepo;
 using PRN221_Repository.CommentRepo;
 using PRN221_Repository.LikePostRepo;
 using PRN221_Repository.NewsRepo;
@@ -149,6 +151,7 @@ builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<PostDAO>();
 builder.Services.AddScoped<PostDTO>();
 
+builder.Services.AddScoped<IPostImageService, PostImageService>();
 builder.Services.AddScoped<IPostImageRepository, PostImageRepository>();
 builder.Services.AddScoped<PostImageDAO>();
 
@@ -167,6 +170,12 @@ builder.Services.AddScoped<SharePostDAO>();
 builder.Services.AddScoped<IViewService, ViewService>();
 builder.Services.AddScoped<IViewRepository, ViewRepository>();
 builder.Services.AddScoped<ViewDAO>();
+
+builder.Services.AddScoped<ICategoryPostService, CategoryPostService>();
+builder.Services.AddScoped<ICategoryPostRepository, CategoryPostRepository>();
+builder.Services.AddScoped<CategoryPostDAO>();
+
+builder.Services.AddScoped<PostViewModel>();
 
 builder.Services.AddSession();
 builder.Services.AddDistributedMemoryCache(); // For storing session data in memory
