@@ -117,13 +117,10 @@
                                 <i class="fa fa-info-circle fa-fw w3-margin-right"></i> Information
                             </a>
                         }
-                        else
-                        {
-                            <a asp-page="/Profile/PersonalPage" asp-route-id="@Model.Profile.AccountId" class="w3-button w3-block w3-theme-l1 w3-left-align">
-                                <i class="fa fa-info-circle fa-fw w3-margin-right"></i> Posts
-                            </a>
-                        }
 
+                        <a asp-page="/Profile/PersonalPage" asp-route-id="@Model.Profile.AccountId" class="w3-button w3-block w3-theme-l1 w3-left-align">
+                            <i class="fa fa-pencil-alt fa-fw w3-margin-right"></i> Posts
+                        </a>
                         <a asp-page="/Profile/ListFollow" asp-route-id="@Model.Profile.AccountId" class="w3-button w3-block w3-theme-l1 w3-left-align">
                             <i class="fa fa-user-friends fa-fw w3-margin-right"></i> Friends
                         </a>
@@ -200,7 +197,7 @@
                         </div>
 
                         <div class="w3-margin-top">
-                            <button type="button" class="w3-button w3-theme-d1 w3-margin-bottom">
+                            @* <button type="button" class="w3-button w3-theme-d1 w3-margin-bottom">
                                 <i class="fa fa-thumbs-up"></i>
                                 <span>10</span> Like
                             </button>
@@ -211,7 +208,7 @@
                             <button type="button" class="w3-button w3-theme-d2 w3-margin-bottom">
                                 <i class="fa fa-comment"></i>
                                 <span>10</span> Share
-                            </button>
+                            </button> *@
 
                             <div class="activity--action fw--700 w3-margin-bottom">
                                 <a asp-page="/Posts/PostDetail" asp-route-postId="@post.post.PostId">See More...</a>

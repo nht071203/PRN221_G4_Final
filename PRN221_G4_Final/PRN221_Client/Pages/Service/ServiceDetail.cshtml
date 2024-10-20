@@ -922,14 +922,10 @@
                         </div>
 
 
-                        <div class="list_reviews">
-                            @{
-                                int count = 0;
-                            }
+                        <div class="list_reviews" id="reviewContainer">
                             @foreach (var ratingList in Model.ServiceRatingList)
                             {
                                 var getAccInList = await _accountService.GetByIdAccount(ratingList.UserId);
-                                count++;
                                 <div class="border p-3 mb-2">
                                     <div class="d-flex mb-2">
                                         <img src="../frontend/img/gitiho_v2/placehover_18x18.png"
@@ -956,8 +952,8 @@
                                                             <div class="stars-content">
                                                                 @for (int i = 1; i <= fullStars; i++)
                                                                 {
-                                                                @* <div class="fas fa-star star-on"
-                                                                     style="width: 92px"></div> *@
+                                                                    @* <div class="fas fa-star star-on"
+                                                            style="width: 92px"></div> *@
                                                                     <label class="star-cmt" title="Full star">★</label>
                                                                 }
                                                                 @for (int i = 1; i <= emptyStars; i++)
@@ -983,11 +979,16 @@
                             }
                         </div>
 
-                        @if (count >= 5)
+                        @* viewMoreReview *@
+
+                        @if (Model.ServiceRatingList.Count() < 5)
+                        {
+
+                        }
+                        else
                         {
                             <div class="m-auto btn--more-review" style="max-width: 200px">
-                                <button class="round-10 py-2 px-3 w-100 color_label btn btn-more btn-default font-weight-bold text-decoration-none justify-content-center"
-                                        onclick="viewMoreReview('same',this)" style="outline: none;box-shadow: none">
+                                <button id="loadMoreReviews" class="round-10 py-2 px-3 w-100 color_label btn btn-more btn-default font-weight-bold text-decoration-none justify-content-center">
                                     Xem thêm <i class="fal fa-angle-down"></i>
                                 </button>
                             </div>
@@ -1308,54 +1309,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        @* <div class="p-3" style="border-top: 1px solid rgba(193, 209, 231, 0.47)">
-                        <p class="fw-700 color_label mb-1">Tư vấn dịch vụ</p>
-                        <p class="mb-3 color_label">
-                        Giải thích những thắc mắc về dịch vụ
-                        </p>
-
-                        <a href="https://business.gitiho.com/?utm_source=Gitiho&amp;utm_campaign=Button_Course_Gbiz"
-                        target="_blank" rel="noreferrer nofollow noopener">
-                        <button class="btn btn-custom-white w-100 round-4"
-                        style="border: 1px solid #333333">
-                        Tư vấn cho doanh nghiệp
-                        </button>
-                        </a>
-                        </div> *@
-
-                        @* <div class="form-code-discount p-3 d-flex flex-column"
-                        style="border-top: 1px solid rgba(193, 209, 231, 0.47)">
-                        <div class="d-flex justify-content-center pointer" onclick="openCodeDiscount(this)">
-                        <u class="mb-0 pointer fw-700" style="color:#6CB1E5!important;">
-                        Áp dụng mã giảm
-                        giá
-                        </u>
-                        </div>
-                        <div class="form-code box-voucher voucher-item my-3 border-0"
-                        style="border-radius: 6px;">
-                        <div class="d-lg-flex justify-content-between">
-                        <div class="mt-0 d-flex justify-content-between w-100 bg-white"
-                        style="border: 1px solid #90A0B7;border-radius: 6px">
-                        <div class="my-auto mx-2">
-                        <i class="far fa-badge-percent"></i>
-                        </div>
-                        <input type="text"
-                        class="form-control coupon-input f-14 border-0 p-0 fw-600"
-                        style="height:41px;outline: none;box-shadow: none;border-radius: 6px;border-color: #B8B8B8!important;"
-                        name="coupon-input" placeholder="Mã giảm giá">
-
-                        <button type="button"
-                        class="fw-600 btn btn-gitiho-default ml-2 round-4 button-apply-coupon text-nowrap my-2"
-                        data-course=""
-                        style="outline: none;box-shadow: none;border-left: 1px solid #90A0B7;padding: 0 0.7rem;background:white;color: #90A0B7;font-size: 14px;border-radius: 0 4px 4px 0!important;"
-                        onclick="applyCoupon(this)">
-                        Áp dụng
-                        </button>
-                        </div>
-                        </div>
-                        </div>
-                        </div> *@
                     </div>
                 </div>
             </div>
@@ -2251,6 +2204,34 @@
     // Gọi hàm renderStars với giá trị AverageRating
     renderStars(averageRating);
 
+    let skipP = 5; //Starting from the 6th review
+    let takeP = 5; //Number of reviews to load per request
+
+    var getLoadMore = document.getElementById("loadMoreReviews");
+
+    getLoadMore.addEventListener('click', loadMoreReviews);
+
+    function loadMoreReviews() {
+        $.ajax({
+            type: 'GET',
+            url: '/Service/ServiceDetail?handler=LoadMoreReview',
+            data: {
+                serviceId: @Model.ServiceDetail.ServiceId,
+                skip: skipP,
+                take: takeP
+            },
+            success: function (data) {
+                // Append the new reviews to the container
+                $('#reviewContainer').append(data);
+                // Increase skip for the next call
+                skipP += takeP;
+                // If fewer than 5 reviews are loaded, hide the button
+                if ($(data).filter('.border').length < takeP) {
+                    $('#loadMoreReviews').hide();
+                }
+            }
+        });
+    }
 </script>
 
 @section Scripts {

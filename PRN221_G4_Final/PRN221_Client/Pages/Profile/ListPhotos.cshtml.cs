@@ -8,13 +8,15 @@ namespace PRN221_Client.Pages.Profile
     public class ListPhotosModel : PageModel
     {
         private readonly IAccountService _accountService;
-
-        public ListPhotosModel(IAccountService accountService)
+        private readonly IPostService _postService;
+        public ListPhotosModel(IAccountService accountService, IPostService postService)
         {
             _accountService = accountService;
+            _postService = postService;
         }
         public Account Profile { get; set; }
         public int AccountLogin { get; set; }
+        public List<PostImage> PostImages { get; set; }
         public async Task<IActionResult> OnGetAsync(int id)
         {
             Profile = await _accountService.GetByIdAccount(id);
@@ -23,6 +25,7 @@ namespace PRN221_Client.Pages.Profile
             {
                 return NotFound(); // Handle case when account is not found
             }
+            PostImages = await _postService.GetAllPostImagesByAccountId(id);
             return Page();
         }
         private int GetLoggedInUserId()

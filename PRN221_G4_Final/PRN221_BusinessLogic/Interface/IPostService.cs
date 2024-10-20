@@ -19,8 +19,9 @@ namespace PRN221_BusinessLogic.Interface
         Task<bool> UnlikePost(int postId, int accountId);
         Task<bool> IsPostLikedByUser(int postId, int accountId);
         Task<List<PostDTO>> GetAllPostByAccountId(int id);
-        Task<List<PostDTO>> GetAllPostImagesByAccountId(int id);
+        //Task<List<PostDTO>> GetAllPostImagesByAccountId(int id);
         Task<Post> AddPost(int categoryId, int accountId, string content);
+        Task<List<PostImage>> GetAllPostImagesByAccountId(int id);
 
     }
 }

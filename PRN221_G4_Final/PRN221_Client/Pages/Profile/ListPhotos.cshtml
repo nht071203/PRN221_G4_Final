@@ -80,13 +80,10 @@
                                 <i class="fa fa-info-circle fa-fw w3-margin-right"></i> Information
                             </a>
                         }
-                        else
-                        {
-                            <a asp-page="/Profile/PersonalPage" asp-route-id="@Model.Profile.AccountId" class="w3-button w3-block w3-theme-l1 w3-left-align">
-                                <i class="fa fa-info-circle fa-fw w3-margin-right"></i> Posts
-                            </a>
-                        }
 
+                        <a asp-page="/Profile/PersonalPage" asp-route-id="@Model.Profile.AccountId" class="w3-button w3-block w3-theme-l1 w3-left-align">
+                            <i class="fa fa-pencil-alt fa-fw w3-margin-right"></i> Posts
+                        </a>
                         <a asp-page="/Profile/ListFollow" asp-route-id="@Model.Profile.AccountId" class="w3-button w3-block w3-theme-l1 w3-left-align">
                             <i class="fa fa-user-friends fa-fw w3-margin-right"></i> Friends
                         </a>
@@ -121,10 +118,14 @@
                     <div >
                         <h5>Tất cả hình ảnh</h5>
                     </div>
+
                     <div class="row mt-3">
-                        <div class="col-md-4 col-sm-6 mb-4 p-2 pb-0 pt-0">
-                            <a asp-page="/Post/PostDetail/" asp-route-postId="1"><img src="https://firebasestorage.googleapis.com/v0/b/prn221-69738.appspot.com/o/image%2Fforest.jpg?alt=media&token=773588f3-0ca5-485b-ac33-53f16e3a146f" class="img-fluid rounded" alt="Forest" /></a>
-                        </div>
+                        @foreach (var image in Model.PostImages)
+                        {
+                            <div class="col-md-4 col-sm-6 mb-4 p-2 pb-0 pt-0">
+                                <a><img src="@image.ImageUrl" class="img-fluid rounded" alt="Forest" /></a>
+                            </div>
+                        }
                     </div>
                 </div>
                 <!-- End Middle Column -->
