@@ -15,11 +15,11 @@ public partial class News
 
     public string? ImageUrl { get; set; }
 
-    public DateOnly CreatedAt { get; set; }
+    public DateTime? CreatedAt { get; set; }
 
-    public DateOnly? UpdatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
 
-    public DateOnly? DeletedAt { get; set; }
+    public DateTime? DeletedAt { get; set; }
 
     public bool? IsDeleted { get; set; }
 }
