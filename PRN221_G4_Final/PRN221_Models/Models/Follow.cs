@@ -11,5 +11,5 @@ public partial class Follow
 
     public int BeFollowedId { get; set; }
 
-    public DateOnly FollowAt { get; set; }
+    public DateTime? FollowAt { get; set; }
 }

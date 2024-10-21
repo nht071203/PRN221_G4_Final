@@ -9,7 +9,7 @@ public partial class Conversation
 
     public string ConversationName { get; set; } = null!;
 
-    public DateOnly CreateAt { get; set; }
+    public DateTime? CreateAt { get; set; }
 
     public int? CreatorId { get; set; }
 
@@ -19,5 +19,5 @@ public partial class Conversation
 
     public bool? IsDeleted { get; set; }
 
-    public DateOnly? DeleteAt { get; set; }
+    public DateTime? DeleteAt { get; set; }
 }

@@ -76,7 +76,9 @@ public partial class Prn221Context : DbContext
                 .HasMaxLength(500)
                 .IsUnicode(false)
                 .HasColumnName("avatar");
-            entity.Property(e => e.DateOfBirth).HasColumnName("dateOfBirth");
+            entity.Property(e => e.DateOfBirth)
+                .HasColumnType("datetime")
+                .HasColumnName("dateOfBirth");
             entity.Property(e => e.DegreeUrl)
                 .HasMaxLength(500)
                 .IsUnicode(false)
@@ -143,7 +145,9 @@ public partial class Prn221Context : DbContext
             entity.ToTable("BookingService");
 
             entity.Property(e => e.BookingId).HasColumnName("booking_id");
-            entity.Property(e => e.BookingAt).HasColumnName("booking_at");
+            entity.Property(e => e.BookingAt)
+                .HasColumnType("datetime")
+                .HasColumnName("booking_at");
             entity.Property(e => e.BookingBy).HasColumnName("booking_by");
             entity.Property(e => e.BookingStatus)
                 .HasMaxLength(10)
@@ -209,11 +213,15 @@ public partial class Prn221Context : DbContext
             entity.Property(e => e.Content)
                 .HasMaxLength(200)
                 .HasColumnName("content");
-            entity.Property(e => e.CreatedAt).HasColumnName("created_at");
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("created_at");
             entity.Property(e => e.IsDeleted).HasColumnName("is_deleted");
             entity.Property(e => e.PostId).HasColumnName("post_id");
             entity.Property(e => e.Rate).HasColumnName("rate");
-            entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("updated_at");
         });
 
         modelBuilder.Entity<Conversation>(entity =>
@@ -226,9 +234,13 @@ public partial class Prn221Context : DbContext
             entity.Property(e => e.ConversationName)
                 .HasMaxLength(20)
                 .HasColumnName("conversation_name");
-            entity.Property(e => e.CreateAt).HasColumnName("create_at");
+            entity.Property(e => e.CreateAt)
+                .HasColumnType("datetime")
+                .HasColumnName("create_at");
             entity.Property(e => e.CreatorId).HasColumnName("creator_id");
-            entity.Property(e => e.DeleteAt).HasColumnName("delete_at");
+            entity.Property(e => e.DeleteAt)
+                .HasColumnType("datetime")
+                .HasColumnName("delete_at");
             entity.Property(e => e.IsDeleted).HasColumnName("is_deleted");
             entity.Property(e => e.IsGroup).HasColumnName("is_group");
             entity.Property(e => e.MemberCount).HasColumnName("member_count");
@@ -242,7 +254,9 @@ public partial class Prn221Context : DbContext
 
             entity.Property(e => e.FollowId).HasColumnName("follow_id");
             entity.Property(e => e.BeFollowedId).HasColumnName("be_followed_id");
-            entity.Property(e => e.FollowAt).HasColumnName("follow_at");
+            entity.Property(e => e.FollowAt)
+                .HasColumnType("datetime")
+                .HasColumnName("follow_at");
             entity.Property(e => e.FollowerId).HasColumnName("follower_id");
         });
 
@@ -269,7 +283,9 @@ public partial class Prn221Context : DbContext
                 .HasMaxLength(200)
                 .HasColumnName("content");
             entity.Property(e => e.ConversationId).HasColumnName("conversation_id");
-            entity.Property(e => e.CreateAt).HasColumnName("create_at");
+            entity.Property(e => e.CreateAt)
+                .HasColumnType("datetime")
+                .HasColumnName("create_at");
             entity.Property(e => e.IsDeleted).HasColumnName("is_deleted");
             entity.Property(e => e.SenderId).HasColumnName("sender_id");
         });
@@ -283,8 +299,12 @@ public partial class Prn221Context : DbContext
             entity.Property(e => e.Content)
                 .HasMaxLength(100)
                 .HasColumnName("content");
-            entity.Property(e => e.CreatedAt).HasColumnName("created_at");
-            entity.Property(e => e.DeletedAt).HasColumnName("deleted_at");
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("created_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("deleted_at");
             entity.Property(e => e.ImageUrl)
                 .HasMaxLength(500)
                 .HasColumnName("image_url");
@@ -292,7 +312,9 @@ public partial class Prn221Context : DbContext
             entity.Property(e => e.Title)
                 .HasMaxLength(200)
                 .HasColumnName("title");
-            entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("updated_at");
         });
 
         modelBuilder.Entity<Post>(entity =>
@@ -360,9 +382,13 @@ public partial class Prn221Context : DbContext
             entity.Property(e => e.Content)
                 .HasMaxLength(1000)
                 .HasColumnName("content");
-            entity.Property(e => e.CreateAt).HasColumnName("create_at");
+            entity.Property(e => e.CreateAt)
+                .HasColumnType("datetime")
+                .HasColumnName("create_at");
             entity.Property(e => e.CreatorId).HasColumnName("creator_id");
-            entity.Property(e => e.DeletedAt).HasColumnName("deleted_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("deleted_at");
             entity.Property(e => e.IsDeleted).HasColumnName("is_deleted");
             entity.Property(e => e.IsEnable).HasColumnName("is_enable");
             entity.Property(e => e.Price).HasColumnName("price");
@@ -370,7 +396,9 @@ public partial class Prn221Context : DbContext
             entity.Property(e => e.Title)
                 .HasMaxLength(200)
                 .HasColumnName("title");
-            entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("updated_at");
         });
 
         modelBuilder.Entity<ServiceRating>(entity =>
@@ -401,7 +429,9 @@ public partial class Prn221Context : DbContext
             entity.Property(e => e.SharePostId).HasColumnName("share_post_id");
             entity.Property(e => e.IsDeleted).HasColumnName("is_deleted");
             entity.Property(e => e.PostId).HasColumnName("post_id");
-            entity.Property(e => e.ShareAt).HasColumnName("share_at");
+            entity.Property(e => e.ShareAt)
+                .HasColumnType("datetime")
+                .HasColumnName("share_at");
             entity.Property(e => e.SharerId).HasColumnName("sharer_id");
         });
 

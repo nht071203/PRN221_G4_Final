@@ -25,7 +25,7 @@ public partial class Account
 
     public string? Gender { get; set; }
 
-    public DateOnly? DateOfBirth { get; set; }
+    public DateTime? DateOfBirth { get; set; }
 
     public string? ShortBio { get; set; }
 
