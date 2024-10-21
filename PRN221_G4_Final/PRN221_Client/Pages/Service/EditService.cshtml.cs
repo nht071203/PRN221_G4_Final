@@ -35,7 +35,7 @@ namespace PRN221_Client.Pages.Service
             int getAccId = Convert.ToInt32(HttpContext.Session.GetInt32("AccountID"));
 
             ServiceItem.CreatorId = getAccId;
-            ServiceItem.UpdatedAt = DateOnly.FromDateTime(DateTime.Now);
+            ServiceItem.UpdatedAt = DateTime.Now;
             ServiceItem.IsDeleted = false;
 
             var updateAcc = await _requirementService.UpdateService(ServiceItem);

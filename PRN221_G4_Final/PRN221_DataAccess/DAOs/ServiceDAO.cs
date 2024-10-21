@@ -91,7 +91,7 @@ namespace PRN221_DataAccess.DAOs
             var item = await GetById(id);
             if (item == null) return;
 
-            item.DeletedAt = DateOnly.FromDateTime(DateTime.Now);
+            item.DeletedAt = DateTime.Now;
             item.IsDeleted = true;
 
             _context.Entry(item).CurrentValues.SetValues(item);
