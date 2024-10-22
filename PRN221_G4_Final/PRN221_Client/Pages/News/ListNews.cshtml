@@ -9,10 +9,10 @@
     <div class="container" style="transform: none;">
         <div class="d-flex">
             <a href="/News/ListNews"><h2 class="pb--20">Tin tức</h2></a>
-            @if (@Model.NewsListByCategory != null)
+            @if (Model.Category != null)
             {
                 <i class="ml--10 text- fa fa-caret-right" style="padding: 35px 20px 0 10px"></i>
-                <a asp-page="/News/ListNews" asp-route-cat="@Model.NewsListByCategory.First().CategoryNewsId"><h2 class="pb--20">@await Model.GetCategoryName(Model.NewsListByCategory.First().CategoryNewsId)</h2></a>
+                <a asp-page="/News/ListNews" asp-route-cat="@Model.Category"><h2 class="pb--20">@await Model.GetCategoryName((int)Model.Category)</h2></a>
             }
         </div>
         <div class="row" style="transform: none;">
@@ -109,42 +109,25 @@
                                 int pageWindow = 2; // Số lượng trang hiển thị xung quanh trang hiện tại
                                 int totalPages = Model.TotalPages;
                                 int currentPage = Model.CurrentPage;
-                                @* <div class="col-xs-12 pb--30" style="position: absolute; left: 0px; top: 1621px;">
-                                    <!-- Page Count Start -->
-                                    <div class="page--count">
-                                        <label class="ff--primary fs--14 fw--500 text-darker d-flex">
-                                            <span>Viewing</span>
-
-                                            @if (Model.CurrentPage > 1)
-                                            {
-                                                <a class="btn-link" asp-page-handler="Pagination" asp-route-p="@(Model.CurrentPage - 1)"><i class="fa fa-caret-left"></i></a>
-                                            }
-                                            @for (int i = 1; i <= Model.TotalPages; i++)
-                                            {
-                                                <a class="form-control form-sm" style="width: 30px" asp-page-handler="Pagination" asp-route-p="@i" class="@(i == Model.CurrentPage ? "active" : "")">@i</a>
-                                            }
-                                            @if (Model.CurrentPage < Model.TotalPages)
-                                            {
-                                                <a class="btn-link" asp-page-handler="Pagination" asp-route-p="@(Model.CurrentPage + 1)"><i class="fa fa-caret-right"></i></a>
-                                            }
-                                            <span>of @Model.TotalPages</span>
-                                        </label>
-                                    </div>
-                                    <!-- Page Count End -->
-                                </div> *@
-
+                                
                                 <nav aria-label="Page navigation">
                                     <ul class="pagination">
                                         @if (currentPage > 1)
                                         {
-                                            // Hiển thị nút Previous
+                                            <!-- Nút Previous -->
                                             <li class="page-item">
-                                                <a class="page-link" asp-page-handler="Pagination" asp-route-p="@(currentPage - 1)">Previous</a>
+                                                <a class="page-link"
+                                                   asp-route-p="@(currentPage - 1)"
+                                                   asp-route-searchKey="@Model.SearchKey"
+                                                   asp-route-cat="@Model.Category">Previous</a>
                                             </li>
                                         }
 
                                         <li class="page-item @(currentPage == 1 ? "active" : "")">
-                                            <a class="page-link" asp-page-handler="Pagination" asp-route-p="1">1</a>
+                                            <a class="page-link"
+                                               asp-route-p="1"
+                                               asp-route-searchKey="@Model.SearchKey"
+                                               asp-route-cat="@Model.Category">1</a>
                                         </li>
 
                                         @if (currentPage - pageWindow > 2)
@@ -157,7 +140,10 @@
                                         @for (int i = Math.Max(2, currentPage - pageWindow); i <= Math.Min(totalPages - 1, currentPage + pageWindow); i++)
                                         {
                                             <li class="page-item @(i == currentPage ? "active" : "")">
-                                                <a class="page-link" asp-page-handler="Pagination" asp-route-p="@i">@i</a>
+                                                <a class="page-link"
+                                                   asp-route-p="@i"
+                                                   asp-route-searchKey="@Model.SearchKey"
+                                                   asp-route-cat="@Model.Category">@i</a>
                                             </li>
                                         }
 
@@ -171,15 +157,21 @@
                                         @if (totalPages > 1)
                                         {
                                             <li class="page-item @(currentPage == totalPages ? "active" : "")">
-                                                <a class="page-link" asp-page-handler="Pagination" asp-route-p="@totalPages">@totalPages</a>
+                                                <a class="page-link"
+                                                   asp-route-p="@totalPages"
+                                                   asp-route-searchKey="@Model.SearchKey"
+                                                   asp-route-cat="@Model.Category">@totalPages</a>
                                             </li>
                                         }
 
                                         @if (currentPage < totalPages)
                                         {
-                                            // Hiển thị nút Next
+                                            <!-- Nút Next -->
                                             <li class="page-item">
-                                                <a class="page-link" asp-page-handler="Pagination" asp-route-p="@(currentPage + 1)">Next</a>
+                                                <a class="page-link"
+                                                   asp-route-p="@(currentPage + 1)"
+                                                   asp-route-searchKey="@Model.SearchKey"
+                                                   asp-route-cat="@Model.Category">Next</a>
                                             </li>
                                         }
                                     </ul>
