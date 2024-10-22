@@ -35,7 +35,7 @@
                                     else
                                     {
                                         <a asp-page="/Profile/PersonalPage" asp-route-id="@Model.PostDTO.account.AccountId">
-                                            <img src="@Model.PostDTO.account.Avatar" alt="Alternate Text" />
+                                            <img src="@Model.PostDTO.account.Avatar" alt="Alternate Text" onerror="this.onerror=null; this.src='https://firebasestorage.googleapis.com/v0/b/prn221-69738.appspot.com/o/image%2Fuser.png?alt=media&token=e669a837-b9c8-4983-b2bd-8eb5c091d48f';" />
                                         </a>
                                     }
                                 </div>
@@ -64,6 +64,17 @@
                             <!-- Post Content Start -->
                             <div class="post-detail-content text-darker">
                                 <p>@Model.PostDTO.post.PostContent</p>
+
+                                @if(Model.PostDTO.postImages != null && Model.PostDTO.postImages.Count() > 0)
+                                {
+                                    <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 10px">
+                                        @foreach (var imageItem in Model.PostDTO.postImages)
+                                        {
+                                            <img style="width: 45%" src="@imageItem.ImageUrl">
+                                        }
+                                    </div>
+                                }
+                                
                             </div>
                             <!-- Post Content End -->
 

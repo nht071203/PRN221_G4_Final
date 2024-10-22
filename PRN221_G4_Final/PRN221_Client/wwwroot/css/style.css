@@ -6421,3 +6421,12 @@ p {
     font-size:17px;
     color:gold;
 }
+
+/*.rate-radio{
+    display:flex;
+    gap: 10px;
+}
+
+.input-filter-rate {
+    margin: 0px !important;
+}*/

@@ -14,7 +14,17 @@
                 <label>Nhập Email ở đây</label>
                 <div class="field input-field">
                     <input asp-for="OTP" type="number" placeholder="OTP">
+                </div>
+
+                <div class="text-danger">
                     <span asp-validation-for="OTP" class="text-danger"></span>
+                </div>
+
+                <div class="text-danger">
+                    @if (ViewData.ModelState.ContainsKey("OTPNotMatch"))
+                    {
+                        <span>@ViewData.ModelState["OTPNotMatch"].Errors[0].ErrorMessage</span>
+                    }
                 </div>
 
                 <div class="field button-field">

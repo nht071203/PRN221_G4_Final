@@ -58,7 +58,7 @@ namespace PRN221_Client.Pages.Service
             {
                 ServiceId = InputServiceId,
                 BookingBy = getAccId,
-                BookingAt = DateOnly.FromDateTime(DateTime.Now),
+                BookingAt = DateTime.Now,
                 BookingStatus = "sending",
                 IsDeletedFarmer = false,
                 Content = InputRequestContent,
@@ -84,6 +84,13 @@ namespace PRN221_Client.Pages.Service
         public string CommentService { get; set; }
         public async Task<IActionResult> OnPostRateService()
         {
+            if (RatingPoint == 0)
+            {
+                // Dùng AddModelError sẽ bị mất khi redirect
+                TempData["NoRating"] = "Số sao không được để trống";
+                return RedirectToPage("/Service/ServiceDetail", new { id = InputServiceId });
+            }
+
             int userId = Convert.ToInt32(HttpContext.Session.GetInt32("AccountID"));
 
             ServiceRating newRating = new ServiceRating

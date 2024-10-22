@@ -11,7 +11,7 @@ public partial class SharePost
 
     public int SharerId { get; set; }
 
-    public DateOnly ShareAt { get; set; }
+    public DateTime? ShareAt { get; set; }
 
     public bool? IsDeleted { get; set; }
 }

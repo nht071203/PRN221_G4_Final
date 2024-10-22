@@ -28,7 +28,7 @@ namespace PRN221_Client.Pages.Service
             {
                 ServiceId = 0,
                 CreatorId = getAccId,
-                CreateAt = DateOnly.FromDateTime(DateTime.Now), // Convert DateTime to DateOnly
+                CreateAt = DateTime.Now, // Convert DateTime to DateOnly
                 UpdatedAt = null,
                 DeletedAt = null,
                 Title = TitleInput,

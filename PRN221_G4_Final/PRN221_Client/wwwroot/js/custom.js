@@ -40,12 +40,8 @@ document.getElementById('selectImageButton').addEventListener('click', () => {
 imageInput.addEventListener('change', (event) => {
     const files = Array.from(event.target.files);
 
-    // Duyệt qua từng file và thêm vào danh sách đã chọn
     files.forEach(file => {
-        // Thêm file vào danh sách đã chọn
-        selectedFiles.push(file); // Thêm file vào danh sách đã chọn
-
-        // Tạo và thêm ảnh mới vào preview
+        //selectedFiles.push(file);
         const reader = new FileReader();
         reader.onload = function (e) {
             const img = document.createElement('img');
@@ -56,20 +52,25 @@ imageInput.addEventListener('change', (event) => {
         };
         reader.readAsDataURL(file);
     });
-
-    // Hiển thị nút xóa ảnh nếu có ảnh
-    clearImagesButton.style.display = selectedFiles.length > 0 ? 'block' : 'none';
-
-    // Đặt lại giá trị của input file để có thể chọn lại cùng file
-    imageInput.value = '';
+    //clearImagesButton.style.display = selectedFiles.length > 0 ? 'block' : 'none';
 });
 
 // Sự kiện cho nút xóa ảnh
 clearImagesButton.addEventListener('click', () => {
     imagePreview.innerHTML = ''; // Xóa ảnh
     selectedFiles = []; // Xóa danh sách file đã chọn
-    clearImagesButton.style.display = 'none'; // Ẩn nút xóa ảnh
+    //clearImagesButton.style.display = 'none'; // Ẩn nút xóa ảnh
 });
+
+// Sự kiện cho nút submit
+//document.getElementById('postForm').addEventListener('submit', function (event) {
+//    // Tạo một DataTransfer để thêm file vào input file
+//    const dataTransfer = new DataTransfer();
+//    selectedFiles.forEach(file => {
+//        dataTransfer.items.add(file);
+//    });
+//    imageInput.files = dataTransfer.files; // Cập nhật giá trị của input file
+//});
 
 
 document.addEventListener('DOMContentLoaded', () => {
