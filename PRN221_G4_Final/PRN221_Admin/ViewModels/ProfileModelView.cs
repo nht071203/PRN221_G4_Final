@@ -6,11 +6,14 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Composition;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using Microsoft.Win32;
+
 
 namespace PRN221_Admin.ViewModels
 {
@@ -33,15 +36,67 @@ namespace PRN221_Admin.ViewModels
             }
         }
 
+        private FirebaseConfig _firebaseConfig;
+        private FirebaseConfig _fireBaseAvatar;
+        private string _imageUrl;
+        private string _avatar;
+
+        public string ImageUrl
+        {
+            get => _imageUrl;
+            set
+            {
+                _imageUrl = value;
+                OnPropertyChanged(nameof(ImageUrl));
+            }
+        }
+        public string AvatarURL
+        {
+            get => _avatar;
+            set
+            {
+                _avatar = value;
+                OnPropertyChanged(nameof(AvatarURL));
+            }
+        }
+
+
+
+
+        private async Task UploadAvatar()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Image files (*.jpg;*.jpeg;*.png)|*.jpg;*.jpeg;*.png"
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                var filePath = openFileDialog.FileName;
+
+                using (var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                {
+                    var fileName = Path.GetFileName(filePath);
+                    var imageUrl = await _firebaseConfig.UploadToFirebase(stream, fileName);
+
+                    AvatarURL = imageUrl;
+                }
+            }
+        }
+
+        public ICommand UploadAvatarAdminCommand { get; set; }
+
 
 
         private string _username;
         private string _fullname;
         private string _password;
+        private string _confirmPassword;
+
         private string _email;
         private string _phone;
-        private string _dateOfBirth;
-        private string _gender; 
+        private DateOnly? _dateOfBirth;
+        private string _gender;
         private string _address;
 
         private string _facebookId;
@@ -58,6 +113,8 @@ namespace PRN221_Admin.ViewModels
             }
         }
 
+
+
         public string Fullname
         {
             get => _fullname;
@@ -70,7 +127,7 @@ namespace PRN221_Admin.ViewModels
 
 
 
- 
+
 
         public string Password
         {
@@ -82,6 +139,15 @@ namespace PRN221_Admin.ViewModels
             }
         }
 
+        public string ConfirmPassword
+        {
+            get => _confirmPassword;
+            set
+            {
+                _confirmPassword = value;
+                OnPropertyChanged(nameof(ConfirmPassword));
+            }
+        }
 
 
         public string Email
@@ -103,7 +169,7 @@ namespace PRN221_Admin.ViewModels
                 OnPropertyChanged(nameof(Phone));
             }
         }
-        public string DateOfBirth
+        public DateOnly? DateOfBirth
         {
             get => _dateOfBirth;
             set
@@ -179,8 +245,13 @@ namespace PRN221_Admin.ViewModels
             Farmers = new ObservableCollection<Account>();
 
             this.accountService = accountService;
-            LoadAdminInfo("expert_user4");
+            LoadAdminInfo("admin_user1");
 
+
+            _firebaseConfig = new FirebaseConfig();
+
+            _fireBaseAvatar = new FirebaseConfig();
+            UploadAvatarAdminCommand = new RelayCommand(async (obj) => await UploadAvatar());
             UpdateAdminBtn = new RelayCommand(async (obj) => await UpdateAdmin(obj));
 
 
@@ -191,11 +262,13 @@ namespace PRN221_Admin.ViewModels
             var account = await accountService.GetByUsername(username);
             if (account != null)
             {
+                AvatarURL = account.Avatar;
                 Username = account.Username;
                 Fullname = account.FullName;
                 Email = account.Email;
                 Phone = account.Phone;
-             Gender = account.Gender;
+                Gender = account.Gender;
+                DateOfBirth = account.DateOfBirth;
                 Password = account.Password;
                 Address = account.Address;
                 FacebookId = account.FacebookId;
@@ -225,22 +298,32 @@ namespace PRN221_Admin.ViewModels
                 }
 
                 // Cập nhật thông tin tài khoản với thông tin từ ViewModel
+                existingMember.Avatar = AvatarURL;
                 existingMember.FullName = Fullname;
                 existingMember.Email = Email;
                 existingMember.Phone = Phone;
                 existingMember.Gender = Gender;
+                existingMember.DateOfBirth = DateOfBirth;
                 existingMember.Password = Password; // Cẩn thận với việc lưu mật khẩu
+                existingMember.Password = ConfirmPassword;
                 existingMember.Address = Address;
                 existingMember.FacebookId = FacebookId;
                 existingMember.ShortBio = ShortBio;
 
+
+
+                if (Password != ConfirmPassword) {
+                    System.Windows.MessageBox.Show("Password not valid.", "Notification", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return ;
+                }
+
                 // Gọi phương thức cập nhật tài khoản
                 await accountService.UpdateAccount(existingMember);
 
-            
+
                 await LoadAdminInfo(Username);
 
-            
+
                 System.Windows.MessageBox.Show("Update successful!", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)

@@ -48,9 +48,10 @@
             <!-- Avatar Image -->
             <Ellipse Width="136" Height="136" HorizontalAlignment="Center" VerticalAlignment="Top">
                 <Ellipse.Fill>
-                    <ImageBrush ImageSource="/logo.jpg" Stretch="UniformToFill"/>
+                    <ImageBrush x:Name="avatar" ImageSource="{Binding AvatarURL, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Stretch="UniformToFill"/>
                 </Ellipse.Fill>
             </Ellipse>
+
 
             <!-- Name and Short Bio -->
             <TextBlock Text="Vũ Minh Uyên" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" Margin="0,10,0,0">
@@ -72,7 +73,7 @@
 
             <!-- Buttons for Avatar and Password -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
-                <Button Content="Avatar" Height="30" Width="100" BorderBrush="#FF003DFF" Foreground="White" Margin="5,0">
+                <Button  Command="{Binding UploadAvatarAdminCommand}" Visibility="{Binding ChooseImageVisibility}" Content="Avatar" Height="30" Width="100" BorderBrush="#FF003DFF" Foreground="White" Margin="5,0">
                     <Button.Background>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                             <GradientStop Color="Black"/>
@@ -167,12 +168,12 @@
 
             <WrapPanel Orientation="Horizontal">
                 <TextBlock Text="Confirm Password:" FontWeight="Bold" FontSize="16"/>
-                <TextBox Text="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="18,5,0,10" Width="311" Height="20"/>
+                <TextBox Text="{Binding ConfirmPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="18,5,0,10" Width="311" Height="20"/>
 
             </WrapPanel>
 
             <!-- Update Profile Button -->
-            <Button  Command="{Binding UpdateAdminBtn}" Content="Update Profile" Height="40" Width="150" HorizontalAlignment="Center" BorderBrush="#FF00FF6C" Foreground="White" FontWeight="Bold" FontSize="16" Margin="10,10">
+            <Button  Command="{Binding UpdateAdminBtn}" Content="Save Profile" Height="40" Width="150" HorizontalAlignment="Center" BorderBrush="#FF00FF6C" Foreground="White" FontWeight="Bold" FontSize="16" Margin="10,10">
                 <Button.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="Black"/>

@@ -27,5 +27,7 @@ namespace PRN221_Admin.Views
             InitializeComponent();
             DataContext = viewModel;
         }
+
+
     }
 }
