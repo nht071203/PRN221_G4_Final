@@ -35,7 +35,7 @@ namespace PRN221_Client.Pages.Posts
         {
             PostId = postId;
             PostDTO = await _postService.GetPostAndImage(PostId);
-            CountLikePost = PostDTO.likePosts.Count(lp => lp.UnLike == 0);
+            CountLikePost = await _postService.GetLikeCountByPostId(PostId);
             AccountLogin = GetLoggedInUserId();
             IsLikedByUser = await _postService.IsPostLikedByUser(PostId, AccountLogin);
             CountSharePost = PostDTO.sharePosts.Count();

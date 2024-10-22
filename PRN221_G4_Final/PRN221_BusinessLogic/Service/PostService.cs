@@ -171,5 +171,7 @@ namespace PRN221_BusinessLogic.Service
 
             return response;
         }
+
+        public Task<int> GetLikeCountByPostId(int postId) => _likePostRepository.GetLikeCountByPostId(postId);
     }
 }

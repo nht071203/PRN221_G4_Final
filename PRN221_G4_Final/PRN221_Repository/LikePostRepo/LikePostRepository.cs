@@ -19,6 +19,8 @@ namespace PRN221_Repository.LikePostRepo
 
         public async Task<IEnumerable<LikePost>> GetAllLikePostByPostId(int id) => await _likePostDAO.GetAllLikePostByPostId(id);
 
+        public async Task<int> GetLikeCountByPostId(int postId) => await _likePostDAO.GetLikeCountByPostId(postId);
+
         public async Task<bool> IsPostLikedByUser(int postId, int accountId) => await _likePostDAO.IsPostLikedByUser(postId, accountId);
 
         public async Task<bool> LikePost(int postId, int accountId) => await _likePostDAO.LikePost(postId, accountId);
