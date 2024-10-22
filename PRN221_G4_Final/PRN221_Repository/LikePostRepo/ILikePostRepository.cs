@@ -13,5 +13,6 @@ namespace PRN221_Repository.LikePostRepo
         Task<bool> LikePost(int postId, int accountId);
         Task<bool> UnlikePost(int postId, int accountId);
         Task<bool> IsPostLikedByUser(int postId, int accountId);
+        Task<int> GetLikeCountByPostId(int postId);
     }
 }

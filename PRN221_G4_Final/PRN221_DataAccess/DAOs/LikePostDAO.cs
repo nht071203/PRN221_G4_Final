@@ -67,5 +67,12 @@ namespace PRN221_DataAccess.DAOs
         {
             return await _context.LikePosts.AnyAsync(lp => lp.PostId == postId && lp.AccountId == accountId && lp.UnLike == 0);
         }
+
+        public async Task<int> GetLikeCountByPostId(int postId)
+        {
+            return await _context.LikePosts.CountAsync(lp => lp.PostId == postId && lp.UnLike == 0);
+        }
+
+
     }
 }
