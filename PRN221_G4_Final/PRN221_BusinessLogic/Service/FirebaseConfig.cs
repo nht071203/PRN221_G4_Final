@@ -62,5 +62,30 @@ namespace PRN221_BusinessLogic.Service
             return imageUrl;
         }
 
+        public async Task<int> DeleteImageFromFirebase(string imageUrl)
+        {
+            if(imageUrl == null)
+            {
+                return 0;
+            }
+            var fileName = imageUrl.Substring(imageUrl.IndexOf("/o/") + 3);
+            fileName = fileName.Substring(0, fileName.IndexOf("?alt="));
+            fileName = fileName.Replace("%2F", "/"); 
+
+            var storage = new FirebaseStorage(
+                "prn221-69738.appspot.com",
+                new FirebaseStorageOptions
+                {
+                    AuthTokenAsyncFactory = () => Task.FromResult(""),
+                    ThrowOnCancel = true
+                });
+
+            // Thực hiện việc xóa file
+            await storage
+                .Child(fileName)
+                .DeleteAsync();
+            return 1;
+        }
+
     }
 }

@@ -26,11 +26,13 @@ using PRN221_Repository.RoleRepo;
 using PRN221_Repository.ServiceRepo;
 using PRN221_Repository.SharePostRepo;
 using PRN221_Repository.ViewRepo;
+using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
 
 builder.Services.AddDbContext<PRN221_DataAccess.Prn221Context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));

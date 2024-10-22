@@ -10,5 +10,6 @@ namespace PRN221_BusinessLogic.Interface
     public interface IImageService
     {
         Task<string> UploadImageAsync(IFormFile fileImage);
+        Task<int> DeleteImageAsync(string fileUrl);
     }
 }
