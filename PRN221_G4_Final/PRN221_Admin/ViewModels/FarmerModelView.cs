@@ -5,14 +5,14 @@ using PRN221_Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using Microsoft.Win32;
 
 
 namespace PRN221_Admin.ViewModels
@@ -52,6 +52,15 @@ namespace PRN221_Admin.ViewModels
 
             this.accountService = accountService;
 
+
+
+            _firebaseConfig = new FirebaseConfig();
+
+            _fireBaseAvatar = new FirebaseConfig();
+            UploadAvatarFarmerCommand = new RelayCommand(async (obj) => await UploadAvatar());
+
+
+
             _ = LoadFarmers();
 
             DeleteFarmerBtn = new RelayCommand(async (obj) => await DeleteMember(obj), CanExecute2);
@@ -59,6 +68,61 @@ namespace PRN221_Admin.ViewModels
             ClearToAdd = new RelayCommand(ClearFields, CanExecute2);
 
         }
+
+
+        private FirebaseConfig _firebaseConfig;
+        private FirebaseConfig _fireBaseAvatar;
+        private string _imageUrl;
+        private string _avatar;
+
+        public string ImageUrl
+        {
+            get => _imageUrl;
+            set
+            {
+                _imageUrl = value;
+                OnPropertyChanged(nameof(ImageUrl));
+            }
+        }
+        public string AvatarURL
+        {
+            get => _avatar;
+            set
+            {
+                _avatar = value;
+                OnPropertyChanged(nameof(AvatarURL));
+            }
+        }
+
+
+
+
+        private async Task UploadAvatar()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Image files (*.jpg;*.jpeg;*.png)|*.jpg;*.jpeg;*.png"
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                var filePath = openFileDialog.FileName;
+
+                using (var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                {
+                    var fileName = Path.GetFileName(filePath);
+                    var imageUrl = await _firebaseConfig.UploadToFirebase(stream, fileName);
+
+                    AvatarURL = imageUrl;
+                }
+            }
+        }
+
+        public ICommand UploadAvatarFarmerCommand { get; set; }
+
+
+
+
 
         private Account _selectedFarmer;
         public Account SelectedFarmers
@@ -74,11 +138,14 @@ namespace PRN221_Admin.ViewModels
 
                 if (_selectedFarmer != null)
                 {
+                    AvatarURL = _selectedFarmer?.Avatar;
                     accountId = _selectedFarmer.AccountId;
                     FullName = _selectedFarmer.FullName;
+                    Gender = _selectedFarmer.Gender;
                     Username = _selectedFarmer.Username;
                     Email = _selectedFarmer.Email;
                     Phone = _selectedFarmer.Phone;
+                    DateofbirthInfo = _selectedFarmer.DateOfBirth;
                     Address = _selectedFarmer.Address;
 
 
@@ -196,16 +263,16 @@ namespace PRN221_Admin.ViewModels
             }
         }
 
-        //private DateOnly? _dateofbirthInfo;
-        //public DateOnly? dateofbirthInfo
-        //{
-        //    get { return _dateofbirthInfo; }
-        //    set
-        //    {
-        //        _dateofbirthInfo = value;
-        //        OnPropertyChanged(nameof(dateofbirthInfo));
-        //    }
-        //}
+        private DateOnly? _dateofbirthInfo;
+        public DateOnly? DateofbirthInfo
+        {
+            get { return _dateofbirthInfo; }
+            set
+            {
+                _dateofbirthInfo = value;
+                OnPropertyChanged(nameof(DateofbirthInfo));
+            }
+        }
 
         private string _Email;
         public string Email
@@ -277,9 +344,16 @@ namespace PRN221_Admin.ViewModels
                 return;
             }
 
+            if (string.IsNullOrWhiteSpace(AvatarURL))
+            {
+                await UploadAvatar();
+            }
+
+
             string gender = IsMale ? "Male" : "Female";
             var st = new Account
             {
+                Avatar = AvatarURL,
                 Username = Username,
                 FullName = FullName,
                 Email = Email,
@@ -295,6 +369,7 @@ namespace PRN221_Admin.ViewModels
             Farmers.Add(st);
 
             Username = FullName = Email = Phone = Address = "";
+            AvatarURL = null;
             OnPropertyChanged(nameof(IsMale));
             OnPropertyChanged(nameof(IsFemale));
             await LoadFarmers();

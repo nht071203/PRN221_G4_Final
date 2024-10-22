@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PRN221_BusinessLogic.Interface;
 using PRN221_BusinessLogic.Service;
-using PRN221_Client.Pagination;
 using PRN221_Models.Models;
 using System;
 namespace PRN221_Client.Pages.News
@@ -21,6 +20,7 @@ namespace PRN221_Client.Pages.News
         public IEnumerable<PRN221_Models.Models.News> NewsListByCategory { get; set; }
         public IEnumerable<PRN221_Models.Models.CategoryNews> CategoryNewsList { get; set; }
         public string SearchKey { get; set; }
+        public int? Category { get; set; }
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
 
@@ -32,7 +32,7 @@ namespace PRN221_Client.Pages.News
             if (!string.IsNullOrEmpty(searchKey) || cat.HasValue)
             {
                 SearchKey = searchKey;
-
+                Category = cat;
                 if (string.IsNullOrEmpty(searchKey) && cat.HasValue)
                 {
                     NewsListByCategory = await _newsService.GetAllNewsByCategoryId(cat.Value);
@@ -45,13 +45,10 @@ namespace PRN221_Client.Pages.News
                 }
                 else
                 {
-                    NewsList = await _newsService.SearchNews(cat ?? 0, searchKey);
-
-                    NewsList = NewsList
-                                .Skip((p - 1) * PageSize)
-                                .Take(PageSize);
-
-                    TotalPages = (int)Math.Ceiling(NewsList.Count() / (double)PageSize);
+                    var filteredNews = await _newsService.SearchNews(cat ?? 0, searchKey);
+                    var pagedResult = filteredNews.Skip((CurrentPage - 1) * PageSize).Take(PageSize).ToList();
+                    TotalPages = (int)Math.Ceiling(filteredNews.Count() / (double)PageSize);
+                    NewsList = pagedResult;
 
                     if (!NewsList.Any())
                     {
