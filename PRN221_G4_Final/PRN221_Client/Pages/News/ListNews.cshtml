@@ -117,17 +117,17 @@
                                             <!-- Nút Previous -->
                                             <li class="page-item">
                                                 <a class="page-link"
-                                                   asp-route-p="@(currentPage - 1)"
                                                    asp-route-searchKey="@Model.SearchKey"
-                                                   asp-route-cat="@Model.Category">Previous</a>
+                                                   asp-route-cat="@Model.Category" 
+                                                   asp-route-p="@(currentPage - 1)">Previous</a>
                                             </li>
                                         }
 
                                         <li class="page-item @(currentPage == 1 ? "active" : "")">
                                             <a class="page-link"
-                                               asp-route-p="1"
                                                asp-route-searchKey="@Model.SearchKey"
-                                               asp-route-cat="@Model.Category">1</a>
+                                               asp-route-cat="@Model.Category" 
+                                               asp-route-p="1">1</a>
                                         </li>
 
                                         @if (currentPage - pageWindow > 2)
@@ -141,9 +141,9 @@
                                         {
                                             <li class="page-item @(i == currentPage ? "active" : "")">
                                                 <a class="page-link"
-                                                   asp-route-p="@i"
                                                    asp-route-searchKey="@Model.SearchKey"
-                                                   asp-route-cat="@Model.Category">@i</a>
+                                                   asp-route-cat="@Model.Category"
+                                                   asp-route-p="@i">@i</a>
                                             </li>
                                         }
 
@@ -158,9 +158,9 @@
                                         {
                                             <li class="page-item @(currentPage == totalPages ? "active" : "")">
                                                 <a class="page-link"
-                                                   asp-route-p="@totalPages"
                                                    asp-route-searchKey="@Model.SearchKey"
-                                                   asp-route-cat="@Model.Category">@totalPages</a>
+                                                   asp-route-cat="@Model.Category" 
+                                                   asp-route-p="@(currentPage + 1)">@totalPages</a>
                                             </li>
                                         }
 
@@ -169,9 +169,9 @@
                                             <!-- Nút Next -->
                                             <li class="page-item">
                                                 <a class="page-link"
-                                                   asp-route-p="@(currentPage + 1)"
                                                    asp-route-searchKey="@Model.SearchKey"
-                                                   asp-route-cat="@Model.Category">Next</a>
+                                                   asp-route-cat="@Model.Category"
+                                                   asp-route-p="@(currentPage + 1)">Next</a>
                                             </li>
                                         }
                                     </ul>
