@@ -1,34 +1,32 @@
 ﻿@page
-@model PRN221_Client.Pages.Access.ConfirmForgetModel
+@model PRN221_Client.Pages.Access.ConfirmEmailModel
 @{
     Layout = "_LayoutAccess";
-    ViewData["Title"] = "OTP Reset";
 }
+
 <section class="container forms" id="confirm-page">
 
     <div class="form login">
         <div class="form-content">
-            <h1 class="title-login">Quên mật khẩu?</h1>
+            <h1 class="title-login">Xác nhận email</h1>
 
             <form method="post" asp-page-handler="ConfirmOTP">
                 <label>Nhập OTP ở đây</label>
-                <div class="field input-field">
-                    <input asp-for="OTP" type="number" placeholder="OTP">
+                <div class="field input-field form-floating">
+                    <input id="OTPEmail" name="OTPEmail" type="number" placeholder="OTP" class="form-control">
+                    <label for="OTPEmail">Nhập OTP</label>
                 </div>
 
                 <div class="text-danger">
-                    <span asp-validation-for="OTP" class="text-danger"></span>
+                    <span class="text-danger"></span>
                 </div>
 
                 <div class="text-danger">
-                    @if (ViewData.ModelState.ContainsKey("OTPNotMatch"))
-                    {
-                        <span>@ViewData.ModelState["OTPNotMatch"].Errors[0].ErrorMessage</span>
-                    }
+                    
                 </div>
 
                 <div class="field button-field">
-                    <button>Xác nhận</button>
+                    <button type="submit">Xác nhận</button>
                 </div>
 
             </form>
