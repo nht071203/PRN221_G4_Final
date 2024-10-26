@@ -39,6 +39,7 @@ namespace PRN221_Client.Pages.Service
 			}
 
 			ServiceItem.IsDeleted = true;
+			ServiceItem.DeletedAt = DateTime.Now;
 
 			var serviceDelete = await _requirementService.UpdateService(ServiceItem);
 			return RedirectToPage("/Service/ListServiceExpert");
