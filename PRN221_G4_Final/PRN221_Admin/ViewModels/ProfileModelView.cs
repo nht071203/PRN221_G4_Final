@@ -95,7 +95,7 @@ namespace PRN221_Admin.ViewModels
 
         private string _email;
         private string _phone;
-        private DateOnly? _dateOfBirth;
+        private DateTime? _dateOfBirth;
         private string _gender;
         private string _address;
 
@@ -169,7 +169,7 @@ namespace PRN221_Admin.ViewModels
                 OnPropertyChanged(nameof(Phone));
             }
         }
-        public DateOnly? DateOfBirth
+        public DateTime? DateOfBirth
         {
             get => _dateOfBirth;
             set

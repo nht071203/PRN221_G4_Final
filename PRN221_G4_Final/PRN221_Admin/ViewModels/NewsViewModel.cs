@@ -59,8 +59,8 @@ namespace PRN221_Admin.ViewModels
             _ = LoadNews();
 
         }
-        private DateOnly? _createDate;
-        public DateOnly? CreateDate
+        private DateTime? _createDate;
+        public DateTime? CreateDate
         {
             get { return _createDate; }
             set
@@ -70,8 +70,8 @@ namespace PRN221_Admin.ViewModels
             }
         }
 
-        private DateOnly? _updateDate;
-        public DateOnly? UpdateDate
+        private DateTime? _updateDate;
+        public DateTime? UpdateDate
         {
             get { return _updateDate; }
             set
