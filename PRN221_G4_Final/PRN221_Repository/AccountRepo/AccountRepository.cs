@@ -46,6 +46,10 @@ namespace PRN221_Repository.AccountRepo
         {
             return await _accountDAO.GetTotalFarmerCountAsync();
         }
+        public async Task<int> GetTotalExpertRepo()
+        {
+            return await _accountDAO.GetTotalFarmerCountAsync();
+        }
         public async Task<Account> GetByFbId(string fbId)
         {
             return await _accountDAO.GetByFbId(fbId);
@@ -55,5 +59,6 @@ namespace PRN221_Repository.AccountRepo
             return await _accountDAO.GetAccountByEmailForReset(email);
         }
 
+        public async Task<List<Account>> GetAccountsByIds(List<int> ids) => await _accountDAO.GetAccountsByIds(ids);
     }
 }

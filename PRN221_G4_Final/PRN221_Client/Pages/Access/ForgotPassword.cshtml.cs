@@ -21,7 +21,7 @@ namespace PRN221_Client.Pages.Access
         }
 
         [BindProperty]
-        [Required]
+        [Required(ErrorMessage = "Email không được để trống")]
         [EmailAddress(ErrorMessage = "Sai định dạng email")]
         public string ResetEmail { get; set; }
 
@@ -39,7 +39,7 @@ namespace PRN221_Client.Pages.Access
             var account = await _authenService.GetAccountByEmailForReset(ResetEmail);
             if (account == null)
             {
-                ModelState.AddModelError(string.Empty, "Email không tồn tại");
+                ModelState.AddModelError("EmailNotFound", "Email không tồn tại");
                 return Page();
             }
 

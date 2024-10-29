@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PRN221_BusinessLogic.Interface;
 using PRN221_Models.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace PRN221_Client.Pages.Access
 {
@@ -20,6 +21,9 @@ namespace PRN221_Client.Pages.Access
         [BindProperty]
         public string Gender { get; set; }
         [BindProperty]
+        [DataType(DataType.Date)]
+        public DateTime DateOfBirth { get; set; }
+        [BindProperty]
         public string PhoneNumber { get; set; }
         [BindProperty]
         public string Username { get; set; }
@@ -36,6 +40,7 @@ namespace PRN221_Client.Pages.Access
             {
                 FullName = this.FullName,
                 Gender = this.Gender,
+                DateOfBirth = this.DateOfBirth,
                 Phone = this.PhoneNumber,
                 Username = this.Username,
                 Password = this.Password,

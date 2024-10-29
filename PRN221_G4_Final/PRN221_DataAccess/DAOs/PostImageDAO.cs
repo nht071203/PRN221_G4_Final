@@ -19,5 +19,11 @@ namespace PRN221_DataAccess.DAOs
         {
             return await _context.PostImages.Where(img => img.PostId == postId).ToListAsync();
         }
+
+        public async Task Add(PostImage postImage)
+        {
+            _context.PostImages.Add(postImage);
+            await _context.SaveChangesAsync();
+        }
     }
 }

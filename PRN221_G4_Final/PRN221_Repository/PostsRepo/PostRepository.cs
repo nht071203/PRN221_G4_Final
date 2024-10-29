@@ -16,9 +16,31 @@ namespace PRN221_Repository.PostsRepo
             _postDAO = postDAO;
         }
 
+        public async Task<Post> AddPost(Post post)
+        {
+            return await _postDAO.Add(post);
+        }
+
+        public async Task<Account> ExpertWithMostPosts()
+        {
+            return await _postDAO.ExpertWithMostPosts();
+        }
+
+        public async Task<Account> FarmerWithMostPosts()
+        {
+            return await _postDAO.FarmerWithMostPosts();    
+        }
+
         public async Task<IEnumerable<Post>> GetAll()
         {
             return await _postDAO.GetAll();
+        }
+
+        public async Task<IEnumerable<Post>> GetAllPostByAccountId(int id) => await _postDAO.GetAllPostByAccountId(id);
+
+        public async Task<Post?> GetById(int postId)
+        {
+            return await _postDAO.GetById(postId);
         }
     }
 }

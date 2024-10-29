@@ -17,6 +17,11 @@ namespace PRN221_BusinessLogic.Service
             _firebaseConfig = firebaseConfig;
         }
 
+        public async Task<int> DeleteImageAsync(string fileUrl)
+        {
+             return await _firebaseConfig.DeleteImageFromFirebase(fileUrl);
+        }
+
         public async Task<string> UploadImageAsync(IFormFile fileImage)
         {
             return await _firebaseConfig.UploadToFirebase(fileImage);

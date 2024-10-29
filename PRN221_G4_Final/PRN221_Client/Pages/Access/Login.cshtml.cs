@@ -195,18 +195,14 @@ namespace PRN221_Client.Pages.Access
             {
 
                 await _accountService.CreateNewFacebookAccount(fbId, name, email, avatar);
+                var getAccAgain = await _accountService.GetByIdFacebook(fbId);
             }
+
 
             if (string.IsNullOrEmpty(avatar) && !string.IsNullOrEmpty(fbId))
             {
                 avatar = $"https://graph.facebook.com/{fbId}/picture?type=large";
             }
-
-            //var claims = new List<Claim>
-            //{
-            //    new Claim(ClaimTypes.Name, account.Username),
-            //    new Claim(ClaimTypes.Email, email)
-            //};
 
             var claims2 = new List<Claim>
             {

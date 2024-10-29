@@ -14,7 +14,7 @@ namespace PRN221_Client.Pages.Service
         private readonly IRequirementService _requirementServices;
         private readonly IAccountService _accountService;
         private readonly IBookingService _bookingService;
-        private const int PageSize = 2; // Số dịch vụ trong 1 page
+        private const int PageSize = 8; // Số dịch vụ trong 1 page
 
         public ListServicesModel(IRequirementService requirementService, IAccountService accountService, IBookingService bookingService)
         {
@@ -30,13 +30,36 @@ namespace PRN221_Client.Pages.Service
 
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int PriceFilter { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int RateFilter { get; set; }
 
-        public async Task OnGet()
+        public async Task<IActionResult> OnGet(int PriceFilter, int RateFilter)
         {
             int page = 1;
 
             // Lấy danh sách tất cả dịch vụ
             var allServices = await _requirementServices.GetAllServiceAvailable();
+
+            // Lọc giá trước
+            if (PriceFilter == 1)
+            {
+                allServices = allServices.OrderBy(x => x.Price);
+            }
+            else if (PriceFilter == 2)
+            {
+                allServices = allServices.OrderByDescending(x => x.Price);
+            }
+
+            if (RateFilter > 0 && RateFilter < 5)
+            {
+                allServices = allServices.Where(s => s.AverageRating >= RateFilter && s.AverageRating < (RateFilter + 1));
+            }
+            else if (RateFilter == 5)
+            {
+                allServices = allServices.Where(s => s.AverageRating == RateFilter);
+            }
 
             // Tính tổng số trang
             int totalServices = allServices.Count();
@@ -56,19 +79,41 @@ namespace PRN221_Client.Pages.Service
                 var account = await _accountService.GetByIdAccount(service.CreatorId);
                 ServiceCreatorAccounts[service.ServiceId] = account;
             }
+
+            return Page(); // Trả về trang đã cập nhật
         }
 
-        //Hàm xử lý chuyển phân trang
-        public async Task<IActionResult> OnGetPagination(int p)
+        public async Task<IActionResult> OnGetPagination(int p, int priceFilter, int rateFilter)
         {
             CurrentPage = p;
 
             // Lấy các dịch vụ theo số trang
-            ServiceList = await _requirementServices.GetServicesPaged(p, PageSize);
+            var allServices = await _requirementServices.GetAllServiceAvailable();
+
+            // Lọc giá trước
+            if (PriceFilter == 1)
+            {
+                allServices = allServices.OrderBy(x => x.Price);
+            }
+            else if (PriceFilter == 2)
+            {
+                allServices = allServices.OrderByDescending(x => x.Price);
+            }
+
+            if (RateFilter > 0 && RateFilter < 5)
+            {
+                allServices = allServices.Where(s => s.AverageRating >= RateFilter && s.AverageRating < (RateFilter + 1));
+            }
+            else if (RateFilter == 5)
+            {
+                allServices = allServices.Where(s => s.AverageRating == RateFilter);
+            }
 
             // Tính tổng dịch vụ
             int totalServices = await _requirementServices.GetTotalServicesCount();
             TotalPages = (int)Math.Ceiling(totalServices / (double)PageSize);
+
+            ServiceList = allServices.Skip((CurrentPage - 1) * PageSize).Take(PageSize);
 
             ServiceCreatorAccounts = new Dictionary<int, Account?>();
 
@@ -77,6 +122,9 @@ namespace PRN221_Client.Pages.Service
                 var account = await _accountService.GetByIdAccount(service.CreatorId);
                 ServiceCreatorAccounts[service.ServiceId] = account;
             }
+
+            PriceFilter = priceFilter;
+            RateFilter = rateFilter;
 
             return Page(); // Trả về trang đã cập nhật
         }
@@ -115,5 +163,6 @@ namespace PRN221_Client.Pages.Service
 
             return RedirectToPage("/Service/BookingSuccess");
         }
+
     }
 }

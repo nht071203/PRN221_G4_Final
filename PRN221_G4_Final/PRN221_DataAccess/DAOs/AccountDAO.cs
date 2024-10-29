@@ -90,6 +90,13 @@ namespace PRN221_DataAccess.DAOs
             return await _context.Accounts.CountAsync(n => n.IsDeleted == false && n.RoleId == 1);
         }
 
+        public async Task<int> GetTotaExpertCountAsync()
+        {
+            return await _context.Accounts.CountAsync(n => n.IsDeleted == false && n.RoleId == 2);
+        }
+
+
+
         public async Task<Account> GetByFbId(string fbId)
         {
             var item = await _context.Accounts.FirstOrDefaultAsync(acc => acc.FacebookId.Equals(fbId));
@@ -114,6 +121,13 @@ namespace PRN221_DataAccess.DAOs
         public async Task<Account?> GetAccountById(int? accountId)
         {
             return await _context.Accounts.FirstOrDefaultAsync(a => a.AccountId == accountId);
+        }
+
+        public async Task<List<Account>> GetAccountsByIds(List<int> ids)
+        {
+            return await _context.Accounts
+                .Where(account => ids.Contains(account.AccountId))
+                .ToListAsync();
         }
     }
 }

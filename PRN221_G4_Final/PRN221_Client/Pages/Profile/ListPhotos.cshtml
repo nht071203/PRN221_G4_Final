@@ -59,7 +59,14 @@
                         {
                         <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> @Model.Profile.DegreeUrl</p>
                         } *@
-                        @* <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> April 1, 1988</p> *@
+                        @if (Model.Profile.DateOfBirth != null)
+                        {
+                            <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> @Model.Profile.DateOfBirth.Value.ToString("MMMM dd, yyyy")</p>
+                        }
+                        @if (Model.Profile.YearOfExperience != null)
+                        {
+                            <p><i class="fa fa-user-tie fa-fw w3-margin-right w3-text-theme"></i> @Model.Profile.YearOfExperience Year Of Experience</p>
+                        }
                     </div>
                 </div>
                 <br>
@@ -67,20 +74,27 @@
                 <!-- Accordion -->
                 <div class="w3-card w3-round">
                     <div class="w3-white">
-                        <a class="w3-button w3-block w3-theme-l1 w3-left-align">
-                            <i class="fa fa-info-circle fa-fw w3-margin-right"></i> My Information
+                        @if (Model.AccountLogin == Model.Profile.AccountId)
+                        {
+                            <a class="w3-button w3-block w3-theme-l1 w3-left-align">
+                                <i class="fa fa-info-circle fa-fw w3-margin-right"></i> Information
+                            </a>
+                        }
+
+                        <a asp-page="/Profile/PersonalPage" asp-route-id="@Model.Profile.AccountId" class="w3-button w3-block w3-theme-l1 w3-left-align">
+                            <i class="fa fa-pencil-alt fa-fw w3-margin-right"></i> Posts
                         </a>
-                        <a class="w3-button w3-block w3-theme-l1 w3-left-align">
-                            <i class="fa fa-user-friends fa-fw w3-margin-right"></i> My Friends
+                        <a asp-page="/Profile/ListFollow" asp-route-id="@Model.Profile.AccountId" class="w3-button w3-block w3-theme-l1 w3-left-align">
+                            <i class="fa fa-user-friends fa-fw w3-margin-right"></i> Friends
                         </a>
-                        <a class="w3-button w3-block w3-theme-l1 w3-left-align">
-                            <i class="fa fa-user-plus fa-fw w3-margin-right"></i> My Followers
+                        <a asp-page="/Profile/ListFollow" asp-route-id="@Model.Profile.AccountId" class="w3-button w3-block w3-theme-l1 w3-left-align">
+                            <i class="fa fa-user-plus fa-fw w3-margin-right"></i> Followers
                         </a>
-                        <a class="w3-button w3-block w3-theme-l1 w3-left-align">
-                            <i class="fa fa-user-check fa-fw w3-margin-right"></i> My Following
+                        <a asp-page="/Profile/ListFollow" asp-route-id="@Model.Profile.AccountId" class="w3-button w3-block w3-theme-l1 w3-left-align">
+                            <i class="fa fa-user-check fa-fw w3-margin-right"></i> Following
                         </a>
-                        <a class="w3-button w3-block w3-theme-l1 w3-left-align">
-                            <i class="fa fa-picture-o fa-fw w3-margin-right"></i> My Photos
+                        <a asp-page="/Profile/ListPhotos" asp-route-id="@Model.Profile.AccountId" class="w3-button w3-block w3-theme-l1 w3-left-align">
+                            <i class="fa fa-picture-o fa-fw w3-margin-right"></i> Photos
                         </a>
                     </div>
                 </div>
@@ -100,25 +114,18 @@
                     </div>
                 </div>
 
-
-
                 <div class="w3-container w3-card w3-white w3-round w3-margin">
                     <div >
                         <h5>Tất cả hình ảnh</h5>
                     </div>
+
                     <div class="row mt-3">
-                        <div class="col-md-4 col-sm-6 mb-4 p-2 pb-0 pt-0">
-                            <a href="/Profile/PersonalPage/2" ><img src="https://firebasestorage.googleapis.com/v0/b/prn221-69738.appspot.com/o/image%2Fforest.jpg?alt=media&token=773588f3-0ca5-485b-ac33-53f16e3a146f" class="img-fluid rounded" alt="Forest" /></a>
-                        </div>
-                        <div class="col-md-4 col-sm-6 mb-4 p-2 pb-0 pt-0">
-                            <a href="/Profile/PersonalPage/2"><img src="https://firebasestorage.googleapis.com/v0/b/prn221-69738.appspot.com/o/image%2Fforest.jpg?alt=media&token=773588f3-0ca5-485b-ac33-53f16e3a146f" class="img-fluid rounded" alt="Forest" /></a>
-                        </div>
-                        <div class="col-md-4 col-sm-6 mb-4 p-2 pb-0 pt-0">
-                            <a href="/Profile/PersonalPage/2" ><img src="https://firebasestorage.googleapis.com/v0/b/prn221-69738.appspot.com/o/image%2Fforest.jpg?alt=media&token=773588f3-0ca5-485b-ac33-53f16e3a146f" class="img-fluid rounded" alt="Forest" /></a>
-                        </div>
-                        <div class="col-md-4 col-sm-6 mb-4 p-2 pb-0 pt-0">
-                            <a href="/Profile/PersonalPage/2"><img src="https://firebasestorage.googleapis.com/v0/b/prn221-69738.appspot.com/o/image%2Fforest.jpg?alt=media&token=773588f3-0ca5-485b-ac33-53f16e3a146f" class="img-fluid rounded" alt="Forest" /></a>
-                        </div>
+                        @foreach (var image in Model.PostImages)
+                        {
+                            <div class="col-md-4 col-sm-6 mb-4 p-2 pb-0 pt-0">
+                                <a><img src="@image.ImageUrl" class="img-fluid rounded" alt="Forest" /></a>
+                            </div>
+                        }
                     </div>
                 </div>
                 <!-- End Middle Column -->

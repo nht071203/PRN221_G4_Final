@@ -2,6 +2,10 @@
 using OxyPlot;
 using PRN221_Admin.Views;
 using PRN221_Admin.ViewModels;
+using LiveCharts;
+using LiveCharts.Defaults;
+using LiveCharts.Wpf;
+using System.IO;
 
 namespace PRN221_Admin
 {
@@ -10,7 +14,7 @@ namespace PRN221_Admin
     /// </summary>
     public partial class DashboardMU : Window
     {
-        public PlotModel PlotModel { get; set; }
+
 
         private ExpertViewModel _ExpertViewModel;
         public NewsViewModel _NewsViewModel;
@@ -43,32 +47,28 @@ namespace PRN221_Admin
            // DashboardPage.Content = new LoginPage(_loginViewModel, _ExpertViewModel);
         }
 
+        public SeriesCollection SeriesCollection { get; set; }
+        public SeriesCollection LastHourSeries { get; set; }
+        public SeriesCollection LastHourSeries1 { get; set; }
+        public string[] Labels { get; set; }
+        public Func<double, string> Formatter { get; set; }
 
-        /*private void Button_ThongKe(object sender, RoutedEventArgs e)
+        public PlotModel PlotModel { get; set; }
+        public ProfileModelView ProfileView { get; set; }
+        public FarmerModelView FarmerView { get; set; }
+        
+        public DashboardMU(ProfileModelView profileViewModel, FarmerModelView farmerViewModel)
         {
-            NoiDung.Content = new ThongKePost();
-
+            InitializeComponent();
+            FarmerView = farmerViewModel;
+            ProfileView = profileViewModel;
+            NoiDung.Content = new ProfileAdmin(ProfileView);
         }
 
-        private void Button_ManagerNew(object sender, RoutedEventArgs e)
+
+        private void Button_Dashboard(object sender, RoutedEventArgs e)
         {
-            NoiDung.Content = new NewsPage(_NewsViewModel);
+            NoiDung.Content = new ProfileAdmin(ProfileView);
         }
-
-        private void Button_ManageExpert(object sender, RoutedEventArgs e)
-        {
-            NoiDung.Content = new ExpertPage(_ExpertViewModel);
-        }
-
-
-        private void Button_ManageFarmer(object sender, RoutedEventArgs e)
-        {
-            NoiDung.Content = new FarmerPage(FarmerView);
-        }*/
-
-    /*    private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            DashboardPage.Content = new LoginPage(_loginViewModel);
-        }*/
     }
 }

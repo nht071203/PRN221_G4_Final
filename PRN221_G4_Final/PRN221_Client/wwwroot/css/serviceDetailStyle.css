@@ -29217,3 +29217,18 @@ button {
     button:hover {
         background-color: #218838;
     }
+
+.gen-star-head {
+    width: 300px;
+    display: flex;
+}
+
+.stars-rate {
+    position: relative;
+}
+
+.star-point {
+    color: gold;
+    font-size: 16px;
+}
+

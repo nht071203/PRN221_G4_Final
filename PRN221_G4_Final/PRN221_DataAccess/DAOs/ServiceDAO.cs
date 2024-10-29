@@ -25,7 +25,7 @@ namespace PRN221_DataAccess.DAOs
         public async Task<IEnumerable<Service>> GetServicesPaged(int pageNumber, int pageSize)
         {
             return await _context.Services
-                .Where(s => s.IsDeleted == false) // Adjust based on your business logic
+                .Where(s => s.IsDeleted == false && s.IsEnable == true) // Adjust based on your business logic
                 .OrderBy(s => s.ServiceId) // Ensure consistent ordering
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
@@ -35,7 +35,7 @@ namespace PRN221_DataAccess.DAOs
         // Đếm tổng số dịch vụ khả dụng
         public async Task<int> GetTotalServicesCount()
         {
-            return await _context.Services.CountAsync(s => s.IsDeleted == false);
+            return await _context.Services.CountAsync(s => s.IsDeleted == false && s.IsEnable == true); 
         }
 
         // Đếm tổng số dịch vụ đã được sử dụng
@@ -91,14 +91,41 @@ namespace PRN221_DataAccess.DAOs
             var item = await GetById(id);
             if (item == null) return;
 
-            _context.Services.Remove(item);
+            item.DeletedAt = DateTime.Now;
+            item.IsDeleted = true;
+
+            _context.Entry(item).CurrentValues.SetValues(item);
+            //_context.Services.Remove(item);
             await _context.SaveChangesAsync();
         }
 
         // Lấy danh sách dịch vụ không xóa
         public async Task<IEnumerable<Service>> GetAllServiceAvailable()
         {
-            return await _context.Services.Where(c => c.IsDeleted == false).ToListAsync();
+            return await _context.Services.Where(c => c.IsDeleted == false && c.IsEnable == true).ToListAsync();
         }
+
+        //// Tìm kiếm dịch vụ theo tiền
+        //// Giá cao nhất
+        //public async Task<IEnumerable<Service>> GetAllServicePriceHighest()
+        //{
+        //    return await _context.Services.Where(s => s.IsDeleted == false && s.IsEnable == true).OrderByDescending(s => s.Price).ToListAsync();
+        //}
+        //// Giá thấp nhất
+        //public async Task<IEnumerable<Service>> GetAllServicePriceLowest()
+        //{
+        //    return await _context.Services.Where(s => s.IsDeleted == false && s.IsEnable == true).OrderBy(s => s.Price).ToListAsync();
+        //}
+
+        //// Tìm kiếm dịch vụ theo số sao
+        //public async Task<IEnumerable<Service>> GetAllServiceByRate(decimal lowRate, decimal highRate)
+        //{
+        //    return await _context.Services.Where(s => s.IsDeleted == false && s.IsEnable == true && (s.AverageRating ?? 0) >= lowRate && (s.AverageRating ?? 0) <= highRate).ToListAsync();
+        //}
+        //// Tìm dịch vụ đánh giá cao nhất
+        //public async Task<IEnumerable<Service>> GetAllServiceByRateInTop()
+        //{
+        //    return await _context.Services.Where(s => s.IsDeleted == false && s.IsEnable == true && (s.AverageRating ?? 0) == 5).ToListAsync();
+        //}
     }
 }

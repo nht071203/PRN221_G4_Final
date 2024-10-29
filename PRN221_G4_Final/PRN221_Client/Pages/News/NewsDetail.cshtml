@@ -24,7 +24,7 @@
                         <div class="post--item post--single pb--30">
                             <!-- Post Image Start -->
                             <div class="post--img">
-                                <a href=""><img src="~/image/background.jpeg" alt=""></a>
+                                <img class="w-100" src="@Model.NewsDetail.ImageUrl" alt="">
                             </div>
                             <!-- Post Image End -->
                             <!-- Post Info Start -->
@@ -114,8 +114,11 @@
                                         <div class="post--item">
                                             <!-- Post Image Start -->
                                             <div class="post--img">
-                                                <a asp-page="/News/NewsDetail" asp-route-id="@news.NewsId" ><img src="~/image/background2.jpeg" alt=""></a>
+                                                <a asp-page="/News/NewsDetail" asp-route-id="@news.NewsId">
+                                                    <img src="@news.ImageUrl" alt="" style="width: 100%;height: 200px;object-fit: cover;">
+                                                </a>
                                             </div>
+
                                             <!-- Post Image End -->
                                             <!-- Post Info Start -->
                                             <div class="post--info">

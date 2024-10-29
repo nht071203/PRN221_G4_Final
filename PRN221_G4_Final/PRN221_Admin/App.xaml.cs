@@ -32,7 +32,11 @@ namespace PRN221_Admin
             var newsViewModel = ServiceProvider.GetRequiredService<NewsViewModel>();
             //var farmerViewModel = ServiceProvider.GetRequiredService<FarmerViewModel>();
             var farmerMU = ServiceProvider.GetRequiredService<FarmerModelView>();
+
             var loginView = ServiceProvider.GetRequiredService<LoginViewModel>();
+
+            var profileMU = ServiceProvider.GetRequiredService<ProfileModelView>();
+
 
             mainwindow.DataContext = studentViewModel;
             mainwindow.DataContext = newsViewModel;
@@ -68,7 +72,11 @@ namespace PRN221_Admin
             services.AddTransient<CategoryNewsDAO>();
             //services.AddTransient<FarmerViewModel>();
             services.AddTransient<FarmerModelView>();
+
             services.AddTransient<LoginViewModel>();
+
+
+            services.AddTransient<ProfileModelView>();
 
 
             /*// Đăng ký ViewModel

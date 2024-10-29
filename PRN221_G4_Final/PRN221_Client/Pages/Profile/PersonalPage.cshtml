@@ -1,4 +1,4 @@
-﻿@page "/Profile/PersonalPage/{id:int}"
+﻿@page "/Profile/PersonalPage"
 @model PRN221_Client.Pages.Profile.PersonalPageModel
 @{
     ViewData["Title"] = @Model.Profile.FullName;
@@ -14,6 +14,43 @@
     h5 {
         font-family: "Open Sans", sans-serif
     }
+    /* Trường hợp 1 ảnh */
+    .image-grid-1 img {
+        width: 100%; /* Hiển thị ảnh rộng 100% */
+    }
+
+    /* Trường hợp 2 ảnh */
+    .image-grid-2 {
+        display: flex;
+        justify-content: space-between;
+    }
+
+        .image-grid-2 img {
+            width: 48%; /* Hiển thị 2 ảnh ngang hàng, mỗi ảnh chiếm 48% */
+        }
+
+    /* Trường hợp 3 ảnh */
+    .image-grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+        .image-grid-3 img {
+            width: 100%; /* 3 ảnh chia đều theo hàng */
+        }
+
+    /* Trường hợp 4 ảnh */
+    .image-grid-4 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+        .image-grid-4 img {
+            width: 100%; /* 4 ảnh chia thành 2x2 */
+        }
+
 </style>
 
 <div class="w3-theme-l5">
@@ -59,7 +96,14 @@
                         {
                             <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> @Model.Profile.DegreeUrl</p>
                         } *@
-                        @* <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> April 1, 1988</p> *@
+                        @if (Model.Profile.DateOfBirth != null)
+                        {
+                            <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> @Model.Profile.DateOfBirth.Value.ToString("MMMM dd, yyyy")</p>
+                        }
+                        @if (Model.Profile.YearOfExperience != null)
+                        {
+                            <p><i class="fa fa-user-tie fa-fw w3-margin-right w3-text-theme"></i> @Model.Profile.YearOfExperience Year Of Experience</p>
+                        }
                     </div>
                 </div>
                 <br>
@@ -67,20 +111,27 @@
                 <!-- Accordion -->
                 <div class="w3-card w3-round">
                     <div class="w3-white">
-                        <a class="w3-button w3-block w3-theme-l1 w3-left-align">
-                            <i class="fa fa-info-circle fa-fw w3-margin-right"></i> My Information
+                        @if (Model.AccountLogin == Model.Profile.AccountId)
+                        {
+                            <a class="w3-button w3-block w3-theme-l1 w3-left-align">
+                                <i class="fa fa-info-circle fa-fw w3-margin-right"></i> Information
+                            </a>
+                        }
+
+                        <a asp-page="/Profile/PersonalPage" asp-route-id="@Model.Profile.AccountId" class="w3-button w3-block w3-theme-l1 w3-left-align">
+                            <i class="fa fa-pencil-alt fa-fw w3-margin-right"></i> Posts
                         </a>
-                        <a class="w3-button w3-block w3-theme-l1 w3-left-align">
-                            <i class="fa fa-user-friends fa-fw w3-margin-right"></i> My Friends
+                        <a asp-page="/Profile/ListFollow" asp-route-id="@Model.Profile.AccountId" class="w3-button w3-block w3-theme-l1 w3-left-align">
+                            <i class="fa fa-user-friends fa-fw w3-margin-right"></i> Friends
                         </a>
-                        <a class="w3-button w3-block w3-theme-l1 w3-left-align">
-                            <i class="fa fa-user-plus fa-fw w3-margin-right"></i> My Followers
+                        <a asp-page="/Profile/ListFollow" asp-route-id="@Model.Profile.AccountId" class="w3-button w3-block w3-theme-l1 w3-left-align">
+                            <i class="fa fa-user-plus fa-fw w3-margin-right"></i> Followers
                         </a>
-                        <a class="w3-button w3-block w3-theme-l1 w3-left-align">
-                            <i class="fa fa-user-check fa-fw w3-margin-right"></i> My Following
+                        <a asp-page="/Profile/ListFollow" asp-route-id="@Model.Profile.AccountId" class="w3-button w3-block w3-theme-l1 w3-left-align">
+                            <i class="fa fa-user-check fa-fw w3-margin-right"></i> Following
                         </a>
                         <a asp-page="/Profile/ListPhotos" asp-route-id="@Model.Profile.AccountId" class="w3-button w3-block w3-theme-l1 w3-left-align">
-                            <i class="fa fa-picture-o fa-fw w3-margin-right"></i> My Photos
+                            <i class="fa fa-picture-o fa-fw w3-margin-right"></i> Photos
                         </a>
                     </div>
                 </div>
@@ -111,47 +162,117 @@
             <!-- Middle Column -->
             <div class="w3-col m7">
 
-                <div class="w3-row-padding">
-                    <div class="w3-col m12">
-                        <div class="w3-card w3-round w3-white">
-                            <div class="w3-container w3-padding">
-                                <h6 class="w3-opacity">Social Media template by w3.css</h6>
-                                <button type="button" class="w3-button w3-theme"><i class="fa fa-pencil"></i>  Post</button>
+                @* ADD POST PERSONAL PAGE *@
+                <div class="container" style="margin-left: 10px;">
+                    <div class="row">
+                        <div class="col-md-8 p-2">
+
+                            <div class="wrapper-add-post add-post-personal">
+                                <div class="post-header">
+                                    <a href="/Profile/PersonalPage/@Model.Profile.AccountId">
+                                        <img src="@Model.Profile.Avatar" alt="Profile Picture" onerror="this.onerror=null; this.src='https://firebasestorage.googleapis.com/v0/b/prn221-69738.appspot.com/o/image%2Fuser.png?alt=media&token=e669a837-b9c8-4983-b2bd-8eb5c091d48f';">
+                                    </a>
+
+                                    <input id="postInput" type="text" placeholder="@Model.Profile.FullName ơi, bạn đang nghĩ gì thế?">
+                                </div>
+                            </div>
+
+                            <div class="popup" id="popup" style="z-index: 100;">
+                                <div class="popup-content">
+                                    <button class="close-btn" id="closePopupBtn">×</button>
+                                    <h2>Tạo bài viết</h2>
+
+                                    <form id="postForm" method="post" asp-page-handler="AddPost" enctype="multipart/form-data">
+                                        <input type="hidden" value="@Model.Profile.AccountId" name="AccountID">
+                                        <textarea name="ContentPost" placeholder="@Model.Profile.FullName ơi, bạn đang nghĩ gì thế?" class="content-post"
+                                                  required></textarea>
+
+                                        <input type="file" id="imageInput" accept="image/*" style="display: none;" multiple asp-for="PostViewModel.ImagesPost">
+
+                                        <div class="select">
+                                            <label for="select-input">Chọn danh mục: </label>
+                                            <select id="select-input" name="CategoryPostId">
+                                                <option value="" disabled selected>Chọn danh mục</option>
+                                                @foreach (var categoryPost in Model.ListCategoryPost)
+                                                {
+                                                    <option value="@categoryPost.CategoryPostId">@categoryPost.CategoryPostName</option>
+                                                }
+                                            </select>
+                                        </div>
+
+                                        <button type="button" id="clearImagesButton" style="display: none;">Xóa ảnh</button>
+                                        <div id="imagePreview" style="margin-top: 10px; display: flex; flex-wrap: wrap;"></div>
+
+
+                                        <div class="actions" style="margin-top: 10px;">
+                                            <button type="button" id="selectImageButton">
+                                                <img src="https://via.placeholder.com/20/00FF00" alt="Photo/Video">Ảnh/video
+                                            </button>
+                                            <div>
+                                                <img src="https://via.placeholder.com/20/FFD700" alt="Feeling/Activity">Cảm
+                                                xúc/hoạt động
+                                            </div>
+                                            <button><img src="https://via.placeholder.com/20/FF4500" alt="GIF">GIF</button>
+                                        </div>
+
+                                        <button type="submit"
+                                                style="width: 100%; margin-top: 10px; padding: 10px; background-color: #1877f2; color: white; border: none; border-radius: 5px;">
+                                            Đăng
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                @* END ADD POST *@
+
+
+                @foreach (var post in Model.Posts)
+                {
+                    var imageCount = post.postImages.Count();
+
+                    <div class="w3-container w3-card w3-white w3-round w3-margin">
+                        <br>
+                        <img src="@post.account.Avatar" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+                        <span class="w3-right w3-opacity">1 min</span>
+                        <h4>@post.account.FullName</h4><br>
+                        <hr class="w3-clear">
+                        <p>
+                            @post.post.PostContent
+                        </p>
+
+                        <div class="w3-row-padding" style="margin:0 -16px">
+                            <div class="@("image-grid-" + imageCount)">
+                                @foreach (var image in post.postImages)
+                                {
+                                    <img src="@image.ImageUrl" alt="@image.ImageUrl" class="">
+                                }
+                            </div>
+                        </div>
+
+                        <div class="w3-margin-top">
+                            @* <button type="button" class="w3-button w3-theme-d1 w3-margin-bottom">
+                                <i class="fa fa-thumbs-up"></i>
+                                <span>10</span> Like
+                            </button>
+                            <button type="button" class="w3-button w3-theme-d2 w3-margin-bottom">
+                                <i class="fa fa-comment"></i>
+                                <span>10</span> Comment
+                            </button>
+                            <button type="button" class="w3-button w3-theme-d2 w3-margin-bottom">
+                                <i class="fa fa-comment"></i>
+                                <span>10</span> Share
+                            </button> *@
+
+                            <div class="activity--action fw--700 w3-margin-bottom">
+                                <a asp-page="/Posts/PostDetail" asp-route-postId="@post.post.PostId">See More...</a>
                             </div>
                         </div>
                     </div>
-                </div>
+                }
 
-                <div class="w3-container w3-card w3-white w3-round w3-margin">
-                    <br>
-                    <img src="@Model.Profile.Avatar" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
-                    <span class="w3-right w3-opacity">1 min</span>
-                    <h4>@Model.Profile.FullName</h4><br>
-                    <hr class="w3-clear">
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-                        ea commodo consequat.
-                    </p>
-                    <div class="w3-row-padding" style="margin:0 -16px">
-                        <div class="w3-half">
-                            <img src="~/image/lights.jpg" style="width:100%" alt="Northern Lights" class="w3-margin-bottom">
-                        </div>
-                        <div class="w3-half">
-                            <img src="~/image/nature.jpg" style="width:100%" alt="Nature" class="w3-margin-bottom">
-                        </div>
-                    </div>
-                    <div>
-                        <button type="button" class="w3-button w3-theme-d1 w3-margin-bottom">
-                            <i class="fa fa-thumbs-up"></i>
-                            <span>10</span> Like
-                        </button>
-                        <button type="button" class="w3-button w3-theme-d2 w3-margin-bottom">
-                            <i class="fa fa-comment"></i>
-                            <span>10</span> Comment
-                        </button>
-                    </div>
-                </div>
                 <!-- End Middle Column -->
             </div>
 

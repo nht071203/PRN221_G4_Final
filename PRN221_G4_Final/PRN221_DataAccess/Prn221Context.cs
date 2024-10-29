@@ -56,7 +56,8 @@ public partial class Prn221Context : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=DESKTOP-EV8RQ78\\SQLEXPRESS;Database=PRN221;uid=sa;pwd=123456;encrypt=true;trustServerCertificate=true;");
+        => optionsBuilder.UseSqlServer("Server=DESKTOP-PU0SOEM\\SQLEXPRESS;Database=PRN221;uid=sa;pwd=123@123a;encrypt=true;trustServerCertificate=true;");
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -76,7 +77,9 @@ public partial class Prn221Context : DbContext
                 .HasMaxLength(500)
                 .IsUnicode(false)
                 .HasColumnName("avatar");
-            entity.Property(e => e.DateOfBirth).HasColumnName("dateOfBirth");
+            entity.Property(e => e.DateOfBirth)
+                .HasColumnType("datetime")
+                .HasColumnName("dateOfBirth");
             entity.Property(e => e.DegreeUrl)
                 .HasMaxLength(500)
                 .IsUnicode(false)
@@ -105,7 +108,6 @@ public partial class Prn221Context : DbContext
                 .HasColumnName("major");
             entity.Property(e => e.Otp).HasColumnName("otp");
             entity.Property(e => e.Password)
-                .IsRequired()
                 .HasMaxLength(32)
                 .IsUnicode(false)
                 .HasColumnName("password");
@@ -119,7 +121,6 @@ public partial class Prn221Context : DbContext
                 .HasMaxLength(500)
                 .HasColumnName("short_bio");
             entity.Property(e => e.Username)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("username");
@@ -128,7 +129,7 @@ public partial class Prn221Context : DbContext
 
         modelBuilder.Entity<AccountConversation>(entity =>
         {
-            entity.HasKey(e => new { e.AccountId, e.ConversationId }).HasName("PK__AccountC__F5B3C52425D82F79");
+            entity.HasKey(e => new { e.AccountId, e.ConversationId }).HasName("PK__AccountC__F5B3C524002C4713");
 
             entity.ToTable("AccountConversation");
 
@@ -140,15 +141,16 @@ public partial class Prn221Context : DbContext
 
         modelBuilder.Entity<BookingService>(entity =>
         {
-            entity.HasKey(e => e.BookingId).HasName("PK__BookingS__5DE3A5B1AAF546B8");
+            entity.HasKey(e => e.BookingId).HasName("PK__BookingS__5DE3A5B1307969F5");
 
             entity.ToTable("BookingService");
 
             entity.Property(e => e.BookingId).HasColumnName("booking_id");
-            entity.Property(e => e.BookingAt).HasColumnName("booking_at");
+            entity.Property(e => e.BookingAt)
+                .HasColumnType("datetime")
+                .HasColumnName("booking_at");
             entity.Property(e => e.BookingBy).HasColumnName("booking_by");
             entity.Property(e => e.BookingStatus)
-                .IsRequired()
                 .HasMaxLength(10)
                 .IsUnicode(false)
                 .HasColumnName("booking_status");
@@ -160,21 +162,20 @@ public partial class Prn221Context : DbContext
 
         modelBuilder.Entity<CategoryNews>(entity =>
         {
-            entity.HasKey(e => e.CategoryNewsId).HasName("PK__Category__9D9BEED86CCDC5D7");
+            entity.HasKey(e => e.CategoryNewsId).HasName("PK__Category__9D9BEED87C61F923");
 
             entity.Property(e => e.CategoryNewsId).HasColumnName("category_news_id");
             entity.Property(e => e.CategoryNewsDescription)
                 .HasMaxLength(500)
                 .HasColumnName("category_news_description");
             entity.Property(e => e.CategoryNewsName)
-                .IsRequired()
                 .HasMaxLength(100)
                 .HasColumnName("category_news_name");
         });
 
         modelBuilder.Entity<CategoryPost>(entity =>
         {
-            entity.HasKey(e => e.CategoryPostId).HasName("PK__Category__02AEB4E3A75289D0");
+            entity.HasKey(e => e.CategoryPostId).HasName("PK__Category__02AEB4E3BF8A9E2B");
 
             entity.ToTable("CategoryPost");
 
@@ -183,14 +184,13 @@ public partial class Prn221Context : DbContext
                 .HasMaxLength(500)
                 .HasColumnName("category_post_description");
             entity.Property(e => e.CategoryPostName)
-                .IsRequired()
                 .HasMaxLength(200)
                 .HasColumnName("category_post_name");
         });
 
         modelBuilder.Entity<CategoryService>(entity =>
         {
-            entity.HasKey(e => e.CategoryServiceId).HasName("PK__Category__8B6132CCD97B1B29");
+            entity.HasKey(e => e.CategoryServiceId).HasName("PK__Category__8B6132CC3776AB88");
 
             entity.ToTable("CategoryService");
 
@@ -199,14 +199,13 @@ public partial class Prn221Context : DbContext
                 .HasMaxLength(500)
                 .HasColumnName("category_service_description");
             entity.Property(e => e.CategoryServiceName)
-                .IsRequired()
                 .HasMaxLength(100)
                 .HasColumnName("category_service_name");
         });
 
         modelBuilder.Entity<Comment>(entity =>
         {
-            entity.HasKey(e => e.CommentId).HasName("PK__Comment__E7957687BED238FB");
+            entity.HasKey(e => e.CommentId).HasName("PK__Comment__E7957687B7703830");
 
             entity.ToTable("Comment");
 
@@ -215,27 +214,34 @@ public partial class Prn221Context : DbContext
             entity.Property(e => e.Content)
                 .HasMaxLength(200)
                 .HasColumnName("content");
-            entity.Property(e => e.CreatedAt).HasColumnName("created_at");
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("created_at");
             entity.Property(e => e.IsDeleted).HasColumnName("is_deleted");
             entity.Property(e => e.PostId).HasColumnName("post_id");
             entity.Property(e => e.Rate).HasColumnName("rate");
-            entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("updated_at");
         });
 
         modelBuilder.Entity<Conversation>(entity =>
         {
-            entity.HasKey(e => e.ConversationId).HasName("PK__Conversa__311E7E9AD7DFF313");
+            entity.HasKey(e => e.ConversationId).HasName("PK__Conversa__311E7E9A712BF576");
 
             entity.ToTable("Conversation");
 
             entity.Property(e => e.ConversationId).HasColumnName("conversation_id");
             entity.Property(e => e.ConversationName)
-                .IsRequired()
                 .HasMaxLength(20)
                 .HasColumnName("conversation_name");
-            entity.Property(e => e.CreateAt).HasColumnName("create_at");
+            entity.Property(e => e.CreateAt)
+                .HasColumnType("datetime")
+                .HasColumnName("create_at");
             entity.Property(e => e.CreatorId).HasColumnName("creator_id");
-            entity.Property(e => e.DeleteAt).HasColumnName("delete_at");
+            entity.Property(e => e.DeleteAt)
+                .HasColumnType("datetime")
+                .HasColumnName("delete_at");
             entity.Property(e => e.IsDeleted).HasColumnName("is_deleted");
             entity.Property(e => e.IsGroup).HasColumnName("is_group");
             entity.Property(e => e.MemberCount).HasColumnName("member_count");
@@ -243,19 +249,21 @@ public partial class Prn221Context : DbContext
 
         modelBuilder.Entity<Follow>(entity =>
         {
-            entity.HasKey(e => e.FollowId).HasName("PK__Follow__15A69144A43E0255");
+            entity.HasKey(e => e.FollowId).HasName("PK__Follow__15A69144F9CB19C6");
 
             entity.ToTable("Follow");
 
             entity.Property(e => e.FollowId).HasColumnName("follow_id");
             entity.Property(e => e.BeFollowedId).HasColumnName("be_followed_id");
-            entity.Property(e => e.FollowAt).HasColumnName("follow_at");
+            entity.Property(e => e.FollowAt)
+                .HasColumnType("datetime")
+                .HasColumnName("follow_at");
             entity.Property(e => e.FollowerId).HasColumnName("follower_id");
         });
 
         modelBuilder.Entity<LikePost>(entity =>
         {
-            entity.HasKey(e => e.LikePostId).HasName("PK__LikePost__8F1D2FE8BFF9C254");
+            entity.HasKey(e => e.LikePostId).HasName("PK__LikePost__8F1D2FE8284286A8");
 
             entity.ToTable("LikePost");
 
@@ -267,47 +275,52 @@ public partial class Prn221Context : DbContext
 
         modelBuilder.Entity<Message>(entity =>
         {
-            entity.HasKey(e => e.MessageId).HasName("PK__Message__0BBF6EE695F8FE0A");
+            entity.HasKey(e => e.MessageId).HasName("PK__Message__0BBF6EE639D90C4D");
 
             entity.ToTable("Message");
 
             entity.Property(e => e.MessageId).HasColumnName("message_id");
             entity.Property(e => e.Content)
-                .IsRequired()
                 .HasMaxLength(200)
                 .HasColumnName("content");
             entity.Property(e => e.ConversationId).HasColumnName("conversation_id");
-            entity.Property(e => e.CreateAt).HasColumnName("create_at");
+            entity.Property(e => e.CreateAt)
+                .HasColumnType("datetime")
+                .HasColumnName("create_at");
             entity.Property(e => e.IsDeleted).HasColumnName("is_deleted");
             entity.Property(e => e.SenderId).HasColumnName("sender_id");
         });
 
         modelBuilder.Entity<News>(entity =>
         {
-            entity.HasKey(e => e.NewsId).HasName("PK__News__4C27CCD8E1B0C95C");
+            entity.HasKey(e => e.NewsId).HasName("PK__News__4C27CCD8FE856CC5");
 
             entity.Property(e => e.NewsId).HasColumnName("news_id");
             entity.Property(e => e.CategoryNewsId).HasColumnName("category_news_id");
             entity.Property(e => e.Content)
-                .IsRequired()
                 .HasMaxLength(100)
                 .HasColumnName("content");
-            entity.Property(e => e.CreatedAt).HasColumnName("created_at");
-            entity.Property(e => e.DeletedAt).HasColumnName("deleted_at");
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("created_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("deleted_at");
             entity.Property(e => e.ImageUrl)
                 .HasMaxLength(500)
                 .HasColumnName("image_url");
             entity.Property(e => e.IsDeleted).HasColumnName("is_deleted");
             entity.Property(e => e.Title)
-                .IsRequired()
                 .HasMaxLength(200)
                 .HasColumnName("title");
-            entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("updated_at");
         });
 
         modelBuilder.Entity<Post>(entity =>
         {
-            entity.HasKey(e => e.PostId).HasName("PK__Post__3ED78766B622D442");
+            entity.HasKey(e => e.PostId).HasName("PK__Post__3ED78766985BE016");
 
             entity.ToTable("Post");
 
@@ -331,13 +344,12 @@ public partial class Prn221Context : DbContext
 
         modelBuilder.Entity<PostImage>(entity =>
         {
-            entity.HasKey(e => e.PostImageId).HasName("PK__PostImag__CD0DD5609BA75BA8");
+            entity.HasKey(e => e.PostImageId).HasName("PK__PostImag__CD0DD56058FCF37D");
 
             entity.ToTable("PostImage");
 
             entity.Property(e => e.PostImageId).HasColumnName("post_image_id");
             entity.Property(e => e.ImageUrl)
-                .IsRequired()
                 .HasMaxLength(300)
                 .IsUnicode(false)
                 .HasColumnName("image_url");
@@ -347,13 +359,12 @@ public partial class Prn221Context : DbContext
 
         modelBuilder.Entity<Role>(entity =>
         {
-            entity.HasKey(e => e.RoleId).HasName("PK__Role__760965CCB4572B25");
+            entity.HasKey(e => e.RoleId).HasName("PK__Role__760965CC34C7AFCC");
 
             entity.ToTable("Role");
 
             entity.Property(e => e.RoleId).HasColumnName("role_id");
             entity.Property(e => e.RoleName)
-                .IsRequired()
                 .HasMaxLength(10)
                 .IsUnicode(false)
                 .HasColumnName("role_name");
@@ -361,7 +372,7 @@ public partial class Prn221Context : DbContext
 
         modelBuilder.Entity<Service>(entity =>
         {
-            entity.HasKey(e => e.ServiceId).HasName("PK__Service__3E0DB8AFB288731A");
+            entity.HasKey(e => e.ServiceId).HasName("PK__Service__3E0DB8AFFD7FAEA9");
 
             entity.ToTable("Service");
 
@@ -370,26 +381,30 @@ public partial class Prn221Context : DbContext
                 .HasColumnType("decimal(2, 1)")
                 .HasColumnName("average_rating");
             entity.Property(e => e.Content)
-                .IsRequired()
                 .HasMaxLength(1000)
                 .HasColumnName("content");
-            entity.Property(e => e.CreateAt).HasColumnName("create_at");
+            entity.Property(e => e.CreateAt)
+                .HasColumnType("datetime")
+                .HasColumnName("create_at");
             entity.Property(e => e.CreatorId).HasColumnName("creator_id");
-            entity.Property(e => e.DeletedAt).HasColumnName("deleted_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("deleted_at");
             entity.Property(e => e.IsDeleted).HasColumnName("is_deleted");
             entity.Property(e => e.IsEnable).HasColumnName("is_enable");
             entity.Property(e => e.Price).HasColumnName("price");
             entity.Property(e => e.RatingCount).HasColumnName("rating_count");
             entity.Property(e => e.Title)
-                .IsRequired()
                 .HasMaxLength(200)
                 .HasColumnName("title");
-            entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("updated_at");
         });
 
         modelBuilder.Entity<ServiceRating>(entity =>
         {
-            entity.HasKey(e => e.RatingId).HasName("PK__ServiceR__D35B278BF3A60A32");
+            entity.HasKey(e => e.RatingId).HasName("PK__ServiceR__D35B278B7C5FD7CD");
 
             entity.ToTable("ServiceRating");
 
@@ -408,20 +423,22 @@ public partial class Prn221Context : DbContext
 
         modelBuilder.Entity<SharePost>(entity =>
         {
-            entity.HasKey(e => e.SharePostId).HasName("PK__SharePos__3B880F3237080A2C");
+            entity.HasKey(e => e.SharePostId).HasName("PK__SharePos__3B880F32BD4E6DD9");
 
             entity.ToTable("SharePost");
 
             entity.Property(e => e.SharePostId).HasColumnName("share_post_id");
             entity.Property(e => e.IsDeleted).HasColumnName("is_deleted");
             entity.Property(e => e.PostId).HasColumnName("post_id");
-            entity.Property(e => e.ShareAt).HasColumnName("share_at");
+            entity.Property(e => e.ShareAt)
+                .HasColumnType("datetime")
+                .HasColumnName("share_at");
             entity.Property(e => e.SharerId).HasColumnName("sharer_id");
         });
 
         modelBuilder.Entity<View>(entity =>
         {
-            entity.HasKey(e => e.CountViewId).HasName("PK__Views__C5F7EC92CBBD2D2F");
+            entity.HasKey(e => e.CountViewId).HasName("PK__Views__C5F7EC92353A6A10");
 
             entity.Property(e => e.CountViewId).HasColumnName("count_view_id");
             entity.Property(e => e.AccountId).HasColumnName("account_id");

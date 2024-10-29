@@ -48,6 +48,40 @@
           crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     <script src="https://kit.fontawesome.com/1bd9fa3a2e.js" crossorigin="anonymous"></script>
+    <style>
+        .chat-online {
+            color: #34ce57
+        }
+
+        .chat-offline {
+            color: #e4606d
+        }
+
+
+
+        .flex-grow-0 {
+            flex-grow: 0 !important;
+        }
+
+        .border-top {
+            border-top: 1px solid #dee2e6 !important;
+        }
+
+        #popupListChat {
+            position: fixed;
+            right: 0;
+            top: 0;
+            z-index: 1000;
+            overflow-y: auto;
+            width: 300px;
+            /* height : 500px; */
+            margin-top: 59px;
+            margin-right: 5px;
+            background-color: #6ed941;
+            border: 2px dashed #000000;
+        }
+    </style>
+
 </head>
 <body class="wrapper">
     <!-- Header Section Start -->
@@ -84,7 +118,7 @@
                     @if (isLoggedIn)
                     {
                         <li>
-                            <a href="#" class="btn-link">
+                            <a asp-page="/Profile/PersonalPage" asp-route-id="@getAcc?.AccountId" class="btn-link">
                                 <i class="fa mr--8 fa-user-o"></i>
                                 <span>My Account</span>
                             </a>
@@ -96,6 +130,12 @@
                                 <span>Đăng xuất</span>
                             </a>
                         </li>
+                          <li>
+                        <a id="chatButton" href="#" class="btn-link" onclick="showListChat()">
+                            <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                            <span>Tin Nhắn</span>
+                        </a>
+                    </li>
                     }
                     else
                     {
@@ -110,6 +150,224 @@
                 <!-- Header Topbar Links End -->
             </div>
         </div>
+           <div id="popupListChat" style="display: none;">
+
+            <div class="px-4 d-none d-md-block">
+                <div class="d-flex align-items-center">
+                    <div class="flex-grow-1">
+                        <input type="text" class="form-control my-3" placeholder="Search...">
+                    </div>
+                </div>
+                <i class="fas fa-times" onclick="hideListChat()"></i>
+            </div>
+
+            <a href="#" class="list-group-item list-group-item-action border-0" onclick="showConversation()">
+                <div class="badge bg-success float-right">5</div>
+                <div class="d-flex align-items-start">
+                    <img src="~/image/logo.jpg" class="rounded-circle mr-1" alt="Vanessa Tucker" width="40" height="40">
+                    <div class="flex-grow-1 ml-3">
+                        minh uyen
+                        <div class="small"><span class="fas fa-circle chat-online"></span> Online</div>
+                    </div>
+                </div>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action border-0" onclick="showConversation()">
+                <div class="badge bg-success float-right">5</div>
+                <div class="d-flex align-items-start">
+                    <img src="~/image/logo.jpg" class="rounded-circle mr-1" alt="Vanessa Tucker" width="40" height="40">
+                    <div class="flex-grow-1 ml-3">
+                        minh uyen
+                        <div class="small"><span class="fas fa-circle chat-online"></span> Online</div>
+                    </div>
+                </div>
+            </a>    <a href="#" class="list-group-item list-group-item-action border-0" onclick="showConversation()">
+                <div class="badge bg-success float-right">5</div>
+                <div class="d-flex align-items-start">
+                    <img src="~/image/logo.jpg" class="rounded-circle mr-1" alt="Vanessa Tucker" width="40" height="40">
+                    <div class="flex-grow-1 ml-3">
+                        minh uyen
+                        <div class="small"><span class="fas fa-circle chat-online"></span> Online</div>
+                    </div>
+                </div>
+            </a>    <a href="#" class="list-group-item list-group-item-action border-0" onclick="showConversation()">
+                <div class="badge bg-success float-right">5</div>
+                <div class="d-flex align-items-start">
+                    <img src="~/image/logo.jpg" class="rounded-circle mr-1" alt="Vanessa Tucker" width="40" height="40">
+                    <div class="flex-grow-1 ml-3">
+                        minh uyen
+                        <div class="small"><span class="fas fa-circle chat-online"></span> Online</div>
+                    </div>
+                </div>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action border-0" onclick="showConversation()">
+                <div class="badge bg-success float-right">5</div>
+                <div class="d-flex align-items-start">
+                    <img src="~/image/logo.jpg" class="rounded-circle mr-1" alt="Vanessa Tucker" width="40" height="40">
+                    <div class="flex-grow-1 ml-3">
+                        minh uyen
+                        <div class="small"><span class="fas fa-circle chat-online"></span> Online</div>
+                    </div>
+                </div>
+            </a>
+
+            <hr class="d-block d-lg-none mt-1 mb-0">
+
+        </div>
+
+
+
+
+
+        <div id="popup2" style="display: none;">
+            <div class="card" id="chat1" style="border-radius: 15px;">
+                <div class="card-header d-flex justify-content-between align-items-center p-3 text-white border-bottom-0"
+                     style="border-top-left-radius: 15px; border-top-right-radius: 15px;background-image: linear-gradient(to right,orange, green, yellow) ">
+                    <img src="~/image/logo.jpg"
+                         alt="avatar 2" style="width: 15px; height: 100%; border-radius:50%">
+                    <i class="fas fa-times" onclick="hideConversation()"></i>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex flex-row justify-content-start mb-4">
+                        <img src="~/image/logo.jpg"
+                             alt="avatar 1" style="width: 15px; height: 100%;">
+                        <div class="p-2 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
+                            <p class="small mb-0">
+                                hello ai zị
+                            </p>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                        <div class="p-2 me-3 border bg-body-tertiary" style="border-radius: 15px;">
+                            <p class="small mb-0">Hello minh uyen ne</p>
+                        </div>
+                        <img src="~/image/logo.jpg"
+                             alt="avatar 2" style="width: 15px; height: 100%;">
+                    </div>
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                        <div class="p-2 me-3 border bg-body-tertiary" style="border-radius: 15px;">
+                            <p class="small mb-0">Hello minh uyen ne</p>
+                        </div>
+                        <img src="~/image/logo.jpg"
+                             alt="avatar 2" style="width: 15px; height: 100%;">
+                    </div>
+                    <div class="d-flex flex-row justify-content-start mb-4">
+                        <img src="~/image/logo.jpg"
+                             alt="avatar 1" style="width: 15px; height: 100%;">
+                        <div class="p-2 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
+                            <p class="small mb-0">
+                                hello ai zị
+                            </p>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-row justify-content-start mb-4">
+                        <img src="~/image/logo.jpg"
+                             alt="avatar 1" style="width: 15px; height: 100%;">
+                        <div class="p-2 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
+                            <p class="small mb-0">
+                                hello ai zị
+                            </p>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                        <div class="p-2 me-3 border bg-body-tertiary" style="border-radius: 15px;">
+                            <p class="small mb-0">Hello minh uyen ne</p>
+                        </div>
+                        <img src="~/image/logo.jpg"
+                             alt="avatar 2" style="width: 15px; height: 100%;">
+                    </div>
+                    <div class="d-flex flex-row justify-content-start mb-4">
+                        <img src="~/image/logo.jpg"
+                             alt="avatar 1" style="width: 15px; height: 100%;">
+                        <div class="p-2 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
+                            <p class="small mb-0">
+                                hello ai zị
+                            </p>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                        <div class="p-2 me-3 border bg-body-tertiary" style="border-radius: 15px;">
+                            <p class="small mb-0">Hello minh uyen ne</p>
+                        </div>
+                        <img src="~/image/logo.jpg"
+                             alt="avatar 2" style="width: 15px; height: 100%;">
+                    </div>
+                </div>
+
+                <div class="card-footer text-muted d-flex justify-content-start align-items-center p-1">
+                    <input type="text" class="form-control form-control-lg" style="height : 20px">
+                    <a class="ms-3" href="#"><i class="fas fa-paper-plane"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function showListChat() {
+                document.getElementById('popupListChat').style.display = 'block';
+            }
+
+            function hideListChat() {
+                document.getElementById('popupListChat').style.display = 'none';
+            }
+
+            function showConversation() {
+                document.getElementById('popup2').style.display = 'block';
+            }
+
+            function hideConversation() {
+                document.getElementById('popup2').style.display = 'none';
+            }
+
+            document.addEventListener('click', function (event) {
+                var popup = document.getElementById('popupListChat');
+                var chatButton = document.getElementById('chatButton');
+
+                if (!popup.contains(event.target) && !button.contains(event.target)) {
+                    hideListChat();
+                }
+            });
+
+            document.getElementById('popupListChat').addEventListener('click', function (event) {
+                event.stopPropagation();
+            });
+            document.getElementById('chatButton').addEventListener('click', function (event) {
+                event.stopPropagation();
+            });
+
+        </script>
+
+        <style>
+            #popup2 {
+                position: fixed;
+                bottom: 10px;
+                right: 10px;
+                z-index: 999;
+                width: 250px;
+                overflow-y: auto;
+                max-width: 400px;
+                max-height: 400px;
+            }
+
+            .card {
+                margin: 0;
+                padding: 0;
+                border-radius: 15px;
+            }
+
+            .card-body {
+                height: 300px;
+                overflow-y: auto;
+            }
+
+            .card-footer {
+                border-top: 1px solid rgba(0, 0, 0, 0.125);
+                background-color: #f7f7f7;
+            }
+
+            .form-control-lg {
+                border-radius: 10px;
+            }
+
+        </style>
         <!-- Header Topbar End -->
         <!-- Header Navbar Start -->
         <div id="sticky--wrapper" class="header--navbar">
@@ -191,7 +449,7 @@
                         </li>
 
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <a href="/Service/ListServices" class="dropdown-toggle">
                                 <span>Dịch vụ</span>
                                 @* <i class="fa fa-caret-down"></i> *@
                             </a>

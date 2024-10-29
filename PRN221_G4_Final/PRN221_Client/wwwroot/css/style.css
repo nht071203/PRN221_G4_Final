@@ -6297,7 +6297,7 @@ body.isScrolling #backToTop {
         width: 1em;
         overflow: hidden;
         white-space: nowrap;
-        font-size: 25px;
+        font-size: 18px;
         color: #ffc700;
     }
 
@@ -6316,7 +6316,7 @@ body.isScrolling #backToTop {
 
 
 .count-rate {
-    margin-top: 10px;
+    margin-top: 5px;
 }
 
 .d-flex-price {
@@ -6416,3 +6416,17 @@ p {
         background-color: #32CD32; /* Màu xanh lá đậm khi hover */
         transform: scale(1.05); /* Hiệu ứng phóng to nhẹ khi hover */
     }
+
+.star-cmt{
+    font-size:17px;
+    color:gold;
+}
+
+/*.rate-radio{
+    display:flex;
+    gap: 10px;
+}
+
+.input-filter-rate {
+    margin: 0px !important;
+}*/

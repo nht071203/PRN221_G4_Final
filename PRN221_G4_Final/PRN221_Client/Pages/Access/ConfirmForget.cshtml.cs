@@ -20,7 +20,7 @@ namespace PRN221_Client.Pages.Access
         }
 
         [BindProperty]
-        [Required]
+        [Required(ErrorMessage = "Không được để trống")]
         public int OTP { get; set; }
         public async Task<IActionResult> OnPostConfirmOTP()
         {
@@ -35,7 +35,7 @@ namespace PRN221_Client.Pages.Access
             int? checkOTP = getAccount.Otp;
 
             if (OTP != getAccount.Otp) {
-                ModelState.AddModelError(string.Empty, "OTP không khớp");
+                ModelState.AddModelError("OTPNotMatch", "OTP không khớp");
                 return Page();
             }
 

@@ -1,0 +1,55 @@
+﻿@page
+@model PRN221_Client.Pages.Access.ConfirmEmailModel
+@{
+    Layout = "_LayoutAccess";
+}
+
+<section class="container forms" id="confirm-page">
+
+    <div class="form login">
+        <div class="form-content">
+            <h1 class="title-login">Xác nhận email</h1>
+
+            <form method="post" asp-page-handler="ConfirmOTP">
+                <label>Nhập OTP ở đây</label>
+                <div class="field input-field form-floating">
+                    <input id="OTPEmail" name="OTPEmail" type="number" placeholder="OTP" class="form-control">
+                    <label for="OTPEmail">Nhập OTP</label>
+                </div>
+
+                <div class="text-danger">
+                    <span class="text-danger"></span>
+                </div>
+
+                <div class="text-danger">
+                    
+                </div>
+
+                <div class="field button-field">
+                    <button type="submit">Xác nhận</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <!-- Signup Form -->
+</section>
+
+
+
+<!-- JavaScript -->
+<script src="~/js/loginMain.js"></script>
+<script type="text/javascript">
+    if (window.location.hash === '#_=_') {
+        if (history.replaceState) {
+            var cleanUrl = window.location.href.split("#")[0];
+            history.replaceState(null, null, cleanUrl);
+        } else {
+            window.location.hash = '';
+        }
+    }
+</script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
