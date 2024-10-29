@@ -24,25 +24,28 @@ namespace PRN221_Admin.Views
     public partial class DashBoardPage : Page
     {
         public PlotModel PlotModel { get; set; }
+        public ProfileModelView ProfileView { get; set; }
 
         private ExpertViewModel _ExpertViewModel;
         public NewsViewModel _NewsViewModel;
-        private FarmerViewModel _farmerViewModel;
+        private FarmerModelView _farmerViewModel;
         private LoginViewModel _loginViewModel;
         public FarmerModelView FarmerView { get; set; }
-        public DashBoardPage(ExpertViewModel expertViewModel, NewsViewModel newsViewModel, FarmerModelView farmerViewModel)
+        public DashBoardPage(ExpertViewModel expertViewModel, 
+            NewsViewModel newsViewModel, FarmerModelView farmerViewModel, ProfileModelView profile)
         {
             InitializeComponent();
             FarmerView = farmerViewModel;
             _ExpertViewModel = expertViewModel;
             _NewsViewModel = newsViewModel;
+            ProfileView = profile;
             DataContext = this;
         }
 
-        public DashBoardPage()
+/*        public DashBoardPage()
         {
             InitializeComponent();
-        }
+        }*/
 
         private void Button_ThongKe(object sender, RoutedEventArgs e)
         {
@@ -61,9 +64,23 @@ namespace PRN221_Admin.Views
         }
 
 
-        private void Button_ManageFarmer(object sender, RoutedEventArgs e)
+        private void Button_Farmer(object sender, RoutedEventArgs e)
         {
             NoiDung.Content = new FarmerPage(FarmerView);
+        }
+
+     /*   public DashBoardPage(ProfileModelView profileViewModel, FarmerModelView farmerViewModel)
+        {
+            InitializeComponent();
+            FarmerView = farmerViewModel;
+            ProfileView = profileViewModel;
+            NoiDung.Content = new ProfileAdmin(ProfileView);
+        }*/
+
+
+        private void Button_Dashboard(object sender, RoutedEventArgs e)
+        {
+            NoiDung.Content = new ProfileAdmin(ProfileView);
         }
     }
 }

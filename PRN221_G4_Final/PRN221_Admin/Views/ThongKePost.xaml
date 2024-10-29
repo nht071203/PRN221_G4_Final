@@ -133,7 +133,7 @@
                             </WrapPanel>
 
 
-                            <TextBlock Text="{Binding TopFarmer.FullName}" TextAlignment="Center" Margin="0 5" Foreground="White" FontSize="20" Height="19" />
+                            <TextBlock Text="{Binding TopFarmer.FullName}" TextAlignment="Center" Margin="0 5" Foreground="White" FontSize="20" Height="29" />
 
                             <Image Margin="0,0,0,0" Height="91" Width="123">
                                 <Image.Style>
@@ -195,7 +195,7 @@
                                 <materialDesign:PackIcon Kind="Stars" Foreground="#FFC83D" VerticalAlignment="Center" HorizontalAlignment="Center" Width="29" />
                                 <TextBlock Text="Best Expert" FontSize="16" Foreground="White" TextAlignment="Center" FontWeight="Bold" FontStyle="Italic" TextDecorations="Underline" Height="20" />
                             </WrapPanel>
-                            <TextBlock Text="{Binding TopExpert.FullName}" TextAlignment="Center" Margin="0 5" Foreground="White" FontSize="20" Height="19" />
+                            <TextBlock Text="{Binding TopExpert.FullName}" TextAlignment="Center" Margin="0 5" Foreground="White" FontSize="20" Height="29" />
                             <Image Margin="0,0,0,0" Height="92" Width="135">
                                 <Image.Style>
                                     <Style TargetType="Image">

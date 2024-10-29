@@ -31,6 +31,7 @@ namespace PRN221_Admin.ViewModels
         public NewsViewModel _NewsViewModel;
         private FarmerModelView _farmerViewModel;
         private LoginViewModel _loginViewModel;
+        private ProfileModelView _profileViewModel;
 
         public ObservableCollection<Account> Accounts
         {
@@ -49,18 +50,6 @@ namespace PRN221_Admin.ViewModels
         public ICommand RememberPasswordCommand { get; }
         public ICommand isCloseCommand { get; }
 
-
-     /*   public LoginViewModel(IAccountService accountService, INewsService newsService)
-        {
-            Accounts = new ObservableCollection<Account>();
-            this.accountService = accountService;
-            this.newsService = newsService;
-            LoginCommand = new RelayCommand(ExecuteLoginCommand, CanExecute);
-            isCloseCommand = new RelayCommand(ExcuteCloseLogin);
-            CommandManager.InvalidateRequerySuggested();
-            _ = LoadAccounts();
-
-        }*/
         public async Task LoadAccounts()
         {
             var students = await accountService.GetListAccountByRoleId(3);
@@ -143,37 +132,7 @@ namespace PRN221_Admin.ViewModels
             }
         }
 
-        /*private void ExecuteLoginCommand(object obj)
-        {
-            var isValidUser = checkLogin(Username, Password);
-
-            if (isValidUser)
-            {
-                Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(Username), null);
-
-                ErrorMessage = "login roi nhe";
-
-                // Lấy tham chiếu của cửa sổ login (truyền qua CommandParameter)
-                if (obj is System.Windows.Window loginWindow)
-                {
-                    var expertViewModel = App.ServiceProvider.GetRequiredService<ExpertViewModel>();
-                    var newsViewModel = App.ServiceProvider.GetRequiredService<NewsViewModel>();
-                    var farmerViewModel = App.ServiceProvider.GetRequiredService<FarmerModelView>();
-
-                   // DashboardMU dashBoard = new DashboardMU(expertViewModel, newsViewModel, farmerViewModel);
-
-
-                   // dashBoard.Show();
-
-                    // Đóng cửa sổ login
-                    loginWindow.Close();
-                }
-            }
-            else
-            {
-                ErrorMessage = "* Invalid username or password";
-            }
-        }*/
+        
         private Visibility _loginPageVisibility = Visibility.Visible;
         public Visibility LoginPageVisibility
         {
@@ -199,7 +158,7 @@ namespace PRN221_Admin.ViewModels
        // public ICommand LoginCommand { get; }
 
         public LoginViewModel(IAccountService accountService, INewsService newsService, 
-            ExpertViewModel expert, FarmerModelView farmer, NewsViewModel news)
+            ExpertViewModel expert, FarmerModelView farmer, NewsViewModel news, ProfileModelView profile)
         {
             this.accountService = accountService;
             this.newsService = newsService;
@@ -208,6 +167,7 @@ namespace PRN221_Admin.ViewModels
             _ExpertViewModel = expert;
             _farmerViewModel = farmer;
             _NewsViewModel = news;
+            _profileViewModel= profile;
  
             isCloseCommand = new RelayCommand(ExcuteCloseLogin);
            // CommandManager.InvalidateRequerySuggested();
@@ -226,7 +186,7 @@ namespace PRN221_Admin.ViewModels
                 if (Application.Current.MainWindow is DashboardMU mainWindow)
                 {
                     mainWindow.DashboardPage.Navigate(new DashBoardPage(_ExpertViewModel, _NewsViewModel, 
-                        _farmerViewModel));
+                        _farmerViewModel, _profileViewModel));
 
                 }
             }
@@ -235,42 +195,6 @@ namespace PRN221_Admin.ViewModels
                 ErrorMessage = "* Invalid username or password";
             }
         }
-
-        //private void ExecuteLoginCommand(object obj)
-        //{
-        //    var isValidUser = checkLogin(Username, Password);
-
-        //    if (isValidUser)
-        //    {
-        //        Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(Username), null);
-
-        //        // Get the necessary services from the ServiceProvider
-        //        var dashboard = App.ServiceProvider.GetRequiredService<DashboardMU>();
-
-        //        // Inject the necessary ViewModels into DashboardMU
-        //        var expertViewModel = App.ServiceProvider.GetRequiredService<ExpertViewModel>();
-        //        var newsViewModel = App.ServiceProvider.GetRequiredService<NewsViewModel>();
-        //        var farmerViewModel = App.ServiceProvider.GetRequiredService<FarmerModelView>();
-
-        //        // Set the ViewModels into DashboardMU
-        //        dashboard.DataContext = expertViewModel;
-        //        dashboard._NewsViewModel = newsViewModel;
-        //        dashboard.FarmerView = farmerViewModel;
-
-        //        // Show the Dashboard
-        //        dashboard.Show();
-
-        //        // Close the login window
-        //        if (obj is System.Windows.Window loginWindow)
-        //        {
-        //            loginWindow.Close();
-        //        }
-        //    }
-        //    else
-        //    {
-        //        ErrorMessage = "* Invalid username or password";
-        //    }
-        //}
 
 
     }

@@ -18,19 +18,29 @@ namespace PRN221_Admin
 
         private ExpertViewModel _ExpertViewModel;
         public NewsViewModel _NewsViewModel;
-        private FarmerViewModel _farmerViewModel;
+       // private FarmerModelView _farmerViewModel;
         private LoginViewModel _loginViewModel;
         public FarmerModelView FarmerView { get; set; }
+        public SeriesCollection SeriesCollection { get; set; }
+        public SeriesCollection LastHourSeries { get; set; }
+        public SeriesCollection LastHourSeries1 { get; set; }
+        public string[] Labels { get; set; }
+        public Func<double, string> Formatter { get; set; }
 
-        public DashboardMU(ExpertViewModel expertViewModel, NewsViewModel newsViewModel, FarmerModelView farmerViewModel, LoginViewModel login)
+        public PlotModel PlotModel { get; set; }
+        public ProfileModelView ProfileView { get; set; }
+
+
+        public DashboardMU(ExpertViewModel expertViewModel, NewsViewModel newsViewModel, FarmerModelView farmerViewModel, LoginViewModel login, ProfileModelView profile)
         {
             InitializeComponent();
             FarmerView = farmerViewModel;
             _ExpertViewModel = expertViewModel;
             _NewsViewModel = newsViewModel;
             _loginViewModel = login;
+            ProfileView = profile;
             DataContext = this;
-            DashboardPage.Content = new LoginPage(_loginViewModel, expertViewModel, farmerViewModel, newsViewModel);
+            DashboardPage.Content = new LoginPage(_loginViewModel, expertViewModel, farmerViewModel, newsViewModel, profile);
         }
 
         public DashboardMU()
@@ -47,17 +57,9 @@ namespace PRN221_Admin
            // DashboardPage.Content = new LoginPage(_loginViewModel, _ExpertViewModel);
         }
 
-        public SeriesCollection SeriesCollection { get; set; }
-        public SeriesCollection LastHourSeries { get; set; }
-        public SeriesCollection LastHourSeries1 { get; set; }
-        public string[] Labels { get; set; }
-        public Func<double, string> Formatter { get; set; }
 
-        public PlotModel PlotModel { get; set; }
-        public ProfileModelView ProfileView { get; set; }
-        public FarmerModelView FarmerView { get; set; }
         
-        public DashboardMU(ProfileModelView profileViewModel, FarmerModelView farmerViewModel)
+        /*public DashboardMU(ProfileModelView profileViewModel, FarmerModelView farmerViewModel)
         {
             InitializeComponent();
             FarmerView = farmerViewModel;
@@ -69,6 +71,6 @@ namespace PRN221_Admin
         private void Button_Dashboard(object sender, RoutedEventArgs e)
         {
             NoiDung.Content = new ProfileAdmin(ProfileView);
-        }
+        }*/
     }
 }
