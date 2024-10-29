@@ -94,7 +94,7 @@ namespace PRN221_Client.Pages.Service
             {
                 ServiceId = InputServiceId,
                 BookingBy = getAccId,
-                BookingAt = DateOnly.FromDateTime(DateTime.Now),
+                BookingAt = DateTime.Now,
                 BookingStatus = "sending",
                 IsDeletedFarmer = false,
                 Content = InputRequestContent,

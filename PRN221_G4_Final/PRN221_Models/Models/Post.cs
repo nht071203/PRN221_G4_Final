@@ -11,13 +11,13 @@ public partial class Post
 
     public int? AccountId { get; set; }
 
-    public DateOnly CreatedAt { get; set; }
+    public DateTime? CreatedAt { get; set; }
 
-    public DateOnly? UpdateAt { get; set; }
+    public DateTime? UpdateAt { get; set; }
 
-    public string? PostContent { get; set; }
+    public string PostContent { get; set; }
 
     public bool? IsDeleted { get; set; }
 
-    public DateOnly? DeletedAt { get; set; }
+    public DateTime? DeletedAt { get; set; }
 }

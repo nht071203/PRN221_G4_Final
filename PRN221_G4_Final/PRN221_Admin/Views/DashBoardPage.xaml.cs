@@ -1,14 +1,27 @@
-﻿using System.Windows;
+﻿using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 using OxyPlot;
-using PRN221_Admin.Views;
 using PRN221_Admin.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
-namespace PRN221_Admin
+namespace PRN221_Admin.Views
 {
     /// <summary>
-    /// Interaction logic for DashboardMU.xaml
+    /// Interaction logic for DashBoardPage.xaml
     /// </summary>
-    public partial class DashboardMU : Window
+    public partial class DashBoardPage : Page
     {
         public PlotModel PlotModel { get; set; }
 
@@ -17,34 +30,21 @@ namespace PRN221_Admin
         private FarmerViewModel _farmerViewModel;
         private LoginViewModel _loginViewModel;
         public FarmerModelView FarmerView { get; set; }
-
-        public DashboardMU(ExpertViewModel expertViewModel, NewsViewModel newsViewModel, FarmerModelView farmerViewModel, LoginViewModel login)
+        public DashBoardPage(ExpertViewModel expertViewModel, NewsViewModel newsViewModel, FarmerModelView farmerViewModel)
         {
             InitializeComponent();
             FarmerView = farmerViewModel;
             _ExpertViewModel = expertViewModel;
             _NewsViewModel = newsViewModel;
-            _loginViewModel = login;
             DataContext = this;
-            DashboardPage.Content = new LoginPage(_loginViewModel, expertViewModel, farmerViewModel, newsViewModel);
         }
 
-        public DashboardMU()
-        {
-         InitializeComponent();
-            //DashboardPage.Content = new LoginPage(_loginViewModel,_ExpertViewModel, _);
-        }
-
-        
-       public DashboardMU(FarmerModelView farmerViewModel)
+        public DashBoardPage()
         {
             InitializeComponent();
-            FarmerView = farmerViewModel;
-           // DashboardPage.Content = new LoginPage(_loginViewModel, _ExpertViewModel);
         }
 
-
-        /*private void Button_ThongKe(object sender, RoutedEventArgs e)
+        private void Button_ThongKe(object sender, RoutedEventArgs e)
         {
             NoiDung.Content = new ThongKePost();
 
@@ -64,11 +64,6 @@ namespace PRN221_Admin
         private void Button_ManageFarmer(object sender, RoutedEventArgs e)
         {
             NoiDung.Content = new FarmerPage(FarmerView);
-        }*/
-
-    /*    private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            DashboardPage.Content = new LoginPage(_loginViewModel);
-        }*/
+        }
     }
 }

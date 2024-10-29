@@ -48,7 +48,7 @@ namespace PRN221_DataAccess.DAOs
         {
             var existingItem = await FindById(item.NewsId);
             if (existingItem == null) return;
-            item.UpdatedAt = DateOnly.FromDateTime(DateTime.Now);
+            item.UpdatedAt = DateTime.Now;
             _context.Entry(existingItem).CurrentValues.SetValues(item);
             await _context.SaveChangesAsync();
         }
@@ -59,7 +59,7 @@ namespace PRN221_DataAccess.DAOs
             if (item == null) return;
 
             item.IsDeleted = true;
-            item.DeletedAt = DateOnly.FromDateTime(DateTime.Now);
+            item.DeletedAt = DateTime.Now;
             _context.News.Update(item);
             await _context.SaveChangesAsync();
         }
@@ -68,16 +68,17 @@ namespace PRN221_DataAccess.DAOs
         {
             var result = await _context.News
                 .Where(n => n.IsDeleted != true)
-                .GroupBy(n => new { n.CreatedAt.Year, n.CreatedAt.Month })
+                .GroupBy(n => new { n.CreatedAt.Value.Year, n.CreatedAt.Value.Month })
                 .Select(g => new
                 {
-                    Month = $"{g.Key.Year}-{g.Key.Month:D2}", 
+                    Month = $"{g.Key.Year}-{g.Key.Month:D2}",
                     Count = g.Count()
                 })
                 .ToListAsync();
 
             return result.Select(item => (item.Month, item.Count));
         }
+
 
         public async Task<int> GetTotalNewsCountAsync()
         {

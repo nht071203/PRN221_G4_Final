@@ -17,16 +17,20 @@ using System.Windows.Shapes;
 namespace PRN221_Admin.Views
 {
     /// <summary>
-    /// Interaction logic for ExpertPage.xaml
+    /// Interaction logic for LoginPage.xaml
     /// </summary>
-    public partial class ExpertPage : Page
+    public partial class LoginPage : Page
     {
-        
-        public ExpertPage(ExpertViewModel viewModel)
+        private ExpertViewModel expertViewModel;
+        private FarmerModelView farmerViewModel;
+        private NewsViewModel NewsViewModel;
+        public LoginPage(LoginViewModel login, ExpertViewModel expert, FarmerModelView farmerViewModel, NewsViewModel NewsViewModel)
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = login;
+            expertViewModel = expert;
+            this.farmerViewModel = farmerViewModel;
+            this.NewsViewModel = NewsViewModel;
         }
-        
     }
 }

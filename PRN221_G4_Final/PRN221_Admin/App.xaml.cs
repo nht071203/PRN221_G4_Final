@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using PRN221_Admin.ViewModels;
+using PRN221_Admin.Views;
 using PRN221_BusinessLogic.Interface;
 using PRN221_BusinessLogic.Service;
 using PRN221_DataAccess.DAOs;
@@ -25,25 +26,32 @@ namespace PRN221_Admin
             ConfigureServices(serviceCollection);
             ServiceProvider = serviceCollection.BuildServiceProvider();
             var mainwindow = ServiceProvider.GetRequiredService<DashboardMU>();
+            var dasboardPage = ServiceProvider.GetRequiredService<DashBoardPage>();
 
             var studentViewModel = ServiceProvider.GetRequiredService<ExpertViewModel>();
             var newsViewModel = ServiceProvider.GetRequiredService<NewsViewModel>();
-        //    var farmerViewModel = ServiceProvider.GetRequiredService<FarmerViewModel>();
+            //var farmerViewModel = ServiceProvider.GetRequiredService<FarmerViewModel>();
             var farmerMU = ServiceProvider.GetRequiredService<FarmerModelView>();
+            var loginView = ServiceProvider.GetRequiredService<LoginViewModel>();
 
             mainwindow.DataContext = studentViewModel;
             mainwindow.DataContext = newsViewModel;
             //mainwindow.DataContext = farmerViewModel;
             mainwindow.DataContext = farmerMU;
+
+            dasboardPage.DataContext = studentViewModel;
+            dasboardPage.DataContext = newsViewModel;
+            dasboardPage.DataContext = farmerMU;
             mainwindow.Show();
-            
-            
+           
+
+
         }
 
         private void ConfigureServices(IServiceCollection services)
         {
 
-             // Đăng ký các service, repository, DAO mà bạn đã có sẵn services.
+            // Đăng ký các service, repository, DAO mà bạn đã có sẵn services.
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IAccountRepository, AccountRepository>();
             services.AddTransient<AccountDAO>();
@@ -54,12 +62,13 @@ namespace PRN221_Admin
             services.AddTransient<INewsRepository, NewsRepository>();
 
             services.AddTransient<NewsDAO>();
-            
+
             services.AddTransient<ExpertViewModel>();
             services.AddTransient<NewsViewModel>();
             services.AddTransient<CategoryNewsDAO>();
             //services.AddTransient<FarmerViewModel>();
             services.AddTransient<FarmerModelView>();
+            services.AddTransient<LoginViewModel>();
 
 
             /*// Đăng ký ViewModel
@@ -68,10 +77,12 @@ namespace PRN221_Admin
             services.AddSingleton<FarmerViewModel>();*/
 
             // Đăng ký MainWindow
-            services.AddSingleton<DashboardMU>();
+           services.AddSingleton<DashboardMU>();
+            services.AddSingleton<DashBoardPage>();
+            
             // services.AddSingleton<AccountService>();
         }
-       
+
     }
 }
 
