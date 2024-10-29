@@ -28,7 +28,7 @@ namespace PRN221_Client.Pages.Profile
             AccountLogin = GetLoggedInUserId();
             if (Profile == null)
             {
-                return NotFound(); // Handle case when account is not found
+                return NotFound(); // Handle case when account is not found 
             }
             
             Posts = await _postService.GetAllPostByAccountId(id);
