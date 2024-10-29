@@ -26,9 +26,10 @@ namespace PRN221_Admin.Views
 
         private ExpertViewModel _ExpertViewModel;
         public NewsViewModel _NewsViewModel;
-        private FarmerViewModel _farmerViewModel;
+        //private FarmerViewModel _farmerViewModel;
         public FarmerModelView FarmerView { get; set; }
-        public Login(LoginViewModel viewModel, FarmerModelView FarmerView, ExpertViewModel expertViewModel, NewsViewModel newsViewModel)
+        public Login(LoginViewModel viewModel, 
+            FarmerModelView FarmerView, ExpertViewModel expertViewModel, NewsViewModel newsViewModel)
         {
             InitializeComponent();
             DataContext = viewModel;

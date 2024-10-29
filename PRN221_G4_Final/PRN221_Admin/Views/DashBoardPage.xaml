@@ -60,7 +60,7 @@
                     </StackPanel>
                 </Button>
 
-                <Button Width="150" Height="40" Background="Transparent" BorderThickness="0" Foreground="Black" Click="Button_Click">
+                <Button Width="150" Height="40" Background="Transparent" BorderThickness="0" Foreground="Black" Click="Button_ManagerNew">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="16" Text="&#xE835;" Margin="5"/>
                         <TextBlock Text="Manage News" VerticalAlignment="Center" Margin="10,0,0,0" FontWeight="Bold" Foreground="Black" FontSize="16"/>

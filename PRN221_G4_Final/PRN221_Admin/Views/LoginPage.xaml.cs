@@ -24,13 +24,16 @@ namespace PRN221_Admin.Views
         private ExpertViewModel expertViewModel;
         private FarmerModelView farmerViewModel;
         private NewsViewModel NewsViewModel;
-        public LoginPage(LoginViewModel login, ExpertViewModel expert, FarmerModelView farmerViewModel, NewsViewModel NewsViewModel)
+        private ProfileModelView profileViewModel;
+        public LoginPage(LoginViewModel login, 
+            ExpertViewModel expert, FarmerModelView farmerViewModel, NewsViewModel NewsViewModel, ProfileModelView profile)
         {
             InitializeComponent();
             DataContext = login;
             expertViewModel = expert;
             this.farmerViewModel = farmerViewModel;
             this.NewsViewModel = NewsViewModel;
+            profileViewModel = profile;
         }
     }
 }
