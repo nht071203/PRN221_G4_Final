@@ -83,9 +83,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     postInput.addEventListener('click', () => {
         popup.style.display = 'flex';
+        popup.style.zIndex = '1050';
+
+        // Đảm bảo chỉ có một overlay
+        let modalBackdrop = document.querySelector('.modal-backdrop');
+        if (!modalBackdrop) {
+            modalBackdrop = document.createElement('div');
+            modalBackdrop.className = 'modal-backdrop fade show';
+            modalBackdrop.style.zIndex = '1040';
+            document.body.appendChild(modalBackdrop);
+        }
+
+        body.classList.add('modal-open'); // Khóa cuộn trang
     });
 
     closePopupBtn.addEventListener('click', () => {
         popup.style.display = 'none';
+        popup.style.zIndex = '0';
+
+        // Xóa overlay nếu có
+        const modalBackdrop = document.querySelector('.modal-backdrop');
+        if (modalBackdrop) {
+            modalBackdrop.remove();
+        }
+
+        document.body.classList.remove('modal-open'); // Mở khóa cuộn trang
     });
 });

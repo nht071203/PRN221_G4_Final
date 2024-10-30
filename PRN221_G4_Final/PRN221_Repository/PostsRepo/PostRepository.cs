@@ -21,6 +21,11 @@ namespace PRN221_Repository.PostsRepo
             return await _postDAO.Add(post);
         }
 
+        public Task<int> DeletePost(int postId)
+        {
+            return _postDAO.InActivePost(postId);
+        }
+
         public async Task<Account> ExpertWithMostPosts()
         {
             return await _postDAO.ExpertWithMostPosts();
