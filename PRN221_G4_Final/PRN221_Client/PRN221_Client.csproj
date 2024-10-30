@@ -33,4 +33,8 @@
     <ProjectReference Include="..\PRN221_Repository\PRN221_Repository.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\BookingService\" />
+  </ItemGroup>
+
 </Project>
