@@ -134,12 +134,10 @@
                                                     
                                                     @if (post.postImages != null && post.postImages.Count() > 0)
                                                     {
-                                                        <span>@post.postImages.FirstOrDefault().ImageUrl</span>
                                                         <div>
                                                             <ul class="nav AdjustRow">
                                                                 <li>
                                                                     <a href="/Posts/PostDetail/@post.post.PostId">
-                                                                        
                                                                         <img src="@post.postImages.FirstOrDefault().ImageUrl" alt="">
                                                                     </a>
                                                                 </li>

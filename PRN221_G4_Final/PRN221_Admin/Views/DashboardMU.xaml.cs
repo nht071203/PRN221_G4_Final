@@ -1,20 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 using OxyPlot;
-using OxyPlot.Series;
-using System.Windows;
-using OxyPlot.Axes;
 using PRN221_Admin.Views;
 using PRN221_Admin.ViewModels;
 using LiveCharts;
@@ -30,6 +15,12 @@ namespace PRN221_Admin
     public partial class DashboardMU : Window
     {
 
+
+        private ExpertViewModel _ExpertViewModel;
+        public NewsViewModel _NewsViewModel;
+       // private FarmerModelView _farmerViewModel;
+        private LoginViewModel _loginViewModel;
+        public FarmerModelView FarmerView { get; set; }
         public SeriesCollection SeriesCollection { get; set; }
         public SeriesCollection LastHourSeries { get; set; }
         public SeriesCollection LastHourSeries1 { get; set; }
@@ -38,8 +29,37 @@ namespace PRN221_Admin
 
         public PlotModel PlotModel { get; set; }
         public ProfileModelView ProfileView { get; set; }
-        public FarmerModelView FarmerView { get; set; }
-        public DashboardMU(ProfileModelView profileViewModel, FarmerModelView farmerViewModel)
+
+
+        public DashboardMU(ExpertViewModel expertViewModel, NewsViewModel newsViewModel, FarmerModelView farmerViewModel, LoginViewModel login, ProfileModelView profile)
+        {
+            InitializeComponent();
+            FarmerView = farmerViewModel;
+            _ExpertViewModel = expertViewModel;
+            _NewsViewModel = newsViewModel;
+            _loginViewModel = login;
+            ProfileView = profile;
+            DataContext = this;
+            DashboardPage.Content = new LoginPage(_loginViewModel, expertViewModel, farmerViewModel, newsViewModel, profile);
+        }
+
+        public DashboardMU()
+        {
+         InitializeComponent();
+            //DashboardPage.Content = new LoginPage(_loginViewModel,_ExpertViewModel, _);
+        }
+
+        
+       public DashboardMU(FarmerModelView farmerViewModel)
+        {
+            InitializeComponent();
+            FarmerView = farmerViewModel;
+           // DashboardPage.Content = new LoginPage(_loginViewModel, _ExpertViewModel);
+        }
+
+
+        
+        /*public DashboardMU(ProfileModelView profileViewModel, FarmerModelView farmerViewModel)
         {
             InitializeComponent();
             FarmerView = farmerViewModel;
@@ -47,34 +67,10 @@ namespace PRN221_Admin
             NoiDung.Content = new ProfileAdmin(ProfileView);
         }
 
-    
-
-
-
-        private void Button_ThongKe(object sender, RoutedEventArgs e)
-        {
-            NoiDung.Content = new ThongKePost();
-        }
-
-        private void Button_Farmer(object sender, RoutedEventArgs e)
-        {
-            NoiDung.Content = new FarmerPage(FarmerView);
-        }
-
-        private void Button_ManageExpert(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
 
         private void Button_Dashboard(object sender, RoutedEventArgs e)
         {
             NoiDung.Content = new ProfileAdmin(ProfileView);
-        }
+        }*/
     }
 }

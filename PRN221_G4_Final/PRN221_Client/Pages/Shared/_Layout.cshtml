@@ -118,8 +118,7 @@
                     @if (isLoggedIn)
                     {
                         <li>
-                            <a asp-page="/Profile/PersonalPage" asp-route-id="@getIdAccount" class="btn-link">
-                                <i class="fa mr--8 fa-user-o"></i>
+                            <a asp-page="/Profile/PersonalPage" asp-route-id="@getAcc?.AccountId" class="btn-link">                                <i class="fa mr--8 fa-user-o"></i>
                                 <span>My Account</span>
                             </a>
                         </li>
