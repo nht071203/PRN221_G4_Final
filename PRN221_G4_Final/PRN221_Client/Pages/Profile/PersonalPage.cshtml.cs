@@ -40,7 +40,7 @@ namespace PRN221_Client.Pages.Profile
 
             if (Profile == null)
             {
-                return NotFound(); // Handle case when account is not found
+                return NotFound(); // Handle case when account is not found 
             }
 
             ListCategoryPost = await _categoryPostService.GetAllCategory();
