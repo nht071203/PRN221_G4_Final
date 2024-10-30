@@ -23,6 +23,7 @@ namespace PRN221_BusinessLogic.Interface
         Task<List<PostDTO>> GetAllPostByAccountId(int id);
         //Task<List<PostDTO>> GetAllPostImagesByAccountId(int id);
         Task<Post> AddPost(int categoryId, int accountId, string content);
+        Task<int> DeletePost(int postId);
         Task<List<PostImage>> GetAllPostImagesByAccountId(int id);
     }
 }

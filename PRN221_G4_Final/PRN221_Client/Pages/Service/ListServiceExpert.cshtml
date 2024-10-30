@@ -72,7 +72,7 @@
 								<p>Bạn có muốn xóa dịch vụ này không?</p>
 							</div>
 							<div class="modal-footer">
-								<input type="button" class="btn btn-default" data-dismiss="modal" value="Quay về">
+								<input type="button" class="btn btn-default btnBack" data-dismiss="modal" value="Quay về">
 								<a id="confirmDelete" class="btn btn-danger">Xóa</a>
 
 							</div>
@@ -93,6 +93,15 @@
         var serviceId = $(this).data('id');
         $('#confirmDelete').attr('href', '/Service/DeleteService?handler=RemoveService&id=' + serviceId);
         $('#deleteEmployeeModal').modal('show');
+
+		$('.btnBack').on('click', function () {
+			const modalBackdrop = document.querySelector('.modal-backdrop');
+			if (modalBackdrop) {
+				modalBackdrop.remove();
+			}
+
+			document.body.classList.remove('modal-open'); // Mở khóa cuộn trang
+		});
     });
 });
 

@@ -1,7 +1,10 @@
 ﻿@page "/Profile/PersonalPage"
 @model PRN221_Client.Pages.Profile.PersonalPageModel
+@inject IHttpContextAccessor HttpContextAccessor
+@using Microsoft.AspNetCore.Http;
 @{
     ViewData["Title"] = @Model.Profile.FullName;
+    var isLoggedIn = HttpContextAccessor.HttpContext.Session.GetString("UserSession") != null;
 }
 
 <style>
@@ -50,6 +53,57 @@
         .image-grid-4 img {
             width: 100%; /* 4 ảnh chia thành 2x2 */
         }
+
+     /* MODAL KHI DELETE POST */
+    .modal .modal-dialog {
+        max-width: 400px;
+    }
+
+    .modal .modal-header {
+        width: 100%;
+    }
+
+    .modal .modal-header .modal-title {
+        width: 80%;
+        text-align: center;
+    }
+
+    .modal .modal-header, .modal .modal-body, .modal .modal-footer {
+        padding: 20px 30px;
+    }
+
+    .modal .modal-content {
+        border-radius: 3px;
+        font-size: 14px;
+    }
+
+    .modal .modal-footer {
+        background: #ecf0f1;
+        border-radius: 0 0 3px 3px;
+    }
+
+    .modal .modal-title {
+        display: inline-block;
+    }
+
+    .modal .form-control {
+        border-radius: 2px;
+        box-shadow: none;
+        border-color: #dddddd;
+    }
+
+    .modal textarea.form-control {
+        resize: vertical;
+    }
+
+    .modal .btn {
+        border-radius: 2px;
+        min-width: 100px;
+    }
+
+    .modal form label {
+        font-weight: normal;
+    }
 
 </style>
 
@@ -136,143 +190,241 @@
                     </div>
                 </div>
                 <br>
-
-                <!-- Interests -->
-                @* <div class="w3-card w3-round w3-white w3-hide-small pb-3 pt-3">
-                    <div class="w3-container">
-                        <p>Interests</p>
-                        <p>
-                            <span class="w3-tag w3-small w3-theme-d5">News</span>
-                            <span class="w3-tag w3-small w3-theme-d4">W3Schools</span>
-                            <span class="w3-tag w3-small w3-theme-d3">Labels</span>
-                            <span class="w3-tag w3-small w3-theme-d2">Games</span>
-                            <span class="w3-tag w3-small w3-theme-d1">Friends</span>
-                            <span class="w3-tag w3-small w3-theme">Games</span>
-                            <span class="w3-tag w3-small w3-theme-l1">Friends</span>
-                            <span class="w3-tag w3-small w3-theme-l2">Food</span>
-                            <span class="w3-tag w3-small w3-theme-l3">Design</span>
-                            <span class="w3-tag w3-small w3-theme-l4">Art</span>
-                            <span class="w3-tag w3-small w3-theme-l5">Photos</span>
-                        </p>
-                    </div>
-                </div>
-                <br> *@
             </div>
 
             <!-- Middle Column -->
             <div class="w3-col m7">
 
-                @* ADD POST PERSONAL PAGE *@
-                <div class="container" style="margin-left: 10px;">
-                    <div class="row">
-                        <div class="col-md-8 p-2">
+                @* CHỈ ĐƯỢC ĐĂNG ẢNH TRONG TRANG CÁ NHÂN CỦA MÌNH *@
+                @if(Model.Profile.AccountId == Model.UserSession.AccountId)
+                {
+                    @* ADD POST PERSONAL PAGE *@
+                    <div class="container" style="margin-left: 10px;">
+                        <div class="row">
+                            <div class="col-md-8 p-2">
 
-                            <div class="wrapper-add-post add-post-personal">
-                                <div class="post-header">
-                                    <a href="/Profile/PersonalPage/@Model.Profile.AccountId">
-                                        <img src="@Model.Profile.Avatar" alt="Profile Picture" onerror="this.onerror=null; this.src='https://firebasestorage.googleapis.com/v0/b/prn221-69738.appspot.com/o/image%2Fuser.png?alt=media&token=e669a837-b9c8-4983-b2bd-8eb5c091d48f';">
-                                    </a>
+                                <div class="wrapper-add-post add-post-personal">
+                                    <div class="post-header">
+                                        <a href="/Profile/PersonalPage/@Model.Profile.AccountId">
+                                            <img src="@Model.Profile.Avatar" alt="Profile Picture" onerror="this.onerror=null; this.src='https://firebasestorage.googleapis.com/v0/b/prn221-69738.appspot.com/o/image%2Fuser.png?alt=media&token=e669a837-b9c8-4983-b2bd-8eb5c091d48f';">
+                                        </a>
 
-                                    <input id="postInput" type="text" placeholder="@Model.Profile.FullName ơi, bạn đang nghĩ gì thế?">
+                                        <input id="postInput" type="text" placeholder="@Model.Profile.FullName ơi, bạn đang nghĩ gì thế?">
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="popup" id="popup" style="z-index: 100;">
-                                <div class="popup-content">
-                                    <button class="close-btn" id="closePopupBtn">×</button>
-                                    <h2>Tạo bài viết</h2>
+                                <div class="popup" id="popup" style="z-index: 100;">
+                                    <div class="popup-content">
+                                        <button class="close-btn" id="closePopupBtn">×</button>
+                                        <h2>Tạo bài viết</h2>
 
-                                    <form id="postForm" method="post" asp-page-handler="AddPost" enctype="multipart/form-data">
-                                        <input type="hidden" value="@Model.Profile.AccountId" name="AccountID">
-                                        <textarea name="ContentPost" placeholder="@Model.Profile.FullName ơi, bạn đang nghĩ gì thế?" class="content-post"
-                                                  required></textarea>
+                                        <form id="postForm" method="post" asp-page-handler="AddPost" enctype="multipart/form-data">
+                                            <input type="hidden" value="@Model.Profile.AccountId" name="AccountID">
+                                            <textarea name="ContentPost" placeholder="@Model.Profile.FullName ơi, bạn đang nghĩ gì thế?" class="content-post"
+                                                      required></textarea>
 
-                                        <input type="file" id="imageInput" accept="image/*" style="display: none;" multiple asp-for="PostViewModel.ImagesPost">
+                                            <input type="file" id="imageInput" accept="image/*" style="display: none;" multiple asp-for="PostViewModel.ImagesPost">
 
-                                        <div class="select">
-                                            <label for="select-input">Chọn danh mục: </label>
-                                            <select id="select-input" name="CategoryPostId">
-                                                <option value="" disabled selected>Chọn danh mục</option>
-                                                @foreach (var categoryPost in Model.ListCategoryPost)
-                                                {
-                                                    <option value="@categoryPost.CategoryPostId">@categoryPost.CategoryPostName</option>
-                                                }
-                                            </select>
-                                        </div>
-
-                                        <button type="button" id="clearImagesButton" style="display: none;">Xóa ảnh</button>
-                                        <div id="imagePreview" style="margin-top: 10px; display: flex; flex-wrap: wrap;"></div>
-
-
-                                        <div class="actions" style="margin-top: 10px;">
-                                            <button type="button" id="selectImageButton">
-                                                <img src="https://via.placeholder.com/20/00FF00" alt="Photo/Video">Ảnh/video
-                                            </button>
-                                            <div>
-                                                <img src="https://via.placeholder.com/20/FFD700" alt="Feeling/Activity">Cảm
-                                                xúc/hoạt động
+                                            <div class="select">
+                                                <label for="select-input">Chọn danh mục: </label>
+                                                <select id="select-input" name="CategoryPostId">
+                                                    <option value="" disabled selected>Chọn danh mục</option>
+                                                    @foreach (var categoryPost in Model.ListCategoryPost)
+                                                    {
+                                                        <option value="@categoryPost.CategoryPostId">@categoryPost.CategoryPostName</option>
+                                                    }
+                                                </select>
                                             </div>
-                                            <button><img src="https://via.placeholder.com/20/FF4500" alt="GIF">GIF</button>
-                                        </div>
 
-                                        <button type="submit"
-                                                style="width: 100%; margin-top: 10px; padding: 10px; background-color: #1877f2; color: white; border: none; border-radius: 5px;">
-                                            Đăng
-                                        </button>
-                                    </form>
+                                            <button type="button" id="clearImagesButton" style="display: none;">Xóa ảnh</button>
+                                            <div id="imagePreview" style="margin-top: 10px; display: flex; flex-wrap: wrap;"></div>
+
+
+                                            <div class="actions" style="margin-top: 10px;">
+                                                <button type="button" id="selectImageButton">
+                                                    <img src="https://via.placeholder.com/20/00FF00" alt="Photo/Video">Ảnh/video
+                                                </button>
+                                                <div>
+                                                    <img src="https://via.placeholder.com/20/FFD700" alt="Feeling/Activity">Cảm
+                                                    xúc/hoạt động
+                                                </div>
+                                                <button><img src="https://via.placeholder.com/20/FF4500" alt="GIF">GIF</button>
+                                            </div>
+
+                                            <button type="submit"
+                                                    style="width: 100%; margin-top: 10px; padding: 10px; background-color: #1877f2; color: white; border: none; border-radius: 5px;">
+                                                Đăng
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>
 
+                            </div>
                         </div>
                     </div>
-                </div>
-                @* END ADD POST *@
+                    @* END ADD POST *@
+                }
+                
 
-
-                @foreach (var post in Model.Posts)
+                @* HIỂN THỊ LIST POST KHI TỰ XEM TRANG CỦA MÌNH *@
+                @if (Model.Profile.AccountId == Model.UserSession.AccountId)
                 {
-                    var imageCount = post.postImages.Count();
+                    @foreach (var post in Model.Posts)
+                    {
+                        var imageCount = post.postImages.Count();
 
-                    <div class="w3-container w3-card w3-white w3-round w3-margin">
-                        <br>
-                        <img src="@post.account.Avatar" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
-                        <span class="w3-right w3-opacity">1 min</span>
-                        <h4>@post.account.FullName</h4><br>
-                        <hr class="w3-clear">
-                        <p>
-                            @post.post.PostContent
-                        </p>
+                        <div class="w3-container w3-card w3-white w3-round w3-margin">
+                            <br>
+                            <img src="@post.account.Avatar" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
 
-                        <div class="w3-row-padding" style="margin:0 -16px">
-                            <div class="@("image-grid-" + imageCount)">
-                                @foreach (var image in post.postImages)
+                            <div class="w3-right w3-opacity">
+
+                                <a asp-page="/Posts/UpdatePost" asp-route-id="@post.post.PostId" class="updatePost controlPostBtn">
+                                    Chỉnh sửa
+                                </a>
+
+                                <a class="deletePost controlPostBtn" asp-page="/Posts/DeletePost" asp-route-postid="@post.post.PostId" asp-page-handler="DeletePost" data-postid="@post.post.PostId" data-toggle="modal">Xóa</a>
+                            </div>
+                            
+
+                            <h4>@post.account.FullName</h4><br>
+                            <hr class="w3-clear">
+                            <p>
+                                @post.post.PostContent
+                            </p>
+
+                            <div class="w3-row-padding" style="margin:0 -16px">
+                                <div class="@("image-grid-" + imageCount)">
+                                    @foreach (var image in post.postImages)
+                                    {
+                                        <img src="@image.ImageUrl" alt="@image.ImageUrl" class="">
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="w3-margin-top">
+                                <div class="activity--action fw--700 w3-margin-bottom">
+                                    <a asp-page="/Posts/PostDetail" asp-route-postId="@post.post.PostId">See More...</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    //Modal khi nhấn delete
+                    <div id="deletePost" class="modal fade">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form>
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Xóa bài đăng</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Bạn có muốn xóa bài đăng này không?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input type="button" class="btn btn-default btnBack" data-dismiss="modal" value="Quay về">
+                                        <a id="confirmDeletePost" class="btn btn-danger">Xóa</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                } 
+                //GỌI KHI XEM PROFILE CỦA NGƯỜI KHÁC
+                else
+                {
+                    <div class="activity--list">
+                        <ul class="activity--items nav" style="display: flex; justify-content: center;">
+
+                            @if (Model.Posts != null)
+                            {
+                                @foreach (var post in Model.Posts)
                                 {
-                                    <img src="@image.ImageUrl" alt="@image.ImageUrl" class="">
+                                    <!-- Activity Item Start -->
+                                    <li style="width: 90%; box-shadow:  0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);">
+                                        <div class="activity--item">
+                                            <div class="activity--avatar">
+                                                @if (post.account == null)
+                                                {
+                                                    <a href="/Access/Login">
+                                                        <img src="" alt="" onerror="this.onerror=null; this.src='https://firebasestorage.googleapis.com/v0/b/prn221-69738.appspot.com/o/image%2Fuser.png?alt=media&token=e669a837-b9c8-4983-b2bd-8eb5c091d48f';">
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <a asp-page="/Profile/PersonalPage" asp-route-id="@post.account.AccountId">
+                                                        <img src="@post.account.Avatar" alt="" onerror="this.onerror=null; this.src='https://firebasestorage.googleapis.com/v0/b/prn221-69738.appspot.com/o/image%2Fuser.png?alt=media&token=e669a837-b9c8-4983-b2bd-8eb5c091d48f';">
+                                                    </a>
+                                                }
+
+                                            </div>
+
+                                            <div class="activity--info fs--14">
+                                                <div class="activity--header">
+                                                    @if (post.account == null)
+                                                    {
+                                                        <p><a href="/Access/Login">Người dùng ẩn danh</a> vừa đăng 1 bài viết</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p><a asp-page="/Profile/PersonalPage" asp-route-id="@post.account.AccountId">@post.account.FullName</a> vừa đăng 1 bài viết</p>
+                                                    }
+
+                                                </div>
+
+                                                <div class="activity--meta fs--12">
+                                                    <p><i class="fa mr--8 fa-clock-o"></i>@post.post.CreatedAt</p>
+                                                </div>
+
+                                                <div class="activity--content">
+                                                    <p class="content-text-ellipsis">@post.post.PostContent</p>
+
+                                                    @if (post.postImages != null && post.postImages.Count() > 0)
+                                                    {
+                                                        <div>
+                                                            <ul class="nav AdjustRow">
+                                                                <li>
+                                                                    <a href="/Posts/PostDetail/@post.post.PostId">
+                                                                        <img src="@post.postImages.FirstOrDefault().ImageUrl" alt="">
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    }
+
+                                                </div>
+
+
+                                                @* KHI KHONG LOGIN THI KHÔNG XEM ĐƯỢC CHI TIẾT *@
+                                                @if (!isLoggedIn)
+                                                {
+                                                    <div class="activity--action fw--700">
+                                                        <a href="/Access/Login">See More...</a>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    @* KHI LOGIN ROI THI XEM DUOC *@
+                                                    <div class="activity--action fw--700">
+                                                        <a href="/Posts/PostDetail/@post.post.PostId">See More...</a>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <!-- Activity Item End -->
                                 }
-                            </div>
-                        </div>
+                            }
+                            else
+                            {
+                                <h1>không có bài đăng</h1>
+                            }
 
-                        <div class="w3-margin-top">
-                            @* <button type="button" class="w3-button w3-theme-d1 w3-margin-bottom">
-                                <i class="fa fa-thumbs-up"></i>
-                                <span>10</span> Like
-                            </button>
-                            <button type="button" class="w3-button w3-theme-d2 w3-margin-bottom">
-                                <i class="fa fa-comment"></i>
-                                <span>10</span> Comment
-                            </button>
-                            <button type="button" class="w3-button w3-theme-d2 w3-margin-bottom">
-                                <i class="fa fa-comment"></i>
-                                <span>10</span> Share
-                            </button> *@
-
-                            <div class="activity--action fw--700 w3-margin-bottom">
-                                <a asp-page="/Posts/PostDetail" asp-route-postId="@post.post.PostId">See More...</a>
-                            </div>
-                        </div>
+                        </ul>
                     </div>
                 }
-
+                
                 <!-- End Middle Column -->
             </div>
 

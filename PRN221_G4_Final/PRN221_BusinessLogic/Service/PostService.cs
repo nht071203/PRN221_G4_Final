@@ -42,15 +42,18 @@ namespace PRN221_BusinessLogic.Service
 
             foreach (var item in listPost)
             {
-                var listImageByPost = await _postImageRepository.GetAllByPostId(item.PostId);
-                var account = await _accountRepository.GetAccountById((int)item.AccountId);
-                var likePost = await _likePostRepository.GetAllLikePostByPostId(item.PostId);
-                var comment = await _commentRepository.GetAllCommentPostByPostId(item.PostId);
-                var sharePost = await _sharePostRepository.GetAllSharePostByPostId(item.PostId);
+                if(item.IsDeleted == false)
+                {
+                    var listImageByPost = await _postImageRepository.GetAllByPostId(item.PostId);
+                    var account = await _accountRepository.GetAccountById((int)item.AccountId);
+                    var likePost = await _likePostRepository.GetAllLikePostByPostId(item.PostId);
+                    var comment = await _commentRepository.GetAllCommentPostByPostId(item.PostId);
+                    var sharePost = await _sharePostRepository.GetAllSharePostByPostId(item.PostId);
 
-                var postItemDto = new PostDTO(item, listImageByPost, account, likePost, comment, sharePost);
+                    var postItemDto = new PostDTO(item, listImageByPost, account, likePost, comment, sharePost);
 
-                response.Add(postItemDto);
+                    response.Add(postItemDto);
+                }  
             }
 
             return response;
@@ -173,5 +176,10 @@ namespace PRN221_BusinessLogic.Service
         }
 
         public Task<int> GetLikeCountByPostId(int postId) => _likePostRepository.GetLikeCountByPostId(postId);
+
+        public Task<int> DeletePost(int postId)
+        {
+            return _postRepository.DeletePost(postId);
+        }
     }
 }

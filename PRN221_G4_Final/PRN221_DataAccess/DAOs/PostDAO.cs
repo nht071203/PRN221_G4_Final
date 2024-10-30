@@ -30,6 +30,15 @@ namespace PRN221_DataAccess.DAOs
             return post;
         }
 
+        public async Task<int> InActivePost(int postId)
+        {
+            var post = await _context.Posts.FirstOrDefaultAsync(p => p.PostId == postId);
+            if (post == null) return -1;
+            post.IsDeleted = true;
+            post.DeletedAt = DateTime.Now;
+            return _context.SaveChanges();
+        }
+
         public async Task<Account?> FarmerWithMostPosts()
         {
             var currentYear = DateTime.Now.Year;
