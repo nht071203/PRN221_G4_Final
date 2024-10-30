@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PRN221_BusinessLogic.Interface;
+using PRN221_BusinessLogic.Service;
 using PRN221_Models.Models;
 
 namespace PRN221_Client.Pages.Profile
@@ -14,32 +15,44 @@ namespace PRN221_Client.Pages.Profile
             _accountService = accountService;
         }
 
-        public Account Profile { get; set; }
-        public Account NewProfile { get; set; }
-        //public int AccountLogin { get; set; }
+        [BindProperty]
+        public Account Profile { get; set; } = default!;
+
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            Profile = await _accountService.GetByIdAccount(id);
-            //AccountLogin = GetLoggedInUserId();
-            if (Profile == null)
+            if (id == null)
             {
-                return NotFound(); // Handle case when account is not found 
+                return NotFound();
             }
 
+            var account = await _accountService.GetByIdAccount(id);
+            if (account == null)
+            {
+                return NotFound();
+            }
+            Profile = account;
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int id)
+        public async Task<IActionResult> OnPostUpdateAsync()
         {
-            Profile = await _accountService.GetByIdAccount(id);
-            await _accountService.UpdateAccount(Profile);  
-            //AccountLogin = GetLoggedInUserId();
-            if (Profile == null)
+            if (!ModelState.IsValid)
             {
-                return NotFound(); // Handle case when account is not found 
+                return Page();
             }
 
+            if (Request.Form.Files.Count > 0)
+            {
+                var file = Request.Form.Files[0];
+
+                // Gọi Firebase service để upload hình ảnh
+                var firebaseService = new FirebaseConfig();
+                Profile.Avatar = await firebaseService.UploadToFirebase(file);
+            }
+
+            await _accountService.UpdateAccount(Profile);
             return Page();
         }
+
     }
 }

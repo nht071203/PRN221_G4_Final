@@ -27,5 +27,6 @@ namespace PRN221_BusinessLogic.Interface
         Task<int> GetTotalFarmerService();
         Task<string?> GetFullNameByUsername(string username);
         Task<int> GetTotalExpertService();
+        Task<bool> ChangePasswordAsync(int id, string oldPassword, string newPassword);
     }
 }
