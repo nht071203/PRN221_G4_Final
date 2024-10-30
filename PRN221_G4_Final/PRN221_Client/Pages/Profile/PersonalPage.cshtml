@@ -68,6 +68,16 @@
                             <img src="@Model.Profile.Avatar" class="w3-circle" style="height:106px;width:106px"
                                  alt="Avatar">
                         </p>
+                        <div class="mt-3 text-center">
+                            @if (Model.Profile.ShortBio != null && Model.Profile.ShortBio != "N/A")
+                            {
+                                <p class="text-secondary mb-1">@Model.Profile.ShortBio</p>
+                            }
+                            @if(Model.AccountLogin != Model.Profile.AccountId)
+                            {
+                                <button class="btn btn-primary">Follow</button>
+                            }
+                        </div>
                         <hr>
                         @if (Model.Profile.Major != null && Model.Profile.Major != "N/A")
                         {
@@ -113,7 +123,7 @@
                     <div class="w3-white">
                         @if (Model.AccountLogin == Model.Profile.AccountId)
                         {
-                            <a class="w3-button w3-block w3-theme-l1 w3-left-align">
+                            <a asp-page="/Profile/Information" asp-route-id="@Model.Profile.AccountId" class="w3-button w3-block w3-theme-l1 w3-left-align">
                                 <i class="fa fa-info-circle fa-fw w3-margin-right"></i> Information
                             </a>
                         }
