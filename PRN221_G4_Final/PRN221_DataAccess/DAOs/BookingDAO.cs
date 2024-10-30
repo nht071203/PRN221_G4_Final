@@ -23,5 +23,14 @@ namespace PRN221_DataAccess.DAOs
             await _context.SaveChangesAsync();
             return item;
         }
+        //xuan mai
+        public async Task UpdateStatusBooking(BookingService itemm)
+        {
+            var item = await _context.BookingServices.FirstOrDefaultAsync(c => c.BookingId == itemm.BookingId );
+            if (item == null) return;
+            _context.Entry(item).CurrentValues.SetValues(itemm);
+            await _context.SaveChangesAsync();
+
+        }
     }
 }
