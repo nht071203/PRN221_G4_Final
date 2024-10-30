@@ -32,8 +32,21 @@ namespace PRN221_Client.Pages.Profile
         public Post Post { get; set; }
         private string ImageUrl { get; set; }
 
+        //UserSession là user đang đăng nhập
+        public Account UserSession { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int id)
         {
+            // Kiểm tra session và lấy thông tin người đang đăng nhập
+            var usernameSession = HttpContext.Session.GetString("UserSession");
+
+            if(usernameSession == null)
+            {
+                return RedirectToPage("/Access/Login");
+            }
+
+            UserSession = await _accountService.GetByUsername(usernameSession);
+
             Posts = new List<PostDTO>();
             Profile = await _accountService.GetByIdAccount(id);
             AccountLogin = GetLoggedInUserId();
@@ -91,5 +104,6 @@ namespace PRN221_Client.Pages.Profile
 
             return RedirectToPage("/Profile/PersonalPage", new { id = account_id });
         }
+
     }
 }
