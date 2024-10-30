@@ -71,13 +71,14 @@ namespace PRN221_DataAccess.DAOs
                 .GroupBy(n => new { n.CreatedAt.Value.Year, n.CreatedAt.Value.Month })
                 .Select(g => new
                 {
-                    Month = $"{g.Key.Year}-{g.Key.Month:D2}", 
+                    Month = $"{g.Key.Year}-{g.Key.Month:D2}",
                     Count = g.Count()
                 })
                 .ToListAsync();
 
             return result.Select(item => (item.Month, item.Count));
         }
+
 
         public async Task<int> GetTotalNewsCountAsync()
         {
