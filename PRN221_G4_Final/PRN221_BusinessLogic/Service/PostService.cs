@@ -182,6 +182,14 @@ namespace PRN221_BusinessLogic.Service
             return _postRepository.DeletePost(postId);
         }
 
+        public async Task<Comment> FindCommentById(int id) => await _commentRepository.FindById(id);
+
+        public async Task AddComment(Comment item) => await _commentRepository.Add(item);
+
+        public async Task UpdateComment(Comment item) => await _commentRepository.Update(item);
+
+        public async Task DeleteComment(int id) => await _commentRepository.Delete(id);
+
         public async Task<int> UpdatePost(int postId, int categoryid, int? accountId, string content)
         {
             DateTime currentUtcDateTime = DateTime.UtcNow;

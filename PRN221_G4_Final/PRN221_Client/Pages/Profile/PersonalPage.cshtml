@@ -79,7 +79,18 @@
                             }
                             @if(Model.AccountLogin != Model.Profile.AccountId)
                             {
-                                <button class="btn btn-primary">Follow</button>
+                                if (!Model.IsFollowing)
+                                {
+                                    <form method="post" asp-page-handler="Follow">
+                                        <button class="btn btn-primary">Follow</button>
+                                    </form>
+                                }
+                                else if (Model.IsFollowing)
+                                {
+                                    <form method="post" asp-page-handler="Unfollow">
+                                        <button class="btn btn-danger">Following</button>
+                                    </form>
+                                }
                             }
                         </div>
                         <hr>
@@ -436,3 +447,22 @@
         <!-- End Page Container -->
     </div>
 </div>
+
+<div id="success-message" style="display:none;">@TempData["SuccessMessage"]</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var successMessage = document.getElementById('success-message').innerText;
+
+            if (successMessage) {
+                Swal.fire({
+                    title: 'Alert',
+                    text: successMessage,
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            }
+        });
+    </script>
+}

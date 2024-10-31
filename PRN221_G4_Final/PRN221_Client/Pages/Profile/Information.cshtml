@@ -42,6 +42,7 @@
             </ul>
         </div>
     </div>
+
     <div class="col-lg-8 p-4">
         <div class="card p-5">
             <div class="row mb-3">
@@ -171,4 +172,22 @@
             </div>
         </div>
     </div>
+    <div id="success-message" style="display:none;">@TempData["SuccessMessage"]</div>
 </div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var successMessage = document.getElementById('success-message').innerText;
+
+            if (successMessage) {
+                Swal.fire({
+                    title: 'Success',
+                    text: successMessage,
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            }
+        });
+    </script>
+}

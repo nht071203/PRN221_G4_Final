@@ -48,11 +48,14 @@ namespace PRN221_Client.Pages.Profile
                 // Gọi Firebase service để upload hình ảnh
                 var firebaseService = new FirebaseConfig();
                 Profile.Avatar = await firebaseService.UploadToFirebase(file);
+                TempData["SuccessMessage"] = "Update avatar successfully.";
             }
-
+            else 
+            {
+                TempData["SuccessMessage"] = "Update profile successfully.";
+            }
             await _accountService.UpdateAccount(Profile);
-            return Page();
+            return RedirectToPage("/Profile/Information", new { id = Profile.AccountId });
         }
-
     }
 }

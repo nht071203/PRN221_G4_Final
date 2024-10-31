@@ -97,22 +97,6 @@ namespace PRN221_BusinessLogic.Service
         {
             return await _accountRepo.GetFullnameByUsername(username);
         }
-
-        public async Task<bool> ChangePasswordAsync(int id, string oldPassword, string newPassword)
-        {
-            var account = await _accountRepo.GetAccountById(id);
-            if (account == null)
-            {
-                return false; // Account not found
-            }
-
-            if (account.Password == oldPassword) 
-            { 
-                account.Password = newPassword;
-                await _accountRepo.Update(account);
-            }           
-            return true;
-        }
     }
 }
 
