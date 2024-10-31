@@ -21,6 +21,11 @@ namespace PRN221_Repository.PostImageRepo
             await _postImageDAO.Add(postImage);
         }
 
+        public Task<int> DeleteImage(PostImage postImage)
+        {
+            return _postImageDAO.Delete(postImage);
+        }
+
         public async Task<IEnumerable<PostImage>> GetAll()
         {
             return await _postImageDAO.GetAll();
