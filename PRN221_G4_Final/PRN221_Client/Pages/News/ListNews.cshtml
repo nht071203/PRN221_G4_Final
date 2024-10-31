@@ -92,17 +92,7 @@
                             }
                             @if (TempData["Message"] != null)
                             {
-                                <script>
-                                    document.addEventListener('DOMContentLoaded', function () {
-                                        Swal.fire({
-                                            title: 'Alert',
-                                            text: '@TempData["Message"]',
-                                            icon: 'warning',
-                                            confirmButtonText: 'OK'
-                                        });
-                                    });
-                                </script>
-                                <div class="p-3 mb-3 alert alert-warning">@TempData["Message"]</div>
+                                <div id="success-message" class="p-3 mb-3 alert alert-warning">@TempData["Message"]</div>
                             }
                             else
                             {
@@ -236,3 +226,21 @@
         </div>
     </div>
 </section>
+
+@section scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var successMessage = document.getElementById('success-message').innerText;
+
+            if (successMessage) {
+                Swal.fire({
+                    title: 'Alert',
+                    text: successMessage,
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+                console.log(successMessage);
+            }
+        });
+    </script>
+}

@@ -35,7 +35,7 @@ function loadImage(event) {
 document.getElementById('cropButton').addEventListener('click', function () {
     if (cropper) {
         const canvas = cropper.getCroppedCanvas({
-            width: 110, // Kích thước bạn muốn
+            width: 110,
             height: 110,
         });
 

@@ -17,24 +17,26 @@ namespace PRN221_Client.Pages.Profile
 
         public Account Profile { get; set; }
 
-        // Properties for password change
-        [Required]
+        [BindProperty]
+        [Required(ErrorMessage = "Please enter your password.")]
         public string OldPassword { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The new password must be at least {2} characters long.", MinimumLength = 6)]
+        [BindProperty]
+        [Required(ErrorMessage = "Please enter your new password.")]
+        [MinLength(6, ErrorMessage = "New password must be at least 6 characters long.")]
         public string NewPassword { get; set; }
 
-        [Required]
-        [Compare("NewPassword", ErrorMessage = "The confirmation password does not match.")]
-        public string ConfirmNewPassword { get; set; }
+        [BindProperty]
+        [Required(ErrorMessage = "Please confirm your new password.")]
+        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
             Profile = await _accountService.GetByIdAccount(id);
             if (Profile == null)
             {
-                return NotFound(); // Handle case when account is not found 
+                return NotFound(); 
             }
 
             return Page();
@@ -44,21 +46,27 @@ namespace PRN221_Client.Pages.Profile
         {
             if (!ModelState.IsValid)
             {
-                return Page(); // Return page with validation errors
+                return Page(); 
             }
 
-            // Call the service to change the password
-            var result = await _accountService.ChangePasswordAsync(id, OldPassword, NewPassword);
-            if (result)
+            Profile = await _accountService.GetByIdAccount(id);
+            if (Profile == null)
             {
-                // Optionally add a success message
-                TempData["SuccessMessage"] = "Password changed successfully.";
-                return RedirectToPage("/Profile/PersonalPage", new { id = id });
+                return NotFound(); 
             }
 
-            // Add an error message if the change failed
-            ModelState.AddModelError(string.Empty, "Failed to change password. Please check your old password and try again.");
-            return Page();
+            if (Profile.Password != OldPassword)
+            {
+                TempData["ErrorMessage"] = "Your old password is incorrect!";
+                return Page();
+            }
+
+            Profile.Password = NewPassword;
+            await _accountService.UpdateAccount(Profile);
+
+            TempData["SuccessMessage"] = "Password changed successfully.";
+            return RedirectToPage("/Profile/Information", new { id = id });
+            //return Page();
         }
     }
 }

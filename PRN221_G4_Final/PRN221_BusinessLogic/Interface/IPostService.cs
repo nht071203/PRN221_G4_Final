@@ -25,5 +25,9 @@ namespace PRN221_BusinessLogic.Interface
         Task<Post> AddPost(int categoryId, int accountId, string content);
         Task<int> DeletePost(int postId);
         Task<List<PostImage>> GetAllPostImagesByAccountId(int id);
+        Task<Comment> FindCommentById(int id);
+        Task AddComment(Comment item);
+        Task UpdateComment(Comment item);
+        Task DeleteComment(int id);
     }
 }

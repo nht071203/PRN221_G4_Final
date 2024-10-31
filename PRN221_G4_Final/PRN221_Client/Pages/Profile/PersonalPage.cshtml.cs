@@ -15,13 +15,15 @@ namespace PRN221_Client.Pages.Profile
         private readonly ICategoryPostService _categoryPostService;
         private readonly IPostImageService _postImageService;
         private readonly IImageService _imageService;
-        public PersonalPageModel(IAccountService accountService, IPostService postService, ICategoryPostService categoryPostService, IPostImageService postImageService, IImageService imageService)
+        private readonly IFollowService _followService;
+        public PersonalPageModel(IAccountService accountService, IPostService postService, ICategoryPostService categoryPostService, IPostImageService postImageService, IImageService imageService, IFollowService followService )
         {
             _accountService = accountService;
             _postService = postService;
             _categoryPostService = categoryPostService;
             _postImageService = postImageService;
             _imageService = imageService;
+            _followService = followService;
         }
 
         public Account Profile { get; set; }
@@ -34,12 +36,12 @@ namespace PRN221_Client.Pages.Profile
 
         //UserSession là user đang đăng nhập
         public Account UserSession { get; set; }
-
+        public Follow Follow { get; set; }
+        public bool IsFollowing { get; set; }   
         public async Task<IActionResult> OnGetAsync(int id)
         {
             // Kiểm tra session và lấy thông tin người đang đăng nhập
             var usernameSession = HttpContext.Session.GetString("UserSession");
-
             if(usernameSession == null)
             {
                 return RedirectToPage("/Access/Login");
@@ -49,8 +51,8 @@ namespace PRN221_Client.Pages.Profile
 
             Posts = new List<PostDTO>();
             Profile = await _accountService.GetByIdAccount(id);
+            TempData["ProfileId"] = Profile.AccountId;
             AccountLogin = GetLoggedInUserId();
-
             if (Profile == null)
             {
                 return NotFound(); // Handle case when account is not found 
@@ -58,6 +60,10 @@ namespace PRN221_Client.Pages.Profile
 
             ListCategoryPost = await _categoryPostService.GetAllCategory();
             Posts = await _postService.GetAllPostByAccountId(id);
+
+            var follower_id = AccountLogin;
+            int followed_id = Profile.AccountId;
+            IsFollowing = await _followService.IsFollowing(follower_id, followed_id);
             return Page();
         }
         private int GetLoggedInUserId()
@@ -105,5 +111,29 @@ namespace PRN221_Client.Pages.Profile
             return RedirectToPage("/Profile/PersonalPage", new { id = account_id });
         }
 
+        public async Task<IActionResult> OnPostFollow(Follow follow)
+        {
+            var follower_id = HttpContext.Session.GetInt32("AccountID");
+            int followed_id = (int)TempData["ProfileId"];
+            if (follower_id != null)
+            {
+                follow.FollowerId = (int)follower_id;
+                follow.BeFollowedId = followed_id;
+            }
+            Follow = follow;
+            await _followService.Add(Follow);
+            return RedirectToPage("/Profile/PersonalPage", new { id = followed_id });
+        }
+
+        public async Task<IActionResult> OnPostUnfollow(Follow follow)
+        {
+            var follower_id = HttpContext.Session.GetInt32("AccountID");
+            int followed_id = (int)TempData["ProfileId"];
+            
+            follow = await _followService.FindById((int)follower_id, followed_id);
+            Follow = follow;
+            await _followService.Delete((int)follower_id, followed_id);
+            return RedirectToPage("/Profile/PersonalPage", new { id = followed_id });
+        }
     }
 }

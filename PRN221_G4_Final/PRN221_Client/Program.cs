@@ -182,8 +182,6 @@ builder.Services.AddScoped<PostViewModel>();
 
 builder.Services.AddScoped<IFollowService, FollowService>();
 builder.Services.AddScoped<IFollowRepository, FollowRepository>();
-builder.Services.AddScoped<FollowService>();
-builder.Services.AddScoped<FollowRepository>();
 builder.Services.AddScoped<FollowDAO>();
 
 builder.Services.AddSession();

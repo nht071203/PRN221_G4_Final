@@ -37,5 +37,34 @@ namespace PRN221_DataAccess.DAOs
                 .Where(f => friendIds.Contains(f.BeFollowedId))
                 .ToListAsync();
         }
+        public async Task<Follow> FindById(int follower_id, int followed_id)
+        {
+            var item = await _context.Follows.FirstOrDefaultAsync(f => f.FollowerId == follower_id && f.BeFollowedId == followed_id);
+            if (item == null) return null;
+            return item;
+        }
+        public async Task Add(Follow item)
+        {
+            item.FollowAt = DateTime.Now;
+            _context.Follows.Add(item);
+            await _context.SaveChangesAsync();
+        }
+
+        //public async Task Update(Follow item)
+        //{
+        //    var existingItem = await FindById(item.FollowId);
+        //    if (existingItem == null) return;
+        //    _context.Entry(existingItem).CurrentValues.SetValues(item);
+        //    await _context.SaveChangesAsync();
+        //}
+
+        public async Task Delete(int follower_id, int followed_id)
+        {
+            var item = await FindById(follower_id, followed_id);
+            if (item == null) return;
+
+            _context.Follows.Remove(item);
+            await _context.SaveChangesAsync();
+        }
     }
 }
