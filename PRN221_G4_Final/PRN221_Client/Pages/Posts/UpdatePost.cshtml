@@ -1,0 +1,321 @@
+﻿@page "/Posts/UpdatePost"
+@model PRN221_Client.Pages.Posts.UpdatePostModel
+@{
+}
+
+<style>
+    html,
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+        font-family: "Open Sans", sans-serif
+    }
+    /* Trường hợp 1 ảnh */
+    .image-grid-1 img {
+        width: 100%; /* Hiển thị ảnh rộng 100% */
+    }
+
+    /* Trường hợp 2 ảnh */
+    .image-grid-2 {
+        display: flex;
+        justify-content: space-between;
+    }
+
+        .image-grid-2 img {
+            width: 48%; /* Hiển thị 2 ảnh ngang hàng, mỗi ảnh chiếm 48% */
+        }
+
+    /* Trường hợp 3 ảnh */
+    .image-grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+        .image-grid-3 img {
+            width: 100%; /* 3 ảnh chia đều theo hàng */
+        }
+
+    /* Trường hợp 4 ảnh */
+    .image-grid-4 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+        .image-grid-4 img {
+            width: 100%; /* 4 ảnh chia thành 2x2 */
+        }
+</style>
+
+<div class="w3-theme-l5">
+    <!-- Page Container -->
+    <div class="w3-container w3-content" style="max-width:1400px;margin-top:30px; background-color: white">
+        <!-- The Grid -->
+        <div class="w3-row">
+
+            <!-- Left Column -->
+            <div class="w3-col m3">
+
+                <!-- Profile -->
+                <div class="w3-card w3-round w3-white pb-3">
+                    <div class="w3-container">
+                        <h4 class="w3-center">@Model.Profile.FullName </h4>
+                        <p class="w3-center">
+                            <img src="@Model.Profile.Avatar" class="w3-circle" style="height:106px;width:106px"
+                                 alt="Avatar">
+                        </p>
+                        <div class="mt-3 text-center">
+                            @if (Model.Profile.ShortBio != null && Model.Profile.ShortBio != "N/A")
+                            {
+                                <p class="text-secondary mb-1">@Model.Profile.ShortBio</p>
+                            }
+                            @if (Model.AccountLogin != Model.Profile.AccountId)
+                            {
+                                <button class="btn btn-primary">Follow</button>
+                            }
+                        </div>
+                        <hr>
+                        @if (Model.Profile.Major != null && Model.Profile.Major != "N/A")
+                        {
+                            <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> @Model.Profile.Major</p>
+                        }
+                        @if (Model.Profile.Address != null && Model.Profile.Address != "N/A")
+                        {
+                            <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> @Model.Profile.Address</p>
+                        }
+                        @if (Model.Profile.Gender != null && Model.Profile.Gender != "N/A")
+                        {
+                            if (Model.Profile.Gender.ToLower() == "female")
+                            {
+                                <p><i class="fa fa-venus  fa-fw w3-margin-right w3-text-theme"></i> @Model.Profile.Gender</p>
+                            }
+                            else if (Model.Profile.Gender.ToLower() == "male")
+                            {
+                                <p><i class="fa fa-mars fa-fw w3-margin-right w3-text-theme"></i> @Model.Profile.Gender</p>
+                            }
+                            else
+                            {
+                                <p><i class="fa fa-genderless fa-fw w3-margin-right w3-text-theme"></i> @Model.Profile.Gender</p>
+                            }
+                        }
+                        @* @if (Model.Profile.DegreeUrl != null)
+                        {
+                        <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> @Model.Profile.DegreeUrl</p>
+                        } *@
+                        @if (Model.Profile.DateOfBirth != null)
+                        {
+                            <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> @Model.Profile.DateOfBirth.Value.ToString("MMMM dd, yyyy")</p>
+                        }
+                        @if (Model.Profile.YearOfExperience != null)
+                        {
+                            <p><i class="fa fa-user-tie fa-fw w3-margin-right w3-text-theme"></i> @Model.Profile.YearOfExperience Year Of Experience</p>
+                        }
+                    </div>
+                </div>
+                <br>
+
+                <!-- Accordion -->
+                <div class="w3-card w3-round">
+                    <div class="w3-white">
+                        @if (Model.AccountLogin == Model.Profile.AccountId)
+                        {
+                            <a asp-page="/Profile/Information" asp-route-id="@Model.Profile.AccountId" class="w3-button w3-block w3-theme-l1 w3-left-align">
+                                <i class="fa fa-info-circle fa-fw w3-margin-right"></i> Information
+                            </a>
+                        }
+
+                        <a asp-page="/Profile/PersonalPage" asp-route-id="@Model.Profile.AccountId" class="w3-button w3-block w3-theme-l1 w3-left-align">
+                            <i class="fa fa-pencil-alt fa-fw w3-margin-right"></i> Posts
+                        </a>
+                        <a asp-page="/Profile/ListFollow" asp-route-id="@Model.Profile.AccountId" class="w3-button w3-block w3-theme-l1 w3-left-align">
+                            <i class="fa fa-user-friends fa-fw w3-margin-right"></i> Friends
+                        </a>
+                        <a asp-page="/Profile/ListFollow" asp-route-id="@Model.Profile.AccountId" class="w3-button w3-block w3-theme-l1 w3-left-align">
+                            <i class="fa fa-user-plus fa-fw w3-margin-right"></i> Followers
+                        </a>
+                        <a asp-page="/Profile/ListFollow" asp-route-id="@Model.Profile.AccountId" class="w3-button w3-block w3-theme-l1 w3-left-align">
+                            <i class="fa fa-user-check fa-fw w3-margin-right"></i> Following
+                        </a>
+                        <a asp-page="/Profile/ListPhotos" asp-route-id="@Model.Profile.AccountId" class="w3-button w3-block w3-theme-l1 w3-left-align">
+                            <i class="fa fa-picture-o fa-fw w3-margin-right"></i> Photos
+                        </a>
+                    </div>
+                </div>
+                <br>
+            </div>
+
+            <!-- Middle Column -->
+            <div class="w3-col m7" style="padding: 0 10px;">
+
+                @* FORM UPDATE *@
+                    <div class="update-post-container">
+                        <h2>Chỉnh sửa bài viết</h2>
+
+                        <form id="updatePostForm" method="post" asp-page="/Posts/UpdatePost" asp-page-handler="UpdatePost" enctype="multipart/form-data">
+                            <input type="hidden" value="@Model.Post.post.PostId" name="PostId">
+                            <textarea name="ContentPostUpdate" placeholder="@Model.Profile.FullName ơi, bạn đang nghĩ gì thế?" class="content-post-update"
+                                      required>@Model.Post.post.PostContent</textarea>
+
+                            <input type="file" id="imageInputUpdate" accept="image/*" style="display: none;" multiple asp-for="PostViewModel.ImagesPost">
+
+                            <div class="select">
+                                <label for="select-input">Chọn danh mục: </label>
+                            <select id="select-input" name="CategoryIdUpdate">
+                                    <option value="" disabled selected>Chọn danh mục</option>
+                                    @foreach (var categoryPost in Model.ListCategoryPost)
+                                    {
+                                        @if(categoryPost.CategoryPostId == Model.Post.post.CategoryPostId)
+                                        {
+                                            <option selected value="@categoryPost.CategoryPostId">@categoryPost.CategoryPostName</option>
+                                        } else
+                                        {
+                                            <option value="@categoryPost.CategoryPostId">@categoryPost.CategoryPostName</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+
+                            @if (Model.Post.postImages != null && Model.Post.postImages.Count() > 0)
+                            {
+                                <div id="optionChooseImage">
+                                    <label>Bạn có muốn xóa ảnh cũ không?</label>
+                                    <div>
+                                        <input type="radio" asp-for="IsDeleteOldImage" value="true" /> Có
+                                        <input type="radio" asp-for="IsDeleteOldImage" value="false" /> Không
+                                    </div>
+                                </div>
+                            }
+
+                            
+                            <div id="imageOldPreviewUpdate">
+                                <p>Ảnh cũ:</p>
+
+                                <div style="margin-top: 10px; display: flex; flex-wrap: wrap;">
+                                    @if (Model.Post.postImages != null && Model.Post.postImages.Count() > 0)
+                                    {
+                                        @foreach (var imageItem in Model.Post.postImages)
+                                        {
+                                            <img style="width: 100px; margin-right: 10px" src="@imageItem.ImageUrl" />
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <p>Bài post hiện không có ảnh</p>
+                                    }
+                                </div>
+                                
+                            </div>
+
+                            <div id="imageNewPreviewUpdate">
+                                <p>Ảnh mới: </p>
+                                <div id="previewNewImage" style="margin-top: 10px; display: flex; flex-wrap: wrap;">
+
+                                </div>
+                            </div>
+
+                            <div class="actions" style="margin-top: 10px;">
+                                <button type="button" id="selectImageButtonUpdate">
+                                    <img src="https://via.placeholder.com/20/00FF00" alt="Photo/Video">Ảnh/video
+                                </button>
+                                <div>
+                                    <img src="https://via.placeholder.com/20/FFD700" alt="Feeling/Activity">Cảm
+                                    xúc/hoạt động
+                                </div>
+                                <button><img src="https://via.placeholder.com/20/FF4500" alt="GIF">GIF</button>
+                            </div>
+
+                            <button type="submit"
+                                    style="width: 100%; margin-top: 10px; padding: 10px; background-color: #1877f2; color: white; border: none; border-radius: 5px;">
+                                Lưu thay đổi
+                            </button>
+
+                            <a asp-page="/Profile/PersonalPage" asp-route-id="@Model.Profile.AccountId">Trở về trang cá nhân</a>
+                        </form>
+                    </div>
+                @* END FORM UPDATE *@
+                
+            </div>
+
+            <!-- Right Column -->
+            <div class="w3-col m2">
+                <div class="w3-card w3-round w3-white w3-center pt-2 pb-3">
+                    <div class="w3-container">
+                        <p>Upcoming Events:</p>
+                        <img src="~/image/forest.jpg" alt="Forest" style="width:100%;">
+                        <p><strong>Holiday</strong></p>
+                        <p>Friday 15:00</p>
+                        <p><button class="w3-button w3-block w3-theme-l4">Info</button></p>
+                    </div>
+                </div>
+                <br>
+
+                <div class="w3-card w3-round w3-white w3-center">
+                    <div class="w3-container">
+                        <p>Friend Request</p>
+                        <img src="~/image/avatar6.png" alt="Avatar" style="width:50%"><br>
+                        <span>Jane Doe</span>
+                        <div class="w3-row w3-opacity">
+                            <div class="w3-half">
+                                <button class="w3-button w3-block w3-green w3-section" title="Accept">
+                                    <i class="fa fa-check"></i>
+                                </button>
+                            </div>
+                            <div class="w3-half">
+                                <button class="w3-button w3-block w3-red w3-section" title="Decline">
+                                    <i class="fa fa-remove"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+
+                <div class="w3-card w3-round w3-white w3-padding-32 w3-center">
+                    <p><i class="fa fa-bug w3-xxlarge"></i></p>
+                </div>
+
+                <!-- End Right Column -->
+            </div>
+
+            <!-- End Grid -->
+        </div>
+
+        <!-- End Page Container -->
+    </div>
+</div>
+
+<script>
+    //JS CHO FORM UPDATE POST TRONG PERSONAL PAGE
+    const imageInputUpdate = document.getElementById('imageInputUpdate');
+    const previewNewImage = document.getElementById('previewNewImage');
+
+    // Sự kiện cho nút chọn ảnh
+    document.getElementById('selectImageButtonUpdate').addEventListener('click', () => {
+        imageInputUpdate.click();
+    });
+
+    // Sự kiện cho input file
+    imageInputUpdate.addEventListener('change', (event) => {
+        // Xóa các ảnh hiện có trước khi thêm ảnh mới
+        previewNewImage.innerHTML = '';
+
+        const files = Array.from(event.target.files);
+
+        files.forEach(file => {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.width = '100px'; // Kích thước hình ảnh
+                img.style.marginRight = '10px';
+                previewNewImage.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+        });
+    });
+
+</script>

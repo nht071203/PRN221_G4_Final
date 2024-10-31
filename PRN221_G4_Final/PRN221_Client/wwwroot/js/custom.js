@@ -38,6 +38,7 @@ document.getElementById('selectImageButton').addEventListener('click', () => {
 
 // Sự kiện cho input file
 imageInput.addEventListener('change', (event) => {
+    imagePreview.innerHTML = '';
     const files = Array.from(event.target.files);
 
     files.forEach(file => {
@@ -82,6 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
     popup.style.display = 'none';
 
     postInput.addEventListener('click', () => {
+
         popup.style.display = 'flex';
         popup.style.zIndex = '1050';
 
@@ -94,6 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.appendChild(modalBackdrop);
         }
 
+        imagePreview.innerHTML = '';
         body.classList.add('modal-open'); // Khóa cuộn trang
     });
 
@@ -110,3 +113,5 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.remove('modal-open'); // Mở khóa cuộn trang
     });
 });
+
+
