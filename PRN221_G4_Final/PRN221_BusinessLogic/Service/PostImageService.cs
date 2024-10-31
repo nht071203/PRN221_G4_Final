@@ -27,5 +27,15 @@ namespace PRN221_BusinessLogic.Service
 
             await _postImageRepository.AddPostImage(postImage);
         }
+
+        public async Task<int> DeletePostImage(PostImage postImage)
+        {
+            return await _postImageRepository.DeleteImage(postImage);
+        }
+
+        public async Task<IEnumerable<PostImage>> GetPostImagesByPostId(int postId)
+        {
+            return await _postImageRepository.GetAllByPostId(postId);
+        }
     }
 }

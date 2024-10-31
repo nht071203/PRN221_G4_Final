@@ -181,5 +181,22 @@ namespace PRN221_BusinessLogic.Service
         {
             return _postRepository.DeletePost(postId);
         }
+
+        public async Task<int> UpdatePost(int postId, int categoryid, int? accountId, string content)
+        {
+            DateTime currentUtcDateTime = DateTime.UtcNow;
+
+            var post = new Post
+            {
+                PostId = postId,
+                AccountId = accountId,
+                CategoryPostId = categoryid,
+                PostContent = content,
+                UpdateAt = currentUtcDateTime,
+                IsDeleted = false
+            };
+
+            return await _postRepository.UpdatePost(post);
+        }
     }
 }

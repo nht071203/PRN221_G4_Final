@@ -47,5 +47,10 @@ namespace PRN221_Repository.PostsRepo
         {
             return await _postDAO.GetById(postId);
         }
+
+        public async Task<int> UpdatePost(Post post)
+        {
+            return await _postDAO.Update(post);
+        }
     }
 }
