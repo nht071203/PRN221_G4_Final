@@ -16,63 +16,33 @@ namespace PRN221_Admin.ViewModels
 {
     public class ThongKeModelView : BaseViewModel
     {
-        public NewsDAO newsDAO;
-
         public PlotModel PlotModel { get; set; }
+        private readonly INewsService newsService;
+        private readonly IAccountService accountService;
+        private readonly IPostService postService;
 
-        public ThongKeModelView()
+        public ThongKeModelView(INewsService newsService, IAccountService accountService, IPostService postService)
         {
+            this.newsService = newsService;
+            this.accountService = accountService;
+            this.postService = postService;
+
             PlotModel = new PlotModel { Title = "Post Chart" };
-
-            PlotModel.Axes.Add(new LinearAxis
-            {
-                Position = AxisPosition.Bottom,
-                Title = "Month"
-            });
-            PlotModel.Axes.Add(new LinearAxis
-            {
-                Position = AxisPosition.Left,
-                Title = "Posts"
-            });
-
-
-
+            PlotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Title = "Month" });
+            PlotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Title = "Posts" });
 
             LoadData();
         }
 
         private async void LoadData()
         {
-            var newsCountByMonth = await NewsDAO.Instance.GetNewsCountByMonth();
-            TotalNewsCount = await NewsDAO.Instance.GetTotalNewsCountAsync();
-            TotalFarmerCount = await AccountDAO.Instance.GetTotalFarmerCountAsync();
-            TotalExpertCount = await AccountDAO.Instance.GetTotaExpertCountAsync();
-            TotalServiceCount = await ServiceDAO.Instance.GetTotalServicesCount();
+            var newsCountByMonth = await newsService.GetNewsCountByMonth();
+            TotalNewsCount = await newsService.GetTotalNewsCount();
+            TotalFarmerCount = await accountService.GetTotalFarmerService();
+            TotalExpertCount = await accountService.GetTotalExpertService();
 
-            var topFarmer = await PostDAO.Instance.FarmerWithMostPosts();
-
-
-            if (topFarmer != null)
-            {
-                TopFarmer = topFarmer;
-            }
-            else
-            {
-                TopFarmer = new Account();
-            }
-
-            var topExpert = await PostDAO.Instance.ExpertWithMostPosts();
-            if (topExpert != null)
-            {
-                TopExpert = topExpert;
-            }
-            else
-            {
-                TopExpert = new Account();
-            }
-
-
-
+            TopFarmer = await postService.FarmerWithMostPosts() ?? new Account();
+            TopExpert = await postService.ExpertWithMostPosts() ?? new Account();
 
             var lineSeries = new LineSeries
             {
@@ -83,13 +53,22 @@ namespace PRN221_Admin.ViewModels
 
             foreach (var item in newsCountByMonth)
             {
-                var month = DateTime.ParseExact(item.Month, "yyyy-MM", null).Month;
-                lineSeries.Points.Add(new DataPoint(month, item.Count));
+                try
+                {
+                    var month = DateTime.ParseExact(item.Month, "yyyy-MM", null).Month;
+                    lineSeries.Points.Add(new DataPoint(month, item.Count));
+                }
+                catch (FormatException ex)
+                {
+                    Console.WriteLine($"Lỗi định dạng ngày tháng: {item.Month}. Chi tiết: {ex.Message}");
+                }
             }
 
+            PlotModel.Series.Clear();
             PlotModel.Series.Add(lineSeries);
             PlotModel.InvalidatePlot(true);
         }
+
 
         private int _totalNewsCount;
         public int TotalNewsCount

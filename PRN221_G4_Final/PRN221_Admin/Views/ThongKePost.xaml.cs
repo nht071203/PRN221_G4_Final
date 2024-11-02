@@ -28,10 +28,12 @@ namespace PRN221_Admin
     /// </summary>
     public partial class ThongKePost : Page
     {
+        private readonly ThongKeModelView _thongKeModelView;
         public ThongKePost()
         {
             InitializeComponent();
-            DataContext = new ThongKeModelView();
+            _thongKeModelView = (ThongKeModelView)App.ServiceProvider.GetService(typeof(ThongKeModelView));
+            DataContext = _thongKeModelView;
             DispatcherTimer timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += timer_Tick;
