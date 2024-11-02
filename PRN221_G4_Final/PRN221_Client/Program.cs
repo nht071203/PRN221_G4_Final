@@ -27,11 +27,18 @@ using PRN221_Repository.ServiceRepo;
 using PRN221_Repository.SharePostRepo;
 using PRN221_Repository.ViewRepo;
 using Newtonsoft.Json;
+using PRN221_Repository.ConversRepo;
+using PRN221_Client.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddSignalR(options =>
+{
+    options.EnableDetailedErrors = true;
+});
 
 
 builder.Services.AddDbContext<PRN221_DataAccess.Prn221Context>(options =>
@@ -143,6 +150,10 @@ builder.Services.AddScoped<IRateService, RateService>();
 builder.Services.AddScoped<IRateRepository, RateRepository>();
 builder.Services.AddScoped<RateDAO>();
 
+builder.Services.AddScoped<IConversService, ConversService>();
+builder.Services.AddScoped<IConversRepository, ConversRepository>();
+builder.Services.AddScoped<ConversationDAO>();
+
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<FirebaseConfig>();
 
@@ -206,4 +217,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
+
+/*app.MapHub<ChatHub>("/chatHub");*/
+app.MapHub<SignalRServer>("/SignalRServer");
+
 app.Run();

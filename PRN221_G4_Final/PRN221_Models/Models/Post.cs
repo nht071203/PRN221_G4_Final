@@ -15,7 +15,7 @@ public partial class Post
 
     public DateTime? UpdateAt { get; set; }
 
-    public string PostContent { get; set; }
+    public string? PostContent { get; set; }
 
     public bool? IsDeleted { get; set; }
 

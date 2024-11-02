@@ -7,7 +7,7 @@ public partial class Conversation
 {
     public int ConversationId { get; set; }
 
-    public string ConversationName { get; set; }
+    public string ConversationName { get; set; } = null!;
 
     public DateTime? CreateAt { get; set; }
 

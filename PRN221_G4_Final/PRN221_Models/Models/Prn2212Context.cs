@@ -1,14 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using PRN221_Models.Models;
 
-namespace PRN221_DataAccess;
-public partial class Prn221Context : DbContext
+namespace PRN221_Models.Models;
+
+public partial class Prn2212Context : DbContext
 {
-    public Prn221Context()
+    public Prn2212Context()
     {
     }
 
-    public Prn221Context(DbContextOptions<Prn221Context> options)
+    public Prn2212Context(DbContextOptions<Prn2212Context> options)
         : base(options)
     {
     }

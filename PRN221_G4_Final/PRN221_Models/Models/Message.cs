@@ -13,7 +13,7 @@ public partial class Message
 
     public DateTime? CreateAt { get; set; }
 
-    public string Content { get; set; }
+    public string Content { get; set; } = null!;
 
     public bool? IsDeleted { get; set; }
 }
