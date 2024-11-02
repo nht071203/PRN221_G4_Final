@@ -7,7 +7,7 @@ public partial class CategoryService
 {
     public int CategoryServiceId { get; set; }
 
-    public string CategoryServiceName { get; set; }
+    public string CategoryServiceName { get; set; } = null!;
 
-    public string CategoryServiceDescription { get; set; }
+    public string? CategoryServiceDescription { get; set; }
 }

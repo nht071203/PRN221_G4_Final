@@ -1,0 +1,57 @@
+﻿@model IEnumerable<PRN221_Models.Models.Conversation>
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@inject PRN221_BusinessLogic.Interface.IConversService _conversService;
+@inject PRN221_BusinessLogic.Interface.IAccountService _accountService;
+
+@{
+    int? getIdAccount = null;
+    if (HttpContextAccessor.HttpContext.Session.GetString("AccountID") != null)
+    {
+        getIdAccount = Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetInt32("AccountID"));
+    }
+}
+
+<div class="px-4 d-none d-md-block">
+    <div class="d-flex align-items-center">
+        <div class="flex-grow-1">
+            <input type="text" class="form-control my-3" placeholder="Search...">
+        </div>
+    </div>
+    <i class="fas fa-times" onclick="hideListChat()"></i>
+</div>
+@foreach (var item in Model)
+{
+    <input type="hidden" id="get-acc-id" value="@getIdAccount.Value"></input>
+    var getAccInConvList = await _conversService.GetAccConversationByAccOId(item.ConversationId, getIdAccount.Value);
+    var getAccById = await _accountService.GetByIdAccount(getAccInConvList.AccountId);
+    <a class="list-group-item list-group-item-action border-0 conversation-btn" onclick="loadConversList(@item.ConversationId)">
+        <div class="badge bg-success float-right">5</div>
+        <div class="d-flex align-items-start">
+            <img src="~/image/logo.jpg" class="rounded-circle mr-1" alt="Vanessa Tucker" width="40" height="40">
+            <div class="flex-grow-1 ml-3">
+                @getAccById.Username
+                <div class="small"><span class="fas fa-circle chat-online"></span> Online</div>
+            </div>
+        </div>
+    </a>
+}
+
+<script>
+    function loadConversList(conversationId) {
+        console.log(conversationId);
+        document.getElementById('popup2').style.display = 'block';
+        $.ajax({
+            type: 'GET',
+            url: '/Chat/Conversation?handler=LoadMessageList',
+            data: {
+                convId: conversationId
+            },
+            success: function (data) {
+                $('#popup2').html(data);
+                userId = document.getElementById("get-acc-id").value;
+                console.log("Updated User ID:", userId);
+            }
+        });
+    }
+</script>
