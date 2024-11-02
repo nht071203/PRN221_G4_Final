@@ -45,5 +45,9 @@ namespace PRN221_Repository.NewsRepo
         public Task<IEnumerable<News>> GetNewsPaged(int pageNumber, int pageSize) => _newsDAO.GetNewsPaged(pageNumber, pageSize);   
 
         public Task<int> GetTotalNewsCount() => _newsDAO.GetTotalNewsCount();
+
+        public async Task<IEnumerable<(string Month, int Count)>> GetNewsCountByMonth() => await _newsDAO.GetNewsCountByMonth();
+
+
     }
 }

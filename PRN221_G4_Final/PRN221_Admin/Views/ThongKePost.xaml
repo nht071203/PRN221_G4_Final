@@ -91,7 +91,7 @@
                             </StackPanel>
                         </materialDesign:Card>
                     </Border>
-                    <Border BorderBrush="White" BorderThickness="5" Margin="0 0" CornerRadius="15">
+                    <!--<Border BorderBrush="White" BorderThickness="5" Margin="0 0" CornerRadius="15">
                         <materialDesign:Card UniformCornerRadius="15" BorderThickness="5"
                          BorderBrush="White" Width="88" Height="109" Background="#F6F6F8">
                             <StackPanel Margin="10">
@@ -100,7 +100,7 @@
                                 <TextBlock FontSize="15" Text="Services" />
                             </StackPanel>
                         </materialDesign:Card>
-                    </Border>
+                    </Border>-->
                 </WrapPanel>
 
                 <WrapPanel HorizontalAlignment="Center" Width="492" Height="250">

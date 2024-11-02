@@ -66,7 +66,7 @@ namespace PRN221_DataAccess.DAOs
 
         public async Task<IEnumerable<(string Month, int Count)>> GetNewsCountByMonth()
         {
-            var result = await _context.News
+            var result = await _context.Posts
                 .Where(n => n.IsDeleted != true)
                 .GroupBy(n => new { n.CreatedAt.Value.Year, n.CreatedAt.Value.Month })
                 .Select(g => new
