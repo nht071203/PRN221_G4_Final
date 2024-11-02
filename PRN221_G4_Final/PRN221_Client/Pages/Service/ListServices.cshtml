@@ -42,14 +42,20 @@
                                             <!-- <p>Started by <a href="member-activity-personal.html">Alice A. Baker</a> in <a href="#">sports</a> forum</p> -->
                                             <!-- hiển thị sao được đánh giá -->
                                             <div class="rate">
-                                                @for (int i = 1; i <= fullStars; i++)
+                                                
+                                                @for (int i = 0; i < fullStars; i++)
                                                 {
                                                     <label title="Full star">★</label>
                                                 }
-                                                @for (int i = 1; i <= emptyStars; i++)
+
+                                                @if(emptyStars > 0)
                                                 {
-                                                    <label title="Empty star" style="color: #ccc;">★</label> <!-- Sao trống (màu xám) -->
+                                                    @for (int i = 0; i < emptyStars; i++)
+                                                    {
+                                                        <label title="Empty star" style="color: #ccc;">★</label> <!-- Sao trống (màu xám) -->
+                                                    }
                                                 }
+                                                
                                             </div>
                                             <p class="count-rate">(@service.RatingCount)</p>
                                         </td>

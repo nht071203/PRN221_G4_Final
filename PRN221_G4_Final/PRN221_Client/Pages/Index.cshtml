@@ -134,12 +134,10 @@
                                                     
                                                     @if (post.postImages != null && post.postImages.Count() > 0)
                                                     {
-                                                        <span>@post.postImages.FirstOrDefault().ImageUrl</span>
                                                         <div>
                                                             <ul class="nav AdjustRow">
                                                                 <li>
                                                                     <a href="/Posts/PostDetail/@post.post.PostId">
-                                                                        
                                                                         <img src="@post.postImages.FirstOrDefault().ImageUrl" alt="">
                                                                     </a>
                                                                 </li>
@@ -173,59 +171,6 @@
                             {
                                 <h1>không có bài đăng</h1>
                             }
-
-                           @*  <li>
-                                <!-- Activity Item Start -->
-                                <div class="activity--item">
-                                    <div class="activity--avatar">
-                                        <a href="member-activity-personal.html">
-                                            <img src="img/activity-img/avatar-07.jpg" alt="">
-                                        </a>
-                                    </div>
-
-                                    <div class="activity--info fs--14">
-                                        <div class="activity--header">
-                                            <p><a href="member-activity-personal.html">Anita J. Lilley</a> posted an update in the group <a href="group-home.html">Lens-bians Photography</a></p>
-                                        </div>
-
-                                        <div class="activity--meta fs--12">
-                                            <p><i class="fa mr--8 fa-clock-o"></i>Yeasterday at 08:20 am</p>
-                                        </div>
-
-                                        <div class="activity--content">
-                                            <div class="gallery--embed" data-trigger="gallery_popup">
-                                                <ul class="nav AdjustRow">
-                                                    <li>
-                                                        <a href="~/image/avatar2.png">
-                                                            <img src="~/image/avatar2.png" alt="">
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="~/image/avatar2.png">
-                                                            <img src="~/image/avatar2.png" alt="">
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="~/image/avatar2.png">
-                                                            <img src="~/image/avatar2.png" alt="">
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="~/image/avatar2.png" data-overlay="0.5">
-                                                            <img src="~/image/avatar2.png" alt="">
-                                                            <span>24+ More</span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="activity--action fw--700">
-                                            <a href="#">See More...</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Activity Item End -->
-                            </li> *@
 
                         </ul>
                     </div>

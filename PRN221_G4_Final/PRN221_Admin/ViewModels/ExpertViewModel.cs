@@ -21,9 +21,21 @@ namespace PRN221_Admin.ViewModels
         // xu li image
         private FirebaseConfig _firebaseConfig;
         private FirebaseConfig _fireBaseAvatar;
+        private FirebaseConfig _fireBaseEducation;
         private string _imageUrl;
         private string _avatar;
+        private string _education;
 
+        private DateTime? _birthday;
+        public DateTime? Birthday
+        {
+            get { return _birthday; }
+            set
+            {
+                _birthday = value;
+                OnPropertyChanged(nameof(Birthday));
+            }
+        }
         public string ImageUrl
         {
             get => _imageUrl;
@@ -42,8 +54,17 @@ namespace PRN221_Admin.ViewModels
                 OnPropertyChanged(nameof(AvatarURL));
             }
         }
+        public string Education
+        {
+            get => _education;
+            set
+            {
+                _education = value;
+                OnPropertyChanged(nameof(Education));
+            }
+        }
 
-        
+
         private async Task UploadDegree()
         {
             // Use OpenFileDialog from Microsoft.Win32 (for WPF)
@@ -97,6 +118,32 @@ namespace PRN221_Admin.ViewModels
                 }
             }
         }
+        private async Task UploadEducation()
+        {
+            // Use OpenFileDialog from Microsoft.Win32 (for WPF)
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Image files (*.jpg;*.jpeg;*.png)|*.jpg;*.jpeg;*.png"
+            };
+
+            // Show the dialog to select an image file
+            if (openFileDialog.ShowDialog() == true)
+            {
+                // Get file path
+                var filePath = openFileDialog.FileName;
+
+                // Open a file stream to read the image
+                using (var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                {
+                    // Call UploadToFirebase by passing the stream and the file name
+                    var fileName = Path.GetFileName(filePath);
+                    var imageUrl = await _firebaseConfig.UploadToFirebase(stream, fileName);
+
+                    // Update ImageUrl with the returned URL
+                    Education = imageUrl;
+                }
+            }
+        }
 
         public ObservableCollection<Account> Experts
         {
@@ -119,28 +166,31 @@ namespace PRN221_Admin.ViewModels
         public ICommand ClearFormCommand { get; set; }
         public ICommand UploadDegreeCommand { get; set; }
         public ICommand UploadAvatarCommand { get; set; }
+        public ICommand UploadEducationCommand { get; set; }
 
         public ExpertViewModel(IAccountService accountService)
         {
             Experts = new ObservableCollection<Account>();
-           // FarmerAccount = new ObservableCollection<Account>();
+            // FarmerAccount = new ObservableCollection<Account>();
             expertService = accountService;
             //image
             _firebaseConfig = new FirebaseConfig();
             UploadDegreeCommand = new RelayCommand(async (obj) => await UploadDegree());
             _fireBaseAvatar = new FirebaseConfig();
-            UploadAvatarCommand = new RelayCommand(async(obj) => await UploadAvatar());
+            UploadAvatarCommand = new RelayCommand(async (obj) => await UploadAvatar());
+            _fireBaseEducation = new FirebaseConfig();
+            UploadEducationCommand = new RelayCommand(async (obj) => await UploadEducation());
             //command of delete, add and clear
 
             RemoveExpertCommand = new RelayCommand(async (obj) => await DeleteExpert(obj));
             AddExpertCommand = new RelayCommand(async (obj) => await AddExpert(obj));
             ClearFormCommand = new RelayCommand(ClearForm);
             _ = LoadAccounts();
-          //  _ = LoadFarmer();
+            //  _ = LoadFarmer();
 
 
         }
-   
+
 
         private bool _isClearButtonEnabled;
         private bool _isAddButtonEnabled;
@@ -184,6 +234,8 @@ namespace PRN221_Admin.ViewModels
                 OnPropertyChanged(nameof(SelectedExpert));
                 ImageUrl = _selectedExpert?.DegreeUrl;
                 AvatarURL = _selectedExpert?.Avatar;
+                Education = _selectedExpert?.EducationUrl;
+                Birthday = _selectedExpert?.DateOfBirth;
                 OnPropertyChanged(nameof(IsMaleChecked));  // Update Male selection
                 OnPropertyChanged(nameof(IsFemaleChecked));
                 OnPropertyChanged(nameof(ImageUrl));// Update Female selection
@@ -196,7 +248,7 @@ namespace PRN221_Admin.ViewModels
         public async Task LoadAccounts()
         {
 
-            
+
             var students = await expertService.GetListAccountByRoleId(2);
             Experts.Clear();
             foreach (var student in students)
@@ -224,12 +276,6 @@ namespace PRN221_Admin.ViewModels
             return accounts.Any(account => username.Equals(account.Username));
         }
 
-        private async Task<bool> CheckPhoneIsExist(string phone)
-        {
-            var accounts = await getAllAccount();
-            return accounts.Any(account => phone.Equals(account.Phone));
-        }
-
         public async Task AddExpert(object obj)
         {
             try
@@ -242,6 +288,7 @@ namespace PRN221_Admin.ViewModels
                     string.IsNullOrWhiteSpace(SelectedExpert.Address) ||
                     string.IsNullOrWhiteSpace(SelectedExpert.Major)
 
+
                     )
                 {
                     System.Windows.MessageBox.Show("Please enter enough your information!", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -251,22 +298,21 @@ namespace PRN221_Admin.ViewModels
                 {
                     System.Windows.MessageBox.Show("This username is already existed!", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
-                
-                else if (await CheckPhoneIsExist(SelectedExpert.Phone))
-                {
-                    System.Windows.MessageBox.Show("This phone is already existed!", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
+
                 else
                 {
                     SelectedExpert.IsDeleted = false;// Default phone number
                     SelectedExpert.DegreeUrl = ImageUrl;
                     SelectedExpert.Avatar = AvatarURL;
-                                                     // Add the new expert account
+                    SelectedExpert.EducationUrl = Education;
+                    SelectedExpert.DateOfBirth = Birthday;
+                    // Add the new expert account
                     await expertService.AddAccount(SelectedExpert);
-                   
+                    await LoadAccounts();
+
                 }
 
-                await LoadAccounts();
+               
                 //IsDeleteButtonEnabled = false;
 
             }
@@ -290,7 +336,7 @@ namespace PRN221_Admin.ViewModels
                 }
                 expert.IsDeleted = true;
                 await expertService.UpdateAccount(expert);
-               
+
                 await LoadAccounts();
             }
             catch (Exception ex)
@@ -350,7 +396,11 @@ namespace PRN221_Admin.ViewModels
                 Gender = currentGender, // Giữ lại giá trị Gender
                 Address = string.Empty,
                 Major = string.Empty,
-                Password = string.Empty, // Xóa mật khẩu
+                Password = string.Empty,
+                ShortBio = string.Empty,
+                YearOfExperience = 0,
+
+                // Xóa mật khẩu
                 RoleId = 2 // Giữ RoleId là Expert (2) nếu cần
             };
 

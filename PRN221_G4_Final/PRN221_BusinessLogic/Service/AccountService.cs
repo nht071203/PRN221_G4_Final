@@ -1,4 +1,5 @@
-﻿using PRN221_BusinessLogic.Interface;
+﻿using Microsoft.EntityFrameworkCore;
+using PRN221_BusinessLogic.Interface;
 using PRN221_Models.Models;
 using PRN221_Repository.AccountRepo;
 using System;
@@ -96,9 +97,6 @@ namespace PRN221_BusinessLogic.Service
         {
             return await _accountRepo.GetFullnameByUsername(username);
         }
-
-       }
-
-
     }
+}
 

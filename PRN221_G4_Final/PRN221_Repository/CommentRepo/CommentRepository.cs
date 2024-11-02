@@ -17,6 +17,14 @@ namespace PRN221_Repository.CommentRepo
             _commentPostDAO = commentPostDAO;
         }
 
+        public async Task Add(Comment item) => await _commentPostDAO.Add(item);
+
+        public async Task Delete(int id) => await _commentPostDAO.Delete(id);
+
+        public async Task<Comment> FindById(int id) => await _commentPostDAO.FindById(id);
+
         public async Task<IEnumerable<Comment>> GetAllCommentPostByPostId(int id) => await _commentPostDAO.GetAllCommentPostByPostId(id);
+
+        public async Task Update(Comment item) => await _commentPostDAO.Update(item);
     }
 }

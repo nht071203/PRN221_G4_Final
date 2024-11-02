@@ -38,6 +38,7 @@ document.getElementById('selectImageButton').addEventListener('click', () => {
 
 // Sự kiện cho input file
 imageInput.addEventListener('change', (event) => {
+    imagePreview.innerHTML = '';
     const files = Array.from(event.target.files);
 
     files.forEach(file => {
@@ -82,10 +83,35 @@ document.addEventListener('DOMContentLoaded', () => {
     popup.style.display = 'none';
 
     postInput.addEventListener('click', () => {
+
         popup.style.display = 'flex';
+        popup.style.zIndex = '1050';
+
+        // Đảm bảo chỉ có một overlay
+        let modalBackdrop = document.querySelector('.modal-backdrop');
+        if (!modalBackdrop) {
+            modalBackdrop = document.createElement('div');
+            modalBackdrop.className = 'modal-backdrop fade show';
+            modalBackdrop.style.zIndex = '1040';
+            document.body.appendChild(modalBackdrop);
+        }
+
+        imagePreview.innerHTML = '';
+        body.classList.add('modal-open'); // Khóa cuộn trang
     });
 
     closePopupBtn.addEventListener('click', () => {
         popup.style.display = 'none';
+        popup.style.zIndex = '0';
+
+        // Xóa overlay nếu có
+        const modalBackdrop = document.querySelector('.modal-backdrop');
+        if (modalBackdrop) {
+            modalBackdrop.remove();
+        }
+
+        document.body.classList.remove('modal-open'); // Mở khóa cuộn trang
     });
 });
+
+

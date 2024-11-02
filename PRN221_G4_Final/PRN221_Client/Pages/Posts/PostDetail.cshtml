@@ -89,7 +89,7 @@
                                                 <li>
                                                     <i class="mr--8 fa fa-folder-open-o"></i>
 
-                                                    <a href="#"><span>@Model.PostDTO.post.CategoryPostId</span></a>
+                                                    <a href="#"><span>Thể loại: @Model.PostDTO.post.CategoryPostId</span></a>
                                                 </li>
                                                 <li>
                                                     <i class="mr--8 fa fa-tags"></i>
@@ -151,12 +151,12 @@
                         <h4 class="h4 pb--15">Bình luận</h4>
 
                         @* FORM COMMENT *@
-                        <form action="#">
+                        <form method="post" asp-page-handler="Comment">
                             <div class="row gutter--15">
 
                                 <div class="col-sm-12">
                                     <div class="form-group">
-                                        <textarea name="comment" placeholder="Comment *" class="form-control" required></textarea>
+                                        <textarea asp-for="@Model.CommentContent" placeholder="Comment *" class="form-control"></textarea>
                                     </div>
                                 </div>
 

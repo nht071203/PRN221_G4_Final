@@ -12,5 +12,8 @@ namespace PRN221_Repository.FollowRepo
         Task<List<Follow>> GetFollowersByAccountId(int id);
         Task<List<Follow>> GetFollowingByAccountId(int id);
         Task<List<Follow>> GetFriendsByAccountId(int id);
+        Task<Follow> FindById(int follower_id, int followed_id);
+        Task Add(Follow item);
+        Task Delete(int follower_id, int followed_id);
     }
 }

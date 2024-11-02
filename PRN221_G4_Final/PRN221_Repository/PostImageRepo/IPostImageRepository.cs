@@ -12,5 +12,6 @@ namespace PRN221_Repository.PostImageRepo
         Task<IEnumerable<PostImage>> GetAll();
         Task<IEnumerable<PostImage>> GetAllByPostId(int postId);
         Task AddPostImage(PostImage postImage);
+        Task<int> DeleteImage(PostImage postImage);
     }
 }

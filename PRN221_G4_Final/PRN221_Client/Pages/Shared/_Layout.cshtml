@@ -29,19 +29,23 @@
     <!-- ==== Favicon ==== -->
     <link rel="icon" href="favicon.png" type="image/png">
     <!-- ==== Google Font ==== -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,500,600,700%7CRoboto:300,400,400i,500,700">
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ProjectPRNClient.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/plugins.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/responsive-style.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/colors/color-1.css" asp-append-version="true" id="changeColorScheme" />
     <link rel="stylesheet" href="~/css/custom.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css//personalPage.css" asp-append-version="true" />
     <link href="~/image/logo.jpg" rel="icon" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.0/css/boxicons.min.css"
           integrity="sha512-pVCM5+SN2+qwj36KonHToF2p1oIvoU3bsqxphdOIWMYmgr4ZqD3t5DjKvvetKhXGc/ZG5REYTT6ltKfExEei/Q=="
@@ -118,8 +122,7 @@
                     @if (isLoggedIn)
                     {
                         <li>
-                            <a href="#" class="btn-link">
-                                <i class="fa mr--8 fa-user-o"></i>
+                            <a asp-page="/Profile/PersonalPage" asp-route-id="@getAcc?.AccountId" class="btn-link">                                <i class="fa mr--8 fa-user-o"></i>
                                 <span>My Account</span>
                             </a>
                         </li>
@@ -482,7 +485,7 @@
     </div>
 
     <footer class="footer--section">
-        <!-- Footer Widgets Start -->
+        @* <!-- Footer Widgets Start -->
         <div class="footer--widgets pt--70 pb--20 bg-lightdark" data-bg-img="img/footer-img/footer-widgets-bg.png">
             <div class="container">
                 <div class="row AdjustRow">
@@ -645,7 +648,7 @@
                 </div>
             </div>
         </div>
-        <!-- Footer Widgets End -->
+        <!-- Footer Widgets End --> *@
         <!-- Footer Extra Start -->
         <div class="footer--extra bg-darker pt--30 pb--40 text-center">
             <div class="container">
@@ -719,13 +722,18 @@
         <div class="footer--copyright pt--30 pb--30 bg-darkest">
             <div class="container">
                 <div class="text fw--500 fs--14 text-center">
-                    <p>Copyright &copy; Soci<span>fly</span>. All Rights Reserved.</p>
+                    <p>&copy; Copyright 2024 Farm<span>Family</span>. All Rights Reserved.</p>
                 </div>
             </div>
         </div>
         <!-- Footer Copyright End -->
     </footer>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+    @* PERSONAL PAGE *@
+    <script src="~/js/personalPage.js"></script>
     @* Search box js *@
     <script src="~/js/custom.js"></script>
     <script src="~/js/plugins.min.js"></script>
