@@ -5,6 +5,8 @@
 @{
     //var isLoggedIn = HttpContext.Session.GetString("UserSession") != null;
     var isLoggedIn = HttpContextAccessor.HttpContext.Session.GetString("UserSession") != null;
+    int getIdAccount = Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetInt32("AccountID"));
+    var accountLogin = await _accountService.GetByIdAccount(getIdAccount);
     //var isLoggedIn = HttpContextAccessor.HttpContext?.Session?.GetString("UserSession") != null;
     //var isLoggedIn = HttpContextAccessor?.HttpContext?.Session?.GetString("UserSession") != null;
 }
@@ -692,12 +694,13 @@
                     <div class="main-content">
                         @if (isLoggedIn)
                         {
+                            
                             <p class="f-32 fw-500 mb-3">Đánh giá dịch vụ</p>
                             <div class="d-flex align-items-center justify-content-center border my-3">
                                 <form class="card" method="post" asp-page-handler="RateService">
                                     <div class="row">
                                         <div class="col-2">
-                                            <img src="https://i.imgur.com/xELPaag.jpg" width="70" class="rounded-circle mt-2">
+                                            <img src="@accountLogin.Avatar" width="70" class="rounded-circle mt-2">
                                         </div>
                                         <div class="col-10">
                                             <div class="comment-box ml-2">
@@ -935,7 +938,7 @@
                                 var getAccInList = await _accountService.GetByIdAccount(ratingList.UserId);
                                 <div class="border p-3 mb-2">
                                     <div class="d-flex mb-2">
-                                        <img src="../frontend/img/gitiho_v2/placehover_18x18.png"
+                                        <img src="@getAccInList.Avatar"
                                              alt="" data-src="../caches/ua_small/users/1615037654.jpg"
                                              class="my-auto rounded-circle lazyload mr-3" width="36px"
                                              height="36px" />

@@ -54,7 +54,7 @@ namespace PRN221_Client.Pages
 
             //LAY LIST POST KEM IMAGE
             Posts = await _postService.GetListPostAvailable();
-            
+            Posts = Posts.OrderByDescending(p => p.post.CreatedAt).ToList();
             return Page();
         }
 
