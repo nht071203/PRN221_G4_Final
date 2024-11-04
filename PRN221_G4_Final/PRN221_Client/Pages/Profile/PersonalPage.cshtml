@@ -235,7 +235,16 @@
                     </div>
                     @* END ADD POST *@
                 }
-                
+                else
+                {
+                    if (Model.Posts.Count() == 0)
+                    {
+                        <div class="w3-container w3-card w3-white w3-round w3-margin">
+                            <h6 class="text-center">@Model.Profile.Username <span class="font-italic">Chưa có bài viết nào</span></h6>
+                            </div>
+                    }
+                }
+
 
                 @* HIỂN THỊ LIST POST KHI TỰ XEM TRANG CỦA MÌNH *@
 
@@ -247,8 +256,9 @@
 
                         <div class="w3-container w3-card w3-white w3-round w3-margin">
                             <br>
-                            <img src="@post.account.Avatar" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
-
+                            <a asp-page="/Profile/PersonalPages" asp-route-postid="@post.post.PostId">
+                                <img src="@post.account.Avatar" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+                            </a>
                             <div class="w3-right w3-opacity">
 
                                 <a asp-page="/Posts/UpdatePost" asp-route-postid="@post.post.PostId" class="updatePost controlPostBtn">
@@ -257,14 +267,22 @@
 
                                 <a class="deletePost controlPostBtn" asp-page="/Posts/DeletePost" asp-route-postid="@post.post.PostId" asp-page-handler="DeletePost" data-postid="@post.post.PostId" data-toggle="modal">Xóa</a>
                             </div>
-                            
 
-                            <h4>@post.account.FullName</h4><br>
-                            <hr class="w3-clear">
-                            <p>
+
+                            @* <h4>@post.account.FullName</h4>
+                    <p>@post.post.CreatedAt</p> *@
+                            <div class="activity--header">
+                                <p><a asp-page="/Profile/PersonalPage" asp-route-id="@post.account.AccountId">@post.account.FullName</a></p>
+
+                            </div>
+                            <div class="activity--meta fs--12">
+                                <p><i class="fa mr--8 fa-clock-o"></i>@post.post.CreatedAt</p>
+                            </div>
+                            <br />
+                            <h5>
                                 @post.post.PostContent
-                            </p>
-
+                            </h5>
+                            <hr class="w3-clear">
                             <div class="w3-row-padding" style="margin:0 -16px">
                                 <div class="@("image-grid-" + imageCount)">
                                     @foreach (var image in post.postImages)
@@ -281,7 +299,6 @@
                             </div>
                         </div>
                     }
-
                     //Modal khi nhấn delete
                     <div id="deletePost" class="modal fade">
                         <div class="modal-dialog">

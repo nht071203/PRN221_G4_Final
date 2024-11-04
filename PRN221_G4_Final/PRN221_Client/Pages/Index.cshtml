@@ -98,7 +98,7 @@
                                     <!-- Activity Item Start -->
                                     <li>
                                         <div class="activity--item">
-                                            <div class="activity--avatar">
+                                            <div class="">
                                                 @if(post.account == null)
                                                 {
                                                     <a href="/Access/Login">
@@ -107,7 +107,7 @@
                                                 } else
                                                 {
                                                     <a asp-page="/Profile/PersonalPage" asp-route-id="@post.account.AccountId">
-                                                        <img src="@post.account.Avatar" alt="" onerror="this.onerror=null; this.src='https://firebasestorage.googleapis.com/v0/b/prn221-69738.appspot.com/o/image%2Fuser.png?alt=media&token=e669a837-b9c8-4983-b2bd-8eb5c091d48f';">
+                                                        <img src="@post.account.Avatar" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
                                                     </a>
                                                 }
                                                
@@ -117,10 +117,10 @@
                                                 <div class="activity--header">
                                                     @if(post.account == null)
                                                     {
-                                                        <p><a href="/Access/Login">Người dùng ẩn danh</a> vừa đăng 1 bài viết</p>
+                                                        <p><a href="/Access/Login">Người dùng ẩn danh</a> </p>
                                                     } else
                                                     {
-                                                        <p><a asp-page="/Profile/PersonalPage" asp-route-id="@post.account.AccountId">@post.account.FullName</a> vừa đăng 1 bài viết</p>
+                                                        <p><a asp-page="/Profile/PersonalPage" asp-route-id="@post.account.AccountId">@post.account.FullName</a> </p>
                                                     }
                                                     
                                                 </div>
@@ -130,14 +130,14 @@
                                                 </div>
 
                                                 <div class="activity--content">
-                                                    <p class="content-text-ellipsis">@post.post.PostContent</p>
+                                                    <h6 class="content-text-ellipsis">@post.post.PostContent</h6>
                                                     
                                                     @if (post.postImages != null && post.postImages.Count() > 0)
                                                     {
                                                         <div>
                                                             <ul class="nav AdjustRow">
-                                                                <li>
-                                                                    <a href="/Posts/PostDetail/@post.post.PostId">
+                                                                <li class="p-0">
+                                                                    <a class="p-0" href="/Posts/PostDetail/@post.post.PostId">
                                                                         <img src="@post.postImages.FirstOrDefault().ImageUrl" alt="">
                                                                     </a>
                                                                 </li>
