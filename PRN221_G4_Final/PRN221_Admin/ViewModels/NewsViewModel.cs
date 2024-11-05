@@ -175,17 +175,13 @@ namespace PRN221_Admin.ViewModels
 
         public async Task LoadNews()
         {
-           
-
+            
             var students = await newsService.GetAllNews();
             News.Clear();
             foreach (var student in students)
             {
-                if (student.IsDeleted == false)
-                {
-
+               
                     News.Add(student);
-                }
 
             }
             await LoadCategoryNews();
