@@ -35,13 +35,9 @@ namespace PRN221_Client.Pages.Posts
             _accountService = accountService;
         }
 
-        public async Task<IActionResult> OnGetAsync(int postId)
+        public async Task OnGetAsync(int postId)
         {
             var account_id = HttpContext.Session.GetInt32("AccountID");
-            if (account_id == null)
-            {
-                return RedirectToPage("/Access/Login");
-            }
 
             PostId = postId;
             PostDTO = await _postService.GetPostAndImage(PostId);
@@ -65,7 +61,6 @@ namespace PRN221_Client.Pages.Posts
             await _viewService.AddRecordPost((int)account_id, PostId);
             View = await _viewService.GetViewByPostId(PostId);
 
-            return Page();
         }
 
         public async Task<IActionResult> OnPostLikeAsync(int postId)
