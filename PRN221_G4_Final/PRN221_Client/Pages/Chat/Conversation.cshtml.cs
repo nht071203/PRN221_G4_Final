@@ -46,7 +46,7 @@ namespace PRN221_Client.Pages.Chat
                 ConversationId = convId
             };
 
-            //await _hubContext.Clients.All.SendAsync("LoadMessages");
+            await _hubContext.Clients.All.SendAsync("LoadMessages");
 
             return Partial("_ListMessage", viewModel);
         }
@@ -74,7 +74,7 @@ namespace PRN221_Client.Pages.Chat
                 ConversationId = convId
             };
 
-            //await _hubContext.Clients.All.SendAsync("LoadMessages");
+            await _hubContext.Clients.All.SendAsync("LoadMessages");
 
             return Partial("_ListMessage", viewModel);
         }
