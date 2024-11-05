@@ -60,7 +60,6 @@ namespace PRN221_Client.Pages.Posts
             //Add record vào db để làm chức năng + 1 view khi xem detail
             await _viewService.AddRecordPost((int)account_id, PostId);
             View = await _viewService.GetViewByPostId(PostId);
-
         }
 
         public async Task<IActionResult> OnPostLikeAsync(int postId)
