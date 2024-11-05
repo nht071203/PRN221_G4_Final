@@ -35,8 +35,14 @@ namespace PRN221_Client.Pages.Posts
             _accountService = accountService;
         }
 
-        public async Task OnGetAsync(int postId)
+        public async Task<IActionResult> OnGetAsync(int postId)
         {
+            var account_id = HttpContext.Session.GetInt32("AccountID");
+            if (account_id == null)
+            {
+                return RedirectToPage("/Access/Login");
+            }
+
             PostId = postId;
             PostDTO = await _postService.GetPostAndImage(PostId);
             CountLikePost = await _postService.GetLikeCountByPostId(PostId);
@@ -54,7 +60,12 @@ namespace PRN221_Client.Pages.Posts
                     CommentAccounts[comment.AccountId.Value] = account;
                 }
             }
+
+            //Add record vào db để làm chức năng + 1 view khi xem detail
+            await _viewService.AddRecordPost((int)account_id, PostId);
             View = await _viewService.GetViewByPostId(PostId);
+
+            return Page();
         }
 
         public async Task<IActionResult> OnPostLikeAsync(int postId)
