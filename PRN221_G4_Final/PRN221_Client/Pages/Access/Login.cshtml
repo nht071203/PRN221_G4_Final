@@ -14,10 +14,12 @@
             <form method="post" asp-page-handler="Login">
                 <div class="field input-field">
                     <input type="text" placeholder="Tên đăng nhập" class="input" name="Username">
+                    <span asp-validation-for="@Model.Username"></span>
                 </div>
 
                 <div class="field input-field">
                     <input type="text" placeholder="Mật khẩu" class="password" name="Password">
+                    <span asp-validation-for="@Model.Password"></span>
                     <i class='bx bx-hide eye-icon'></i>
                 </div>
 
@@ -111,3 +113,25 @@
             }
         }
     </script>
+
+@if (TempData["RegisterSuccess"] != null)
+{
+    <input type="hidden" id="success-message">
+}
+@section scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var successMessage = document.getElementById('success-message').innerText;
+
+            if (successMessage) {
+                Swal.fire({
+                    title: 'Alert',
+                    text: successMessage,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+                console.log(successMessage);
+            }
+        });
+    </script>
+}

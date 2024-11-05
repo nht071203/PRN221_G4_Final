@@ -449,15 +449,20 @@
                         </li>
 
                         <li class="dropdown">
-                            <a href="/Service/ListServices" class="dropdown-toggle">
-                                <span>Dịch vụ</span>
-                            </a>
-
                             @if (getAcc != null && getAcc.RoleId == 2)
                             {
+                                <a href="/Service/ListServices" class="dropdown-toggle">
+                                    <span>Dịch vụ</span>
+                                </a>
                                 <ul class="dropdown-menu">
                                     <li><a href="/Service/ListServiceExpert">Tùy chỉnh dịch vụ</a></li>
                                 </ul>
+                            }
+                            else
+                            {
+                                <a href="/Service/ListServices">
+                                    <span>Dịch vụ</span>
+                                </a>
                             }
                         </li>
                         <li><a href=""><span>Liên hệ hỗ trợ</span></a></li>

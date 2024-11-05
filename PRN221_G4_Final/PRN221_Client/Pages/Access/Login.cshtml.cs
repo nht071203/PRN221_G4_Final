@@ -125,7 +125,7 @@ namespace PRN221_Client.Pages.Access
                     PhoneConfirmed = 0,
                     Gender = "N/A",
                     DegreeUrl = null,
-                    Avatar = null,
+                    Avatar = "https://firebasestorage.googleapis.com/v0/b/prn221-69738.appspot.com/o/image%2F638662847785835158_av.jpg?alt=media&token=6866244f-096d-4b21-ad44-1d0d2772c509",
                     Major = null,
                     Address = "N/A",
                     IsDeleted = false,
@@ -189,15 +189,29 @@ namespace PRN221_Client.Pages.Access
             var email = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
             var fbId = claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
             var avatar = claims.FirstOrDefault(c => c.Type == "picture")?.Value;
-
-            var account = await _accountService.GetByIdFacebook(fbId);
-            if (account == null)
+            if (avatar == null)
             {
-
-                await _accountService.CreateNewFacebookAccount(fbId, name, email, avatar);
-                var getAccAgain = await _accountService.GetByIdFacebook(fbId);
+                avatar = "https://firebasestorage.googleapis.com/v0/b/prn221-69738.appspot.com/o/image%2F638662847785835158_av.jpg?alt=media&token=6866244f-096d-4b21-ad44-1d0d2772c509";
             }
 
+			var account = await _accountService.GetAccountByEmail(email);
+
+            if (account != null)
+            {
+                account.FacebookId = fbId;
+                await _accountService.UpdateAccount(account);
+            }
+
+            else 
+            {
+                // var account = await _accountService.GetByIdFacebook(fbId);
+                if (account == null)
+				{
+					await _accountService.CreateNewFacebookAccount(fbId, name, email, avatar);
+					var getAccAgain = await _accountService.GetByIdFacebook(fbId);
+				}
+			}
+            
 
             if (string.IsNullOrEmpty(avatar) && !string.IsNullOrEmpty(fbId))
             {

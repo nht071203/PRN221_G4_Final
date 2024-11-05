@@ -217,36 +217,38 @@
                 </div>
             </div>
 
-            <div class="row mb-3">
-                <div class="col-3">
-                    <h6 class="mb-0">Year Of Experience</h6>
+            @if (Model.Profile.RoleId != 1)
+            {
+                <div class="row mb-3">
+                    <div class="col-3">
+                        <h6 class="mb-0">Year Of Experience</h6>
+                    </div>
+                    <div class="col-9 text-secondary">
+                        <input asp-for="Profile.YearOfExperience" class="form-control" />
+                        <span asp-validation-for="Profile.YearOfExperience" class="text-danger"></span>
+                    </div>
                 </div>
-                <div class="col-9 text-secondary">
-                    <input asp-for="Profile.YearOfExperience" class="form-control" />
-                    <span asp-validation-for="Profile.YearOfExperience" class="text-danger"></span>
+                <div class="row mb-3">
+                    <div class="col-3">
+                        <h6 class="mb-0">Education</h6>
+                    </div>
+                    <div class="col-9 text-secondary">
+                        <input asp-for="Profile.EducationUrl" class="form-control" />
+                        <span asp-validation-for="Profile.EducationUrl" class="text-danger"></span>
+                    </div>
                 </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-3">
-                    <h6 class="mb-0">Education</h6>
-                </div>
-                <div class="col-9 text-secondary">
-                    <input asp-for="Profile.EducationUrl" class="form-control" />
-                    <span asp-validation-for="Profile.EducationUrl" class="text-danger"></span>
-                </div>
-            </div>
 
 
-            <div class="row mb-3">
-                <div class="col-3">
-                    <h6 class="mb-0">Degree</h6>
+                <div class="row mb-3">
+                    <div class="col-3">
+                        <h6 class="mb-0">Degree</h6>
+                    </div>
+                    <div class="col-9 text-secondary">
+                        <input asp-for="Profile.DegreeUrl" class="form-control" />
+                        <span asp-validation-for="Profile.DegreeUrl" class="text-danger"></span>
+                    </div>
                 </div>
-                <div class="col-9 text-secondary">
-                    <input asp-for="Profile.DegreeUrl" class="form-control" />
-                    <span asp-validation-for="Profile.DegreeUrl" class="text-danger"></span>
-                </div>
-            </div>
-           
+            }
             <div class="row mb-3">
                 <div class="col-3">
                 </div>
