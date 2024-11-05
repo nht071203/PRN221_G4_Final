@@ -2,6 +2,7 @@
 @inject IHttpContextAccessor HttpContextAccessor
 @model PRN221_Client.Pages.Service.ListServicesModel
 @{
+    ViewData["Title"] = "Dịch vụ";
     var isLoggedIn = HttpContextAccessor.HttpContext.Session.GetString("UserSession") != null;
 }
 <link rel="stylesheet" href="~/css/modalFormBookingStyle.css" />
