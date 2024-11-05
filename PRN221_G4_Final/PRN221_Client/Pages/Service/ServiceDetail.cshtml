@@ -3,6 +3,7 @@
 @inject PRN221_BusinessLogic.Interface.IAccountService _accountService;
 @model PRN221_Client.Pages.Service.ServiceDetailModel
 @{
+    ViewData["Title"] = @Model.ServiceDetail.Title;
     //var isLoggedIn = HttpContext.Session.GetString("UserSession") != null;
     var isLoggedIn = HttpContextAccessor.HttpContext.Session.GetString("UserSession") != null;
     int getIdAccount = Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetInt32("AccountID"));
@@ -818,7 +819,7 @@
                         <div>
                             <div class="info-text mb-auto mt-4 mt-md-auto">
                                 <p class="color-label fw-600 mb-2 fw-700">
-                                    <a href="https://gitiho.com/teacher/82540-g-learning"
+                                    <a asp-page="/Profile/PersonalPage" asp-route-id="@Model.CreatorService.AccountId"
                                        class="color_label"><u>@Model.CreatorService.FullName</u></a>
                                 </p>
                             </div>

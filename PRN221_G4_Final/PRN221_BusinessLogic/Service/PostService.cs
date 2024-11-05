@@ -135,14 +135,12 @@ namespace PRN221_BusinessLogic.Service
 
         public async Task<Post> AddPost(int categoryId, int accountId, string content)
         {
-            DateTime currentUtcDateTime = DateTime.UtcNow;
-
             var post = new Post
             {
                 CategoryPostId = categoryId,
                 AccountId = accountId,
                 PostContent = content,
-                CreatedAt = currentUtcDateTime,
+                CreatedAt = DateTime.Now,
                 IsDeleted = false
             };
 
