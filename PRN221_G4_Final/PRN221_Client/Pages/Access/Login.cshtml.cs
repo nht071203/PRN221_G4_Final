@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Facebook;
 using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -123,16 +124,22 @@ namespace PRN221_Client.Pages.Access
                     EmailConfirmed = 1,
                     Phone = null,
                     PhoneConfirmed = 0,
-                    Gender = "N/A",
+                    Gender = null,
                     DegreeUrl = null,
                     Avatar = "https://firebasestorage.googleapis.com/v0/b/prn221-69738.appspot.com/o/image%2F638662847785835158_av.jpg?alt=media&token=6866244f-096d-4b21-ad44-1d0d2772c509",
                     Major = null,
-                    Address = "N/A",
+                    Address = null,
                     IsDeleted = false,
                     Otp = null,
                     FacebookId = null,
                 };
 
+                // Store the session for the Google user
+                HttpContext.Session.SetString("UserSession", acc.Username);
+                HttpContext.Session.SetString("UserEmail", acc.Email); // Store other info as needed
+                HttpContext.Session.SetInt32("AccountID", acc.AccountId);
+
+                Console.WriteLine("User signed in successfully with Google.");
                 await _accountService.AddAccount(acc);
                 return RedirectToPage("/Index");
             }
@@ -195,7 +202,6 @@ namespace PRN221_Client.Pages.Access
             }
 
 			var account = await _accountService.GetAccountByEmail(email);
-
             if (account != null)
             {
                 account.FacebookId = fbId;
@@ -209,7 +215,12 @@ namespace PRN221_Client.Pages.Access
 				{
 					await _accountService.CreateNewFacebookAccount(fbId, name, email, avatar);
 					var getAccAgain = await _accountService.GetByIdFacebook(fbId);
-				}
+                    account = getAccAgain;
+                    // Store the session for the Google user
+                    HttpContext.Session.SetString("UserSession", getAccAgain.Username);
+                    HttpContext.Session.SetString("UserEmail", getAccAgain.Email); // Store other info as needed
+                    HttpContext.Session.SetInt32("AccountID", getAccAgain.AccountId);
+                }
 			}
             
 
