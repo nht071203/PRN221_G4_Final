@@ -36,21 +36,21 @@
                 @if (Model.Profile.Major != null && Model.Profile.Major != "N/A")
                 {
                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                        <h6 class="mb-0"><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i>Major</h6>
+                        <h6 class="mb-0"><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i>Ngành</h6>
                         <span class="text-secondary">@Model.Profile.Major</span>
                     </li>
                 }
                 @if (Model.Profile.Address != null && Model.Profile.Address != "N/A")
                 {
                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                        <h6 class="mb-0"><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i>Address</h6>
+                        <h6 class="mb-0"><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i>Địa chỉ</h6>
                         <span class="text-secondary">@Model.Profile.Address</span>
                     </li>
                 }
                 @if (Model.Profile.DateOfBirth != null)
                 {
                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                        <h6 class="mb-0"><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i>Date Of Birth</h6>
+                        <h6 class="mb-0"><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i>Ngày sinh</h6>
                         <span class="text-secondary">@Model.Profile.DateOfBirth.Value.ToString("MMMM dd, yyyy")</span>
                     </li>
                 }
@@ -63,7 +63,7 @@
         <div class="card p-5">
             <div class="row mb-3">
                 <div class="col-3">
-                    <h6 class="mb-0">FullName</h6>
+                    <h6 class="mb-0">Tên đầy đủ</h6>
                 </div>
                 <div class="col-9 text-secondary">
                     <input type="text" class="form-control" asp-for="Profile.FullName" readonly>
@@ -73,7 +73,7 @@
 
             <div class="row mb-3">
                 <div class="col-3">
-                    <h6 class="mb-0">Short Bio</h6>
+                    <h6 class="mb-0">Bio</h6>
                 </div>
                 <div class="col-9 text-secondary">
                     <input asp-for="Profile.ShortBio" class="form-control" readonly />
@@ -83,7 +83,7 @@
 
             <div class="row mb-3">
                 <div class="col-3">
-                    <h6 class="mb-0">Username</h6>
+                    <h6 class="mb-0">Tên đăng nhập</h6>
                 </div>
                 <div class="col-9 text-secondary">
                     <input asp-for="Profile.Username" class="form-control" readonly />
@@ -102,7 +102,7 @@
 
             <div class="row mb-3">
                 <div class="col-3">
-                    <h6 class="mb-0">Phone</h6>
+                    <h6 class="mb-0">Số điện thoại</h6>
                 </div>
                 <div class="col-9 text-secondary">
                     <input asp-for="Profile.Phone" class="form-control" readonly />
@@ -112,7 +112,7 @@
 
             <div class="row mb-3">
                 <div class="col-3">
-                    <h6 class="mb-0">Gender</h6>
+                    <h6 class="mb-0">Giới tính</h6>
                 </div>
                 <div class="col-9 text-secondary">
                     <input asp-for="Profile.Gender" class="form-control" readonly />
@@ -120,25 +120,17 @@
             </div>
             <div class="row mb-3">
                 <div class="col-3">
-                    <h6 class="mb-0">Address</h6>
+                    <h6 class="mb-0">Địa chỉ</h6>
                 </div>
                 <div class="col-9 text-secondary">
                     <input asp-for="Profile.Address" class="form-control" readonly />
                     <span asp-validation-for="Profile.Address" class="text-danger"></span>
                 </div>
             </div>
+            
             <div class="row mb-3">
                 <div class="col-3">
-                    <h6 class="mb-0">Major</h6>
-                </div>
-                <div class="col-9 text-secondary">
-                    <input asp-for="Profile.Major" class="form-control" readonly />
-                    <span asp-validation-for="Profile.Major" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-3">
-                    <h6 class="mb-0">DateOfBirth</h6>
+                    <h6 class="mb-0">Ngày sinh</h6>
                 </div>
                 <div class="col-9 text-secondary">
                     <input asp-for="Profile.DateOfBirth" class="form-control" type="date" value="@Model.Profile.DateOfBirth?.ToString("yyyy-MM-dd")" readonly />
@@ -150,7 +142,16 @@
             {
                 <div class="row mb-3">
                     <div class="col-3">
-                        <h6 class="mb-0">Year Of Experience</h6>
+                        <h6 class="mb-0">Ngành</h6>
+                    </div>
+                    <div class="col-9 text-secondary">
+                        <input asp-for="Profile.Major" class="form-control" readonly />
+                        <span asp-validation-for="Profile.Major" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-3">
+                        <h6 class="mb-0">Năm kinh nghiệm</h6>
                     </div>
                     <div class="col-9 text-secondary">
                         <input asp-for="Profile.YearOfExperience" class="form-control" readonly />
@@ -159,7 +160,7 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-3">
-                        <h6 class="mb-0">Education</h6>
+                        <h6 class="mb-0">Học vấn</h6>
                     </div>
                     <div class="col-9 text-secondary">
                         <input asp-for="Profile.EducationUrl" class="form-control" readonly />
@@ -171,7 +172,7 @@
 
                 <div class="row mb-3">
                     <div class="col-3">
-                        <h6 class="mb-0">Degree</h6>
+                        <h6 class="mb-0">Bằng cấp</h6>
                     </div>
                     <div class="col-9 text-secondary">
                         <input asp-for="Profile.DegreeUrl" class="form-control" readonly />
@@ -185,9 +186,9 @@
                 <div class="col-3">
                 </div>
                 <div class="col-9 text-secondary">
-                    <a asp-page="/Profile/UpdateProfile" asp-route-id="@Model.Profile.AccountId" class="btn btn-primary">Update</a>
-                    <a asp-page="/Profile/PersonalPage" asp-route-id="@Model.Profile.AccountId" class="btn btn-primary">Personal Page</a>
-                    <a asp-page="/Profile/ChangePassword" asp-route-id="@Model.Profile.AccountId" class="btn btn-primary">Change Password</a>
+                    <a asp-page="/Profile/UpdateProfile" asp-route-id="@Model.Profile.AccountId" class="btn btn-primary">Cập nhật</a>
+                    <a asp-page="/Profile/PersonalPage" asp-route-id="@Model.Profile.AccountId" class="btn btn-primary">Trang cá nhân</a>
+                    <a asp-page="/Profile/ChangePassword" asp-route-id="@Model.Profile.AccountId" class="btn btn-primary">Đổi mật khẩu</a>
                 </div>
             </div>
         </div>

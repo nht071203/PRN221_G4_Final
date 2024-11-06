@@ -76,23 +76,24 @@
                         @if (Model.AccountLogin == Model.Profile.AccountId)
                         {
                             <a asp-page="/Profile/Information" asp-route-id="@Model.Profile.AccountId" class="w3-button w3-block w3-theme-l1 w3-left-align">
-                                <i class="fa fa-info-circle fa-fw w3-margin-right"></i> Information
+                                <i class="fa fa-info-circle fa-fw w3-margin-right"></i> Thông tin
                             </a>
                         }
+
                         <a asp-page="/Profile/PersonalPage" asp-route-id="@Model.Profile.AccountId" class="w3-button w3-block w3-theme-l1 w3-left-align">
-                            <i class="fa fa-pencil-alt fa-fw w3-margin-right"></i> Posts
+                            <i class="fa fa-pencil-alt fa-fw w3-margin-right"></i> Bài đăng
                         </a>
                         <a asp-page="/Profile/ListFollow" asp-route-id="@Model.Profile.AccountId" asp-route-tab="friends" class="w3-button w3-block w3-theme-l1 w3-left-align">
-                            <i class="fa fa-user-friends fa-fw w3-margin-right"></i> Friends
+                            <i class="fa fa-user-friends fa-fw w3-margin-right"></i> Bạn bè
                         </a>
                         <a asp-page="/Profile/ListFollow" asp-route-id="@Model.Profile.AccountId" asp-route-tab="followers" class="w3-button w3-block w3-theme-l1 w3-left-align">
-                            <i class="fa fa-user-plus fa-fw w3-margin-right"></i> Followers
+                            <i class="fa fa-user-plus fa-fw w3-margin-right"></i> Người theo dõi
                         </a>
                         <a asp-page="/Profile/ListFollow" asp-route-id="@Model.Profile.AccountId" asp-route-tab="following" class="w3-button w3-block w3-theme-l1 w3-left-align">
-                            <i class="fa fa-user-check fa-fw w3-margin-right"></i> Following
+                            <i class="fa fa-user-check fa-fw w3-margin-right"></i> Đang theo dõi
                         </a>
                         <a asp-page="/Profile/ListPhotos" asp-route-id="@Model.Profile.AccountId" class="w3-button w3-block w3-theme-l1 w3-left-align">
-                            <i class="fa fa-picture-o fa-fw w3-margin-right"></i> Photos
+                            <i class="fa fa-picture-o fa-fw w3-margin-right"></i> Hình ảnh
                         </a>
                     </div>
                 </div>

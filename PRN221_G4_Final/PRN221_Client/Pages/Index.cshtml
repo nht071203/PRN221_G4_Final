@@ -98,11 +98,11 @@
                                     <!-- Activity Item Start -->
                                     <li>
                                         <div class="activity--item">
-                                            <div class="activity--avatar">
+                                            <div>
                                                 @if(post.account == null)
                                                 {
                                                     <a href="/Access/Login">
-                                                        <img src="" alt="" onerror="this.onerror=null; this.src='https://firebasestorage.googleapis.com/v0/b/prn221-69738.appspot.com/o/image%2Fuser.png?alt=media&token=e669a837-b9c8-4983-b2bd-8eb5c091d48f';">
+                                                        <img src="" alt="" onerror="this.onerror=null; this.src='https://firebasestorage.googleapis.com/v0/b/prn221-69738.appspot.com/o/image%2F638662847785835158_av.jpg?alt=media&token=6866244f-096d-4b21-ad44-1d0d2772c509';">
                                                     </a>
                                                 } else
                                                 {
@@ -152,14 +152,14 @@
                                                 @if (!isLoggedIn)
                                                 {
                                                     <div class="activity--action fw--700">
-                                                        <a href="/Access/Login">See More...</a>
+                                                        <a href="/Access/Login">Xem thêm...</a>
                                                     </div>
                                                 }
                                                 else
                                                 {
                                                     @* KHI LOGIN ROI THI XEM DUOC *@
                                                     <div class="activity--action fw--700">
-                                                        <a href="/Posts/PostDetail/@post.post.PostId">See More...</a>
+                                                        <a href="/Posts/PostDetail/@post.post.PostId">Xem thêm...</a>
                                                     </div>
                                                 }
                                             </div>
