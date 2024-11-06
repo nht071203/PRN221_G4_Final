@@ -58,7 +58,9 @@ namespace PRN221_BusinessLogic.Service
 
         public Task<int> GetTotalNewsCount() => _newsRepo.GetTotalNewsCount();
 
-        public async Task<IEnumerable<(string Month, int Count)>> GetNewsCountByMonth() => await _newsRepo.GetNewsCountByMonth();
+        public async Task<IEnumerable<(string Month, int Count)>> GetNewsCountByMonth(int year) => await _newsRepo.GetNewsCountByMonth(year);
+
+        public async Task<IEnumerable<(string Day, int Count)>> GetNewsCountByDay(int year, int month) => await _newsRepo.GetNewsCountByDay(year,month);
 
 
     }

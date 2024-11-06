@@ -82,5 +82,11 @@ namespace PRN221_Admin.Views
         {
             NoiDung.Content = new ProfileAdmin(ProfileView);
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            NoiDung.Content = new Statistic();
+
+        }
     }
 }
