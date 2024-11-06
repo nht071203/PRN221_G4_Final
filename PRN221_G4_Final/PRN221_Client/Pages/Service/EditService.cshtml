@@ -2,6 +2,11 @@
 @model PRN221_Client.Pages.Service.EditServiceModel
 @{
 }
+<style>
+    .valid-service {
+        text-align: start;
+    }
+</style>
 <!-- JQUERY STEP -->
 <link rel="stylesheet" href="~/css/addServiceStyle.css" />
 <section class="body-form">
@@ -12,16 +17,30 @@
             <input type="hidden" asp-for="ServiceItem.CreateAt" />
             <input type="hidden" asp-for="ServiceItem.AverageRating" />
             <input type="hidden" asp-for="ServiceItem.RatingCount" />
+            <input type="hidden" asp-for="ServiceItem.IsEnable" />
             <h4 class="title-input">Tiêu đề</h4>
-            <input class="input-form" type="text" placeholder="Tiêu đề" asp-for="ServiceItem.Title" required>
-
+            <input class="input-form" type="text" placeholder="Tiêu đề" asp-for="ServiceItem.Title">
+            <div class="text-danger valid-service">
+                <span asp-validation-for="ServiceItem.Title" class="text-danger"></span>
+            </div>
             <h4 class="title-input">Giá dịch vụ</h4>
-            <input class="input-form" type="number" placeholder="Giá" asp-for="ServiceItem.Price" required>
-
+            <input class="input-form" type="number" placeholder="Giá" asp-for="ServiceItem.Price">
+            <div class="text-danger valid-service">
+                @if (ViewData.ModelState.ContainsKey("PriceNotZero"))
+                {
+                    <span class="valid-service">@ViewData.ModelState["PriceNotZero"].Errors[0].ErrorMessage</span>
+                }
+                else if (ViewData.ModelState.ContainsKey("PriceInteger"))
+                {
+                    <span class="valid-service">@ViewData.ModelState["PriceInteger"].Errors[0].ErrorMessage</span>
+                }
+            </div>
             <h4 class="title-input">Nội dung</h4>
-            <textarea class="input-form" asp-for="ServiceItem.Content" placeholder="Nội dung" required></textarea>
-
-            <h4 class="title-input">Trạng thái</h4>
+            <textarea class="input-form" asp-for="ServiceItem.Content" placeholder="Nội dung"></textarea>
+            <div class="text-danger valid-service">
+                <span asp-validation-for="ServiceItem.Content" class="text-danger"></span>
+            </div>
+            @* <h4 class="title-input">Trạng thái</h4>
             <div class="radio-check d-flex justify-content-center gap-5">
                 <div>
                     <input type="radio" asp-for="ServiceItem.IsEnable" value="true">
@@ -31,7 +50,7 @@
                     <input type="radio" asp-for="ServiceItem.IsEnable" value="false">
                     <label>Không khả dụng</label><br>
                 </div>
-            </div>
+            </div> *@
         </div>
         <input class="submit-service" type="submit" value="Cập nhật" id="input-submit">
     </form>
