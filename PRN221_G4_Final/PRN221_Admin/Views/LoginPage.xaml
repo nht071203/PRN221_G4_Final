@@ -11,7 +11,7 @@
     <Grid>
         <Border CornerRadius="12">
             <Border.Background>
-                <ImageBrush ImageSource="D:\Learning\KY07\PRN221\PROJECT_Group4\PRN221_G4_Final\PRN221_G4_Final\PRN221_Admin\bg1.jpg"
+                <ImageBrush ImageSource="/bg1.jpg"
                 Stretch="None"
                 Viewport="0,0,800,550" 
                 ViewportUnits="Absolute"
