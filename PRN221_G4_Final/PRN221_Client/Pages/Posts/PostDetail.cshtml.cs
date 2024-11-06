@@ -37,6 +37,8 @@ namespace PRN221_Client.Pages.Posts
 
         public async Task OnGetAsync(int postId)
         {
+            var account_id = HttpContext.Session.GetInt32("AccountID");
+
             PostId = postId;
             PostDTO = await _postService.GetPostAndImage(PostId);
             CountLikePost = await _postService.GetLikeCountByPostId(PostId);
@@ -54,6 +56,9 @@ namespace PRN221_Client.Pages.Posts
                     CommentAccounts[comment.AccountId.Value] = account;
                 }
             }
+
+            //Add record vào db để làm chức năng + 1 view khi xem detail
+            await _viewService.AddRecordPost((int)account_id, PostId);
             View = await _viewService.GetViewByPostId(PostId);
         }
 

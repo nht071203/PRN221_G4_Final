@@ -73,10 +73,11 @@
                                  alt="Avatar">
                         </p>
                         <div class="mt-3 text-center">
-                            @if (Model.Profile.ShortBio != null && Model.Profile.ShortBio != "N/A")
+                            @if (Model.Profile.ShortBio != null)
                             {
                                 <p class="text-secondary mb-1">@Model.Profile.ShortBio</p>
                             }
+
                             @if(Model.AccountLogin != Model.Profile.AccountId)
                             {
                                 if (!Model.IsFollowing)
@@ -94,15 +95,15 @@
                             }
                         </div>
                         <hr>
-                        @if (Model.Profile.Major != null && Model.Profile.Major != "N/A")
+                        @if (Model.Profile.Major != null)
                         {
                             <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> @Model.Profile.Major</p>
                         }
-                        @if (Model.Profile.Address != null && Model.Profile.Address != "N/A")
+                        @if (Model.Profile.Address != null)
                         {
                             <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> @Model.Profile.Address</p>
                         }
-                        @if (Model.Profile.Gender != null && Model.Profile.Gender != "N/A")
+                        @if (Model.Profile.Gender != null)
                         {
                             if (Model.Profile.Gender.ToLower() == "female")
                             {
@@ -235,14 +236,12 @@
                     </div>
                     @* END ADD POST *@
                 }
-                else
+
+                @if (Model.Posts.Count() == 0)
                 {
-                    if (Model.Posts.Count() == 0)
-                    {
-                        <div class="w3-container w3-card w3-white w3-round w3-margin">
-                            <h6 class="text-center">@Model.Profile.Username <span class="font-italic">Chưa có bài viết nào</span></h6>
-                            </div>
-                    }
+                    <div class="w3-container w3-card w3-white w3-round w3-margin">
+                        <h6 class="text-center">@Model.Profile.FullName <span class="font-italic">Chưa có bài viết nào</span></h6>
+                    </div>
                 }
 
 
@@ -265,7 +264,7 @@
                                     Chỉnh sửa
                                 </a>
 
-                                <a class="deletePost controlPostBtn" asp-page="/Posts/DeletePost" asp-route-postid="@post.post.PostId" asp-page-handler="DeletePost" data-postid="@post.post.PostId" data-toggle="modal">Xóa</a>
+                                <a class="deletePost controlPostBtn" asp-page="/Posts/DeletePost" asp-page-handler="DeletePost" asp-route-postid="@post.post.PostId">Xóa</a>
                             </div>
 
 

@@ -28,6 +28,8 @@ namespace PRN221_BusinessLogic.Interface
         Task<IEnumerable<News>> GetNewsPaged(int pageNumber, int pageSize);
         Task<int> GetTotalNewsCount();
 
-       Task<IEnumerable<(string Month, int Count)>> GetNewsCountByMonth();
+        Task<IEnumerable<(string Month, int Count)>> GetNewsCountByMonth(int year);
+
+     Task<IEnumerable<(string Day, int Count)>> GetNewsCountByDay(int year, int month);
     }
 }

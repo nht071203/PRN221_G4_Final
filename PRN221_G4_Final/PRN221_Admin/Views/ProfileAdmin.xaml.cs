@@ -30,6 +30,7 @@ namespace PRN221_Admin.Views
         }
         private void ProfileAdmin_Loaded(object sender, RoutedEventArgs e)
         {
+            // Lấy Storyboard từ Resources
             Storyboard sb = (Storyboard)this.Resources["MarqueeStoryboard"];
             sb.Begin();
         }

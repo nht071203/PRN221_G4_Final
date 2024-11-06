@@ -82,7 +82,7 @@ namespace PRN221_BusinessLogic.Service
                 EmailConfirmed = 1,
                 Phone = null,
                 PhoneConfirmed = 0,
-                Gender = "none",
+                Gender = null,
                 DegreeUrl = null,
                 Avatar = avatar,
                 Major = null,

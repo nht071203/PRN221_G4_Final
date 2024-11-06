@@ -45,13 +45,19 @@ namespace PRN221_Admin
             var catNews = ServiceProvider.GetRequiredService<CategoryViewModel>();
             var catpost = ServiceProvider.GetRequiredService<CategoryPostViewModel>();
 
+            var statistic = ServiceProvider.GetRequiredService<StatisticModelView>();
+
 
             mainwindow.DataContext = studentViewModel;
             mainwindow.DataContext = newsViewModel;
             //mainwindow.DataContext = farmerViewModel;
             mainwindow.DataContext = farmerMU;
+
             mainwindow.DataContext = catNews;
             mainwindow.DataContext = catpost;
+
+            mainwindow.DataContext = statistic;
+
 
             dasboardPage.DataContext = studentViewModel;
             dasboardPage.DataContext = newsViewModel;
@@ -118,10 +124,10 @@ namespace PRN221_Admin
             services.AddTransient<CategoryViewModel>();
             services.AddTransient<CategoryPostViewModel>();
             services.AddTransient<DashboardMU>();
+            services.AddTransient<StatisticModelView>();
 
 
-      
-      
+
             services.AddTransient<CategoryNewsDAO>();
        
 

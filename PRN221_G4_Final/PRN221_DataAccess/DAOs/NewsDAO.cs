@@ -64,10 +64,10 @@ namespace PRN221_DataAccess.DAOs
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<(string Month, int Count)>> GetNewsCountByMonth()
+        public async Task<IEnumerable<(string Month, int Count)>> GetNewsCountByMonth(int year)
         {
             var result = await _context.Posts
-                .Where(n => n.IsDeleted != true)
+                .Where(n => n.IsDeleted != true && n.CreatedAt.Value.Year == year)
                 .GroupBy(n => new { n.CreatedAt.Value.Year, n.CreatedAt.Value.Month })
                 .Select(g => new
                 {
@@ -77,6 +77,20 @@ namespace PRN221_DataAccess.DAOs
                 .ToListAsync();
 
             return result.Select(item => (item.Month, item.Count));
+        }
+        public async Task<IEnumerable<(string Day, int Count)>> GetNewsCountByDay(int year, int month)
+        {
+            var result = await _context.Posts
+                .Where(n => n.IsDeleted != true && n.CreatedAt.Value.Year == year && n.CreatedAt.Value.Month == month)
+                .GroupBy(n => n.CreatedAt.Value.Day)
+                .Select(g => new
+                {
+                    Day = $"{year}-{month:D2}-{g.Key:D2}",
+                    Count = g.Count()
+                })
+                .ToListAsync();
+
+            return result.Select(item => (item.Day, item.Count));
         }
 
 

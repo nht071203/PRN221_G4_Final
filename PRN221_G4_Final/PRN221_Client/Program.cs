@@ -35,10 +35,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 
-builder.Services.AddSignalR(options =>
-{
-    options.EnableDetailedErrors = true;
-});
+builder.Services.AddSignalR();
 
 
 builder.Services.AddDbContext<PRN221_DataAccess.Prn221Context>(options =>
@@ -218,7 +215,7 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 
-/*app.MapHub<ChatHub>("/chatHub");*/
-app.MapHub<SignalRServer>("/SignalRServer");
+app.MapHub<ChatHub>("/chatHub");
+//app.MapHub<SignalRServer>("/SignalRServer");
 
 app.Run();

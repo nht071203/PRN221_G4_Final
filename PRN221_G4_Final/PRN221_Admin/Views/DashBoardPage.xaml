@@ -43,7 +43,7 @@
                 <Button Width="150" Height="40" Background="Transparent" BorderThickness="0" Click="Button_ThongKe">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="16" Text="&#xE77F;" Margin="5"/>
-                        <TextBlock Text="Statistic" VerticalAlignment="Center" Margin="10,0,0,0" FontWeight="Bold" Foreground="Black" FontSize="16"/>
+                        <TextBlock Text="Statistic Year" VerticalAlignment="Center" Margin="10,0,0,0" FontWeight="Bold" Foreground="Black" FontSize="16"/>
                     </StackPanel>
                 </Button>
                 <Button Width="158" Height="40" Background="Transparent" BorderThickness="0" Click="Button_Farmer">
@@ -79,11 +79,14 @@
                         <TextBlock Text="Category Post" VerticalAlignment="Center" Margin="10,0,0,0" FontWeight="Bold" Foreground="Black" FontSize="16"/>
                     </StackPanel>
                 </Button>
+
                 
-                <Button Width="150" Height="40" Background="Transparent" BorderThickness="0">
-                    <StackPanel Orientation="Horizontal">
+
+                <Button Width="155" Height="40" Background="Transparent" BorderThickness="0" Click="Button_Click">
+                    <StackPanel Orientation="Horizontal" Width="155">
+
                         <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="16" Text="&#xE897;" Margin="5"/>
-                        <TextBlock Text="Help" VerticalAlignment="Center" Margin="10,0,0,0" FontWeight="Bold" Foreground="Black" FontSize="16"/>
+                        <TextBlock Text="Statistic Month" VerticalAlignment="Center" Margin="10,0,0,0" FontWeight="Bold" Foreground="Black" FontSize="16" Width="121"/>
                     </StackPanel>
                 </Button>
 

@@ -87,6 +87,7 @@ namespace PRN221_Admin.Views
         {
             NoiDung.Content = new ProfileAdmin(ProfileView);
         }
+
         private void Button_Category_news(object sender, RoutedEventArgs e)
         {
             NoiDung.Content = new CategoryNews(_categoryViewModel);
@@ -95,6 +96,12 @@ namespace PRN221_Admin.Views
         private void Button_Category_Post(object sender, RoutedEventArgs e)
         {
             NoiDung.Content = new CategoryPost(_categoryPostViewModel);
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            NoiDung.Content = new Statistic();
+
+
         }
     }
 }
