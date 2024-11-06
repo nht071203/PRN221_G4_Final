@@ -5,6 +5,7 @@ using PRN221_BusinessLogic.Interface;
 using PRN221_BusinessLogic.Service;
 using PRN221_DataAccess.DAOs;
 using PRN221_Repository.AccountRepo;
+using PRN221_Repository.CategoryPostRepo;
 using PRN221_Repository.CommentRepo;
 using PRN221_Repository.LikePostRepo;
 using PRN221_Repository.NewsRepo;
@@ -41,6 +42,10 @@ namespace PRN221_Admin
             var loginView = ServiceProvider.GetRequiredService<LoginViewModel>();
 
             var profileMU = ServiceProvider.GetRequiredService<ProfileModelView>();
+            var catNews = ServiceProvider.GetRequiredService<CategoryViewModel>();
+            var catpost = ServiceProvider.GetRequiredService<CategoryPostViewModel>();
+
+            var statistic = ServiceProvider.GetRequiredService<StatisticModelView>();
 
 
             mainwindow.DataContext = studentViewModel;
@@ -48,9 +53,17 @@ namespace PRN221_Admin
             //mainwindow.DataContext = farmerViewModel;
             mainwindow.DataContext = farmerMU;
 
+            mainwindow.DataContext = catNews;
+            mainwindow.DataContext = catpost;
+
+            mainwindow.DataContext = statistic;
+
+
             dasboardPage.DataContext = studentViewModel;
             dasboardPage.DataContext = newsViewModel;
             dasboardPage.DataContext = farmerMU;
+            dasboardPage.DataContext = catNews;
+            dasboardPage.DataContext = catpost;
             mainwindow.Show();
            
 
@@ -92,6 +105,11 @@ namespace PRN221_Admin
             services.AddTransient<NewsDAO>();
 
 
+            services.AddTransient<ICategoryPostService, CategoryPostService>();
+            services.AddTransient<ICategoryPostRepository, CategoryPostRepository>();
+            services.AddTransient<CategoryPostDAO>();
+
+
             // Đăng ký CategoryNewsDAO
             services.AddTransient<CategoryNewsDAO>(); // Đăng ký CategoryNewsDAO
 
@@ -103,11 +121,13 @@ namespace PRN221_Admin
             services.AddTransient<FarmerModelView>();
             services.AddTransient<ExpertViewModel>();
             services.AddTransient<NewsViewModel>();
+            services.AddTransient<CategoryViewModel>();
+            services.AddTransient<CategoryPostViewModel>();
             services.AddTransient<DashboardMU>();
+            services.AddTransient<StatisticModelView>();
 
 
-      
-      
+
             services.AddTransient<CategoryNewsDAO>();
        
 

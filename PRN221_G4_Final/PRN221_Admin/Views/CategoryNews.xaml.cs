@@ -10,7 +10,6 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -18,22 +17,14 @@ using System.Windows.Shapes;
 namespace PRN221_Admin.Views
 {
     /// <summary>
-    /// Interaction logic for ProfileAdmin.xaml
+    /// Interaction logic for CategoryNews.xaml
     /// </summary>
-    public partial class ProfileAdmin : Page
+    public partial class CategoryNews : Page
     {
-        public ProfileAdmin(ProfileModelView viewModel)
+        public CategoryNews(CategoryViewModel viewmodel)
         {
             InitializeComponent();
-            DataContext = viewModel;
-            Loaded += ProfileAdmin_Loaded;
+            DataContext = viewmodel;
         }
-        private void ProfileAdmin_Loaded(object sender, RoutedEventArgs e)
-        {
-            // Lấy Storyboard từ Resources
-            Storyboard sb = (Storyboard)this.Resources["MarqueeStoryboard"];
-            sb.Begin();
-        }
-
     }
 }

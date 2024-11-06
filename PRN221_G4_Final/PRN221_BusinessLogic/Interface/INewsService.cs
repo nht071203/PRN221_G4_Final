@@ -15,6 +15,11 @@ namespace PRN221_BusinessLogic.Interface
         Task AddNews(News item);
         Task UpdateNews(News item);
         Task DeleteNews(int id);
+
+        Task AddCatNews(CategoryNews item);
+        Task UpdateCatNews(CategoryNews item);
+        Task DeleteCatNews(int id);
+
         Task<CategoryNews> GetCategoryNewsById(int id);
         Task<IEnumerable<News>> GetAllNewsByCategoryId(int categoryId);
         Task<IEnumerable<CategoryNews>> GetCategoriesHaveNews();
@@ -23,6 +28,8 @@ namespace PRN221_BusinessLogic.Interface
         Task<IEnumerable<News>> GetNewsPaged(int pageNumber, int pageSize);
         Task<int> GetTotalNewsCount();
 
-       Task<IEnumerable<(string Month, int Count)>> GetNewsCountByMonth();
+        Task<IEnumerable<(string Month, int Count)>> GetNewsCountByMonth(int year);
+
+     Task<IEnumerable<(string Day, int Count)>> GetNewsCountByDay(int year, int month);
     }
 }

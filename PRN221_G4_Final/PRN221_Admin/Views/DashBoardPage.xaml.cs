@@ -31,8 +31,11 @@ namespace PRN221_Admin.Views
         private FarmerModelView _farmerViewModel;
         private LoginViewModel _loginViewModel;
         public FarmerModelView FarmerView { get; set; }
+        private CategoryViewModel _categoryViewModel;
+        private CategoryPostViewModel _categoryPostViewModel;
         public DashBoardPage(ExpertViewModel expertViewModel, 
-            NewsViewModel newsViewModel, FarmerModelView farmerViewModel, ProfileModelView profile)
+            NewsViewModel newsViewModel, FarmerModelView farmerViewModel, ProfileModelView profile,
+            CategoryViewModel categoryViewModel, CategoryPostViewModel categoryPostViewModel)
         {
             InitializeComponent();
             FarmerView = farmerViewModel;
@@ -40,12 +43,14 @@ namespace PRN221_Admin.Views
             _NewsViewModel = newsViewModel;
             ProfileView = profile;
             DataContext = this;
+            _categoryViewModel = categoryViewModel;
+            _categoryPostViewModel = categoryPostViewModel;
         }
 
-/*        public DashBoardPage()
-        {
-            InitializeComponent();
-        }*/
+        /*        public DashBoardPage()
+                {
+                    InitializeComponent();
+                }*/
 
         private void Button_ThongKe(object sender, RoutedEventArgs e)
         {
@@ -81,6 +86,23 @@ namespace PRN221_Admin.Views
         private void Button_Dashboard(object sender, RoutedEventArgs e)
         {
             NoiDung.Content = new ProfileAdmin(ProfileView);
+        }
+
+        private void Button_Category_news(object sender, RoutedEventArgs e)
+        {
+            NoiDung.Content = new CategoryNews(_categoryViewModel);
+        }
+
+        private void Button_Category_Post(object sender, RoutedEventArgs e)
+        {
+            NoiDung.Content = new CategoryPost(_categoryPostViewModel);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            NoiDung.Content = new Statistic();
+
+
         }
     }
 }

@@ -46,7 +46,9 @@ namespace PRN221_Repository.NewsRepo
 
         public Task<int> GetTotalNewsCount() => _newsDAO.GetTotalNewsCount();
 
-        public async Task<IEnumerable<(string Month, int Count)>> GetNewsCountByMonth() => await _newsDAO.GetNewsCountByMonth();
+        public async Task<IEnumerable<(string Month, int Count)>> GetNewsCountByMonth(int year) => await _newsDAO.GetNewsCountByMonth(year);
+
+        public async Task<IEnumerable<(string Day, int Count)>> GetNewsCountByDay(int year, int month) => await _newsDAO.GetNewsCountByDay(year, month);
 
 
     }

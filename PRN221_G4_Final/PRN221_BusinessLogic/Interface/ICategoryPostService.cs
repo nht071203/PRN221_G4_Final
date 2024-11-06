@@ -10,5 +10,12 @@ namespace PRN221_BusinessLogic.Interface
     public interface ICategoryPostService
     {
         Task<IEnumerable<CategoryPost>> GetAllCategory();
+        Task<CategoryPost> FindById(int id);
+
+        Task AddCatPost(CategoryPost item);
+        Task UpdateCatPost(CategoryPost item);
+        Task DeleteCatPost(int id);
+
     }
+
 }

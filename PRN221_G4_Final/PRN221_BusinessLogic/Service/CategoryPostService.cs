@@ -17,9 +17,29 @@ namespace PRN221_BusinessLogic.Service
             _categoryPostRepository = categoryPostRepository;
         }
 
+        public async Task AddCatPost(CategoryPost item)
+        {
+            await _categoryPostRepository.Add(item);
+        }
+
+        public async Task DeleteCatPost(int id)
+        {
+            await _categoryPostRepository.Delete(id);
+        }
+
+        public async Task<CategoryPost> FindById(int id)
+        {
+            return await _categoryPostRepository.FindById(id);
+        }
+
         public async Task<IEnumerable<CategoryPost>> GetAllCategory()
         {
             return await _categoryPostRepository.GetAllCategory();
+        }
+
+        public async Task UpdateCatPost(CategoryPost item)
+        {
+           await _categoryPostRepository.Update(item);
         }
     }
 }

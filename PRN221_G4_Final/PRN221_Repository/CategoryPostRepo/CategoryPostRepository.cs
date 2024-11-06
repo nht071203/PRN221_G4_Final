@@ -21,5 +21,10 @@ namespace PRN221_Repository.CategoryPostRepo
         {
             return await _categoryPostDAO.GetAll();
         }
+        public async Task<CategoryPost> FindById(int id) => await _categoryPostDAO.FindById(id);
+        public async Task Add(CategoryPost news) => await _categoryPostDAO.Add(news);
+        public async Task Update(CategoryPost news) => await _categoryPostDAO.Update(news);
+
+        public async Task Delete(int id) => await _categoryPostDAO.Delete(id);
     }
 }
