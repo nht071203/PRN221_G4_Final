@@ -1,163 +1,161 @@
-﻿            @model PRN221_Client.ViewModel.MessageListViewModel
-    @inject IHttpContextAccessor HttpContextAccessor
-    @inject PRN221_BusinessLogic.Interface.IConversService _conversService;
-    @{
-        int? getIdAccount = null;
-        if (HttpContextAccessor.HttpContext.Session.GetString("AccountID") != null)
-        {
-            getIdAccount = Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetInt32("AccountID"));
-            Console.WriteLine("User ID from session:", getIdAccount);
-        }
-        Console.WriteLine("Load message");
+﻿@model PRN221_Client.ViewModel.MessageListViewModel
+@inject IHttpContextAccessor HttpContextAccessor
+@inject PRN221_BusinessLogic.Interface.IConversService _conversService;
+
+@{
+    int? getIdAccount = null;
+    if (HttpContextAccessor.HttpContext.Session.GetString("AccountID") != null)
+    {
+        getIdAccount = Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetInt32("AccountID"));
+        Console.WriteLine("User ID from session:", getIdAccount);
     }
+}
 
-
-    <div class="card" id="chat1" style="border-radius: 15px;">
-        @{
-            var getToUser = await _conversService.GetAccConversationByAccOId(Model.ConversationId, getIdAccount.Value);
-        }
-        <input type="hidden" id="conversationId" name="name" value="@Model.ConversationId" />
-        <input type="hidden" id="toUserInput" name="name" value="@getToUser.AccountId" />
-        <div class="card-header d-flex justify-content-between align-items-center p-3 text-white border-bottom-0"
-             style="border-top-left-radius: 15px; border-top-right-radius: 15px;background-image: linear-gradient(to right,orange, green, yellow) ">
-            <img src="~/image/logo.jpg"
-                 alt="avatar 2" style="width: 15px; height: 100%; border-radius:50%" />
-            <i class="fas fa-times" onclick="hideConversation()"></i>
-        </div>
-        <div id="messageslist" class="card-body">
-            @foreach (var message in Model.Messages)
+<div class="card" id="chat1" style="border-radius: 15px;">
+    @{
+        var getToUser = await _conversService.GetAccConversationByAccOId(Model.ConversationId, getIdAccount.Value);
+    }
+    <input type="hidden" id="user-id" name="name" value="@getIdAccount" />
+    <input type="hidden" id="conversationId" name="name" value="@Model.ConversationId" />
+    <input type="hidden" id="toUserInput" name="name" value="@getToUser.AccountId" />
+    <div class="card-header d-flex justify-content-between align-items-center p-3 text-white border-bottom-0"
+         style="border-top-left-radius: 15px; border-top-right-radius: 15px;background-image: linear-gradient(to right,orange, green, yellow)">
+        <img src="~/image/logo.jpg"
+             alt="avatar 2" style="width: 15px; height: 100%; border-radius:50%" />
+        <i class="fas fa-times" onclick="hideConversation()"></i>
+    </div>
+    <div id="messageslist" class="card-body">
+        @foreach (var message in Model.Messages)
+        {
+            if (message.SenderId == getIdAccount)
             {
-                if (message.SenderId == getIdAccount)
-                {
-                    <div class="d-flex flex-row justify-content-end mb-4">
-                        <div class="p-2 me-3 border bg-body-tertiary" style="border-radius: 15px;">
-                            <p class="small mb-0">@message.Content</p>
-                        </div>
-                        <img src="~/image/logo.jpg"
-                             alt="avatar 2" style="width: 15px; height: 100%;">
+                <div class="d-flex flex-row justify-content-end mb-4">
+                    <div class="p-2 me-3 border bg-body-tertiary" style="border-radius: 15px;">
+                        <p class="small mb-0">@message.Content</p>
                     </div>
-                } else
-                {
-                    <div class="d-flex flex-row justify-content-start mb-4">
-                        <img src="~/image/logo.jpg"
-                             alt="avatar 1" style="width: 15px; height: 100%;">
-                        <div class="p-2 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
-                            <p class="small mb-0">
-                                @message.Content
-                            </p>
-                        </div>
-                    </div>
-                }
+                    <img src="~/image/logo.jpg"
+                         alt="avatar 2" style="width: 15px; height: 100%;">
+                </div>
             }
-        </div>
-
-        <div class="card-footer text-muted d-flex justify-content-start align-items-center p-1">
-            <input id="messageInput" type="text" class="form-control form-control-lg" style="height : 20px">
-            <button id="sendButton" type="button" class="ms-3"><i class="fas fa-paper-plane"></i></button>
-        </div>
+            else
+            {
+                <div class="d-flex flex-row justify-content-start mb-4">
+                    <img src="~/image/logo.jpg"
+                         alt="avatar 1" style="width: 15px; height: 100%;">
+                    <div class="p-2 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
+                        <p class="small mb-0">
+                            @message.Content
+                        </p>
+                    </div>
+                </div>
+            }
+        }
     </div>
 
-    <script>
-        /*
-        let userId = "@getIdAccount";
-        console.log("User ID:", userId); // Kiểm tra ID người dùng
+    <div class="card-footer text-muted d-flex justify-content-start align-items-center p-1">
+        <input id="messageInput" type="text" class="form-control form-control-lg" style="height : 20px">
+        <button id="sendButton" type="button" class="ms-3"><i class="fas fa-paper-plane"></i></button>
+    </div>
+</div>
 
-            function Hello() {
-                console.log("Hello function called"); // Kiểm tra xem hàm có chạy không
-                const message = document.getElementById("messageInput").value.trim();
-                const conversationId = parseInt(document.getElementById("conversationId").value.trim(), 10);
+<!-- Move script section to the bottom -->
+<script>
+    /*
+    scrollToBottom();
 
-                if (!message) {
-                    alert("Vui lòng nhập nội dung tin nhắn!");
+    const userId = document.getElementById("user-id").value.trim();;
+
+    // Đảm bảo các biến được định nghĩa trước khi tham chiếu đến chúng
+    const sendButton = document.getElementById("sendButton");
+    const messageInput = document.getElementById("messageInput");
+    const messagesList = document.getElementById("messageslist");
+    //const conversationId = document.getElementById("conversationId").value.trim();
+    const conversationId = "@Model.ConversationId";
+
+    if (sendButton && messageInput && messagesList) {
+        console.log("sendButton:", sendButton);
+        console.log("messageInput:", messageInput);
+
+        console.log("conversationId:", conversationId, "-", typeof conversationId);
+
+        const connection = new signalR.HubConnectionBuilder().withUrl("/chathub?conversationId=" + conversationId).build();
+
+        // Vô hiệu hóa nút gửi cho đến khi kết nối được thiết lập
+        sendButton.disabled = true;
+
+        connection.on("ReceiveMessage", (fromUserId, messageContent) => {
+            // Thêm tin nhắn vào giao diện
+            console.log("Tai tin nhan");
+            console.log(fromUserId, messageContent);
+            //const messageList = document.getElementById("messageslist");
+            let messageDiv = document.createElement("div");
+
+            if (fromUserId == userId) {
+                messageDiv.className = "d-flex flex-row justify-content-end mb-4";
+                messageDiv.innerHTML = `
+                    <div class="p-2 me-3 border bg-body-tertiary" style="border-radius: 15px;">
+                        <p class="small mb-0">${messageContent}</p>
+                    </div>
+                    <img src="/image/logo.jpg" alt="avatar 2" style="width: 15px; height: 100%;">
+                `;
+            } else {
+                messageDiv.className = "d-flex flex-row justify-content-start mb-4";
+                messageDiv.innerHTML = `
+                    <img src="/image/logo.jpg" alt="avatar 1" style="width: 15px; height: 100%;">
+                    <div class="p-2 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237, .2);">
+                        <p class="small mb-0">${messageContent}</p>
+                    </div>
+                `;
+            }
+            //messageList.innerHTML += messageDiv;
+            messagesList.appendChild(messageDiv);
+            scrollToBottom();
+        });
+
+        connection.start().then(function () {
+            sendButton.disabled = false;
+        }).catch(function (err) {
+            console.error(err.toString());
+        });
+
+        // Gán sự kiện click cho sendButton
+        sendButton.addEventListener("click", function (event) {
+            try {
+                console.log("Đang gửi tin nhắn...");
+                const toUserId = "@getToUser.AccountId";
+                const messageContent = messageInput.value.trim();
+
+                console.log("Kiểm tra kiểu dữ liệu:");
+                console.log("toUserId:", toUserId, "-", typeof toUserId);
+                console.log("message:", messageContent, "-", typeof messageContent);
+                console.log("userId:", userId, "-", typeof userId);
+
+                if (!messageContent) {
+                    alert("Vui lòng điền nội dung tin nhắn");
                     return;
                 }
 
-                $.ajax({
-                    type: 'GET',
-                    url: '/Chat/Conversation?handler=AddMessage',
-                    data: {
-                        senderId: userId,
-                        convId: conversationId,
-                        content: message
-                    },
-                        success: function (data) {
-                        $('#messageslist').html($(data).find("#messageslist").html()); // Cập nhật chỉ phần messageslist
-                        console.log("Message sent successfully");
+                connection.invoke("SendMessage", userId, toUserId, messageContent, conversationId).catch(err => console.error(err.toString()));
 
-                        // Xóa nội dung của messageInput sau khi gửi thành công
-                        document.getElementById("messageInput").value = "";
-
-                            scrollToBottom();
-
-                    },
-                    error: function (error) {
-                        console.error("Error sending message:", error);
-                        alert("Đã xảy ra lỗi khi gửi tin nhắn.");
-                    }
-                });
+                // Xóa nội dung của messageInput sau khi gửi
+                document.getElementById("messageInput").value = '';
+            } catch (error) {
+                console.error("Lỗi trong sự kiện click gửi tin nhắn:", error);
+                alert("Đã xảy ra lỗi không mong muốn. Vui lòng thử lại.");
             }
 
-            function scrollToBottom() {
-                const messagesList = document.getElementById("messageslist");
-                messagesList.scrollTop = messagesList.scrollHeight; // Đặt thanh cuộn xuống cuối danh sách
-            }
-
-            window.onload = function() {
-                scrollToBottom();
-            };
-
-            document.getElementById("sendButton").addEventListener("click", function(event) {
-                Hello();
-                event.preventDefault(); // Ngăn chặn hành động mặc định
-            });*/
-
-    function Hello() {
-        console.log("Hello function called");
-        const message = document.getElementById("messageInput").value.trim();
-        const conversationId = parseInt(document.getElementById("conversationId").value.trim(), 10);
-        const userId = document.getElementById("toUserInput").value; // Lấy userId từ phần tử đã cập nhật
-
-        if (!message) {
-            alert("Vui lòng nhập nội dung tin nhắn!");
-            return;
-        }
-
-        $.ajax({
-            type: 'GET',
-            url: '/Chat/Conversation?handler=AddMessage',
-            data: {
-                senderId: userId,
-                convId: conversationId,
-                content: message
-            },
-            success: function (data) {
-                $('#popup2').html(data);
-                console.log("Message sent successfully");
-                scrollToBottom();
-            },
-            error: function (error) {
-                console.error("Error sending message:", error);
-                alert("Đã xảy ra lỗi khi gửi tin nhắn.");
-            }
+            event.preventDefault();
         });
+    } else {
+        console.error("sendButton, messageInput, hoặc messagesList không được định nghĩa.");
     }
 
     function scrollToBottom() {
         const messagesList = document.getElementById("messageslist");
         messagesList.scrollTop = messagesList.scrollHeight; // Đặt thanh cuộn xuống cuối danh sách
-    }
+    }*/
+    
+</script>
 
-    window.onload = function () {
-        scrollToBottom();
-    };
-
-    document.getElementById("sendButton").removeEventListener("click", Hello); // Xóa sự kiện cũ
-    document.getElementById("sendButton").addEventListener("click", function (event) {
-        Hello();
-        event.preventDefault();
-    });
-
-    </script>
-    <script src="~/js/site.js"></script>
-    <script src="~/microsoft/signalr/dist/browser/signalr.js"></script>
-    <script src="~/microsoft/signalr/dist/browser/signalr.min.js"></script>
+<script src="~/js/site.js"></script>
+<script src="~/microsoft/signalr/dist/browser/signalr.js"></script>

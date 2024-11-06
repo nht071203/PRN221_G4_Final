@@ -15,93 +15,74 @@ namespace PRN221_Client.Hubs
             _conversService = conversService;
         }
 
-       /* public override Task OnConnectedAsync()
-        {
-            string userId = Context.GetHttpContext()?.Request.Query["user_id"];
-            if (!string.IsNullOrEmpty(userId))
-            {
-                _userConnection[userId] = Context.ConnectionId;
-            }
-            return base.OnConnectedAsync();
-        }*/
+        /* public override Task OnConnectedAsync()
+         {
+             string userId = Context.GetHttpContext()?.Request.Query["user_id"];
+             if (!string.IsNullOrEmpty(userId))
+             {
+                 _userConnection[userId] = Context.ConnectionId;
+             }
+             return base.OnConnectedAsync();
+         }*/
 
-        public override Task OnConnectedAsync()
+        //public override Task OnConnectedAsync()
+        //{
+        //    string userId = Context.GetHttpContext()?.Request.Query["user_id"];
+        //    Console.WriteLine($"User connected with ID: {userId} and ConnectionId: {Context.ConnectionId}"); // Thêm log
+        //    if (!string.IsNullOrEmpty(userId))
+        //    {
+        //        _userConnection[userId] = Context.ConnectionId;
+        //    }
+        //    return base.OnConnectedAsync();
+        //}
+
+
+        //public override Task OnDisconnectedAsync(Exception? exception)
+        //{
+        //    string connectionId = Context.ConnectionId;
+        //    var user = _userConnection.FirstOrDefault(u => u.Value == connectionId).Key;
+        //    if (user != null)
+        //    {
+        //        _userConnection.TryRemove(user, out _);
+        //    }
+        //    return base.OnDisconnectedAsync(exception);
+        //}
+
+        public override async Task OnConnectedAsync()
         {
-            string userId = Context.GetHttpContext()?.Request.Query["user_id"];
-            Console.WriteLine($"User connected with ID: {userId} and ConnectionId: {Context.ConnectionId}"); // Thêm log
-            if (!string.IsNullOrEmpty(userId))
-            {
-                _userConnection[userId] = Context.ConnectionId;
-            }
-            return base.OnConnectedAsync();
+            // Khi kết nối, thêm người dùng vào phòng dựa trên conversationId
+            string conversationId = Context.GetHttpContext().Request.Query["conversationId"];
+            await Groups.AddToGroupAsync(Context.ConnectionId, conversationId);
+
+            await base.OnConnectedAsync();
         }
 
-
-        public override Task OnDisconnectedAsync(Exception? exception)
+        public override async Task OnDisconnectedAsync(Exception? exception)
         {
-            string connectionId = Context.ConnectionId;
-            var user = _userConnection.FirstOrDefault(u => u.Value == connectionId).Key;
-            if (user != null)
-            {
-                _userConnection.TryRemove(user, out _);
-            }
-            return base.OnDisconnectedAsync(exception);
+            string conversationId = Context.GetHttpContext().Request.Query["conversationId"];
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, conversationId);
+
+            await base.OnDisconnectedAsync(exception);
         }
 
-        /*public async Task SendPrivateMessage(string toUser, string message, string fromUser, int conversationId)
+        public async Task SendMessage(string fromUserId, string toUserId, string messageContent, string conversationId)
         {
-            Console.WriteLine("Luu tin nhan");
-            if (_userConnection.TryGetValue(toUser, out string connectionId))
+            Console.WriteLine("Gui tin nhan");
+            // Lưu tin nhắn vào cơ sở dữ liệu
+            var newMessage = new PRN221_Models.Models.Message
             {
-                // Lưu tin nhắn vào database
-                var newMessage = new PRN221_Models.Models.Message
-                {
-                    ConversationId = conversationId,
-                    SenderId = int.Parse(fromUser), // Giả sử `fromUser` là ID của người gửi
-                    Content = message,
-                    CreateAt = DateTime.Now,
-                    IsDeleted = false,
-                };
+                MessageId = 0,
+                ConversationId = int.Parse(conversationId),
+                SenderId = int.Parse(fromUserId), // Giả sử `fromUser` là ID của người gửi
+                Content = messageContent,
+                CreateAt = DateTime.Now,
+                IsDeleted = false,
+            };
 
-                await _conversService.AddMessage(newMessage);
+            await _conversService.AddMessage(newMessage);
 
-                // Gửi tin nhắn cho người nhận
-                await Clients.Client(connectionId).SendAsync("ReceiveMessage", fromUser, message);
-            }
-        }*/
-        public async Task SendPrivateMessage(string toUser, string message, string fromUser, string conversationId)
-        {
-            try
-            {
-                Console.WriteLine("Lưu tin nhắn");
-                if (_userConnection.TryGetValue(toUser, out string connectionId))
-                {
-                    /*// Lưu tin nhắn vào database
-                    var newMessage = new PRN221_Models.Models.Message
-                    {
-                        ConversationId = int.Parse(conversationId),
-                        SenderId = int.Parse(fromUser), // Giả sử `fromUser` là ID của người gửi
-                        Content = message,
-                        CreateAt = DateTime.Now,
-                        IsDeleted = false,  
-                    };
+            await Clients.Group(conversationId.ToString()).SendAsync("ReceiveMessage", fromUserId, messageContent);
 
-                    await _conversService.AddMessage(newMessage);*/
-
-                    // Gửi tin nhắn cho người nhận
-                    await Clients.Client(connectionId).SendAsync("ReceiveMessage", fromUser, message);
-                }
-                else
-                {
-                    Console.WriteLine($"Không tìm thấy kết nối cho người dùng: {toUser}");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Lỗi khi gửi tin nhắn riêng: {ex.Message}");
-                throw;
-            }
         }
-
     }
 }
