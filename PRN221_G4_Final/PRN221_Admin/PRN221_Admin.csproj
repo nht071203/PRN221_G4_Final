@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <None Remove="bg.jpg" />
+    <None Remove="bg1.jpg" />
     <None Remove="logo.jpg" />
   </ItemGroup>
 
@@ -45,6 +46,7 @@
 
   <ItemGroup>
     <Resource Include="bg.jpg" />
+    <Resource Include="bg1.jpg" />
     <Resource Include="logo.jpg" />
   </ItemGroup>
 
