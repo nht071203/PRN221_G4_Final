@@ -96,6 +96,7 @@ namespace PRN221_Admin.Views
         private void Button_Category_Post(object sender, RoutedEventArgs e)
         {
             NoiDung.Content = new CategoryPost(_categoryPostViewModel);
+        }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {

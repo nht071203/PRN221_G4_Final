@@ -33,7 +33,7 @@
                             <h2>Tạo bài viết</h2>
 
                             <form id="postForm" method="post" asp-page-handler="AddPost" enctype="multipart/form-data">
-                                <textarea name="ContentPost" placeholder="Nam ơi, bạn đang nghĩ gì thế?" class="content-post"
+                                <textarea name="ContentPost" placeholder="@Model.FullName ơi, bạn đang nghĩ gì thế?" class="content-post"
                                           required></textarea>
 
                                 <input type="file" id="imageInput" accept="image/*" style="display: none;" multiple asp-for="PostViewModel.ImagesPost">
@@ -98,7 +98,7 @@
                                     <!-- Activity Item Start -->
                                     <li>
                                         <div class="activity--item">
-                                            <div>
+                                            <div class="activity--avatar">
                                                 @if(post.account == null)
                                                 {
                                                     <a href="/Access/Login">
