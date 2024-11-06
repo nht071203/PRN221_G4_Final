@@ -32,6 +32,8 @@ namespace PRN221_Admin.ViewModels
         private FarmerModelView _farmerViewModel;
         private LoginViewModel _loginViewModel;
         private ProfileModelView _profileViewModel;
+        private CategoryViewModel _categoryViewModel;
+        private CategoryPostViewModel _categoryPostViewModel;
 
         public ObservableCollection<Account> Accounts
         {
@@ -158,7 +160,8 @@ namespace PRN221_Admin.ViewModels
        // public ICommand LoginCommand { get; }
 
         public LoginViewModel(IAccountService accountService, INewsService newsService, 
-            ExpertViewModel expert, FarmerModelView farmer, NewsViewModel news, ProfileModelView profile)
+            ExpertViewModel expert, FarmerModelView farmer, NewsViewModel news, ProfileModelView profile,
+            CategoryViewModel catview, CategoryPostViewModel catPostViewModel)
         {
             this.accountService = accountService;
             this.newsService = newsService;
@@ -168,6 +171,8 @@ namespace PRN221_Admin.ViewModels
             _farmerViewModel = farmer;
             _NewsViewModel = news;
             _profileViewModel= profile;
+            _categoryViewModel= catview;
+            _categoryPostViewModel= catPostViewModel;
  
             isCloseCommand = new RelayCommand(ExcuteCloseLogin);
            // CommandManager.InvalidateRequerySuggested();
@@ -186,7 +191,7 @@ namespace PRN221_Admin.ViewModels
                 if (Application.Current.MainWindow is DashboardMU mainWindow)
                 {
                     mainWindow.DashboardPage.Navigate(new DashBoardPage(_ExpertViewModel, _NewsViewModel, 
-                        _farmerViewModel, _profileViewModel));
+                        _farmerViewModel, _profileViewModel, _categoryViewModel, _categoryPostViewModel));
 
                 }
             }
