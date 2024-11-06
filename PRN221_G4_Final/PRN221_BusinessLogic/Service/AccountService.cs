@@ -75,7 +75,7 @@ namespace PRN221_BusinessLogic.Service
                 AccountId = 0,
                 RoleId = 1,
                 FacebookId = fbId,
-                Username = name,
+                Username = email,
                 Password = "1",
                 FullName = name,
                 Email = email,
