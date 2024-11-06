@@ -10,5 +10,10 @@ namespace PRN221_Repository.CategoryPostRepo
     public interface ICategoryPostRepository
     {
         Task<IEnumerable<CategoryPost>> GetAllCategory();
+        Task<CategoryPost> FindById(int id);
+        Task Add(CategoryPost item);
+        Task Update(CategoryPost item);
+        Task Delete(int id);
     }
+    
 }

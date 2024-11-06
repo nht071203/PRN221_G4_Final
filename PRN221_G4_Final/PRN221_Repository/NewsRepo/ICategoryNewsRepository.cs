@@ -14,5 +14,8 @@ namespace PRN221_Repository.NewsRepo
         Task<CategoryNews> GetCategoryNewsById(int id);
         Task<IEnumerable<CategoryNews>> GetAllCategoryNews();
         Task<IEnumerable<CategoryNews>> GetCategoriesHaveNews();
+        Task Add(CategoryNews item);
+        Task Update(CategoryNews item);
+        Task Delete(int id);
     }
 }

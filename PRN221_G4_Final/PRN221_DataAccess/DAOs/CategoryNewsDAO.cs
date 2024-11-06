@@ -29,5 +29,27 @@ namespace PRN221_DataAccess.DAOs
                 .Where(c => _context.News.Any(n => n.CategoryNewsId == c.CategoryNewsId))
                 .ToListAsync();
         }
+
+        public async Task AddCatNews(CategoryNews item)
+        {
+            _context.CategoryNews.Add(item);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateCatNews(CategoryNews item)
+        {
+            var existingItem = await GetCategoryNewsById(item.CategoryNewsId);
+            if (existingItem == null) return;
+            _context.Entry(existingItem).CurrentValues.SetValues(item);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteCatNews(int id)
+        {
+            var item = await GetCategoryNewsById(id);
+            if (item == null) return;
+            _context.CategoryNews.Remove(item);
+            await _context.SaveChangesAsync();
+        }
     }
 }

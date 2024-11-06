@@ -38,6 +38,19 @@ namespace PRN221_BusinessLogic.Service
             await _newsRepo.Delete(id);
         }
 
+        public async Task AddCatNews(CategoryNews item)
+        {
+            await _categoryNewsRepository.Add(item);
+        }
+        public async Task UpdateCatNews(CategoryNews item)
+        {
+            await _categoryNewsRepository.Update(item);
+        }
+        public async Task DeleteCatNews(int id)
+        {
+            await _categoryNewsRepository.Delete(id);
+        }
+
 
         public async Task<IEnumerable<CategoryNews>> GetAllCategoryNews() => await _categoryNewsRepository.GetAllCategoryNews();
 

@@ -28,7 +28,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid Grid.Column="0" Background="White" Grid.RowSpan="2" Margin="0,10,10,-10">
-            <StackPanel Orientation="Vertical" Width="182" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0" Height="362" >
+            <StackPanel Orientation="Vertical" Width="182" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0" Height="517" >
 
                 <Image  Source="/logo.jpg" Height="54" Width="102" />
 
@@ -67,14 +67,24 @@
                     </StackPanel>
                 </Button>
 
-                <Button Width="150" Height="40" Background="Transparent" BorderThickness="0">
+                <Button Width="150" Height="40" Background="Transparent" BorderThickness="0" Click="Button_Category_news">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="16" Text="&#xE789;" Margin="5"/>
-                        <TextBlock Text="Manage Post" VerticalAlignment="Center" Margin="10,0,0,0" FontWeight="Bold" Foreground="Black" FontSize="16"/>
+                        <TextBlock Text="Category News" VerticalAlignment="Center" Margin="10,0,0,0" FontWeight="Bold" Foreground="Black" FontSize="16"/>
                     </StackPanel>
                 </Button>
+                <Button Width="150" Height="40" Background="Transparent" BorderThickness="0" Click="Button_Category_Post">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="16" Text="&#xE789;" Margin="5"/>
+                        <TextBlock Text="Category Post" VerticalAlignment="Center" Margin="10,0,0,0" FontWeight="Bold" Foreground="Black" FontSize="16"/>
+                    </StackPanel>
+                </Button>
+
+                
+
                 <Button Width="155" Height="40" Background="Transparent" BorderThickness="0" Click="Button_Click">
                     <StackPanel Orientation="Horizontal" Width="155">
+
                         <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="16" Text="&#xE897;" Margin="5"/>
                         <TextBlock Text="Statistic Month" VerticalAlignment="Center" Margin="10,0,0,0" FontWeight="Bold" Foreground="Black" FontSize="16" Width="121"/>
                     </StackPanel>
