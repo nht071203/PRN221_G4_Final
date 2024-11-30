@@ -12,6 +12,8 @@ namespace PRN221_Repository.PostsRepo
         Task<IEnumerable<Post>> GetAll();
         Task<Post?> GetById(int postId);
         Task<Post> AddPost(Post post);
+        Task<int> UpdatePost(Post post);
+        Task<int> DeletePost(int postId);
         Task<Account> FarmerWithMostPosts();
 
         Task<Account> ExpertWithMostPosts();

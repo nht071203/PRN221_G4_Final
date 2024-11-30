@@ -42,15 +42,18 @@ namespace PRN221_BusinessLogic.Service
 
             foreach (var item in listPost)
             {
-                var listImageByPost = await _postImageRepository.GetAllByPostId(item.PostId);
-                var account = await _accountRepository.GetAccountById((int)item.AccountId);
-                var likePost = await _likePostRepository.GetAllLikePostByPostId(item.PostId);
-                var comment = await _commentRepository.GetAllCommentPostByPostId(item.PostId);
-                var sharePost = await _sharePostRepository.GetAllSharePostByPostId(item.PostId);
+                if(item.IsDeleted == false)
+                {
+                    var listImageByPost = await _postImageRepository.GetAllByPostId(item.PostId);
+                    var account = await _accountRepository.GetAccountById((int)item.AccountId);
+                    var likePost = await _likePostRepository.GetAllLikePostByPostId(item.PostId);
+                    var comment = await _commentRepository.GetAllCommentPostByPostId(item.PostId);
+                    var sharePost = await _sharePostRepository.GetAllSharePostByPostId(item.PostId);
 
-                var postItemDto = new PostDTO(item, listImageByPost, account, likePost, comment, sharePost);
+                    var postItemDto = new PostDTO(item, listImageByPost, account, likePost, comment, sharePost);
 
-                response.Add(postItemDto);
+                    response.Add(postItemDto);
+                }  
             }
 
             return response;
@@ -132,14 +135,12 @@ namespace PRN221_BusinessLogic.Service
 
         public async Task<Post> AddPost(int categoryId, int accountId, string content)
         {
-            DateTime currentUtcDateTime = DateTime.UtcNow;
-
             var post = new Post
             {
                 CategoryPostId = categoryId,
                 AccountId = accountId,
                 PostContent = content,
-                CreatedAt = currentUtcDateTime,
+                CreatedAt = DateTime.Now,
                 IsDeleted = false
             };
 
@@ -170,6 +171,38 @@ namespace PRN221_BusinessLogic.Service
             }
 
             return response;
+        }
+
+        public Task<int> GetLikeCountByPostId(int postId) => _likePostRepository.GetLikeCountByPostId(postId);
+
+        public Task<int> DeletePost(int postId)
+        {
+            return _postRepository.DeletePost(postId);
+        }
+
+        public async Task<Comment> FindCommentById(int id) => await _commentRepository.FindById(id);
+
+        public async Task AddComment(Comment item) => await _commentRepository.Add(item);
+
+        public async Task UpdateComment(Comment item) => await _commentRepository.Update(item);
+
+        public async Task DeleteComment(int id) => await _commentRepository.Delete(id);
+
+        public async Task<int> UpdatePost(int postId, int categoryid, int? accountId, string content)
+        {
+            DateTime currentUtcDateTime = DateTime.UtcNow;
+
+            var post = new Post
+            {
+                PostId = postId,
+                AccountId = accountId,
+                CategoryPostId = categoryid,
+                PostContent = content,
+                UpdateAt = currentUtcDateTime,
+                IsDeleted = false
+            };
+
+            return await _postRepository.UpdatePost(post);
         }
     }
 }

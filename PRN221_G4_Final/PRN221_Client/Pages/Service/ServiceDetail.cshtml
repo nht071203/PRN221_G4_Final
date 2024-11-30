@@ -3,8 +3,11 @@
 @inject PRN221_BusinessLogic.Interface.IAccountService _accountService;
 @model PRN221_Client.Pages.Service.ServiceDetailModel
 @{
+    ViewData["Title"] = @Model.ServiceDetail.Title;
     //var isLoggedIn = HttpContext.Session.GetString("UserSession") != null;
     var isLoggedIn = HttpContextAccessor.HttpContext.Session.GetString("UserSession") != null;
+    int getIdAccount = Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetInt32("AccountID"));
+    var accountLogin = await _accountService.GetByIdAccount(getIdAccount);
     //var isLoggedIn = HttpContextAccessor.HttpContext?.Session?.GetString("UserSession") != null;
     //var isLoggedIn = HttpContextAccessor?.HttpContext?.Session?.GetString("UserSession") != null;
 }
@@ -300,208 +303,11 @@
         </div>
     </div>
 
-    <div class="nav-menu--show-contest d-none">
-        <div class="px-4 py-2">
-            <div class="px-xl-5">
-                <p class="f-24 color_label">Gitiho contest</p>
-                <p class="color_label f-16">
-                    Cùng gitiho contest chinh phục kiến thức, khẳng định bản thân với hệ thống bài test
-                    phong phú, đầy đủ các chủ đề để bạn khám phá.
-                </p>
-
-                <div class="d-flex justify-content-between mt-4">
-                    <div>
-                        <a href="https://gitiho.com/contest"
-                           class="btn btn-gitiho round-4 f-14 text-nowrap">
-                            Khám phá ngay
-                        </a>
-                    </div>
-                    <div style="max-width: 389px;">
-                        <img width="100%" class="lazyload"
-                             data-src="/frontend/img/gitiho_v2/icon/cartoon_testbank.svg" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="nav-menu--show-subscription d-none">
-        <div class="mx-5 py-2 nav-menu--subscription w-100">
-            <div class="px-xl-5 nav-menu--subscription-name">
-                <p class="f-24 color_label">Chương trình hội viên Gitiho</p>
-            </div>
-            <div class="position-relative pb-5" style="z-index: 1;">
-                <div class="mx-xl-5 nav-menu--subscription-content p-4 my-3">
-                    <h4 class="nav-menu--subscription-header">
-                        Gói Hội viên Gitiho: Trọn bộ khoá học theo Khung năng lực
-                    </h4>
-                    <div class="mt-2 nav-menu--subscription-block">
-                        <div class="d-flex justify-content-between align-items-center nav-menu--subscription-menu">
-                            <div class="nav-menu--subscription-list">
-                                <p class="color_label f-16 nav-menu--subscription-item"
-                                   style="max-width: 515px">
-                                    <i class="far fa-check-circle nav-menu--subscription-item-icon"></i>
-                                    <span class="nav-menu--subscription-item-text">480+ khóa học</span>
-                                </p>
-                                <p class="color_label f-16 nav-menu--subscription-item">
-                                    <i class="far fa-check-circle nav-menu--subscription-item-icon"></i>
-                                    <span class="nav-menu--subscription-item-text">
-                                        15 Danh mục theo kỹ năng,
-                                        ngành nghề
-                                    </span>
-
-                                </p>
-                                <p class="color_label f-16 nav-menu--subscription-item">
-                                    <i class="far fa-check-circle nav-menu--subscription-item-icon"></i>
-                                    <span class="nav-menu--subscription-item-text">
-                                        Năng lực Lõi, Năng lực
-                                        Chuyên môn, Năng lực Bổ trợ, Năng lực Quản lý
-                                    </span>
-                                </p>
-                            </div>
-                            <div class="nav-menu--subscription-button">
-                                <a href="https://gitiho.com/hoi-vien"
-                                   class="btn btn-gitiho round-4 f-14 text-nowrap">
-                                    Khám phá ngay
-                                </a>
-                                <p class="nav-menu--subscription-button-text mb-0">2000+ đã đăng ký</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mx-xl-5 nav-menu--subscription-content p-4 my-3">
-                    <h4 class="nav-menu--subscription-header">
-                        Gói Hội viên G-Skills: 03 kỹ năng bổ trợ thiết yếu
-                    </h4>
-                    <div class="mt-2 nav-menu--subscription-block">
-                        <div class="d-flex justify-content-between align-items-center nav-menu--subscription-menu">
-                            <div class="nav-menu--subscription-list">
-                                <p class="color_label f-16 nav-menu--subscription-item"
-                                   style="max-width: 515px">
-                                    <i class="far fa-check-circle nav-menu--subscription-item-icon"></i>
-                                    <span class="nav-menu--subscription-item-text">
-                                        83 khóa học Tin học văn
-                                        phòng
-                                    </span>
-                                </p>
-                                <p class="color_label f-16 nav-menu--subscription-item">
-                                    <i class="far fa-check-circle nav-menu--subscription-item-icon"></i>
-                                    <span class="nav-menu--subscription-item-text">
-                                        85 khóa học Kỹ năng
-                                        mềm
-                                    </span>
-
-                                </p>
-                                <p class="color_label f-16 nav-menu--subscription-item">
-                                    <i class="far fa-check-circle nav-menu--subscription-item-icon"></i>
-                                    <span class="nav-menu--subscription-item-text">
-                                        29 khóa học Ngoại
-                                        ngữ
-                                    </span>
-
-                                </p>
-                            </div>
-                            <div class="nav-menu--subscription-button">
-                                <a href="https://gitiho.com/hoi-vien/gskill"
-                                   class="btn btn-gitiho round-4 f-14 text-nowrap">
-                                    Khám phá ngay
-                                </a>
-                                <p class="nav-menu--subscription-button-text mb-0">500+ đã đăng ký</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="max-width: 204px; bottom: -32px; right: -80px; z-index: -1;"
-                     class="position-absolute">
-                    <img width="100%" class="lazyload"
-                         data-src="/frontend/img/gitiho_v2/banner_vip_user.png" alt="">
-                </div>
-            </div>
-
-
-        </div>
-    </div>
-    <div class="nav-menu--show-biz d-none">
-        <div class="px-4 py-2 w-100">
-            <div class="px-xl-5">
-                <p class="f-24 color_label">Gitiho for leading business</p>
-                <p class="color_label f-16" style="max-width: 600px">
-                    Tối ưu và đơn giản hóa hoạt động đào tạo tại doanh nghiệp. Sẵn sàng nền tảng, nội dung
-                    đào tạo cho tất cả các vị trí, bộ phận. Ứng dụng MIỄN PHÍ ngay vào doanh nghiệp chỉ với
-                    MỘT click.
-                </p>
-
-                <div>
-                    <p class="color_label f-14 mb-1">Đã được tin tưởng sử dụng bởi các doanh nghiệp</p>
-                    <div>
-                        <img width="51px" src="../landingpage/images/logo_avery.png" alt="">
-                        <img width="51px" src="../landingpage/images/logo_vp.png" alt="">
-                        <img width="51px" src="../landingpage/images/logo_topcv.png" alt="">
-                        <img width="51px" src="../landingpage/images/logo_vcb.png" alt="">
-                        <img width="51px" src="../landingpage/images/logo_vietin.png" alt="">
-                        <img width="51px" src="../landingpage/images/logo_th.png" alt="">
-                    </div>
-                </div>
-                <div class="d-flex justify-content-between mt-4">
-                    <div>
-                        <a href="https://gitiho.com/landing-business"
-                           class="btn btn-gitiho round-4 f-14 text-nowrap">
-                            Đăng ký miễn phí
-                        </a>
-                    </div>
-                    <div style="max-width: 452px;">
-                        <img width="100%" class="lazyload" data-src="/landingpage/images/bg_header_body.png"
-                             alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="position-relative">
         <div class="banner-preview2 p-3">
             <div class="container">
                 <div class="banner--container mx-auto">
                     <div class="main-content breadcrumb-v2 breadcrumb-course pl-0 position-relative mb-4">
-                        <ol class="gitiho-breadcrumb breadcrumb">
-
-                            <li class="breadcrumb-item no-before d-flex">
-                                <a href="https://gitiho.com/categories/tat-ca-khoa-hoc">
-                                    <span>
-                                        Khóa học
-                                    </span>
-                                </a>
-                                <meta content="1">
-                            </li>
-                            <li class="breadcrumb-item no-before d-flex">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
-                                     viewBox="0 0 14 14" class="my-auto mr-1">
-                                    <path d="M4.49995 10.0499L3.44995 8.99995L6.44995 5.99995L3.44995 2.99995L4.49995 1.94995L8.54995 5.99995L4.49995 10.0499Z"
-                                          fill="#6c757d" />
-                                </svg>
-                                <a href="https://gitiho.com/category/1-tin-hoc-van-phong">
-                                    <span>
-                                        Tin học văn phòng
-                                    </span>
-                                </a>
-                                <meta content="2">
-                            </li>
-                            <li class="breadcrumb-item active last no-before d-flex">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
-                                     viewBox="0 0 14 14" class="my-auto mr-1">
-                                    <path d="M4.49995 10.0499L3.44995 8.99995L6.44995 5.99995L3.44995 2.99995L4.49995 1.94995L8.54995 5.99995L4.49995 10.0499Z"
-                                          fill="#6c757d" />
-                                </svg>
-                                <a href="https://gitiho.com/category/93-excel">
-                                    <span>
-                                        Excel
-                                    </span>
-                                </a>
-                                <meta content="3">
-                            </li>
-                            </li>
-                        </ol>
 
                     </div>
                     <div class="show-content--1080">
@@ -555,7 +361,7 @@
                                  data-src="https://gitiho.com/frontend/img/gitiho_v2/icon/icon-custom-2.svg" />
                             <div class="detail-cou-label">
                                 <span class="text-white">Ngày bắt đầu</span><br />
-                                <span class="text-white">@Model.ServiceDetail.CreateAt</span>
+                                <span class="text-white">@Model.ServiceDetail.CreateAt?.ToString("dd/MM/yyyy")</span>
                             </div>
                         </li>
                         <li>
@@ -692,12 +498,13 @@
                     <div class="main-content">
                         @if (isLoggedIn)
                         {
+                            
                             <p class="f-32 fw-500 mb-3">Đánh giá dịch vụ</p>
                             <div class="d-flex align-items-center justify-content-center border my-3">
                                 <form class="card" method="post" asp-page-handler="RateService">
                                     <div class="row">
                                         <div class="col-2">
-                                            <img src="https://i.imgur.com/xELPaag.jpg" width="70" class="rounded-circle mt-2">
+                                            <img src="@accountLogin.Avatar" width="70" class="rounded-circle mt-2">
                                         </div>
                                         <div class="col-10">
                                             <div class="comment-box ml-2">
@@ -935,7 +742,7 @@
                                 var getAccInList = await _accountService.GetByIdAccount(ratingList.UserId);
                                 <div class="border p-3 mb-2">
                                     <div class="d-flex mb-2">
-                                        <img src="../frontend/img/gitiho_v2/placehover_18x18.png"
+                                        <img src="@getAccInList.Avatar"
                                              alt="" data-src="../caches/ua_small/users/1615037654.jpg"
                                              class="my-auto rounded-circle lazyload mr-3" width="36px"
                                              height="36px" />
@@ -1012,7 +819,7 @@
                         <div>
                             <div class="info-text mb-auto mt-4 mt-md-auto">
                                 <p class="color-label fw-600 mb-2 fw-700">
-                                    <a href="https://gitiho.com/teacher/82540-g-learning"
+                                    <a asp-page="/Profile/PersonalPage" asp-route-id="@Model.CreatorService.AccountId"
                                        class="color_label"><u>@Model.CreatorService.FullName</u></a>
                                 </p>
                             </div>
@@ -1071,186 +878,6 @@
                     </div>
                 </div>
             </div>
-
-            @* <div class="my-5">
-            <div class="container">
-            <div class="main-content">
-            <p class="f-32 fw-500 mb-3">Dịch vụ liên quan</p>
-            <div>
-            <div class="course-comparison--show-more">
-            <span id="show-more" data-type="checkbox" class="d-none" data-checked></span>
-            <div class="show-more-module--content" style="max-height: 30rem;">
-            <div class="course-comparison--container">
-            <div>
-            <div class="course-comparison--course-container">
-            <div class="course-comparison--main-content">
-            <a href="ebook-tuyet-dinh-excel-khai-pha-10-ky-thuat-ung-dung-excel-ma-dai-hoc-khong-day-ban.html"
-            class="course-comparison--course-title color_label fw-700 f-16">
-            Ebook Tuyệt đỉnh Excel - Khai phá 10 kỹ thuật ứng dụng
-            Excel mà đại học không dạy bạn
-            </a>
-            <div class="course-comparison--course-info">
-            <div class="course-comparison--meta-items">
-            <span class="course-comparison--content-info">
-            Tổng số 2+ giờ
-            </span>
-            <span>
-            1 bài giảng
-            </span>
-            </div>
-            </div>
-            </div>
-            <div class="course-comparison--comparison-content">
-            <div class="star-rating-module--star">
-            <span class="star-rating-module--rating-number fw-700">
-            4.75
-            </span>
-            <i class="fas fa-star star-rating-module--icon"></i>
-            </div>
-            <div class="course-comparison--num-students">
-            <i class="fas fa-users my-auto"></i>
-            <span>77,806</span>
-            </div>
-
-            <div class="course-comparison--price-text-container">
-            <div class="course-comparison--discount-price">
-            <span class="fw-700">69,000 đ</span>
-            </div>
-
-            <div class="course-comparison--origin-price">
-            <s><span>99,000 đ</span></s>
-            </div>
-            </div>
-            </div>
-
-            <div class="course-comparison--image-wrapper">
-            <img class="lazyload"
-            src="../frontend/img/gitiho_v2/placehover_36x36.png"
-            width="64px" height="64px"
-            data-src="https://gitiho.com/caches/cc_small/cou_avatar/2020/06_09/aed7e51774b9757a335f47ba47f1ecb7.png"
-            alt="#" />
-            </div>
-            <a class="course-comparison--whole-card-link"
-            href="ebook-tuyet-dinh-excel-khai-pha-10-ky-thuat-ung-dung-excel-ma-dai-hoc-khong-day-ban.html"></a>
-            </div>
-            </div>
-
-            <div>
-            <div class="course-comparison--course-container">
-            <div class="course-comparison--main-content">
-            <a href="exg01-tuyet-dinh-excel-tro-thanh-bac-thay-excel-trong-16-gio-2.html"
-            class="course-comparison--course-title color_label fw-700 f-16">
-            EXG01: Tuyệt đỉnh Excel | Khóa học Excel online từ cơ
-            bản đến nâng cao
-            </a>
-            <div class="course-comparison--course-info">
-            <div class="course-comparison--meta-items">
-            <span class="course-comparison--content-info">
-            Tổng số 18 giờ
-            </span>
-            <span>
-            207 bài giảng
-            </span>
-            </div>
-            </div>
-            </div>
-            <div class="course-comparison--comparison-content">
-            <div class="star-rating-module--star">
-            <span class="star-rating-module--rating-number fw-700">
-            4.86
-            </span>
-            <i class="fas fa-star star-rating-module--icon"></i>
-            </div>
-            <div class="course-comparison--num-students">
-            <i class="fas fa-users my-auto"></i>
-            <span>45,643</span>
-            </div>
-
-            <div class="course-comparison--price-text-container">
-            <div class="course-comparison--discount-price">
-            <span class="fw-700">499,000 đ</span>
-            </div>
-
-            <div class="course-comparison--origin-price">
-            <s><span>799,000 đ</span></s>
-            </div>
-            </div>
-            </div>
-
-            <div class="course-comparison--image-wrapper">
-            <img class="lazyload"
-            src="../frontend/img/gitiho_v2/placehover_36x36.png"
-            width="64px" height="64px"
-            data-src="https://gitiho.com/caches/cc_small/cou_avatar/2022/03_16/845cf112bcb9aff731c74785849db37d.png"
-            alt="#" />
-            </div>
-            <a class="course-comparison--whole-card-link"
-            href="exg01-tuyet-dinh-excel-tro-thanh-bac-thay-excel-trong-16-gio-2.html"></a>
-            </div>
-            </div>
-
-            <div>
-            <div class="course-comparison--course-container">
-            <div class="course-comparison--main-content">
-            <a href="vbag01-tuyet-dinh-vba-viet-code-trong-tam-tay.html"
-            class="course-comparison--course-title color_label fw-700 f-16">
-            VBAG01: Tuyệt đỉnh VBA - Tự động hóa Excel với lập trình
-            VBA
-            </a>
-            <div class="course-comparison--course-info">
-            <div class="course-comparison--meta-items">
-            <span class="course-comparison--content-info">
-            Tổng số 14 giờ
-            </span>
-            <span>
-            143 bài giảng
-            </span>
-            </div>
-            </div>
-            </div>
-            <div class="course-comparison--comparison-content">
-            <div class="star-rating-module--star">
-            <span class="star-rating-module--rating-number fw-700">
-            4.86
-            </span>
-            <i class="fas fa-star star-rating-module--icon"></i>
-            </div>
-            <div class="course-comparison--num-students">
-            <i class="fas fa-users my-auto"></i>
-            <span>22,826</span>
-            </div>
-
-            <div class="course-comparison--price-text-container">
-            <div class="course-comparison--discount-price">
-            <span class="fw-700">499,000 đ</span>
-            </div>
-
-            <div class="course-comparison--origin-price">
-            <s><span>799,000 đ</span></s>
-            </div>
-            </div>
-            </div>
-
-            <div class="course-comparison--image-wrapper">
-            <img class="lazyload"
-            src="../frontend/img/gitiho_v2/placehover_36x36.png"
-            width="64px" height="64px"
-            data-src="https://gitiho.com/caches/cc_small/cou_avatar/2022/03_16/1543404fe8a20cd52c3bcc28584de24e.png"
-            alt="#" />
-            </div>
-            <a class="course-comparison--whole-card-link"
-            href="vbag01-tuyet-dinh-vba-viet-code-trong-tam-tay.html"></a>
-            </div>
-            </div>
-
-            </div>
-            </div>
-            </div>
-
-            </div>
-            </div>
-            </div>
-            </div> *@
         </div>
 
 
@@ -1306,14 +933,6 @@
                                     </button>
                                 }
 
-                                <div class="form-registed-user text-center mt-3">
-                                    <div class="change-register hide">
-                                        <i class="fas fa-users-medical color_label"></i>
-                                        <span class="name_register color_label">Nguyễn Xuân Nam </span>
-                                        <span class="color_label">vừa đăng ký</span>
-                                    </div>
-                                    <div class="pending-register"></div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -1323,34 +942,6 @@
     </div>
 
 
-
-    <div class="modal fade bd-show-video-try-modal-lg" tabindex="-1" role="dialog"
-         aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" style="max-width: 600px;">
-            <div class="modal-content px-4 pt-4" style="background: #1e1e1c">
-                <i class="fal fa-times pointer" data-dismiss="modal"
-                   style="position: absolute;color: white;right: 1.5rem;top: 2rem;font-size: 22px;"></i>
-                <div class="text-white">
-                    <p class="f-18 my-1">Nội dung học thử</p>
-                    <p class="font-weight-bold text-content-try mb-4"></p>
-                </div>
-                <div class="player-relative rounded-0 position-relative">
-                    <div class="lecture_content" style="position: relative">
-                    </div>
-                    <div class="bg-over-load-video hide position-absolute d-flex justify-content-center"
-                         style="top:0;bottom:0;width: 100%;left:0;background: rgba(0,0,0,0.6);">
-                        <div class="lds-facebook big my-auto">
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                </div>
-            </div>
-        </div>
-    </div>
     <dialog id="dialog">
         <h2>Bạn chưa đăng nhập</h2>
         <p>Cần tài khoản để tiến hành đăng nhập</p>

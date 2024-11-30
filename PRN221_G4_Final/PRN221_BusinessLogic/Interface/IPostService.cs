@@ -1,4 +1,5 @@
-﻿using PRN221_Models.DTO;
+﻿using Microsoft.EntityFrameworkCore;
+using PRN221_Models.DTO;
 using PRN221_Models.Models;
 using System;
 using System.Collections.Generic;
@@ -18,10 +19,16 @@ namespace PRN221_BusinessLogic.Interface
         Task<bool> LikePost(int postId, int accountId);
         Task<bool> UnlikePost(int postId, int accountId);
         Task<bool> IsPostLikedByUser(int postId, int accountId);
+        Task<int> GetLikeCountByPostId(int postId);
         Task<List<PostDTO>> GetAllPostByAccountId(int id);
         //Task<List<PostDTO>> GetAllPostImagesByAccountId(int id);
         Task<Post> AddPost(int categoryId, int accountId, string content);
+        Task<int> DeletePost(int postId);
+        Task<int> UpdatePost(int postId, int categoryid, int? accountId, string content);
         Task<List<PostImage>> GetAllPostImagesByAccountId(int id);
-
+        Task<Comment> FindCommentById(int id);
+        Task AddComment(Comment item);
+        Task UpdateComment(Comment item);
+        Task DeleteComment(int id);
     }
 }

@@ -11,5 +11,5 @@ public partial class AccountConversation
 
     public bool? IsOut { get; set; }
 
-    public DateOnly? OutAt { get; set; }
+    public DateTime? OutAt { get; set; }
 }

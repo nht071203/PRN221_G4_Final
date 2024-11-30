@@ -1,0 +1,162 @@
+﻿@model IEnumerable<PRN221_Models.Models.Conversation>
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@inject PRN221_BusinessLogic.Interface.IConversService _conversService;
+@inject PRN221_BusinessLogic.Interface.IAccountService _accountService;
+
+@{
+    int? getIdAccount = null;
+    string avatarUrl = string.Empty;
+    string getAccAvatar = string.Empty;
+    if (HttpContextAccessor.HttpContext.Session.GetString("AccountID") != null)
+    {
+        getIdAccount = Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetInt32("AccountID"));
+        var account = await _accountService.GetByIdAccount((int)getIdAccount);
+        avatarUrl = account?.Avatar;
+    }
+}
+
+<div class="px-4 d-none d-md-block">
+    @* <div class="d-flex align-items-center">
+        <div class="flex-grow-1">
+            <input type="text" class="form-control my-3" placeholder="Search...">
+        </div>
+    </div> *@
+    <i class="fas fa-times" onclick="hideListChat()"></i>
+</div>
+@foreach (var item in Model)
+{
+    <input type="hidden" id="get-acc-id" value="@getIdAccount.Value"></input>
+    var getAccInConvList = await _conversService.GetAccConversationByAccOId(item.ConversationId, getIdAccount.Value);
+    var getAccById = await _accountService.GetByIdAccount(getAccInConvList.AccountId);
+    getAccAvatar = getAccById.Avatar;
+    <a class="list-group-item list-group-item-action border-0 conversation-btn" onclick="loadConversList(@item.ConversationId)" style="cursor: pointer">
+        <div class="badge bg-success float-right"></div>
+        <div class="d-flex align-items-start">
+            <img src="@getAccById.Avatar" class="rounded-circle mr-1" alt="Vanessa Tucker" width="40" height="40">
+            <div class="flex-grow-1 ml-3">
+                @getAccById.FullName
+                <div class="small"><span class="fas fa-circle chat-online"></span> Online</div>
+            </div>
+        </div>
+    </a>
+}
+
+<script>
+    function loadConversList(conversationId) {
+        console.log(conversationId);
+        document.getElementById('popup2').style.display = 'block';
+        $.ajax({
+            type: 'GET',
+            url: '/Chat/Conversation?handler=LoadMessageList',
+            data: {
+                convId: conversationId
+            },
+            success: function (data) {
+                $('#popup2').html(data);
+                userId = document.getElementById("get-acc-id").value;
+                console.log("Updated User ID:", userId);
+
+                reloadScript();
+            }
+        });
+    }
+
+    function reloadScript() {
+        scrollToBottom();
+
+        const userId = document.getElementById("user-id").value.trim();;
+
+        // Đảm bảo các biến được định nghĩa trước khi tham chiếu đến chúng
+        const sendButton = document.getElementById("sendButton");
+        const messageInput = document.getElementById("messageInput");
+        const messagesList = document.getElementById("messageslist");
+        var avatarUrl = "@avatarUrl";
+        var accAvatarUrl = "@getAccAvatar";
+        //const conversationId = document.getElementById("conversationId").value.trim();
+        const conversationId = document.getElementById("conversationId").value.trim();
+
+        if (sendButton && messageInput && messagesList) {
+            console.log("sendButton:", sendButton);
+            console.log("messageInput:", messageInput);
+
+            console.log("conversationId:", conversationId, "-", typeof conversationId);
+
+            const connection = new signalR.HubConnectionBuilder().withUrl("/chathub?conversationId=" + conversationId).build();
+
+            // Vô hiệu hóa nút gửi cho đến khi kết nối được thiết lập
+            sendButton.disabled = true;
+
+            connection.on("ReceiveMessage", (fromUserId, messageContent) => {
+                // Thêm tin nhắn vào giao diện
+                console.log("Tai tin nhan");
+                console.log(fromUserId, messageContent);
+                //const messageList = document.getElementById("messageslist");
+                let messageDiv = document.createElement("div");
+
+                if (fromUserId == userId) {
+                    messageDiv.className = "d-flex flex-row justify-content-end mb-4";
+                    messageDiv.innerHTML = `
+                        <div class="p-2 me-3 border bg-body-tertiary" style="border-radius: 15px;">
+                            <p class="small mb-0">${messageContent}</p>
+                        </div>
+                            <img src="${avatarUrl}" alt="avatar 1" style="width: 30px; height: 100%; border-radius: 50%">
+                    `;
+                } else {
+                    messageDiv.className = "d-flex flex-row justify-content-start mb-4";
+                    messageDiv.innerHTML = `
+                                <img src="${accAvatarUrl}" alt="avatar 1" style="width: 30px; height: 100%; border-radius: 50%">
+                        <div class="p-2 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237, .2);">
+                            <p class="small mb-0">${messageContent}</p>
+                        </div>
+                    `;
+                }
+                //messageList.innerHTML += messageDiv;
+                messagesList.appendChild(messageDiv);
+                scrollToBottom();
+            });
+
+            connection.start().then(function () {
+                sendButton.disabled = false;
+            }).catch(function (err) {
+                console.error(err.toString());
+            });
+
+            // Gán sự kiện click cho sendButton
+            sendButton.addEventListener("click", function (event) {
+                try {
+                    console.log("Đang gửi tin nhắn...");
+                    const toUserId = document.getElementById("toUserInput").value.trim();
+                    const messageContent = messageInput.value.trim();
+
+                    console.log("Kiểm tra kiểu dữ liệu:");
+                    console.log("toUserId:", toUserId, "-", typeof toUserId);
+                    console.log("message:", messageContent, "-", typeof messageContent);
+                    console.log("userId:", userId, "-", typeof userId);
+
+                    if (!messageContent) {
+                        alert("Vui lòng điền nội dung tin nhắn");
+                        return;
+                    }
+
+                    connection.invoke("SendMessage", userId, toUserId, messageContent, conversationId).catch(err => console.error(err.toString()));
+
+                    // Xóa nội dung của messageInput sau khi gửi
+                    document.getElementById("messageInput").value = '';
+                } catch (error) {
+                    console.error("Lỗi trong sự kiện click gửi tin nhắn:", error);
+                    alert("Đã xảy ra lỗi không mong muốn. Vui lòng thử lại.");
+                }
+
+                event.preventDefault();
+            });
+        } else {
+            console.error("sendButton, messageInput, hoặc messagesList không được định nghĩa.");
+        }
+    }
+
+    function scrollToBottom() {
+        const messagesList = document.getElementById("messageslist");
+        messagesList.scrollTop = messagesList.scrollHeight; // Đặt thanh cuộn xuống cuối danh sách
+    }
+</script>

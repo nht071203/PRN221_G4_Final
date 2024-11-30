@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Microsoft.Win32;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
 
 namespace PRN221_Admin.ViewModels
@@ -95,7 +96,7 @@ namespace PRN221_Admin.ViewModels
 
         private string _email;
         private string _phone;
-        private DateOnly? _dateOfBirth;
+        private DateTime? _dateOfBirth;
         private string _gender;
         private string _address;
 
@@ -169,7 +170,7 @@ namespace PRN221_Admin.ViewModels
                 OnPropertyChanged(nameof(Phone));
             }
         }
-        public DateOnly? DateOfBirth
+        public DateTime? DateOfBirth
         {
             get => _dateOfBirth;
             set
@@ -253,7 +254,7 @@ namespace PRN221_Admin.ViewModels
             _fireBaseAvatar = new FirebaseConfig();
             UploadAvatarAdminCommand = new RelayCommand(async (obj) => await UploadAvatar());
             UpdateAdminBtn = new RelayCommand(async (obj) => await UpdateAdmin(obj));
-
+            UpdatePassBtn = new RelayCommand(async (obj) => await UpdatePassAdmin(obj));
 
         }
 
@@ -283,6 +284,7 @@ namespace PRN221_Admin.ViewModels
 
 
         public ICommand UpdateAdminBtn { get; set; }
+        public ICommand UpdatePassBtn { get; set; }
 
         public async Task UpdateAdmin(object obj)
         {
@@ -304,18 +306,18 @@ namespace PRN221_Admin.ViewModels
                 existingMember.Phone = Phone;
                 existingMember.Gender = Gender;
                 existingMember.DateOfBirth = DateOfBirth;
-                existingMember.Password = Password; // Cẩn thận với việc lưu mật khẩu
-                existingMember.Password = ConfirmPassword;
+                //existingMember.Password = Password; // Cẩn thận với việc lưu mật khẩu
+                //existingMember.Password = ConfirmPassword;
                 existingMember.Address = Address;
                 existingMember.FacebookId = FacebookId;
                 existingMember.ShortBio = ShortBio;
 
 
 
-                if (Password != ConfirmPassword) {
-                    System.Windows.MessageBox.Show("Password not valid.", "Notification", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return ;
-                }
+                //if (Password != ConfirmPassword) {
+                //    System.Windows.MessageBox.Show("Password not valid.", "Notification", MessageBoxButton.OK, MessageBoxImage.Warning);
+                //    return ;
+                //}
 
                 // Gọi phương thức cập nhật tài khoản
                 await accountService.UpdateAccount(existingMember);
@@ -329,6 +331,85 @@ namespace PRN221_Admin.ViewModels
             catch (Exception ex)
             {
                 System.Windows.MessageBox.Show($"Update failed: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
+
+        private string _currentPass;
+        private string _newPass;
+        private string _confirmPass;
+
+        public string CurrentPass
+        {
+            get => _currentPass;
+            set
+            {
+                _currentPass = value;
+                OnPropertyChanged(nameof(CurrentPass));
+            }
+        }
+
+        public string NewPass
+        {
+            get => _newPass;
+            set
+            {
+                _newPass = value;
+                OnPropertyChanged(nameof(NewPass));
+            }
+        }
+
+        public string ConfirmPass
+        {
+            get => _confirmPass;
+            set
+            {
+                _confirmPass = value;
+                OnPropertyChanged(nameof(ConfirmPass));
+            }
+        }
+
+
+        private async Task UpdatePassAdmin(object obj)
+        {
+            try
+            {
+                // Kiểm tra nếu tài khoản tồn tại
+                var existingMember = await accountService.GetByUsername(Username);
+
+                if (existingMember == null)
+                {
+                    MessageBox.Show("Cannot find account.", "Notification", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                // Kiểm tra nếu mật khẩu mới và xác nhận mật khẩu khớp nhau
+                if (NewPass != ConfirmPass)
+                {
+                    MessageBox.Show("New password and confirm password do not match.", "Notification", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                // Kiểm tra mật khẩu hiện tại
+                if (existingMember.Password != CurrentPass)
+                {
+                    MessageBox.Show("Current password is incorrect.", "Notification", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                // Cập nhật mật khẩu
+                existingMember.Password = NewPass;
+
+                // Lưu thay đổi
+                await accountService.UpdateAccount(existingMember);
+                await LoadAdminInfo(Username);
+
+                MessageBox.Show("Password updated successfully!", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Update failed: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

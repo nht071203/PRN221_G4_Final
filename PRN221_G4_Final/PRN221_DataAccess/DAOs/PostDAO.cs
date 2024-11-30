@@ -18,7 +18,7 @@ namespace PRN221_DataAccess.DAOs
             return await _context.Posts.ToListAsync();
         }
 
-        public async Task<Post?> GetById(int postId)
+        public async Task<Post> GetById(int postId)
         {
             return await _context.Posts.FirstOrDefaultAsync(p => p.PostId == postId);
         }
@@ -28,6 +28,27 @@ namespace PRN221_DataAccess.DAOs
             _context.Posts.Add(post);
             await _context.SaveChangesAsync();
             return post;
+        }
+
+        public async Task<int> Update(Post post)
+        {
+            var existItem = await _context.Posts.FirstOrDefaultAsync(p => p.PostId == post.PostId);
+            if (existItem == null) return -1;
+
+            existItem.UpdateAt = post.UpdateAt;
+            existItem.PostContent = post.PostContent;
+            existItem.CategoryPostId = post.CategoryPostId;
+            existItem.IsDeleted = post.IsDeleted;
+
+            return await _context.SaveChangesAsync();
+        }
+        public async Task<int> InActivePost(int postId)
+        {
+            var post = await _context.Posts.FirstOrDefaultAsync(p => p.PostId == postId);
+            if (post == null) return -1;
+            post.IsDeleted = true;
+            post.DeletedAt = DateTime.Now;
+            return _context.SaveChanges();
         }
 
         public async Task<Account?> FarmerWithMostPosts()

@@ -33,7 +33,7 @@
                             <h2>Tạo bài viết</h2>
 
                             <form id="postForm" method="post" asp-page-handler="AddPost" enctype="multipart/form-data">
-                                <textarea name="ContentPost" placeholder="Nam ơi, bạn đang nghĩ gì thế?" class="content-post"
+                                <textarea name="ContentPost" placeholder="@Model.FullName ơi, bạn đang nghĩ gì thế?" class="content-post"
                                           required></textarea>
 
                                 <input type="file" id="imageInput" accept="image/*" style="display: none;" multiple asp-for="PostViewModel.ImagesPost">
@@ -98,16 +98,16 @@
                                     <!-- Activity Item Start -->
                                     <li>
                                         <div class="activity--item">
-                                            <div class="activity--avatar">
+                                            <div>
                                                 @if(post.account == null)
                                                 {
-                                                    <a href="/Access/Login">
-                                                        <img src="" alt="" onerror="this.onerror=null; this.src='https://firebasestorage.googleapis.com/v0/b/prn221-69738.appspot.com/o/image%2Fuser.png?alt=media&token=e669a837-b9c8-4983-b2bd-8eb5c091d48f';">
+                                                    <a href="">
+                                                        <img src="https://firebasestorage.googleapis.com/v0/b/prn221-69738.appspot.com/o/image%2F638662847785835158_av.jpg?alt=media&token=6866244f-096d-4b21-ad44-1d0d2772c509" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
                                                     </a>
                                                 } else
                                                 {
                                                     <a asp-page="/Profile/PersonalPage" asp-route-id="@post.account.AccountId">
-                                                        <img src="@post.account.Avatar" alt="" onerror="this.onerror=null; this.src='https://firebasestorage.googleapis.com/v0/b/prn221-69738.appspot.com/o/image%2Fuser.png?alt=media&token=e669a837-b9c8-4983-b2bd-8eb5c091d48f';">
+                                                        <img src="@post.account.Avatar" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
                                                     </a>
                                                 }
                                                
@@ -117,10 +117,10 @@
                                                 <div class="activity--header">
                                                     @if(post.account == null)
                                                     {
-                                                        <p><a href="/Access/Login">Người dùng ẩn danh</a> vừa đăng 1 bài viết</p>
+                                                        <p><a href="/Access/Login">Người dùng ẩn danh</a> </p>
                                                     } else
                                                     {
-                                                        <p><a asp-page="/Profile/PersonalPage" asp-route-id="@post.account.AccountId">@post.account.FullName</a> vừa đăng 1 bài viết</p>
+                                                        <p><a asp-page="/Profile/PersonalPage" asp-route-id="@post.account.AccountId">@post.account.FullName</a> </p>
                                                     }
                                                     
                                                 </div>
@@ -130,16 +130,14 @@
                                                 </div>
 
                                                 <div class="activity--content">
-                                                    <p class="content-text-ellipsis">@post.post.PostContent</p>
+                                                    <h6 class="content-text-ellipsis">@post.post.PostContent</h6>
                                                     
                                                     @if (post.postImages != null && post.postImages.Count() > 0)
                                                     {
-                                                        <span>@post.postImages.FirstOrDefault().ImageUrl</span>
                                                         <div>
                                                             <ul class="nav AdjustRow">
-                                                                <li>
-                                                                    <a href="/Posts/PostDetail/@post.post.PostId">
-                                                                        
+                                                                <li class="p-0">
+                                                                    <a class="p-0" href="/Posts/PostDetail/@post.post.PostId">
                                                                         <img src="@post.postImages.FirstOrDefault().ImageUrl" alt="">
                                                                     </a>
                                                                 </li>
@@ -154,14 +152,14 @@
                                                 @if (!isLoggedIn)
                                                 {
                                                     <div class="activity--action fw--700">
-                                                        <a href="/Access/Login">See More...</a>
+                                                        <a href="/Access/Login">Xem thêm...</a>
                                                     </div>
                                                 }
                                                 else
                                                 {
                                                     @* KHI LOGIN ROI THI XEM DUOC *@
                                                     <div class="activity--action fw--700">
-                                                        <a href="/Posts/PostDetail/@post.post.PostId">See More...</a>
+                                                        <a href="/Posts/PostDetail/@post.post.PostId">Xem thêm...</a>
                                                     </div>
                                                 }
                                             </div>
@@ -173,59 +171,6 @@
                             {
                                 <h1>không có bài đăng</h1>
                             }
-
-                           @*  <li>
-                                <!-- Activity Item Start -->
-                                <div class="activity--item">
-                                    <div class="activity--avatar">
-                                        <a href="member-activity-personal.html">
-                                            <img src="img/activity-img/avatar-07.jpg" alt="">
-                                        </a>
-                                    </div>
-
-                                    <div class="activity--info fs--14">
-                                        <div class="activity--header">
-                                            <p><a href="member-activity-personal.html">Anita J. Lilley</a> posted an update in the group <a href="group-home.html">Lens-bians Photography</a></p>
-                                        </div>
-
-                                        <div class="activity--meta fs--12">
-                                            <p><i class="fa mr--8 fa-clock-o"></i>Yeasterday at 08:20 am</p>
-                                        </div>
-
-                                        <div class="activity--content">
-                                            <div class="gallery--embed" data-trigger="gallery_popup">
-                                                <ul class="nav AdjustRow">
-                                                    <li>
-                                                        <a href="~/image/avatar2.png">
-                                                            <img src="~/image/avatar2.png" alt="">
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="~/image/avatar2.png">
-                                                            <img src="~/image/avatar2.png" alt="">
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="~/image/avatar2.png">
-                                                            <img src="~/image/avatar2.png" alt="">
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="~/image/avatar2.png" data-overlay="0.5">
-                                                            <img src="~/image/avatar2.png" alt="">
-                                                            <span>24+ More</span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="activity--action fw--700">
-                                            <a href="#">See More...</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Activity Item End -->
-                            </li> *@
 
                         </ul>
                     </div>

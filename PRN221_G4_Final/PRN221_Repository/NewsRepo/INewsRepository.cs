@@ -20,5 +20,8 @@ namespace PRN221_Repository.NewsRepo
         Task<IEnumerable<News>> SearchNews(int category, string searchString);
         Task<IEnumerable<News>> GetNewsPaged(int pageNumber, int pageSize);
         Task<int> GetTotalNewsCount();
+
+        Task<IEnumerable<(string Month, int Count)>> GetNewsCountByMonth(int year);
+        Task<IEnumerable<(string Day, int Count)>> GetNewsCountByDay(int year, int month);
     }
 }

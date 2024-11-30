@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
 using PRN221_BusinessLogic.Interface;
 using PRN221_Models.Models;
 using System.ComponentModel.DataAnnotations;
@@ -76,15 +77,10 @@ namespace PRN221_Client.Pages.Access
                 RoleId = 2
             };
 
-            var newExpert = await _authenService.Register(account);
 
-            if (newExpert == null )
-            {
-                ModelState.AddModelError(string.Empty, "Đăng ký thất bại!");
-                return Page();
-            }
+            TempData["AccountRegister"] = JsonConvert.SerializeObject(account);
 
-            return RedirectToPage("/Access/Login");
+            return RedirectToPage("/Access/ConfirmEmail");
         }
     }
 }

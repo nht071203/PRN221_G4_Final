@@ -38,6 +38,19 @@ namespace PRN221_BusinessLogic.Service
             await _newsRepo.Delete(id);
         }
 
+        public async Task AddCatNews(CategoryNews item)
+        {
+            await _categoryNewsRepository.Add(item);
+        }
+        public async Task UpdateCatNews(CategoryNews item)
+        {
+            await _categoryNewsRepository.Update(item);
+        }
+        public async Task DeleteCatNews(int id)
+        {
+            await _categoryNewsRepository.Delete(id);
+        }
+
 
         public async Task<IEnumerable<CategoryNews>> GetAllCategoryNews() => await _categoryNewsRepository.GetAllCategoryNews();
 
@@ -57,5 +70,11 @@ namespace PRN221_BusinessLogic.Service
         public Task<IEnumerable<News>> GetNewsPaged(int pageNumber, int pageSize) => _newsRepo.GetNewsPaged(pageNumber, pageSize);  
 
         public Task<int> GetTotalNewsCount() => _newsRepo.GetTotalNewsCount();
+
+        public async Task<IEnumerable<(string Month, int Count)>> GetNewsCountByMonth(int year) => await _newsRepo.GetNewsCountByMonth(year);
+
+        public async Task<IEnumerable<(string Day, int Count)>> GetNewsCountByDay(int year, int month) => await _newsRepo.GetNewsCountByDay(year,month);
+
+
     }
 }

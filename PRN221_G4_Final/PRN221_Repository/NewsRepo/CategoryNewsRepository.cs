@@ -22,5 +22,9 @@ namespace PRN221_Repository.NewsRepo
         public async Task<IEnumerable<CategoryNews>> GetCategoriesHaveNews() => await _categoryNewsDAO.GetCategoriesHaveNews();
 
         public async Task<CategoryNews> GetCategoryNewsById(int id) => await _categoryNewsDAO.GetCategoryNewsById(id);
+        public async Task Add(CategoryNews news) => await _categoryNewsDAO.AddCatNews(news);
+        public async Task Update(CategoryNews news) => await _categoryNewsDAO.UpdateCatNews(news);
+
+        public async Task Delete(int id) => await _categoryNewsDAO.DeleteCatNews(id);
     }
 }

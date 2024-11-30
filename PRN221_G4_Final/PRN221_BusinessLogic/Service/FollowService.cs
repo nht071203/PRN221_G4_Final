@@ -22,6 +22,19 @@ namespace PRN221_BusinessLogic.Service
             _accountRepository = accountRepository;
         }
 
+        public async Task Add(Follow item) => await _followRepository.Add(item);
+
+        public async Task Delete(int follower_id, int followed_id) => await _followRepository.Delete(follower_id, followed_id);
+
+        public async Task<Follow> FindById(int follower_id, int followed_id) => await _followRepository.FindById(follower_id, followed_id);
+
+        public async Task<bool> IsFollowing(int follower_id, int followed_id)
+        {
+            var follow = await _followRepository.FindById(follower_id, followed_id);
+            if (follow != null) return true;
+            return false;
+        }
+
         public async Task<List<Account>> ListFollowers(int id)
         {
             var follows = await _followRepository.GetFollowingByAccountId(id);

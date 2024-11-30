@@ -263,8 +263,8 @@ namespace PRN221_Admin.ViewModels
             }
         }
 
-        private DateOnly? _dateofbirthInfo;
-        public DateOnly? DateofbirthInfo
+        private DateTime? _dateofbirthInfo;
+        public DateTime? DateofbirthInfo
         {
             get { return _dateofbirthInfo; }
             set

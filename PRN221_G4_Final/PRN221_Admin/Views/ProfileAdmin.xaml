@@ -8,17 +8,16 @@
     xmlns:Wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf" 
     x:Class="PRN221_Admin.Views.ProfileAdmin"
     mc:Ignorable="d"
-    d:DesignHeight="600" 
-    d:DesignWidth="800"
+     d:DesignWidth="1000" d:DesignHeight="750" MaxHeight="750" 
     Title="ProfileAdmin"
     Background="White">
     <Page.Resources>
         <Storyboard x:Key="MarqueeStoryboard" RepeatBehavior="Forever">
+
             <DoubleAnimation
               Storyboard.TargetName="ContactTransform"
               Storyboard.TargetProperty="X"
-              From="-200" To="400" Duration="0:0:4"
-              AutoReverse="True"/>
+              From="-500" To="1500" Duration="0:0:3" AutoReverse="False"/>
         </Storyboard>
     </Page.Resources>
 
@@ -29,12 +28,12 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="420" />
+            <RowDefinition Height="520" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <!-- Avatar and Information Section -->
-        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="328" Margin="10,10,0,0" VerticalAlignment="Top" Width="494">
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="326" Margin="10,0,0,0" VerticalAlignment="Top" Width="549">
             <Rectangle.Stroke>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black"/>
@@ -44,7 +43,7 @@
         </Rectangle>
 
         <!-- Avatar and Information Section -->
-        <StackPanel Grid.Column="0" Margin="10" VerticalAlignment="Top">
+        <StackPanel Grid.Column="0" Margin="10,0,10,0" VerticalAlignment="Center" Height="500">
             <!-- Avatar Image -->
             <Ellipse Width="136" Height="136" HorizontalAlignment="Center" VerticalAlignment="Top">
                 <Ellipse.Fill>
@@ -54,7 +53,7 @@
 
 
             <!-- Name and Short Bio -->
-            <TextBlock Text="Vũ Minh Uyên" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" Margin="0,10,0,0">
+            <TextBlock  Text="{Binding Fullname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" Margin="0,10,0,0">
                 <TextBlock.Foreground>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="Black"/>
@@ -114,11 +113,11 @@
         </StackPanel>
 
         <!-- User Information Section -->
-        <StackPanel Grid.Column="1" Margin="20">
+        <StackPanel Grid.Column="1" Margin="20,20,20,183">
             <!-- User Details -->
             <WrapPanel Orientation="Horizontal">
                 <TextBlock Text="Username:" FontWeight="Bold" FontSize="16" />
-                <TextBox Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Margin="10,0,0,10" Width="380"/>
+                <TextBox IsReadOnly="True" Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Margin="10,0,0,10" Width="380"/>
             </WrapPanel>
             <WrapPanel Orientation="Horizontal">
                 <TextBlock Text="Full Name:" FontWeight="Bold" FontSize="16" Height="28"/>
@@ -160,7 +159,7 @@
                 <TextBlock Text="Address:" FontWeight="Bold" FontSize="16" Height="23"/>
                 <TextBox Text="{Binding Address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Margin="28,0,0,10" Width="378"/>
             </WrapPanel>
-            <WrapPanel Orientation="Horizontal">
+            <!--<WrapPanel Orientation="Horizontal">
                 <TextBlock Text="Password:" FontWeight="Bold" FontSize="16" Height="25" />
                 <TextBox Text="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="18,5,0,10" Width="377" Height="20"/>
 
@@ -170,7 +169,7 @@
                 <TextBlock Text="Confirm Password:" FontWeight="Bold" FontSize="16"/>
                 <TextBox Text="{Binding ConfirmPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="18,5,0,10" Width="311" Height="20"/>
 
-            </WrapPanel>
+            </WrapPanel>-->
 
             <!-- Update Profile Button -->
             <Button  Command="{Binding UpdateAdminBtn}" Content="Save Profile" Height="40" Width="150" HorizontalAlignment="Center" BorderBrush="#FF00FF6C" Foreground="White" FontWeight="Bold" FontSize="16" Margin="10,10">
@@ -193,18 +192,56 @@
             </Button>
 
         </StackPanel>
+        <StackPanel Grid.Column="1" Margin="20,350,20,6">
+            <!-- User Details -->
+            <WrapPanel Orientation="Horizontal">
+                <TextBlock Text="Current Password:" FontWeight="Bold" FontSize="16" />
+                <!-- PasswordBox for current password -->
+                <TextBox  Text="{Binding CurrentPass, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Margin="10,0,0,10" Width="380"/>
+            </WrapPanel>
+            <WrapPanel Orientation="Horizontal">
+                <TextBlock Text="New Password:" FontWeight="Bold" FontSize="16" Height="28"/>
+                <!-- PasswordBox for new password -->
+                <TextBox  Text="{Binding NewPass, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Margin="11,5,0,10" Width="379"/>
+            </WrapPanel>
+            <WrapPanel Orientation="Horizontal">
+                <TextBlock Text="Confirm Password:" FontWeight="Bold" FontSize="16" Height="28"/>
+                <!-- PasswordBox for confirm password -->
+                <TextBox  Text="{Binding ConfirmPass, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Margin="11,5,0,10" Width="379"/>
+            </WrapPanel>
+
+            <Button Command="{Binding UpdatePassBtn}" Content="Change Password" Height="40" Width="150" HorizontalAlignment="Center" BorderBrush="#FF00FF6C" Foreground="White" FontWeight="Bold" FontSize="16" Margin="10,10">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Black"/>
+                        <GradientStop Color="#FF54B538" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" 
+                BorderBrush="{TemplateBinding BorderBrush}" 
+                BorderThickness="1" 
+                CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </StackPanel>
+
 
 
 
 
         <Grid Grid.Row="1" Grid.ColumnSpan="2">
-    
+
             <StackPanel Grid.ColumnSpan="2">
                 <WrapPanel Orientation="Horizontal">
-               
-                    <TextBlock x:Name="ContactText" Text="Liên hệ : 0789 61 65 73" FontSize="30" 
-                       HorizontalAlignment="Left" VerticalAlignment="Bottom" 
-                       Margin="10,70,10,10">
+
+                    <TextBlock x:Name="ContactText" Text="Family Farm - 0123 456 789" FontSize="20" 
+                           HorizontalAlignment="Left" VerticalAlignment="Bottom" 
+                           Margin="10,70,10,10">
                         <TextBlock.Foreground>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="Black"/>
@@ -218,5 +255,13 @@
                 </WrapPanel>
             </StackPanel>
         </Grid>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="178" Margin="10,342,0,0" VerticalAlignment="Top" Width="549">
+            <Rectangle.Stroke>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black"/>
+                    <GradientStop Color="#FFFF5E43" Offset="1"/>
+                </LinearGradientBrush>
+            </Rectangle.Stroke>
+        </Rectangle>
     </Grid>
 </Page>

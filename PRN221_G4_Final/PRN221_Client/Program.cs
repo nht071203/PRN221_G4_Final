@@ -26,11 +26,17 @@ using PRN221_Repository.RoleRepo;
 using PRN221_Repository.ServiceRepo;
 using PRN221_Repository.SharePostRepo;
 using PRN221_Repository.ViewRepo;
+using Newtonsoft.Json;
+using PRN221_Repository.ConversRepo;
+using PRN221_Client.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddSignalR();
+
 
 builder.Services.AddDbContext<PRN221_DataAccess.Prn221Context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -141,6 +147,10 @@ builder.Services.AddScoped<IRateService, RateService>();
 builder.Services.AddScoped<IRateRepository, RateRepository>();
 builder.Services.AddScoped<RateDAO>();
 
+builder.Services.AddScoped<IConversService, ConversService>();
+builder.Services.AddScoped<IConversRepository, ConversRepository>();
+builder.Services.AddScoped<ConversationDAO>();
+
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<FirebaseConfig>();
 
@@ -180,8 +190,6 @@ builder.Services.AddScoped<PostViewModel>();
 
 builder.Services.AddScoped<IFollowService, FollowService>();
 builder.Services.AddScoped<IFollowRepository, FollowRepository>();
-builder.Services.AddScoped<FollowService>();
-builder.Services.AddScoped<FollowRepository>();
 builder.Services.AddScoped<FollowDAO>();
 
 builder.Services.AddSession();
@@ -206,4 +214,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
+
+app.MapHub<ChatHub>("/chatHub");
+//app.MapHub<SignalRServer>("/SignalRServer");
+
 app.Run();

@@ -1,4 +1,5 @@
-﻿using PRN221_BusinessLogic.Interface;
+﻿using Microsoft.EntityFrameworkCore;
+using PRN221_BusinessLogic.Interface;
 using PRN221_Models.Models;
 using PRN221_Repository.AccountRepo;
 using System;
@@ -74,14 +75,14 @@ namespace PRN221_BusinessLogic.Service
                 AccountId = 0,
                 RoleId = 1,
                 FacebookId = fbId,
-                Username = name,
+                Username = email,
                 Password = "1",
                 FullName = name,
                 Email = email,
                 EmailConfirmed = 1,
                 Phone = null,
                 PhoneConfirmed = 0,
-                Gender = "none",
+                Gender = null,
                 DegreeUrl = null,
                 Avatar = avatar,
                 Major = null,
@@ -96,9 +97,6 @@ namespace PRN221_BusinessLogic.Service
         {
             return await _accountRepo.GetFullnameByUsername(username);
         }
-
-       }
-
-
     }
+}
 

@@ -25,5 +25,11 @@ namespace PRN221_DataAccess.DAOs
             _context.PostImages.Add(postImage);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<int> Delete(PostImage postImage)
+        {
+            _context.PostImages.Remove(postImage);
+            return await _context.SaveChangesAsync();
+        }
     }
 }

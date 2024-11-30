@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:PRN221_Admin"
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
            >
+
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

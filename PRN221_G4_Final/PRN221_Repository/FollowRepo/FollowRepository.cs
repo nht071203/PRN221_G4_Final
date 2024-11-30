@@ -17,6 +17,12 @@ namespace PRN221_Repository.FollowRepo
             _followDAO = followDAO;
         }
 
+        public async Task Add(Follow item) => await _followDAO.Add(item);
+
+        public async Task Delete(int follower_id, int followed_id) => await _followDAO.Delete(follower_id, followed_id);
+
+        public async Task<Follow> FindById(int follower_id, int followed_id) => await _followDAO.FindById(follower_id, followed_id);
+
         public async Task<List<Follow>> GetFollowersByAccountId(int id) => await _followDAO.GetFollowersByAccountId(id);
 
         public async Task<List<Follow>> GetFollowingByAccountId(int id) => await _followDAO.GetFollowingByAccountId(id);

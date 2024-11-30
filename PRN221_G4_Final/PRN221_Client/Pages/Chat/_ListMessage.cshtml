@@ -1,0 +1,69 @@
+﻿@model PRN221_Client.ViewModel.MessageListViewModel
+@inject IHttpContextAccessor HttpContextAccessor
+@inject PRN221_BusinessLogic.Interface.IConversService _conversService;
+@inject PRN221_BusinessLogic.Interface.IAccountService _accountService;
+
+@{
+    int? getIdAccount = null;
+    if (HttpContextAccessor.HttpContext.Session.GetString("AccountID") != null)
+    {
+        getIdAccount = Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetInt32("AccountID"));
+        Console.WriteLine("User ID from session:", getIdAccount);
+    }
+}
+
+<div class="card" id="chat1" style="border-radius: 15px;">
+    @{
+        var getToUser = await _conversService.GetAccConversationByAccOId(Model.ConversationId, getIdAccount.Value);
+        var accountResiver = await _accountService.GetByIdAccount(getToUser.AccountId);
+        var account = await _accountService.GetByIdAccount((int)getIdAccount);
+    }
+    <input type="hidden" id="user-id" name="name" value="@getIdAccount" />
+    <input type="hidden" id="conversationId" name="name" value="@Model.ConversationId" />
+    <input type="hidden" id="toUserInput" name="name" value="@getToUser.AccountId" />
+    <div class="card-header d-flex justify-content-between align-items-center p-3 text-white border-bottom-0"
+         style="border-top-left-radius: 15px; border-top-right-radius: 15px;background-image: linear-gradient(to right,orange, green, yellow)">
+        <div class="d-flex">
+            <img src="@accountResiver.Avatar"
+                 alt="avatar 2" style="width: 40px; height: 100%; border-radius:50%" />
+            <p>@accountResiver.FullName</p>
+        </div>
+        <i class="fas fa-times" onclick="hideConversation()"></i>
+    </div>
+    <div id="messageslist" class="card-body">
+        @foreach (var message in Model.Messages)
+        {
+            if (message.SenderId == getIdAccount)
+            {
+                <div class="d-flex flex-row justify-content-end mb-4">
+                    <div class="p-2 me-3 border bg-body-tertiary" style="border-radius: 15px;">
+                        <p class="small mb-0">@message.Content</p>
+                    </div>
+                    <img src="@account.Avatar"
+                         alt="avatar 2" style="width: 30px; height: 100%; border-radius: 50%">
+                </div>
+            }
+            else
+            {
+                <div class="d-flex flex-row justify-content-start mb-4">
+                    <img src="@accountResiver.Avatar"
+                         alt="avatar 1" style="width: 30px; height: 100%; border-radius: 50%">
+                    <div class="p-2 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
+                        <p class="small mb-0">
+                            @message.Content
+                        </p>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+    <div class="card-footer text-muted d-flex justify-content-start align-items-center p-1">
+        <input id="messageInput" type="text" class="form-control form-control-lg" style="height : 20px">
+        <button id="sendButton" type="button" class="ms-3"><i class="fas fa-paper-plane"></i></button>
+    </div>
+</div>
+
+
+<script src="~/js/site.js"></script>
+<script src="~/microsoft/signalr/dist/browser/signalr.js"></script>

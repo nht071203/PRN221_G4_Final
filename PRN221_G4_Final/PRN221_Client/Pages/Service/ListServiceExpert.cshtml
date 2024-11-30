@@ -1,10 +1,10 @@
 ﻿@page "/Service/ListServiceExpert"
 @model PRN221_Client.Pages.Service.ListServiceExpertModel
 @{
-	Layout = "~/Pages/Shared/_Layout.cshtml";
+	ViewData["Title"] = "Quản lý dịch vụ";
 }
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+@* <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"> *@
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="~/css/listServiceExpertStyle.css"/>
@@ -16,6 +16,12 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/2.0.0/css/dataTables.bootstrap5.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 <script src="https://kit.fontawesome.com/1bd9fa3a2e.js" crossorigin="anonymous"></script>
+
+<style>
+	.action-service{
+		display: flex;
+	}
+</style>
 
 <section class="body">
 	<div class="container-xl">
@@ -39,6 +45,7 @@
 							<th>Ngày tạo</th>
 							<th>Giá</th>
 							<th>Đánh giá</th>
+							<th>Tình trạng</th>
 							<th>Thao tác</th>
 						</tr>
 					</thead>
@@ -51,9 +58,23 @@
 								<td>@serviceList.CreateAt</td>
 								<td>@serviceList.Price</td>
 								<td>@serviceList.AverageRating</td>
-								<td>
+								@if (serviceList.IsEnable == true)
+								{
+									<td>Hoạt động</td>
+								} else
+								{
+									<td>Ngừng hoạt động</td>
+								}
+								<td class="action-service">
 									<a asp-page="/Service/EditService" asp-route-id="@serviceList.ServiceId" class="edit"><i class="material-icons" title="Edit">&#xE254;</i></a>
 									<a href="#deleteEmployeeModal" class="delete" data-id="@serviceList.ServiceId" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+									@if (serviceList.IsEnable == true)
+									{
+										<a href="#disableModal" class="disable-service" data-id="@serviceList.ServiceId" data-toggle="modal"><i class="fa-solid fa-arrows-rotate" data-toggle="tooltip0"></i></a>
+									} else
+									{
+										<a href="#enableModal" class="enable-service" data-id="@serviceList.ServiceId" data-toggle="modal"><i class="fa-solid fa-arrows-rotate" data-toggle="tooltip1"></i></a>
+									}
 								</td>
 							</tr>
 						}
@@ -66,15 +87,54 @@
 						<form>
 							<div class="modal-header">
 								<h4 class="modal-title">Xóa dịch vụ</h4>
-								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								@* <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> *@
 							</div>
 							<div class="modal-body">
 								<p>Bạn có muốn xóa dịch vụ này không?</p>
 							</div>
 							<div class="modal-footer">
-								<input type="button" class="btn btn-default" data-dismiss="modal" value="Quay về">
+								<input type="button" class="btn btn-default btnBack" data-dismiss="modal" value="Quay về">
 								<a id="confirmDelete" class="btn btn-danger">Xóa</a>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
 
+			<div id="disableModal" class="modal fade">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<form>
+							<div class="modal-header">
+								<h4 class="modal-title">Thay đổi tình trạng dịch vụ</h4>
+								@* <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> *@
+							</div>
+							<div class="modal-body">
+								<p>Bạn có muốn ngừng hoạt động dịch vụ này không?</p>
+							</div>
+							<div class="modal-footer">
+								<input type="button" class="btn btn-default btnBack" data-dismiss="modal" value="Quay về">
+								<a id="confirmDisable" class="btn btn-primary">Xác nhận</a>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+			<div id="enableModal" class="modal fade">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<form>
+							<div class="modal-header">
+								<h4 class="modal-title">Thay đổi tình trạng dịch vụ</h4>
+								@* <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> *@
+							</div>
+							<div class="modal-body">
+								<p>Bạn có muốn hoạt động trờ lại dịch vụ này không?</p>
+							</div>
+							<div class="modal-footer">
+								<input type="button" class="btn btn-default btnBack" data-dismiss="modal" value="Quay về">
+								<a id="confirmEnable" class="btn btn-primary">Xác nhận</a>
 							</div>
 						</form>
 					</div>
@@ -86,13 +146,56 @@
 </section>
 
 <script>
-	$(document).ready(function () {
+$(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
 
     $('.delete').on('click', function () {
         var serviceId = $(this).data('id');
         $('#confirmDelete').attr('href', '/Service/DeleteService?handler=RemoveService&id=' + serviceId);
         $('#deleteEmployeeModal').modal('show');
+
+		$('.btnBack').on('click', function () {
+			const modalBackdrop = document.querySelector('.modal-backdrop');
+			if (modalBackdrop) {
+				modalBackdrop.remove();
+			}
+
+			document.body.classList.remove('modal-open'); // Mở khóa cuộn trang
+		});
+    });
+	
+	$('[data-toggle="tooltip0"]').tooltip();
+
+	$('.disable-service').on('click', function () {
+        var serviceId = $(this).data('id');
+        $('#confirmDisable').attr('href', '/Service/EditService?handler=DisableService&id=' + serviceId);
+        $('#disableModal').modal('show');
+
+		$('.btnBack').on('click', function () {
+			const modalBackdrop = document.querySelector('.modal-backdrop');
+			if (modalBackdrop) {
+				modalBackdrop.remove();
+			}
+
+			document.body.classList.remove('modal-open'); // Mở khóa cuộn trang
+		});
+    });
+
+	$('[data-toggle="tooltip1"]').tooltip();
+
+	$('.enable-service').on('click', function () {
+        var serviceId = $(this).data('id');
+        $('#confirmEnable').attr('href', '/Service/EditService?handler=EnableService&id=' + serviceId);
+        $('#enableModal').modal('show');
+
+		$('.btnBack').on('click', function () {
+			const modalBackdrop = document.querySelector('.modal-backdrop');
+			if (modalBackdrop) {
+				modalBackdrop.remove();
+			}
+
+			document.body.classList.remove('modal-open'); // Mở khóa cuộn trang
+		});
     });
 });
 

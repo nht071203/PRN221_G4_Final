@@ -16,6 +16,11 @@ namespace PRN221_BusinessLogic.Service
             _viewRepository = viewRepository;
         }
 
+        public async Task AddRecordPost(int acc_id, int post_id)
+        {
+            await _viewRepository.AddRecordPost(acc_id, post_id);
+        }
+
         public async Task<int> GetViewByPostId(int postId)
         {
             return await _viewRepository.GetViewByPostId(postId);

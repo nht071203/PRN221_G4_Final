@@ -21,11 +21,12 @@ namespace PRN221_Admin.Views
     /// </summary>
     public partial class ExpertPage : Page
     {
+        
         public ExpertPage(ExpertViewModel viewModel)
         {
             InitializeComponent();
             DataContext = viewModel;
         }
-
+        
     }
 }
